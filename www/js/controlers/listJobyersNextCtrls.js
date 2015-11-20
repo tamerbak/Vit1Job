@@ -8,7 +8,10 @@ starter
     $scope.jobyersNextToMe = $rootScope.jobyersNextToMe;
 
     // Tri de la table
-    $scope.jobyersNextToMe = [
+    
+    $scope.init = function() {
+      
+      $scope.jobyersNextToMe = [
       {firstName:'mohammed', distance:10},
       {firstName:'adil', distance:20},
       {firstName:'sami', distance:15},
@@ -18,26 +21,30 @@ starter
       {firstName:'mourad', distance:100},
       {firstName:'ali', distance:55}
     ];
-
+    
     $scope.SortOrder = '+firstName';
 
     $scope.position = {distance : 15};
-
-    $scope.change = function() {
-
-      if($scope.availabilityChecked)
-      {
-
-      }
-
-      if($scope.matchingChecked)
-      {
-
-      }
-
-      if($scope.positionChecked)
+    
+    $scope.checkboxes = {availability : false,matching : false,position : false}
+    
+    }
+    
+    $scope.sort = function() {
+      
+      if($scope.checkboxes.position)
       {
         $scope.SortOrder = '+distance'
+      }
+      
+      if($scope.checkboxes.matching)
+      {
+
+      }
+
+      if($scope.checkboxes.availability)
+      {
+
       }
 
     };

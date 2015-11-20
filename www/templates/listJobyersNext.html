@@ -4,7 +4,7 @@
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
   </ion-header-bar>
-  <ion-content padding="true">
+  <ion-content padding="true" ng-init="init()" >
 
 	<!--
     <ion-list>
@@ -32,20 +32,20 @@
       </div>
     </div>
 
-	<div class="row">
+	<div class="row" >
       <div class="col col-33">
         <label class="checkbox rel">
-          <input type="checkbox" ng-model="availabilityChecked" ng-checked="change()">
+          <input type="checkbox"  ng-model="checkboxes.availability" ng-change="sort()">
         </label>
       </div>
       <div class="col col-33">
         <label class="checkbox ">
-          <input type="checkbox" ng-model="matchingChecked" ng-checked="change()">
+          <input type="checkbox" ng-model="checkboxes.matching" ng-change="sort()"> 
         </label>
       </div>
       <div class="col col-33">
         <label class="checkbox">
-          <input type="checkbox" ng-model="positionChecked" ng-checked="change()">
+          <input type="checkbox" ng-model="checkboxes.position" ng-change="sort()">
         </label>
       </div>
     </div>

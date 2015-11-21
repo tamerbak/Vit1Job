@@ -7,7 +7,7 @@
   <ion-content padding="true">
 
     <ion-list>
-      <ion-item class ="alternatedList" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
+      <ion-item ng-click="showMenuForContract(jobber)" class ="alternatedList" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
         {{jobber.firstName}} {{jobber.lastName}} | {{jobber.city}}
       </ion-item>
     </ion-list>

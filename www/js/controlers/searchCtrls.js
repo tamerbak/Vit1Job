@@ -154,7 +154,12 @@ starter
 
             // Send Http search to get jobbers with same competencies and same city as mine
             for (i=0; i < jobyersForMe.length ; i++){
-              var proximity = GeoService.getDistance(jobyersForMe[i].lat, jobyersForMe[i].long);
+              var proximity = 0;
+              GeoService.getDistance(jobyersForMe[i].lat, jobyersForMe[i].long).then(function(result){
+                proximity = result;
+              }, function(error) {
+                console.log(error);
+              });
               proximity = proximity.toFixedDown(2);
               console.log(proximity);
               if (proximity <= 10) { // à proximité de 10Km

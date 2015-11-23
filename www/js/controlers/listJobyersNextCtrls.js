@@ -12,17 +12,17 @@ starter
     $scope.init = function() {
       
       $scope.jobyersNextToMe = [
-      {firstName:'mohammed', distance:10},
-      {firstName:'adil', distance:20},
-      {firstName:'sami', distance:15},
-      {firstName:'mehdi', distance:45},
-      {firstName:'tamer', distance:0},
-      {firstName:'khalid', distance:95},
-      {firstName:'mourad', distance:100},
-      {firstName:'ali', distance:55}
+      {firstName:'mohammed', distance:10,availability:0},
+      {firstName:'adil', distance:20,availability:0},
+      {firstName:'sami', distance:15,availability:0},
+      {firstName:'mehdi', distance:45,availability:0},
+      {firstName:'tamer', distance:0,availability:0},
+      {firstName:'khalid', distance:95,availability:0},
+      {firstName:'mourad', distance:100,availability:0},
+      {firstName:'ali', distance:55,availability:0}
     ];
     
-    $scope.SortOrder = '+firstName';
+    $scope.SortOrder = undefined;
 
     $scope.position = {distance : 15};
     
@@ -47,6 +47,19 @@ starter
 
       }
 
+    };
+    
+    $scope.moredata = false;
+    
+    $scope.loadMoreData=function()
+    {
+        var index = $scope.jobyersNextToMe.length;
+        $scope.jobyersNextToMe.push({firstName:'mohammed' + index, distance:10,availability:0});
+        if($scope.jobyersNextToMe.length==100)
+        {
+            $scope.moredata=true;
+        }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
     };
 
     // Fin Tri de la table

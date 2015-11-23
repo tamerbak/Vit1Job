@@ -4,7 +4,7 @@
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
   </ion-header-bar>
-  <ion-content padding="true" data-ng-init="initAll()">
+  <ion-content id="competenceContent" padding="true" data-ng-init="initAll()">
   
   <!-- BUTTONS CONTROLS -->
 	<div class="button icon-left ion-chevron-left button-clear" style="vertical-align: middle" onclick="angular.element(this).scope().loadPrevJobyer()" data-ng-disabled="formData.showButtLeft"></div>
@@ -22,7 +22,9 @@
 
     <br><br>
 	<!-- METIERS -->
-	<div class ="xcontainer">
+    <div class="list">
+      <label class="item item-input">
+	  <!--
 		<div angucomplete-alt id="metiers"
 			placeholder="Métier"
 			maxlength="50"
@@ -35,12 +37,18 @@
 			input-class="form-control form-control-small"
 			match-class="highlight" class="autoCompl">
 		</div>
-		<select class="arriere flat" data-ng-model="formData.metierS" data-ng-change="updateAutoComplete()">
+		-->
+		<select class="flat" data-ng-model="formData.metier" data-ng-init="formData.metier='Metiers'">
+			<option selected disabled style="display: none;">Metiers</option>				
 			<option data-ng-repeat="x in formData.metiers" value="{{x.libelle}}">{{x.libelle}}</option>
 		</select>
+		</label>
 	</div>
-	<br>
+	<!-- <br> -->
 	<!-- JOBS -->
+    <div class="list">
+      <label class="item item-input">
+	  <!--	
 	<div angucomplete-alt id="jobs"
 			placeholder="Job"
 			maxlength="50"
@@ -53,6 +61,13 @@
 			input-class="form-control form-control-small"
 			match-class="highlight" class="autoCompl">
 	</div>
+		-->
+		<select class="flat" data-ng-model="formData.job" data-ng-init="formData.job='Job'">
+			<option selected disabled style="display: none;">Job</option>		
+			<option data-ng-repeat="x in formData.jobs" value="{{x.libelle}}">{{x.libelle}}</option>
+		</select>
+		</label>
+	</div>	
 	<!-- MAITRISE -->
 	<div id="maitriseDiv">
 		<img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>

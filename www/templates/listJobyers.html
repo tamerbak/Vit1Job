@@ -6,11 +6,70 @@
   </ion-header-bar>
   <ion-content padding="true">
 
-    <ion-list>
-      <ion-item ng-click="showMenuForContract(jobber)" class ="alternatedList" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
+    <!--ion-list>
+      <ion-item class ="alternatedList" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
         {{jobber.firstName}} {{jobber.lastName}} | {{jobber.city}}
+          <button class="button button-positive">
+            <i class="icon ion-ios-telephone"></i>
+          </button>
       </ion-item>
-    </ion-list>
+    </ion-list-->
+
+    <div class="row">
+      <div class="col col-33 spec">
+        <button class="button button-small button-calm" ng-click="loadModal('templates/disponibilityModal.html')"><i class="icon ion-information-circled"> Disponibilité</i></button>
+      </div>
+      <div class="col col-33">
+        <button class="button button-small button-calm" ng-click="loadModal('templates/matchingModal.html')"><i class="icon ion-arrow-shrink"> Matching</i></button>
+      </div>
+      <div class="col col-33">
+        <button class="button button-small button-calm" ng-click="loadModal('templates/positionModal.html')"><i class="icon ion-pinpoint"> Position</i></button>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col col-33">
+        <label class="checkbox rel">
+          <input type="checkbox">
+        </label>
+      </div>
+      <div class="col col-33">
+        <label class="checkbox ">
+          <input type="checkbox">
+        </label>
+      </div>
+      <div class="col col-33">
+        <label class="checkbox">
+          <input type="checkbox">
+        </label>
+      </div>
+    </div>
+
+    <div class="list">
+
+      <div ng-click="showMenuForContract(jobber)" class="item item-button-right rel" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
+        {{jobber.firstName}}
+        <div class="buttons">
+            <button class="button button-positive rel">
+              <i class="icon ion-information-circled"></i>
+              5m36s
+            </button>
+            <button class="button button-positive rel">
+              <i class="icon ion-arrow-shrink"></i>
+              25%
+            </button>
+            <button class="button button-positive rel">
+              <i class="icon ion-pinpoint "></i>
+              P:2.31Km
+            </button>
+        </div>
+      </div>
+    </div>
+
+      ...
+
+    </div>
 
   </ion-content>
 </ion-view>

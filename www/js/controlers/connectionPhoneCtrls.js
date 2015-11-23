@@ -8,30 +8,36 @@ starter
   .controller('cPhoneCtrl', function ($scope, $rootScope, $cookieStore, $state, x2js, AuthentificatInServer, PullDataFromServer,
 				formatString, PersistInServer, LoadList, Global, DataProvider, Validator){
 
-	  // FORMULAIRE
+    // FORMULAIRE
 	  $scope.formData = {};
 	  $rootScope.employeur = {};
 
 	  $scope.connexionByPhone = function(){
+      var phone=$scope.formData.phone;
+      var index=$scope.formData.index;
+      var password=$scope.formData.password;
+      var msg = [];
+      var isNew=0;
 
-		for(var obj in $scope.formData){
-			//console.log("formData["+obj+"] : "+$scope.formData[obj]);
-		}
-
-		var phone=$scope.formData.phone;
-		var country=$scope.formData.country;
-		var password=$scope.formData.password;
-
-		var isNew=0;
-       if (isEmpty(password) && isEmpty(phone)){
-        var $msg = 'Tous les champs sont vides. Merci de saisir vos informations pour se connecter ';
-        Global.showAlertPassword($msg);
+      if (isEmpty(index)){
+        msg.push("Indicatif");
+      }
+      if (isEmpty(phone)){
+        msg.push("Téléphone");
+      }
+      if (isEmpty(password)){
+        msg.push("Mot de passe");
+      }
+      if (msg.length>0){
+        Global.missedFieldsAlert(msg);
         return;
       }
-		// CONNEXION AU SERVEUR
-		AuthentificatInServer.getSessionId()
-			.success(function (response){
 
+      phone = index + phone;
+
+      // CONNEXION AU SERVEUR
+      AuthentificatInServer.getSessionId()
+        .success(function (response){
           var jsonResp = x2js.xml_str2json(response);
           var jsonText = JSON.stringify (jsonResp);
           jsonText = jsonText.replace("fr.protogen.connector.model.AmanToken","amanToken");
@@ -40,49 +46,45 @@ starter
           // PUT SESSION ID
           sessionId = jsonResp.amanToken.sessionId;
           console.log("sessionId : "+sessionId);
-		  $cookieStore.put('sessionID', sessionId);
+          $cookieStore.put('sessionID', sessionId);
 
           // INTERROGE PHONE_TABLE
           PullDataFromServer.pullDATA("user_employeur", sessionId, "telephone", phone, phone)
             .success(function (resp){
               var data=formatString.formatServerResult(resp);
-
               var result=data.dataModel.rows;
               if(typeof result === 'undefined' || result.length<=0 || result===""){
-				  console.log('Aucune résultat trouvé');
-				  // REDIRECTION VERS INSCRIPTION-1 : SAISIE CIVILITE
-				  isNew=1;
-			  }
-			  else{
-					// VERIFICATION DU PASSWORD
-					var listEntry=[].concat(result.dataRow.dataRow.dataEntry);
-					if(listEntry.length > 0){
+                console.log('Aucune résultat trouvé');
+				        // REDIRECTION VERS INSCRIPTION-1 : SAISIE CIVILITE
+				        isNew=1;
+              } else{
+                // VERIFICATION DU PASSWORD
+					      var listEntry=[].concat(result.dataRow.dataRow.dataEntry);
+                if(listEntry.length > 0){
+                  for(var i=0; i<listEntry.length; i++){ // AUCUNE RESULTAT
+                    var object=listEntry[i];
+                    console.log("object : "+JSON.stringify(object));
+                    if(object.attributeReference === 'mot_de_passe'){
+                      var pass=object.value;
+                      console.log("Mot de pass: "+pass);
+                      if(pass === password){
+                        // RECUPERATION ID EMPLOYEUR
+                        var employeurId=0;
+                        if(listEntry[0].attributeReference === 'pk_user_employeur')
+                          employeurId=listEntry[0].value;
 
-						for(var i=0; i<listEntry.length; i++){ // AUCUNE RESULTAT
-							var object=listEntry[i];
-							console.log("object : "+JSON.stringify(object));
-
-							if(object.attributeReference === 'mot_de_passe'){
-								var pass=object.value;
-								console.log("Mot de pass: "+pass);
-								if(pass === password){
-									// RECUPERATION ID EMPLOYEUR
-									var employeurId=0;
-									if(listEntry[0].attributeReference === 'pk_user_employeur')
-										employeurId=listEntry[0].value;
-
-									var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
-									$cookieStore.put('connexion', connexion);
-
-									// USER REEL - REDIRECTION VERS RECHERCHE
-									$state.go("search");
-								}
-								else	// MOT DE PASSE INCORRECT
-									Global.showAlertPassword("Mot de passe incorrect");
-							}
-						}
-					}
-			  }
+                        var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
+                        $cookieStore.put('connexion', connexion);
+                        Global.showAlertValidation("Bienvenu dans Vit1job. Vous pouvez lancer les recherches des jobyers que vous souhaitez.");
+                        // USER REEL - REDIRECTION VERS RECHERCHE
+                        $state.go("app");
+                      }
+                      else	// MOT DE PASSE INCORRECT
+                        Global.showAlertPassword("Votre mot de passe est invalide.");
+                    }
+                  }
+                }
+              }
 
 			  console.log("isNew : "+isNew);
 			  if(isNew === 1){
@@ -98,10 +100,10 @@ starter
 								if(employeur.dataModel.status || employeur.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 									connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeur.dataModel.status)};
 									$cookieStore.put('connexion', connexion);
-
+                  Global.showAlertValidation("Bienvenue dans Vit1job. Veuillez saisir vos informations. Elles seront utilisées uniquement en cas de signature du contrat de travail.");
 									$rootScope.employeur.id=Number(employeur.dataModel.status);
 									$rootScope.employeur.phone=phone;
-									$rootScope.employeur.country=country;
+									$rootScope.employeur.index=index;
 									$rootScope.employeur.password=password;
 								}
 
@@ -186,4 +188,30 @@ starter
 				$scope.initForm();
 			}
 		});
+
+    $scope.$watch('formData.phone', function(){
+      if ($scope.formData.phone){
+        $scope.formData.phone = $scope.formData.phone.replace("-","").replace(".","").replace("+","").replace(" ","").
+        replace("(","").replace(")","").replace("/","").replace(",","").
+        replace("#","").replace("*","").replace(";","").replace("N","");
+        if ($scope.formData.phone.length == 10){
+          if ($scope.formData.phone.substring(0, 1) == '0'){
+            $scope.formData.phone = $scope.formData.phone.substring(1,10);
+          } else {
+            $scope.formData.phone = $scope.formData.phone.substring(0,9);
+          }
+        } else if ($scope.formData.phone.length > 10) {
+          $scope.formData.phone = $scope.formData.phone.substring(0,9);
+        }
+      }
+
+
+    });
+
+    $scope.validatePhone = function(tel){
+      $scope.formData.phone = tel.replace("-","").replace(".","").replace("+","").replace(" ","").
+      replace("(","").replace(")","").replace("/","").replace(",","").
+      replace("#","").replace("*","").replace(";","").replace("N","");
+
+    };
   });

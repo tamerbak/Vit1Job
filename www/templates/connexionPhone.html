@@ -11,83 +11,44 @@
       <h3 class="titlePhone"><b>Entrez votre numéro de téléphone : </b></h3>
     </div>
 
-	<!-- PAYS
-	<div class="list">
-	  <label class="item item-input">
-        <select class="flat" data-ng-model="formData.country" data-ng-init="formData.country='France'" data-ng-change="loadCodeInter()">
-          <option selected disabled style="display: none;">France</option>
-		 <option data-ng-repeat="x in formData.pays" value="{{x.indicatif_telephonique}}">{{x.libelle}}</option>
-
-          <!--<option data-ng-repeat="x in formData.villes" value="{{x.pk_user_ville}}">{{x.nom}}</option>-->
-    <!--</select>
-  </label>
-</div>-->
-
-  <!-- NEW TELEPHONE -->
-  <div class="list">
-    <label class="item item-input ">
-      <i class="icon ion-ios-telephone placeholder-icon calm"></i>
-
-      <select class="item item-select indicatif_tel" ng-model="formData.index">
-        <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
-          {{item.libelle}}
-        </option>
-      </select>
-      <input type="tel" ng-model="formData.phone" numbers-only="numbers-only">
-    </label>
-  </div>
-
-    <!--i class="icon ion-ios-telephone placeholder-icon calm"></i>
-    <input class="indicatif_tel" type="text" ng-model="formData.index"/>
-    <select class="item item-select indicatif_tel" ng-model="formData.index">
-      <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
-        {{item.libelle}}
-      </option>
-    </select-->
-
-    <div class="list xtel" align="left">
-      <div class="row" >
-        <div class="col-25 num">
-          <label class="item item-input it1">
-            <i class="icon ion-ios-telephone placeholder-icon calm"></i>
-            <input class="input-indicatif" type="text" ng-model="formData.index" placeholder="0033"/>
-          </label>
-        </div>
-        <div class="col-10 num">
-          <label class="item item-input it3">
-            <select class="item item-select indicatif" ng-model="formData.index">
-              <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
-                {{item.libelle}}
-              </option>
-            </select>
-          </label>
-        </div>
-        <div class="col-67 rue">
-          <label class="item item-input it2">
-            <input type="text" id="addressP1" placeholder="Téléphone" data-ng-model="formData.adresse1">
-          </label>
-        </div>
+    <!-- TELEPHONE -->
+  <div class="list xtel" align="left">
+    <div class="row" >
+      <div class="col-25 num">
+        <label class="item item-input it1">
+          <i class="icon ion-ios-telephone placeholder-icon calm"></i>
+          <input class="input-indicatif" type="tel" ng-model="formData.index" placeholder="" data-ng-init="formData.index='0033'" numbers-only="numbers-only"/>
+        </label>
+      </div>
+      <div class="col-10 num">
+        <label class="item item-input it3">
+          <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
+          <select class="select-indicatif" ng-model="formData.index">
+            <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
+              {{item.libelle}}
+            </option>
+          </select>
+          <input class="input-indicatif" type="text" placeholder=""/>
+        </label>
+      </div>
+      <div class="col-67 rue">
+        <label class="item item-input it2">
+          <input type="tel" id="phone" placeholder="Téléphone" data-ng-model="formData.phone" ng-minlength="9" >
+        </label>
       </div>
     </div>
-
-	<!-- TELEPHONE -->
-	<div class="list">
-      <label class="item item-input">
-        <i class="icon ion-ios-telephone placeholder-icon calm"></i>
-        <input type="tel" data-ng-model="formData.phone" data-ng-init="formData.phone='+33 '" numbers-only="numbers-only">
-      </label>
-	</div>
+  </div>
 
 	<!-- PASSWORD -->
 	<div class="list">
 	  <label class="item item-input">
-        <input type="password" placeholder="Mot de passe" data-ng-model="formData.password">
+        <input type="password" placeholder="Mot de passe" ng-model="formData.password" ng-minlength="6">
       </label>
     </div>
 	<br>
 	<!-- ACTIONS -->
 	<div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="connexionByPhone()">Se connecter</button>
+      <button class="button button-full button-positive green" data-ng-click="connexionByPhone()" ng-disabled="!formData.index || !formData.phone || !formData.password">Se connecter</button>
       <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
     </div>
   </ion-content>

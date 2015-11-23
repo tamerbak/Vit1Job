@@ -20,10 +20,30 @@ starter
 		  console.log("password : "+password);
 
 	  var isNew=0;
+      var msg = [];
+      if (isEmpty(email)){
+        msg.push("Email");
+      }
+      if (isEmpty(password)){
+        msg.push("Mot de passe");
+      }
+	  //email validation
+	   var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	   if (!re.test(email))  {
+		  console.log("error email");
+		Global.showAlertValidation("Veuillez saisir un email valide.");
+		return;		  
+	  }
+      if (msg.length>0){
+        Global.missedFieldsAlert(msg);
+        return;
+      }	  
+	  /*
 	  if(isEmpty(email) || isEmpty(password)){
-		  Global.showAlertPassword("Veuillez saisir tous les champs.");
+		  Global.showAlertValidation("Veuillez saisir tous les champs.");
 		  return;
 	  }
+	  */
 
       // CONNEXION AU SERVEUR
       AuthentificatInServer.getSessionId()
@@ -87,10 +107,10 @@ starter
 			  console.log("isNew : "+isNew);
 			  if(isNew === 1){
 				  // SYSTEME VERIFICATION EMAIL
-
+					console.log("email : "+email+" password : "+password+" sessionId : "+sessionId);
 				  // PERSIST IN BD - EMPLOYEUR
 					PersistInServer.persistInEmployeur
-						('', '', 0, 0, 0, '', '', '', email, password, '', '', '', '', '', sessionId)
+						('', '', 0, 0, 0, '', '', '','', email, password, '', '', '', '', '', sessionId)
 							.success(function (response){
 								console.log("ID EMPLOYEUR : "+response);
 
@@ -107,7 +127,7 @@ starter
 									$rootScope.employeur.password=password;
 								}
 
-								Global.showAlertPassword("Bienvenue! Merci de saisir vos informations avant de lancer votre recherche.");
+								Global.showAlertValidation("Bienvenue! Merci de saisir vos informations avant de lancer votre recherche.");
 								// PASSWORD INCORRECT - REDIRECTION
 								$state.go("saisieCiviliteEmployeur");
 							}).error(function (err){

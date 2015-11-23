@@ -5,27 +5,27 @@
 angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'])
 
   .service('Validator', function ($rootScope, DataProvider) {
-	  
+
 		this.checkEmail=function(id){
 			var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-			
+
 			elm=angular.element(document.querySelector('#'+id));
 			var isMatchRegex = EMAIL_REGEXP.test(elm.val());
 			console.log("Email : "+elm.val());
-			
+
 			if(isMatchRegex){
 				elm.parent().removeClass('has-warning').addClass('has-success');
 			}
 			else if(isMatchRegex == false || elm.val() == ''){
 				elm.parent().removeClass('has-success').addClass('has-warning');
 			}
-		}
-		
+		};
+
 		this.checkField=function(id){
 			var elm = angular.element(document.querySelector('#'+id));
 			console.log("element["+id+"] : "+elm);
 			input=elm.val();
-			
+
 			// TEST
 			if(input && input.length>3){
 				// CHAMP VALID
@@ -34,19 +34,19 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 			else{
 				// CHAMP INVALID
 				elm.parent().removeClass('has-success').addClass('has-warning');
-				elm.val(""); 
-			}	
-		}
-		
+				elm.val("");
+			}
+		};
+
 		this.checkAutoComplete=function(elem, input, data, id){
-			
+
 			console.log("input : "+input);
 			console.log("id : "+elem['currentTarget']['id']);
 			/**for(var o in elem['currentTarget']){
 				console.log(o+" : "+elem['currentTarget'][o]);
 			}**/
 			//console.log("data : "+JSON.stringify(data));
-			
+
 			elm= angular.element(document.querySelector('#'+id));
 			isIn=0;
 			// TEST
@@ -62,7 +62,7 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 					console.log("CHAMP VALID");
 				}
 				else{
-					elm.val(""); 
+					elm.val("");
 					//elem.value='';
 					console.log("VIDAGE CHAMP");
 				}
@@ -73,13 +73,13 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				elm.parent().parent().removeClass('has-success').addClass('has-warning');
 				console.log("CHAMP INVALID");
 				//elm.parentNode.classList.remove('has-success').add('has-warning');
-			}	
-		}
-		
+			}
+		};
+
 		this.updateList=function(fk, list){
 			console.log("fk : "+fk);
 			console.log("list : "+list);
-			
+
 			//$rootScope.$broadcast('scanner-started');
 			/**if(list === "ville")
 				$rootScope.$broadcast('update-list-code', {params: {fk, list}});**/
@@ -87,5 +87,5 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				$rootScope.$broadcast('update-list-ville', {params: {'fk':fk, 'list':list}});
 			if(list === "metier")
 				$rootScope.$broadcast('update-list-job', {params: {'fk':fk, 'list':list}});
-		}
-  })
+		};
+  });

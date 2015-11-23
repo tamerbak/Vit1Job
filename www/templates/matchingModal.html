@@ -1,0 +1,73 @@
+
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Options du matching</h1>
+  </ion-header-bar>
+  <ion-content class="modalContent">
+    <div class="row">
+    <div class="col col-50">
+      <label for="comp">Compétence :</label>
+    </div>
+    <div class="col col-25" >
+      <input id="comp" type="number" style="width: 100%;padding-left: 10px;" min="0" max="100" ng-model="matchingOptions.comp"  >
+    </div>
+      <div class="col col-25" >
+        %
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-50">
+        <label for="job">Job :</label>
+      </div>
+      <div class="col col-25" >
+        <input id="job" type="number" style="width: 100%;padding-left: 10px;" min="0" max="100" ng-model="matchingOptions.job" >
+      </div>
+      <div class="col col-25" >
+        %
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-50">
+        <label for="mait">Maitrise :</label>
+      </div>
+      <div class="col col-25" >
+        <input id="mait" type="number" style="width: 100%;padding-left: 10px;" min="0" max="100" ng-model="matchingOptions.mait">
+      </div>
+      <div class="col col-25" >
+        %
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-50">
+        <label for="indis">Indisponsables :</label>
+      </div>
+      <div class="col col-25" >
+        <input id="indis" type="number" style="width: 100%;padding-left: 10px;" min="0" max="100" ng-model="matchingOptions.indis">
+      </div>
+      <div class="col col-25" >
+        %
+      </div>
+    </div>
+    <div class="row">
+    <div class="col col-50">
+      <label for="lang">Langues :</label>
+    </div>
+    <div class="col col-25" >
+      <input id="lang" type="number" style="width: 100%;padding-left: 10px;" min="0" max="100" ng-model="matchingOptions.lang">
+    </div>
+    <div class="col col-25" >
+      %
+    </div>
+  </div>
+    <br>
+    <div class="row">
+      <div class="col col-50">
+        <button class="button button-small button-dark" style="width: 100%;" ng-click="closeModal()">Sauvegarder</button>
+      </div>
+      <div class="col col-50" >
+        <button class="button button-small button-dark" style="width: 100%;" ng-click="initiateParams()">Initialiser</button>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state, x2js, AuthentificatInServer,
+	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state,$ionicHistory, x2js, AuthentificatInServer,
 						Global, DataProvider, PullDataFromServer, PersistInServer, LoadList, formatString, UploadFile){
 		// FORMULAIRE
 		$scope.formData={};
@@ -129,13 +129,13 @@ starter
 			// VALIDATION DES CHAMPS
 			var metier=null, job=null;
 			if(typeof $scope.formData.metier !== 'undefined')
-				if(typeof $scope.formData.metier.originalObject !== 'undefined'){
-					metier=$scope.formData.metier.originalObject;
-				}
+				//if(typeof $scope.formData.metier.originalObject !== 'undefined'){
+					metier=$scope.formData.metier;
+				//}
 			if(typeof $scope.formData.job !== 'undefined')
-				if(typeof $scope.formData.job.originalObject !== 'undefined'){
-					job=$scope.formData.job.originalObject;
-				}
+				//if(typeof $scope.formData.job.originalObject !== 'undefined'){
+					job=$scope.formData.job;
+				//}
 
 			/**metier=$scope.formData.metier;
 			job=$scope.formData.job;**/
@@ -369,18 +369,21 @@ starter
 			// MODIFICATION JOBYER COURANT
 			var met=null, comp=null;
 			if(typeof $scope.formData.metier !== 'undefined')
-				if(typeof $scope.formData.metier.originalObject !== 'undefined'){
-					met=$scope.formData.metier.originalObject;
-				}
+				//if(typeof $scope.formData.metier.originalObject !== 'undefined'){
+					met=$scope.formData.metier;
+				//}
 			if(typeof $scope.formData.job !== 'undefined')
-				if(typeof $scope.formData.job.originalObject !== 'undefined'){
-					comp=$scope.formData.job.originalObject;
-				}
+				//if(typeof $scope.formData.job.originalObject !== 'undefined'){
+					comp=$scope.formData.job;
+				//}
 
 			if(met !== null)
 				$rootScope.jobyers[idex].metier=met;
 			if(comp !== null)
 				$rootScope.jobyers[idex].job=comp;
+			console.log("met : "+met);
+			console.log("comp : "+comp);
+			
 			/**$rootScope.jobyers[idex].metier=$scope.formData.metier;
 			$rootScope.jobyers[idex].job=$scope.formData.job;**/
 			$rootScope.jobyers[idex].degre=$scope.formData.degre;
@@ -424,12 +427,15 @@ starter
 
 			var promiseArray = [];
 			if(hasSessionID){
-				console.log("Je suis dans : hasSessionID");
+				console.log("Je suis dans : hasSessionID" + $rootScope.jobyers.length);
 
 				// PARCOURIR ALL JOBYERS
-				for(var i=0; i<$rootScope.jobyers.length; i++){
-
-						offre=$rootScope.jobyers[0];
+				var i;
+				for(i=0; i< $rootScope.jobyers.length; i++){
+					console.log("iiii : "+i);
+						
+						var offre=$rootScope.jobyers[i];
+						
 						if(typeof offre.metier === 'undefined' || typeof offre.job === 'undefined' || isNaN(offre.indisp) || isNaN(offre.langue)){
 							console.log("Il manque des informations")
 							return;
@@ -438,27 +444,29 @@ starter
 						// GET NIVEAU
 						var list=DataProvider.getNiveauxMaitrise();
 						var niveau=0;
-						for(var i=0; i<list.length; i++){
-							if(list[i]['libelle'] === offre.maitrise){
-								niveau=Number(list[i]['pk_user_niveau_de_maitrise']); break;
+						for(var j=0; j<list.length; j++){
+							if(list[j]['libelle'] === offre.maitrise){
+								niveau=Number(list[j]['pk_user_niveau_de_maitrise']); break;
 							}
 						}
 						if(niveau){
 							console.log("niveau : "+niveau);
 						}
-
+						
+						
 						// PERSISTENCE OFFRE N°i
 						PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", new Date().getTime(), new Date().getTime()+2592000 , sessionId, employeId, niveau)
 							.then(
 								function (response){
 									console.log("response : "+JSON.stringify(response));
-
+									
 									// RECUPERATION EMPLOYEUR ID*
 									var offreId=0;
 									var ofre=formatString.formatServerResult(response.data);
 									console.log("ofre : "+JSON.stringify(ofre));
 									if(ofre.dataModel.status || ofre.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 										offreId=Number(ofre.dataModel.status);
+										console.log("offreId : "+offreId);
 										// $cookieStore.put('offreID', Number(ofre.dataModel.status));
 									}
 									// DONNEES ONT ETE SAUVEGARDES
@@ -467,6 +475,7 @@ starter
 										if(offre.job){
 											console.log("job : "+offre.job.pk_user_competence);
 											// PERSISTENCE IN COMPETANCE
+											//*
 											PersistInServer.persistInOffres_Competences(sessionId, Number(offre.job.pk_user_competence), Number(offreId))
 												.then(
 													function (response){
@@ -511,7 +520,10 @@ starter
 														}
 													}
 												);
+																					//*/
+
 										}
+												
 
 
 									}
@@ -582,14 +594,18 @@ starter
 							});**/
 
 				}
-
+				
 				// SHOW MODAL
 				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
 				// REDIRECTION VERS SEARCH
 				$state.go("search");
 			}
 		};
-
+	  $scope.backbutton = function()
+	  {
+		console.log("backbutton");
+		console.log($ionicHistory.backView());
+	  };
 		$scope.$on('update-list-job', function(event, args){
 
 			var params = args.params;

@@ -24,25 +24,34 @@ starter
     
     $scope.SortOrder = undefined;
 
-    $scope.position = {distance : 15};
+    $scope.position = {checked : false, minDistance : 15};
     
-    $scope.checkboxes = {availability : false,matching : false,position : false}
+    var todayDate = new Date();
+    todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
+    $scope.availability = {
+      checked : false,
+      startDate : todayDate,
+      endDate : todayDate, 
+      currentDate : new Date()
+      };
+    
+    $scope.matching = {checked : false}
     
     }
     
     $scope.sort = function() {
       
-      if($scope.checkboxes.position)
+      if($scope.position.checked)
       {
         $scope.SortOrder = '+distance'
       }
       
-      if($scope.checkboxes.matching)
+      if($scope.matching.checked)
       {
 
       }
 
-      if($scope.checkboxes.availability)
+      if($scope.availability.checked)
       {
 
       }

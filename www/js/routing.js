@@ -85,6 +85,12 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       url: '/competence',
       templateUrl: 'templates/competences.html',
       controller: 'competenceCtrl'
+    })
+
+    .state('contract', {
+      url: '/contract',
+      templateUrl: 'templates/createContract.html',
+      controller: 'contractCtrl'
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');

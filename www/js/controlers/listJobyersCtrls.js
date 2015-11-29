@@ -3,7 +3,7 @@
  */
 'use strict';
 starter
-  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet) {
+  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, $cookieStore, $state) {
     $scope.jobyersForMe = $rootScope.jobyersForMe;
     $scope.matchingOptions = {
       'comp' : 20,
@@ -120,7 +120,34 @@ starter
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
             */
-            console.log(jobber);
+            var isAuth = UserService.isAuthenticated();
+            if(isAuth){
+              console.log("check and then redirect to contract page");
+              var employer = $cookieStore.get('employeur');
+              var redirectToStep1 = (typeof (employer) != "undefined");
+              if(employer){
+                for (var key in employer){
+                  redirectToStep1 = (employer[key])!="";
+                  break;
+                }
+              }
+              var userInfoDone = (!redirectToStep1);
+              if(userInfoDone){
+                console.log(jobber);
+                console.log("redirect t contract pages");
+              }
+              else{
+
+                console.log(employer);
+                if(redirectToStep1) $state.go("saisieCiviliteEmployeur");
+                else{
+
+                }
+              }
+            }else{
+              $state.go("connection");
+            }
+
             var dataInformed = false; // TODO
             //test si tous les infomations de l'employeur sont renseignées
             if(dataInformed){

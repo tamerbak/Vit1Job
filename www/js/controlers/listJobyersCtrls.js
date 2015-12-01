@@ -124,37 +124,41 @@ starter
             if(isAuth){
               console.log("check and then redirect to contract page");
               var employer = $cookieStore.get('employeur');
-              var redirectToStep1 = (typeof (employer) != "undefined");
+              var redirectToStep1 = (typeof (employer) == "undefined");
+              var redirectToStep2 = (typeof (employer.adressePersonel) == "undefined");
+              var redirectToStep3 = (typeof (employer.adresseTravail) == "undefined");
               if(employer){
                 for (var key in employer){
-                  redirectToStep1 = (employer[key])!="";
-                  break;
+                  redirectToStep1 = (employer[key])=="";
+                  if(redirectToStep1) break;
+                }
+                if(!redirectToStep1){
+                  for (var key in employer.adressePersonel){
+                    redirectToStep2 = (employer.adressePersonel[key])=="";
+                    if(redirectToStep2) break;
+                  }
+                }
+                if(!redirectToStep2){
+                  for (var key in employer.adresseTravail){
+                    redirectToStep3 = (employer.adresseTravail[key])=="";
+                    if(redirectToStep3) break;
+                  }
                 }
               }
-              var userInfoDone = (!redirectToStep1);
-              if(userInfoDone){
+              var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
+              if(dataInformed){
+                //show contract page //TODO
                 console.log(jobber);
-                console.log("redirect t contract pages");
+                console.log("redirect to contract pages");
               }
               else{
-
                 console.log(employer);
                 if(redirectToStep1) $state.go("saisieCiviliteEmployeur");
-                else{
-
-                }
+                else if(redirectToStep2) $state.go("adressePersonel");
+                else if(redirectToStep3) $state.go("adresseTravail");
               }
             }else{
               $state.go("connection");
-            }
-
-            var dataInformed = false; // TODO
-            //test si tous les infomations de l'employeur sont renseignées
-            if(dataInformed){
-              //show contract page //TODO
-            }
-            else{
-              //show employer infos page //TODO
             }
           }
           return true;

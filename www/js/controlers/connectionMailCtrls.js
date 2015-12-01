@@ -94,8 +94,8 @@ starter
 									var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
 									$cookieStore.put('connexion', connexion);
 
-									// USER REEL - REDIRECTION VERS RECHERCHE
-									$state.go("search");
+									// USER REEL - REDIRECTION VERS accueil
+									$state.go("home");
 								}
 								else	// MOT DE PASSE INCORRECT
 									Global.showAlertPassword("Mot de passe incorrect");

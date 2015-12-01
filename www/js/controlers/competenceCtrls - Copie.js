@@ -509,8 +509,8 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 				
 				// SHOW MODAL
 				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
-				// REDIRECTION VERS SEARCH
-				$state.go("search");
+				// REDIRECTION VERS home
+				$state.go("home");
 			}
 		}
 

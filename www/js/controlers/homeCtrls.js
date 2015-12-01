@@ -166,7 +166,7 @@ starter
 
             //isConnected = true;
             //if (jobyersForMe.length>0)
-            $state.go('search');
+            $state.go('app');
           },
           function(response){
             alert("Error : "+response.data);

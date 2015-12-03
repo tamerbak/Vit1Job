@@ -141,8 +141,37 @@ starter
 				//$rootScope.$broadcast('load-new-list', {newList: {codes}});
 			}
 		});
+    $scope.$on('update-list-code', function(event, args){
+      var params = args.params;
+      console.log("params : "+JSON.stringify(params));
 
-		$scope.initForm=function(){
+      var list =params.list;
+      var pk_ville=params.fk;
+      var pk_user_code_postal;
+      allZipCodes=DataProvider.getZipCodes();
+      allVilles=DataProvider.getVilles();
+      newZipCodes=[];
+      for(var i=0; i<allVilles.length; i++) {
+        if (allVilles[i]['pk_user_ville'] === pk_ville) {
+          pk_user_code_postal = allVilles[i]['fk_user_code_postal'];
+        }
+      }
+      console.log("fk_user_code_postal : "+pk_user_code_postal);
+      for(var j=0; j<allZipCodes.length; j++){
+        if (allZipCodes[j]['pk_user_code_postal'] === pk_user_code_postal) {
+          newZipCodes.push(allZipCodes[j]);
+        }
+      }
+
+      $scope.formData.zipCodes=newZipCodes;
+      console.log("New $scope.formData.zipCodes : "+JSON.stringify($scope.formData.zipCodes));
+
+      // ENVOI AU AUTOCOMPLETE CONTROLLEUR
+      //$rootScope.$broadcast('load-new-list', {newList: {codes}});
+    });
+
+
+    $scope.initForm=function(){
 			/**var elm = angular.element(document.querySelector('#ex0_value'));
 			elm.val("Ville");**/
 			$scope.formData.zipCodes=DataProvider.getZipCodes();

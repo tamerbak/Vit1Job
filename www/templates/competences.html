@@ -5,11 +5,11 @@
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
   </ion-header-bar>
   <ion-content id="competenceContent" padding="true" data-ng-init="initAll()">
-  
+
   <!-- BUTTONS CONTROLS -->
 	<div class="button icon-left ion-chevron-left button-clear" style="vertical-align: middle" onclick="angular.element(this).scope().loadPrevJobyer()" data-ng-disabled="formData.showButtLeft"></div>
 	<!-- <div class="button icon-left ion-chevron-left button-clear" onclick="angular.element(this).scope().loadPrevJobyer()" data-ng-disabled="formData.showButtLeft"></div>-->
-	
+
 	<div class="divButton" style="display: inline-block" align="center" data-ng-click="removeJobyer()">
       <span style="vertical-align: middle !important;">-</span>
     </div>
@@ -17,38 +17,43 @@
     <div  class="divButton" style="display: inline-block" align="center" data-ng-click="addJobyer()">
       <span style="vertical-align: middle !important;">+</span>
     </div>
-	
+
 	<div class="button icon-right ion-chevron-right button-clear" style="vertical-align: middle" onclick="angular.element(this).scope().loadNextJobyer()" data-ng-disabled="formData.showButtRight"></div>
 
     <br><br>
 	<!-- METIERS -->
-    <div class="list">
-      <label class="item item-input">
-	  <!--
-		<div angucomplete-alt id="metiers"
-			placeholder="Métier"
-			maxlength="50"
-			pause="100"
-			selected-object="formData.metier"
-			local-data="formData.metiers"
-			search-fields="libelle"
-			title-field="libelle"
-			minlength="1"
-			input-class="form-control form-control-small"
-			match-class="highlight" class="autoCompl">
-		</div>
-		-->
-		<select class="flat" data-ng-model="formData.metier" data-ng-init="formData.metier='Metiers'">
-			<option selected disabled style="display: none;">Metiers</option>				
-			<option data-ng-repeat="x in formData.metiers" value="{{x.libelle}}">{{x.libelle}}</option>
-		</select>
-		</label>
-	</div>
-	<!-- <br> -->
+    <!--
+
+<div class="list">
+<label class="item item-input">
+-->
+    <div class ="xcontainer">
+
+            <div angucomplete-alt id="metiers"
+                placeholder="Métier"
+                maxlength="50"
+                pause="100"
+                selected-object="formData.metier"
+                local-data="formData.metiers"
+                search-fields="libelle"
+                title-field="libelle"
+                minlength="1"
+                input-class="form-control form-control-small"
+                match-class="highlight" class="autoCompl">
+            </div>
+            <select class="arriere flat select" data-ng-model="formData.metier" data-ng-init="formData.metier='Metiers'" data-ng-change="updateAutoCompleteMetier()">
+                <option selected disabled style="display: none;">Metiers</option>
+                <option id="metiers_value" data-ng-repeat="x in formData.metiers" value="{{x}}">{{x.libelle}}</option>
+            </select>
+      <!--  </label> -->
+        </div>
+        <!-- <br> -->
 	<!-- JOBS -->
+    <!--
     <div class="list">
       <label class="item item-input">
-	  <!--	
+      -->
+        <div class ="xcontainer">
 	<div angucomplete-alt id="jobs"
 			placeholder="Job"
 			maxlength="50"
@@ -61,14 +66,13 @@
 			input-class="form-control form-control-small"
 			match-class="highlight" class="autoCompl">
 	</div>
-		-->
-		<select class="flat" data-ng-model="formData.job" data-ng-init="formData.job='Job'">
-			<option selected disabled style="display: none;">Job</option>		
-			<option data-ng-repeat="x in formData.jobs" value="{{x.libelle}}">{{x.libelle}}</option>
+		<select  class="arriere flat select" data-ng-model="formData.job" data-ng-init="formData.job='Job'" data-ng-change="updateAutoCompleteJob()">
+			<option selected disabled style="display: none;">Job</option>
+			<option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
 		</select>
-		</label>
-	</div>	
-	<!-- MAITRISE -->
+          <!-- </label> -->
+          </div>
+          <!-- MAITRISE -->
 	<div id="maitriseDiv">
 		<img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>
 		<label for="maitrise" style="display: inline-block; color:#757575;vertical-align: middle;" > {{formData.maitrise}}</label>

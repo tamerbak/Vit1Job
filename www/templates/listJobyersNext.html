@@ -55,7 +55,7 @@
 <ion-list>
   <div class="item item-button-right rel" ng-repeat="jobber in jobyersNextToMe | orderBy : SortOrder"
            ng-class-odd="'odd'" ng-class-even="'even'">
-        {{jobber.firstName}}
+        {{jobber.name}}
         <div class="buttons">
             <button class="button button-positive rel">
               <i class="icon ion-information-circled"></i>
@@ -70,7 +70,7 @@
               <span ng-if="jobber.distance == 0" class="animate-if">C</span>
               <span ng-if="jobber.distance != 0 && jobber.distance <= position.minDistance" class="animate-if">P</span>
               <span ng-if="jobber.distance > position.minDistance" class="animate-if">A</span>
-               : {{jobber.distance}} Km
+               : {{jobber.distance | number:2}} Km
             </button>
         </div>
       </div>

@@ -207,7 +207,7 @@ getAddressByPosition : function(latitude, longitude) {
 
     getDistanceBetween : function(latitude1, longitude1, latitude2, longitude2) {
 
-        var deferred = $q.defer();
+        //var deferred = $q.defer();
 
         var R = 6371; // km
         //has a problem with the .toRad() method below.
@@ -221,10 +221,10 @@ getAddressByPosition : function(latitude, longitude) {
         Math.sin(dLon/2) * Math.sin(dLon/2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         var d = R * c;
-        deferred.resolve(d);
+        //deferred.resolve(d);
 
-        return deferred.promise;
-
+        //return deferred.promise;
+        return d;
       }
 
     };

@@ -22,52 +22,59 @@ starter
 		$scope.formData.showButtRight=true;
 		$scope.formData.showButtLeft=true;
 
-		$scope.updateAutoComplete= function(){
-			console.log("metier : "+$scope.formData.metierSelected.pk);
+		$scope.updateAutoCompleteMetier= function(){
+      $scope.formData.metier=JSON.parse($scope.formData.metier);
 			var metiers=$scope.formData.metiers;
 			// RECHERCHE LIBELLE
+
 			for(var i=0; i<metiers.length; i++){
-				if(metiers[i]['pk_user_metier'] === $scope.formData.metierSelected.pk){
-					$scope.formData.metierSelected.libelle=metiers[i]['libelle'];
+				if(metiers[i]['pk_user_metier'] === $scope.formData.metier.pk_user_metier){
+					$scope.formData.metier.libelle=metiers[i]['libelle'];
+          console.log("metiers[i]['libelle']: "+metiers[i]['libelle']);
 					break;
 				}
 			}
 
 			if(typeof $scope.formData.metier === 'undefined')
 				$scope.formData.metier={};
-			$scope.formData.metier.originalObject={'pk_user_metier': $scope.formData.metierSelected.pk, 'libelle': $scope.formData.metierSelected.libelle};
-			console.log("formData.metier : "+JSON.stringify($scope.formData.metier));
-			document.getElementById('metiers_value').value=$scope.formData.metierSelected['libelle'];
+			//$scope.formData.metier.originalObject={'pk_user_metier': $scope.formData.metier.pk_user_metier, 'libelle': $scope.formData.metier.libelle};
+			console.log("formData.metier : "+$scope.formData.metier);
+			document.getElementById('metiers_value').value=$scope.formData.metier['libelle'];
+      //$rootScope.$broadcast('update-list-job', {params: {'fk':$scope.formData.metier.pk_user_metier, 'list':'metier'}});
 
 			// VIDER LIST - JOBS
 			$scope.formData.jobs=[];
 			var jobs=DataProvider.getJobs();
 			for(var i=0; i<jobs.length; i++){
-				if(jobs[i]['fk_user_metier'] === $scope.formData.metierSelected.pk)
-					$scope.formData.jobs.push(jobs[i]);
+				if(jobs[i]['fk_user_metier'] === $scope.formData.metier.pk_user_metier){
+          $scope.formData.jobs.push(jobs[i]);
+          console.log("teeest");
+        }
 			}
 
 			// RE-INITIALISE INPUT JOB
-			document.getElementById('jobs_value').value='Jobs';
-			$scope.formData.job={};
+			document.getElementById('jobs_value').value='';
+			//$scope.formData.job={};
 		};
 
-		$scope.updateAutoJob= function(){
-			console.log("job : "+$scope.formData.jobSelected.pk);
+		$scope.updateAutoCompleteJob= function(){
+      $scope.formData.job=JSON.parse($scope.formData.job);
+
+      console.log("job : "+$scope.formData.job.pk);
 			var jobs=$scope.formData.jobs;
 			// RECHERCHE LIBELLE
 			for(var i=0; i<jobs.length; i++){
-				if(jobs[i]['pk_user_competence'] === $scope.formData.jobSelected.pk){
-					$scope.formData.jobSelected.libelle=jobs[i]['libelle'];
+				if(jobs[i]['pk_user_competence'] === $scope.formData.job.pk){
+					$scope.formData.job.libelle=jobs[i]['libelle'];
 					break;
 				}
 			}
 
 			if(typeof $scope.formData.job === 'undefined')
 				$scope.formData.job={};
-			$scope.formData.job.originalObject={'pk_user_competence': $scope.formData.jobSelected.pk, 'libelle': $scope.formData.jobSelected.libelle};
+			$scope.formData.job.originalObject={'pk_user_competence': $scope.formData.job.pk, 'libelle': $scope.formData.job.libelle};
 			console.log("formData.job : "+JSON.stringify($scope.formData.job));
-			document.getElementById('jobs_value').value=$scope.formData.jobSelected['libelle'];
+			document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
 		};
 
 		$scope.initAll = function(){
@@ -383,7 +390,7 @@ starter
 				$rootScope.jobyers[idex].job=comp;
 			console.log("met : "+met);
 			console.log("comp : "+comp);
-			
+
 			/**$rootScope.jobyers[idex].metier=$scope.formData.metier;
 			$rootScope.jobyers[idex].job=$scope.formData.job;**/
 			$rootScope.jobyers[idex].degre=$scope.formData.degre;
@@ -433,9 +440,9 @@ starter
 				var i;
 				for(i=0; i< $rootScope.jobyers.length; i++){
 					console.log("iiii : "+i);
-						
+
 						var offre=$rootScope.jobyers[i];
-						
+
 						if(typeof offre.metier === 'undefined' || typeof offre.job === 'undefined' || isNaN(offre.indisp) || isNaN(offre.langue)){
 							console.log("Il manque des informations")
 							return;
@@ -452,14 +459,14 @@ starter
 						if(niveau){
 							console.log("niveau : "+niveau);
 						}
-						
-						
+
+
 						// PERSISTENCE OFFRE N°i
 						PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", new Date().getTime(), new Date().getTime()+2592000 , sessionId, employeId, niveau)
 							.then(
 								function (response){
 									console.log("response : "+JSON.stringify(response));
-									
+
 									// RECUPERATION EMPLOYEUR ID*
 									var offreId=0;
 									var ofre=formatString.formatServerResult(response.data);
@@ -523,7 +530,7 @@ starter
 																					//*/
 
 										}
-												
+
 
 
 									}
@@ -594,7 +601,7 @@ starter
 							});**/
 
 				}
-				
+
 				// SHOW MODAL
 				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
 				// REDIRECTION VERS home

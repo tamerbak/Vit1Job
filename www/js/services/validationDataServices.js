@@ -27,13 +27,40 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
       var isMatchRegex = Siret_REGEXP.test(elm.val());
       console.log("Siret : "+elm.val());
 
-      if(isMatchRegex){
+      if(isMatchRegex && elm.val() != ''){
         elm.parent().removeClass('has-warning').addClass('has-success');
       }
-      else if(isMatchRegex == false || elm.val() == ''){
+      else if(isMatchRegex == false && elm.val() != ''){
         elm.parent().removeClass('has-success').addClass('has-warning');
       }
+      else{
+        elm.parent().removeClass('has-success');
+        elm.parent().removeClass('has-warning');
+      }
+
       return isMatchRegex;
+    };
+    this.checkApe=function(id){
+      var Ape_REGEXP = /^[0-9]{2}.[0-9]{2}[A-Z]$/;
+      var res;
+      elm=angular.element(document.querySelector('#'+id));
+      var isMatchRegex = Ape_REGEXP.test(elm.val());
+      console.log("Ape : "+elm.val());
+
+      if(isMatchRegex && elm.val() != ''){
+        elm.parent().removeClass('has-warning').addClass('has-success');
+        res=true;
+      }
+      else if(isMatchRegex == false && elm.val() != ''){
+        elm.parent().removeClass('has-success').addClass('has-warning');
+        res=false;
+      }
+      else{
+        elm.parent().removeClass('has-success');
+        elm.parent().removeClass('has-warning');
+        res=true;
+      }
+      return res;
     };
 		this.checkField=function(id){
 			var elm = angular.element(document.querySelector('#'+id));

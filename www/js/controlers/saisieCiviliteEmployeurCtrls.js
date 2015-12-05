@@ -9,16 +9,18 @@ starter
 		// FORMULAIRE
 		$scope.formData = {};
     $scope.siretValide =true;
-		// IMAGE
+    $scope.apeValide =true;
+
+    // IMAGE
 		//$scope.formData.image={};
     $scope.validateSiret= function(id){
-      var isvalid=Validator.checkSiret(id);
-      if(!isvalid)
-          $scope.siretValide =false;
-      else
-        $scope.siretValide =true;
+      $scope.siretValide =Validator.checkSiret(id);
 
-    }
+    };
+
+    $scope.validateApe= function(id){
+      $scope.apeValide = Validator.checkApe(id);
+    };
 
 		$scope.updateCiviliteEmployeur = function(){
 
@@ -51,27 +53,29 @@ starter
 					entreprise="";
 				if(!siret)
 					siret="";
-        else{
-          if(!$scope.siretValide){
+				if(!ape)
+					ape="";
+				if(!numUssaf)
+					numUssaf="";
+        if(!$scope.siretValide || !$scope.apeValide){
+          var text="";
+          if(!$scope.siretValide)
+              text="Le format du SIRET est incorrect "+"<br>";
+          console.log("&&& "+$scope.apeValide);
+          if(!$scope.apeValide)
+              text=text+"Le format du code APE ou NAF est incorrect "+"<br>";
             var myPopup = $ionicPopup.show({
-              template: "Le format du SIRET est incorrect <br>",
+              template: text,
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
               buttons: [
                 {
-                  text: '<b>Non</b>',
+                  text: '<b>OK</b>',
                   type: 'button-dark'
                 }
               ]
             });
             return;
           }
-
-        }
-				if(!ape)
-					ape="";
-				if(!numUssaf)
-					numUssaf="";
-
 				// UPDATE EMPLOYEUR
 				UpdateInServer.updateCiviliteInEmployeur(
 					Number(employeId), Number(titre), nom, prenom, entreprise, siret, ape, numUssaf, sessionId)

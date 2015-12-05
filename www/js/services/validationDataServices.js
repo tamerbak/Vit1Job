@@ -20,7 +20,21 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				elm.parent().removeClass('has-success').addClass('has-warning');
 			}
 		};
+    this.checkSiret=function(id){
+      var Siret_REGEXP = /^[0-9]{3}\s[0-9]{3}\s[0-9]{3}\s[0-9]{5}$/;
 
+      elm=angular.element(document.querySelector('#'+id));
+      var isMatchRegex = Siret_REGEXP.test(elm.val());
+      console.log("Siret : "+elm.val());
+
+      if(isMatchRegex){
+        elm.parent().removeClass('has-warning').addClass('has-success');
+      }
+      else if(isMatchRegex == false || elm.val() == ''){
+        elm.parent().removeClass('has-success').addClass('has-warning');
+      }
+      return isMatchRegex;
+    };
 		this.checkField=function(id){
 			var elm = angular.element(document.querySelector('#'+id));
 			console.log("element["+id+"] : "+elm);

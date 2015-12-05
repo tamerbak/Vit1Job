@@ -4,12 +4,21 @@
 'use strict';
 starter
 	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state, UpdateInServer, UploadFile, $base64,
-				LoadList, formatString, DataProvider, Validator){
+				LoadList, formatString, DataProvider, Validator,$ionicPopup){
 
 		// FORMULAIRE
 		$scope.formData = {};
+    $scope.siretValide =true;
 		// IMAGE
 		//$scope.formData.image={};
+    $scope.validateSiret= function(id){
+      var isvalid=Validator.checkSiret(id);
+      if(!isvalid)
+          $scope.siretValide =false;
+      else
+        $scope.siretValide =true;
+
+    }
 
 		$scope.updateCiviliteEmployeur = function(){
 
@@ -42,6 +51,22 @@ starter
 					entreprise="";
 				if(!siret)
 					siret="";
+        else{
+          if(!$scope.siretValide){
+            var myPopup = $ionicPopup.show({
+              template: "Le format du SIRET est incorrect <br>",
+              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+              buttons: [
+                {
+                  text: '<b>Non</b>',
+                  type: 'button-dark'
+                }
+              ]
+            });
+            return;
+          }
+
+        }
 				if(!ape)
 					ape="";
 				if(!numUssaf)

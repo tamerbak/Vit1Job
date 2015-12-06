@@ -665,7 +665,7 @@ angular.module('wsConnectors', ['ionic'])
     };
 
 
-	this.persistInOffres_Niveaux=function(sessionID, niveauID, offreID){
+    this.persistInOffres_Niveaux_Langue=function(sessionID, langueID, offreID){
 
       soapMessage=
 		'<fr.protogen.connector.model.DataModel>'+
@@ -674,6 +674,20 @@ angular.module('wsConnectors', ['ionic'])
 			'<rows>'+
     			'<fr.protogen.connector.model.DataRow>'+
 					'<dataRow>'+
+            '<fr.protogen.connector.model.DataEntry>'+
+              '<label>&lt;![CDATA[LANGUE]]&gt;</label>'+
+              '<attributeReference>fk_user_langue</attributeReference>'+
+              '<type>fk_user_langue</type>'+
+              '<list/>'+
+              '<value>'+langueID+'</value>'+
+              '</fr.protogen.connector.model.DataEntry>'+
+              '<fr.protogen.connector.model.DataEntry>'+
+              '<label>&lt;![CDATA[OFFRE]]&gt;</label>'+
+              '<attributeReference>fk_user_offre</attributeReference>'+
+              '<type>fk_user_offre</type>'+
+              '<list/>'+
+              '<value>'+offreID+'</value>'+
+            '</fr.protogen.connector.model.DataEntry>'+
 					'</dataRow>'+
     			'</fr.protogen.connector.model.DataRow>'+
   			'</rows>'+

@@ -191,7 +191,7 @@ starter
 
 			//if(metier === null || job === null || !$scope.isValid(indisp) || !$scope.isValid(langue)){
       console.log(metier+" job "+job+" indisp "+indisp+" langue "+langue);
-			if(metier === "Metiers" || (job === "Job" && indisp==="Les indispensables" && langue==="langue")){
+			if(metier === "Metiers" || (job === "Job" && indisp==="Qualités indispensables" && langue==="langue")){
 				Global.showAlertValidation("Veuillez saisir d’abord les informations du premier jobyer.");
 				return;
 			}
@@ -501,7 +501,7 @@ starter
 
 						var offre=$rootScope.jobyers[i];
             console.log(offre.metier+":::"+offre.job+":::"+offre.indisp+":::"+offre.langue);
-						if(offre.metier === 'Metiers' || (offre.job === 'Job' && offre.indisp==='Les indispensables' && offre.langue==='Langue')){
+						if(offre.metier === 'Metiers' || (offre.job === 'Job' && offre.indisp==='Qualités indispensables' && offre.langue==='Langue')){
 							console.log("Il manque des informations");
               Global.showAlertValidation("Remplir tous les champs.");
               return;

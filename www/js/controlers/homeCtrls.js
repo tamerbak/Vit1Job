@@ -166,7 +166,10 @@ starter
 
             //isConnected = true;
             //if (jobyersForMe.length>0)
-            $state.go('search');
+            if ($scope.nbJobyersForMe != 0){
+              $state.go('list');
+            }
+            //$state.go('app');
           },
           function(response){
             alert("Error : "+response.data);

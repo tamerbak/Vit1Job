@@ -32,12 +32,12 @@ starter
 	   if (!re.test(email))  {
 		  console.log("error email");
 		Global.showAlertValidation("Veuillez saisir un email valide.");
-		return;		  
+		return;
 	  }
       if (msg.length>0){
         Global.missedFieldsAlert(msg);
         return;
-      }	  
+      }
 	  /*
 	  if(isEmpty(email) || isEmpty(password)){
 		  Global.showAlertValidation("Veuillez saisir tous les champs.");

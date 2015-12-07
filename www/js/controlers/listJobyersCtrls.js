@@ -3,7 +3,7 @@
  */
 'use strict';
 starter
-  .controller('listCtrl', function ($scope, $rootScope,$ionicModal) {
+  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, $cookieStore, $state) {
     $scope.jobyersForMe = $rootScope.jobyersForMe;
     $scope.matchingOptions = {
       'comp' : 20,
@@ -106,5 +106,64 @@ starter
       // Execute action
     });
 
+    $scope.showMenuForContract = function(jobber){
+      var hideSheet = $ionicActionSheet.show({
+        buttons: [
+          { text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' }
+        ],
+        titleText: 'Contractualisation',
+        cancelText: 'Annuler',
+        buttonClicked: function(index) {
+          //branchement de la page de contrat ou infos clients
+          if(index==0){
+            /*
+              recuperation des données de l'emplyeur et calcule dans une variable boolean
+              si toutes les informations sont présentes
+            */
+            var isAuth = UserService.isAuthenticated();
+            if(isAuth){
+              console.log("check and then redirect to contract page");
+              var employer = $cookieStore.get('employeur');
+              var redirectToStep1 = (typeof (employer) == "undefined");
+              var redirectToStep2 = (employer) ? (employertypeof (employer.adressePersonel) == "undefined") : true;
+              var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
+              if(employer){
+                for (var key in employer){
+                  redirectToStep1 = (employer[key])=="";
+                  if(redirectToStep1) break;
+                }
+                if(!redirectToStep1){
+                  for (var key in employer.adressePersonel){
+                    redirectToStep2 = (employer.adressePersonel[key])=="";
+                    if(redirectToStep2) break;
+                  }
+                }
+                if(!redirectToStep2){
+                  for (var key in employer.adresseTravail){
+                    redirectToStep3 = (employer.adresseTravail[key])=="";
+                    if(redirectToStep3) break;
+                  }
+                }
+              }
+              var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
+              if(dataInformed){
+                //show contract page //TODO
+                console.log(jobber);
+                console.log("redirect to contract pages");
+              }
+              else{
+                console.log(employer);
+                if(redirectToStep1) $state.go("saisieCiviliteEmployeur");
+                else if(redirectToStep2) $state.go("adressePersonel");
+                else if(redirectToStep3) $state.go("adresseTravail");
+              }
+            }else{
+              $state.go("connection");
+            }
+          }
+          return true;
+        }
+      });
+    }
   })
 ;

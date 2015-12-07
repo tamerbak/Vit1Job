@@ -1,6 +1,6 @@
 <ion-view title="list">
   <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="search">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
   </ion-header-bar>
@@ -48,7 +48,7 @@
 
     <div class="list">
 
-      <div class="item item-button-right rel" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
+      <div ng-click="showMenuForContract(jobber)" class="item item-button-right rel" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
         {{jobber.firstName}}
         <div class="buttons">
             <button class="button button-positive rel">

@@ -20,48 +20,7 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				elm.parent().removeClass('has-success').addClass('has-warning');
 			}
 		};
-    this.checkSiret=function(id){
-      var Siret_REGEXP = /^[0-9]{3}\s[0-9]{3}\s[0-9]{3}\s[0-9]{5}$/;
 
-      elm=angular.element(document.querySelector('#'+id));
-      var isMatchRegex = Siret_REGEXP.test(elm.val());
-      console.log("Siret : "+elm.val());
-
-      if(isMatchRegex && elm.val() != ''){
-        elm.parent().removeClass('has-warning').addClass('has-success');
-      }
-      else if(isMatchRegex == false && elm.val() != ''){
-        elm.parent().removeClass('has-success').addClass('has-warning');
-      }
-      else{
-        elm.parent().removeClass('has-success');
-        elm.parent().removeClass('has-warning');
-      }
-
-      return isMatchRegex;
-    };
-    this.checkApe=function(id){
-      var Ape_REGEXP = /^[0-9]{2}.[0-9]{2}[A-Z]$/;
-      var res;
-      elm=angular.element(document.querySelector('#'+id));
-      var isMatchRegex = Ape_REGEXP.test(elm.val());
-      console.log("Ape : "+elm.val());
-
-      if(isMatchRegex && elm.val() != ''){
-        elm.parent().removeClass('has-warning').addClass('has-success');
-        res=true;
-      }
-      else if(isMatchRegex == false && elm.val() != ''){
-        elm.parent().removeClass('has-success').addClass('has-warning');
-        res=false;
-      }
-      else{
-        elm.parent().removeClass('has-success');
-        elm.parent().removeClass('has-warning');
-        res=true;
-      }
-      return res;
-    };
 		this.checkField=function(id){
 			var elm = angular.element(document.querySelector('#'+id));
 			console.log("element["+id+"] : "+elm);
@@ -128,7 +87,5 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				$rootScope.$broadcast('update-list-ville', {params: {'fk':fk, 'list':list}});
 			if(list === "metier")
 				$rootScope.$broadcast('update-list-job', {params: {'fk':fk, 'list':list}});
-      if(list === "ville")
-        $rootScope.$broadcast('update-list-code', {params: {'fk':fk, 'list':list}});
 		};
   });

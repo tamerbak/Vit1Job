@@ -125,7 +125,7 @@ starter
               console.log("check and then redirect to contract page");
               var employer = $cookieStore.get('employeur');
               var redirectToStep1 = (typeof (employer) == "undefined");
-              var redirectToStep2 = (employer) ? (employertypeof (employer.adressePersonel) == "undefined") : true;
+              var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
               var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
               if(employer){
                 for (var key in employer){

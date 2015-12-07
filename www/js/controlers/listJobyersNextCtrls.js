@@ -116,6 +116,15 @@
 
     };
 
+    var getSqlDateFormat = function(adate){
+      
+      var year = adate.getFullYear();
+      var month = adate.getMonth();
+      var date = adate.getDate();
+
+      return year + "/" + month + "/" + date;
+    }
+
     var getJobyerOfferPeriodicAvailabilityQuery = function(jobyerOfferId){
 
       var jobyerOfferPeriodicAvailabilityQuery = "SELECT user_disponibilite_offre_salarie.heure_debut AS starthour,";
@@ -125,8 +134,8 @@
       jobyerOfferPeriodicAvailabilityQuery += "INNER JOIN user_offre_salarie ON user_disponibilite_offre_salarie.fk_user_disponibilite_offre_salarie__user_offre_salarie = user_offre_salarie.pk_user_offre_salarie ";
       jobyerOfferPeriodicAvailabilityQuery += "INNER JOIN user_jour_de_la_semaine ON user_disponibilite_offre_salarie.fk_user_jour_de_la_semaine = user_jour_de_la_semaine.pk_user_jour_de_la_semaine ";
       jobyerOfferPeriodicAvailabilityQuery += "WHERE user_disponibilite_offre_salarie.fk_user_disponibilite_offre_salarie__user_offre_salarie = " + jobyerOfferId;
-      jobyerOfferPeriodicAvailabilityQuery += " AND user_offre_salarie.disponible_du >= '" + (($scope.availability) ? $scope.availability.startDate : '') + "'";
-      jobyerOfferPeriodicAvailabilityQuery += " AND user_offre_salarie.disponible_au <= '" + (($scope.availability) ? $scope.availability.endDate : '') + "'";
+      jobyerOfferPeriodicAvailabilityQuery += " AND user_offre_salarie.disponible_du >= '" + getSqlDateFormat($scope.availability.startDate) + "'";
+      jobyerOfferPeriodicAvailabilityQuery += " AND user_offre_salarie.disponible_au <= '" + getSqlDateFormat($scope.availability.endDate) + "'";
 
       return jobyerOfferPeriodicAvailabilityQuery;
     }
@@ -154,8 +163,8 @@
       jobyerOfferAperiodicAvailabilityQuery += "FROM user_disponibilite_aperiodique ";
       jobyerOfferAperiodicAvailabilityQuery += "INNER JOIN user_offre_salarie ON user_disponibilite_aperiodique.fk_user_disponibilite_aperiodique__user_offre_salarie = user_offre_salarie.pk_user_offre_salarie ";
       jobyerOfferAperiodicAvailabilityQuery += "WHERE user_disponibilite_aperiodique.fk_user_disponibilite_aperiodique__user_offre_salarie = " + jobyerOfferId;
-      jobyerOfferAperiodicAvailabilityQuery += " AND user_offre_salarie.disponible_du >= '" + (($scope.availability) ? $scope.availability.startDate : '') + "'";
-      jobyerOfferAperiodicAvailabilityQuery += " AND user_offre_salarie.disponible_au <= '" + (($scope.availability) ? $scope.availability.endDate : '') + "'";
+      jobyerOfferAperiodicAvailabilityQuery += " AND user_offre_salarie.disponible_du >= '" + getSqlDateFormat($scope.availability.startDate) + "'";
+      jobyerOfferAperiodicAvailabilityQuery += " AND user_offre_salarie.disponible_au <= '" + getSqlDateFormat($scope.availability.endDate) + "'";
 
       return jobyerOfferAperiodicAvailabilityQuery;
 
@@ -268,22 +277,18 @@
     };
 
     // Récupérer la disponibilité periodique par jour de la semaine
-    var getPeriodicAvailabilityByWeekDay = function(periodicAvailabilities, weekDayNumer){
-      var periodicAvailability;
+    var getPeriodicAvailabilitiesByWeekDay = function(periodicAvailabilities, weekDayNumer){
+
+      var periodicAvailabilitiesByWeekDay = [];
       if(periodicAvailabilities && periodicAvailabilities.length > 0){
-        var found = false;
-        var index = 0;
-        while (!found && index < periodicAvailabilities.length){
-          found = (getWeekDayNumber(periodicAvailabilities[index].day) = weekDayNumer);
-          if(!found){
-            index++;
+        for(var i = 0; i <periodicAvailabilities.length; i++){
+          if((getWeekDayNumber(periodicAvailabilities[i].day) = weekDayNumer)){
+            periodicAvailabilitiesByWeekDay.push(periodicAvailabilities[i]);
           }
         }
-        if(found){
-          periodicAvailability = periodicAvailabilities[index];
-        }
       }
-      return periodicAvailability;
+      return periodicAvailabilitiesByWeekDay;
+
     };
 
     // Calculer la disponibilité périodique
@@ -306,7 +311,7 @@
     var AddAperiodicAvailability = function(availability, aperiodicAvailabilities, periodicAvailabilities){
 
       var hourDiff;
-      var periodicAvailability;
+      var periodicAvailabilities;
 
       if(aperiodicAvailabilities && aperiodicAvailabilities.length > 0){
         
@@ -315,11 +320,13 @@
           hourDiff = aperiodicAvailabilities[i].endHour - aperiodicAvailabilities[i].startHour;
           availability += hourDiff;
           
-          periodicAvailability = getPeriodicAvailabilityByWeekDay(periodicAvailabilities,aperiodicAvailabilities[i].date.getDay());
+          periodicAvailabilitiesByWeekDay = getPeriodicAvailabilitiesByWeekDay(periodicAvailabilities,aperiodicAvailabilities[i].date.getDay());
           
-          if(periodicAvailability){
-            hourDiff = periodicAvailabilities[i].endHour - periodicAvailabilities[i].startHour;
-            availability -= hourDiff;
+          if(periodicAvailabilitiesByWeekDay && periodicAvailabilitiesByWeekDay.length > 0){
+            for(var j = 0; j < periodicAvailabilitiesByWeekDay.length; j++){
+              hourDiff = periodicAvailabilitiesByWeekDay[j].endHour - periodicAvailabilitiesByWeekDay[j].startHour;
+              availability -= hourDiff;
+            }
           }
 
         }

@@ -56,7 +56,7 @@ starter
 
 						employeur=$cookieStore.get('employeur');
 						if(!employeur)
-							var employeur={};
+              var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adresseTravail={};
 						 adresseTravail={'codePostal': codePost, 'ville': ville, 'adresse1': adresse1, 'adresse2': adresse2};
 						employeur.adresseTravail=adresseTravail;

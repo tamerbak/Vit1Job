@@ -167,7 +167,7 @@ starter
 
 		$scope.initForm=function(){
 			// GET LIST
-			$scope.formData={'pays': DataProvider.getPays()};
+      $scope.formData={'pays': DataProvider.getPays(),'index':"0033"};
 			//$scope.formData={ 'villes': $cookieStore.get('villes')};
 		};
 

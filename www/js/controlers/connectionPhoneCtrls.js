@@ -93,8 +93,8 @@ starter
 						('', '', 0, 0, 0, '', '', '', phone, '', password, '', '', '', '', '', sessionId)
 							.success(function (response){
 								console.log("ID EMPLOYEUR : "+response);
-
-								// RECUPERATION EMPLOYEUR ID
+                console.log("phone : "+phone);
+                // RECUPERATION EMPLOYEUR ID
 								var employeur=formatString.formatServerResult(response);
 
 								if(employeur.dataModel.status || employeur.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES

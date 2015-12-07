@@ -13,15 +13,20 @@
 
       $scope.SortOrder = undefined;
 
-      $scope.position = { checked: false, minDistance: 15 };
+      $scope.position = { 
+        'checked' : false, 
+        'sortingMethod' : 'byDistance',
+        'minDistance' : 15,
+        'transportationMode' : 'driving'
+      };
 
       var todayDate = new Date();
       todayDate = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
       $scope.availability = {
-        checked: false,
-        startDate: todayDate,
-        endDate: todayDate,
-        currentDate: new Date()
+        'checked' : false,
+        'startDate' : todayDate,
+        'endDate' : todayDate,
+        'currentDate' : new Date()
       };
 
       $scope.matching = { checked: false }
@@ -69,7 +74,8 @@
         if(userGeo)
         {
           var distance = GeoService.getDistanceBetween(userGeo.latitude,userGeo.longitude,location.lat,location.lng)
-          $scope.jobyersNextToMe[index].distance = distance;
+          $scope.jobyersNextToMe[index].distance.value = distance;
+          $scope.jobyersNextToMe[index].distance.text = distance.toFixed(2) + " Km";
         }
       }
     };
@@ -109,6 +115,29 @@
         address = address.replace(new RegExp(' ', 'g'), '+');
         if(address.startsWith('+')){
           address = address.replace('+','');
+        }
+      }
+
+      return address;
+
+    };
+
+    var getAddress2 = function(jobyerData){
+
+      var address;
+
+      var number = (jobyerData.number && jobyerData.number.toUpperCase() != "NULL") ? jobyerData.number : '';
+      var street = (jobyerData.street && jobyerData.street.toUpperCase() != "NULL") ? ' ' + jobyerData.street : '';
+      var complement = (jobyerData.complement && jobyerData.complement.toUpperCase() != "NULL") ? '+' +  jobyerData.complement : '';
+      var zipCode = (jobyerData.zipcode && jobyerData.zipcode.toUpperCase() != "NULL") ? ' ' + jobyerData.zipcode : ''
+      var city = (jobyerData.city && jobyerData.city.toUpperCase() != "NULL") ? ' ' + jobyerData.city : '';
+      var country = (jobyerData.country && jobyerData.country.toUpperCase() != "NULL") ? ' ' + jobyerData.country : '';
+
+      var address = number + street + complement + zipCode + city + country;
+      if(address){
+        address = address.replace(new RegExp(' ', 'g'), ' ');
+        if(address.startsWith(' ')){
+          address = address.replace(' ','');
         }
       }
 
@@ -368,12 +397,115 @@
     var onJobyerOfferAperiodicAvailabilityRequestError = function(data){
     };
 
+    var retrieveLegFormGoogleDirectionResponse = function(response){
+      var leg;
+      if(response && response.routes && response.routes.length > 0 && response.routes[0].legs && response.routes[0].legs.length){
+        leg = response.routes[0].legs[0];
+      }
+      return leg;
+    };
+
+    var retrieveDistanceFormGoogleDirectionResponse = function(response){
+      
+      var distance = {
+        'text' : '',
+        'value' : 0
+      }
+
+      var leg = retrieveLegFormGoogleDirectionResponse(response);
+      if(leg && leg.distance){
+        distance = leg.distance;
+      }
+
+      return distance;
+
+    };
+
+    var retrieveDurationFormGoogleDirectionResponse = function(response){
+      
+      var duration = {
+        'text' : '',
+        'value' : 0
+      }
+
+      var leg = retrieveLegFormGoogleDirectionResponse(response);
+      if(leg && leg.duration){
+        duration = leg.duration;
+      }
+
+      return duration;
+
+    };
+
+    var onGoogleGeocodingDirectionRequestSuccess = function(index){
+      return function(data){
+        $scope.jobyersNextToMe[index].distance = retrieveDistanceFormGoogleDirectionResponse(data);
+        $scope.jobyersNextToMe[index].duration = retrieveDurationFormGoogleDirectionResponse(data);
+      }
+    };
+
+    var getTravelMode = function(){
+      switch($scope.position.transportationMode) {
+        case 'driving': return google.maps.TravelMode.DRIVING;
+        case 'walking': return google.maps.TravelMode.WALKING;
+        case 'bicycling': return google.maps.TravelMode.BICYCLING;
+        case 'transit': return google.maps.TravelMode.TRANSIT;
+        default: return google.maps.TravelMode.DRIVING;
+      }
+    };
+
+    var getdirectionsRequest = function(userGeo, address){
+
+      var directionsRequest = {
+        'origin' : new google.maps.LatLng(userGeo.latitude, userGeo.longitude),
+        'destination' : address,
+        'travelMode' : getTravelMode()
+      }
+
+      return directionsRequest;
+
+    };
+
+    var onGetUserGeoSuccess2 = function(jobyerData, index){
+      return function(data){
+        var userGeo = data;
+        if(userGeo){
+          var address = getAddress(jobyerData);
+          if(address) {
+            $scope.jobyersNextToMe[index].address = address;
+            var directionsService = new google.maps.DirectionsService;
+            var directionsRequest = getdirectionsRequest(userGeo, address);
+            directionsService.route(directionsRequest, onGoogleGeocodingDirectionRequestSuccess(index));
+          }
+        }
+      }
+    };
+
+    var onGetUserGeoSuccess3 = function(address, index){
+      return function(data){
+        var userGeo = data;
+        if(userGeo){
+          var directionsService = new google.maps.DirectionsService;
+          var directionsRequest = getdirectionsRequest(userGeo, address);
+          directionsService.route(directionsRequest, onGoogleGeocodingDirectionRequestSuccess(index));
+        }
+      }
+    };
+
+    var promiseCalculateDistanceAndDuration = function(jobyerData, index){
+      GeoService.getUserGeo().then(onGetUserGeoSuccess2(jobyerData, index), onGetUserGeoError);
+    };
+
+    var promiseCalculateDistanceAndDuration2 = function(address, index){
+      GeoService.getUserGeo().then(onGetUserGeoSuccess3(address, index), onGetUserGeoError);
+    };
+
     var promiseCalculateDistance = function(jobyerData, index){
 
       var address = getAddress(jobyerData);
 
       if(address) {
-        var googleGeocodingRequest = googleGeocodingRequestPrefix + address + '&index=' + index;
+        var googleGeocodingRequest = googleGeocodingRequestPrefix + address;
         $http.get(googleGeocodingRequest).success(onGoogleGeocodingRequestSuccess(index)).error(onGoogleGeocodingRequestError);
       }
 
@@ -387,6 +519,18 @@
         .error(onJobyerOfferAperiodicAvailabilityRequestError);
       }
 
+    };
+
+    var reCalculateDistanceAndDurations = function(){
+
+      var jobyerOffersNextToMe = $scope.jobyersNextToMe;
+      if(jobyerOffersNextToMe && jobyerOffersNextToMe.length > 0){
+        for(var i =  0; i < jobyerOffersNextToMe.length; i++){
+          if(jobyerOffersNextToMe[i].address){
+            promiseCalculateDistanceAndDuration2(jobyerOffersNextToMe[i].address, i);
+          }
+        }
+      }
     };
 
     var reCalculateAvailabilities = function(){
@@ -404,9 +548,24 @@
     // Récupèrer les informations d'un jobyer depuis un élement resultat JSON
     var getJobyerOffer = function(jobyerData, index){
 
-      var jobyerOffer = { 'jobyerOfferId' : jobyerData.jobyerofferid, 'name': jobyerData.jobyername, 'distance': 0, 'availability': 0 };
+      var jobyerOffer = { 
+        'jobyerOfferId' : jobyerData.jobyerofferid, 
+        'name': jobyerData.jobyername, 
+        'distance': {
+          'text' : '',
+          'value' : 0
+        }, 
+        'duration' : {
+          'text' : '',
+          'value' : 0
+        }, 
+        'availability': 0,
+        'address' : null
+      };
 
-      promiseCalculateDistance(jobyerData, index);
+      //promiseCalculateDistance(jobyerData, index);
+
+      promiseCalculateDistanceAndDuration(jobyerData, index);
 
       promiseCalculateAvailability(jobyerData.jobyerofferid, index);
 
@@ -456,7 +615,11 @@
     $scope.sort = function () {
 
       if ($scope.position.checked) {
-        $scope.SortOrder = '+distance';
+        if($scope.position.sortingMethod == 'byDistance'){
+          $scope.SortOrder = '+distance.value';
+        } else if($scope.position.sortingMethod == 'byDuration'){
+          $scope.SortOrder = '+duration.value';
+        }
       }
 
       if ($scope.matching.checked) {
@@ -574,6 +737,7 @@
     });
     // Execute action on hide modal
     $scope.$on('modal.hidden', function () {
+      reCalculateDistanceAndDurations();
       reCalculateAvailabilities();
     });
     // Execute action on remove modal

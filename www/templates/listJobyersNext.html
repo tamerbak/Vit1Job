@@ -59,7 +59,7 @@
         <div class="buttons">
             <button class="button button-positive rel">
               <i class="icon ion-information-circled"></i>
-              5m36s
+              {{jobber.duration.text}}
             </button>
             <button class="button button-positive rel">
               <i class="icon ion-arrow-shrink"></i>
@@ -67,10 +67,10 @@
             </button>
             <button class="button button-positive rel">
               <i class="icon ion-pinpoint "></i>
-              <span ng-if="jobber.distance == 0" class="animate-if">C</span>
-              <span ng-if="jobber.distance != 0 && jobber.distance <= position.minDistance" class="animate-if">P</span>
-              <span ng-if="jobber.distance > position.minDistance" class="animate-if">A</span>
-               : {{jobber.distance | number:2}} Km
+              <span ng-if="jobber.distance == 0" class="animate-if">C :</span>
+              <span ng-if="jobber.distance != 0 && jobber.distance <= position.minDistance" class="animate-if">P :</span>
+              <span ng-if="jobber.distance > position.minDistance" class="animate-if">A :</span>
+               {{jobber.distance.text}}
             </button>
         </div>
       </div>

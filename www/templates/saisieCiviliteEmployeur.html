@@ -45,14 +45,14 @@
       <!-- SIRET -->
       <div class="list">
           <label class="item item-input">
-              <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')">
+              <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret">
           </label>
       </div>
 
       <!-- CODE APE -->
       <div class="list">
           <label class="item item-input">
-              <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape" data-ng-change="validateApe('ape')">
+              <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape">
           </label>
       </div>
 
@@ -104,7 +104,7 @@
       <!-- ACTIONS -->
       <div class="buttonConnect">
           <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()">Valider</button>
-          <button class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="adressePersonel">Passer</button>
+          <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="adressePersonel">Passer</button>
       </div>
 
   </ion-content>

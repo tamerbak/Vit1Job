@@ -3,25 +3,15 @@
  */
 'use strict';
 starter
-	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state, UpdateInServer, UploadFile, $base64,
-				LoadList, formatString, DataProvider, Validator,$ionicPopup){
+	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state,$stateParams, UpdateInServer, UploadFile, $base64,
+				LoadList, formatString, DataProvider, Validator){
 
 		// FORMULAIRE
 		$scope.formData = {};
-    $scope.siretValide =true;
-    $scope.apeValide =true;
-
-    // IMAGE
+		// IMAGE
 		//$scope.formData.image={};
-    $scope.validateSiret= function(id){
-      $scope.siretValide =Validator.checkSiret(id);
-
-    };
-
-    $scope.validateApe= function(id){
-      $scope.apeValide = Validator.checkApe(id);
-    };
-
+    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  JSON.parse($stateParams.steps);
 		$scope.updateCiviliteEmployeur = function(){
 
 			for(var obj in $scope.formData){
@@ -57,25 +47,7 @@ starter
 					ape="";
 				if(!numUssaf)
 					numUssaf="";
-        if(!$scope.siretValide || !$scope.apeValide){
-          var text="";
-          if(!$scope.siretValide)
-              text="Le format du SIRET est incorrect "+"<br>";
-          console.log("&&& "+$scope.apeValide);
-          if(!$scope.apeValide)
-              text=text+"Le format du code APE ou NAF est incorrect "+"<br>";
-            var myPopup = $ionicPopup.show({
-              template: text,
-              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-              buttons: [
-                {
-                  text: '<b>OK</b>',
-                  type: 'button-dark'
-                }
-              ]
-            });
-            return;
-          }
+
 				// UPDATE EMPLOYEUR
 				UpdateInServer.updateCiviliteInEmployeur(
 					Number(employeId), Number(titre), nom, prenom, entreprise, siret, ape, numUssaf, sessionId)
@@ -174,8 +146,7 @@ starter
 			}***/
 
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
-
-			$state.go('adressePersonel');
+      $state.go('adressePersonel',{"steps":JSON.stringify(steps)});
 		};
 
     $scope.selectImage = function() {

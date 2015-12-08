@@ -435,7 +435,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   padding-right: 0 !important;
 }
 
-#maitriseDiv ,#maitriseLangueDiv{
+#maitriseDiv {
     margin-top: 23px;
     margin-bottom: 23px;
 	border-radius: 27px;

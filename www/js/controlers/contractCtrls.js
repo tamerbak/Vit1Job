@@ -17,7 +17,7 @@ starter.controller('contractCtrl',function($scope,$cookieStore,$stateParams,Data
   var adrTrv = employeur.adresseTravail;
   $scope.lieu = adrTrv.adresse1 + " " + adrTrv.adresse2 + " " + adrTrv.codePostal + " " + adrTrv.ville;
   var jobyer = $stateParams.jobyer;
-  $scope.cityJ = jobyer.city;
-  $scope.firstNameJ = jobyer.firstName;
-  $scope.lastNameJ = jobyer.lastName;
+  //$scope.cityJ = jobyer.city;
+  $scope.firstNameJ = jobyer.name;
+  $scope.lastNameJ = jobyer.name;
 });

@@ -4,12 +4,13 @@
 'use strict';
 starter
 
-	.controller('adresseTravailCtrl', function ($scope, $rootScope, $cookieStore, $state, formatString,
+	.controller('adresseTravailCtrl', function ($scope, $rootScope, $cookieStore, $state, $stateParams,formatString,
 					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory){
 
 		// FORMULAIRE
 		$scope.formData = {};
-
+    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  JSON.parse($stateParams.steps);
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 

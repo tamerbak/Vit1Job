@@ -147,6 +147,7 @@ starter
                 }
               }
               var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
+              var objRedirect = {"step1":redirectToStep1,"step2":redirectToStep2,"step3":redirectToStep3};
               if(dataInformed){
                 //show contract page //TODO
                 console.log(jobber);
@@ -154,9 +155,9 @@ starter
               }
               else{
                 console.log(employer);
-                if(redirectToStep1) $state.go("saisieCiviliteEmployeur");
-                else if(redirectToStep2) $state.go("adressePersonel");
-                else if(redirectToStep3) $state.go("adresseTravail");
+                if(redirectToStep1) $state.go("saisieCiviliteEmployeur",{ "steps": JSON.stringify(objRedirect)});
+                else if(redirectToStep2) $state.go("adressePersonel",{ "steps": JSON.stringify(objRedirect)});
+                else if(redirectToStep3) $state.go("adresseTravail",{ "steps": JSON.stringify(objRedirect)});
               }
             }else{
               $state.go("connection");

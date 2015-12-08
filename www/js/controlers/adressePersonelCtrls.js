@@ -4,12 +4,13 @@
 
 starter
 
-	.controller('adressePersonelCtrl', function ($scope, $rootScope, $cookieStore, $state, UpdateInServer,
+	.controller('adressePersonelCtrl', function ($scope, $rootScope, $cookieStore, $state,$stateParams, UpdateInServer,
 			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ){
 
 		// FORMULAIRE
 		$scope.formData = {};
-
+    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  JSON.parse($stateParams.steps);
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdressePersEmployeur = function(){
 
@@ -96,7 +97,7 @@ starter
 					});
 			}
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
-			$state.go('adresseTravail');
+			$state.go('adresseTravail',{"steps":JSON.stringify(steps)});
 		};
 
 		// VALIDATION - FIELD

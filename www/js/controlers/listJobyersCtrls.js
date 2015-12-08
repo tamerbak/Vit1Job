@@ -9,8 +9,8 @@ $scope.init = function () {
 
       $scope.SortOrder = undefined;
 
-      $scope.position = { 
-        'checked' : false, 
+      $scope.position = {
+        'checked' : false,
         'sortingMethod' : 'byDistance',
         'minDistance' : 15,
         'transportationMode' : 'driving'
@@ -51,7 +51,7 @@ $scope.init = function () {
     jobyeroffersBySkillQuery += "INNER JOIN user_competence ON user_competence.pk_user_competence = user_competence_salarie.fk_user_competence ";
     jobyeroffersBySkillQuery += "INNER JOIN user_offre_salarie ON user_salarie.pk_user_salarie = user_offre_salarie.fk_user_salarie "
     jobyeroffersBySkillQuery += "WHERE LOWER(user_competence.libelle) = '" + $rootScope.queryText + "';";
-    
+
     var jobyerOffersBySkillRequest = {
       method : 'POST',
       url : 'http://ns389914.ovh.net:8080/vit1job/api/sql',
@@ -80,7 +80,7 @@ $scope.init = function () {
     var onGetUserGeoError = function(data){
     };
 
-    // Si succès de la requète https de google geocoding qui récupère les coordonnées depuis l'adresse 
+    // Si succès de la requète https de google geocoding qui récupère les coordonnées depuis l'adresse
     var onGoogleGeocodingRequestSuccess = function(index) {
       return function(data) {
         var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
@@ -142,7 +142,7 @@ $scope.init = function () {
     };
 
     var getSqlDateFormat = function(adate){
-      
+
       var year = adate.getFullYear();
       var month = adate.getMonth();
       var date = adate.getDate();
@@ -227,10 +227,10 @@ $scope.init = function () {
       var aperiodicAvailabilities;
 
       if(aperiodicAvailabilitiesData && aperiodicAvailabilitiesData.lenght > 0){
-        
+
         var dataLenght = aperiodicAvailabilitiesData.length;
         aperiodicAvailabilities = new Array(dataLenght);
-        
+
         for(var i = 0; i < dataLenght; i++){
           aperiodicAvailabilities[i] = getAperiodicAvailability(aperiodicAvailabilitiesData[i]);
         }
@@ -258,10 +258,10 @@ $scope.init = function () {
       var periodicAvailabilities;
 
       if(periodicAvailabilitiesData && periodicAvailabilitiesData.lenght > 0){
-        
+
         var dataLenght = periodicAvailabilitiesData.length;
         periodicAvailabilities = new Array(dataLenght);
-        
+
         for(var i = 0; i < dataLenght; i++){
           periodicAvailabilities[i] = getPeriodicAvailability(periodicAvailabilitiesData[i]);
         }
@@ -279,7 +279,7 @@ $scope.init = function () {
     var countCertainDays = function(days, d0, d1) {
       var ndays = 1 + Math.round((d1-d0)/(24*3600*1000));
       var sum = function(a,b) {
-        return a + Math.floor( ( ndays + (d0.getDay()+6-b) % 7 ) / 7 ); 
+        return a + Math.floor( ( ndays + (d0.getDay()+6-b) % 7 ) / 7 );
       };
       return days.reduce(sum,0);
     };
@@ -339,14 +339,14 @@ $scope.init = function () {
       var periodicAvailabilities;
 
       if(aperiodicAvailabilities && aperiodicAvailabilities.length > 0){
-        
+
         for(var i = 0; i < aperiodicAvailabilities.length; i++){
-          
+
           hourDiff = aperiodicAvailabilities[i].endHour - aperiodicAvailabilities[i].startHour;
           availability += hourDiff;
-          
+
           periodicAvailabilitiesByWeekDay = getPeriodicAvailabilitiesByWeekDay(periodicAvailabilities,aperiodicAvailabilities[i].date.getDay());
-          
+
           if(periodicAvailabilitiesByWeekDay && periodicAvailabilitiesByWeekDay.length > 0){
             for(var j = 0; j < periodicAvailabilitiesByWeekDay.length; j++){
               hourDiff = periodicAvailabilitiesByWeekDay[j].endHour - periodicAvailabilitiesByWeekDay[j].startHour;
@@ -380,9 +380,9 @@ $scope.init = function () {
 
     var onJobyerOfferAperiodicAvailabilityRequestSuccess = function(jobyerOfferId, index){
       return function(data){
-        
+
         var aperiodicAvailabilities = (data) ? getAperiodicAvailabilities(data.data) : null;
-        
+
         $http(getJobyerOfferPeriodicAvailabilityRequest(jobyerOfferId))
         .success(onJobyerOfferPeriodicAvailabilityRequestSuccess(aperiodicAvailabilities, index))
         .error(onJobyerOfferPeriodicAvailabilityRequestError);
@@ -402,7 +402,7 @@ $scope.init = function () {
     };
 
     var retrieveDistanceFormGoogleDirectionResponse = function(response){
-      
+
       var distance = {
         'text' : '',
         'value' : 0
@@ -418,7 +418,7 @@ $scope.init = function () {
     };
 
     var retrieveDurationFormGoogleDirectionResponse = function(response){
-      
+
       var duration = {
         'text' : '',
         'value' : 0
@@ -544,17 +544,17 @@ $scope.init = function () {
     // Récupèrer les informations d'un jobyer depuis un élement resultat JSON
     var getJobyerOffer = function(jobyerData, index){
 
-      var jobyerOffer = { 
-        'jobyerOfferId' : jobyerData.jobyerofferid, 
-        'name': jobyerData.jobyername, 
+      var jobyerOffer = {
+        'jobyerOfferId' : jobyerData.jobyerofferid,
+        'name': jobyerData.jobyername,
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': 0,
         'address' : null
       };
@@ -597,7 +597,7 @@ $scope.init = function () {
       else if(data.status = 'failure'){
         alert(data.error);
       }
-      
+
     };
 
     // Si echec de la requète http qui récupère la liste des offres jobyers par competence
@@ -785,6 +785,7 @@ $scope.init = function () {
               var objRedirect = {"step1":redirectToStep1,"step2":redirectToStep2,"step3":redirectToStep3};
               if(dataInformed){
                 //show contract page //TODO
+                $state.go("contract", { jobyer: jobber });
                 console.log(jobber);
                 console.log("redirect to contract pages");
               }

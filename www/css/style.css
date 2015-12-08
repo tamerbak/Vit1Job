@@ -452,3 +452,27 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 	padding-bottom : 4%!important;
 	padding-top : 4% !important;
 }
+#disponibiliteContent .header .col {
+  background-color:lightgrey !important;
+}
+
+#disponibiliteContent .col {
+  border: solid 1px grey !important;
+  border-bottom-style: none !important;
+  border-right-style: none !important;
+}
+
+#disponibiliteContent .col:last-child {
+  border-right: solid 1px grey !important;
+}
+
+#disponibiliteContent .row:last-child .col {
+  border-bottom: solid 1px grey !important;
+}
+#disponibiliteContent .item-toggle, #disponibiliteContent .item-toggle.item-complex .item-content {
+  padding-right: 135px;
+  padding-left:1px;
+}
+#disponibiliteContent .toggle{
+  right: 3px;
+}

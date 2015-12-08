@@ -396,7 +396,76 @@ angular.module('wsConnectors', ['ionic'])
         },
         data: soapMessage
       });
-	}
+	};
+    this.persistInDisponibilite=function(jourId, heure_debut, heure_fin, sessionID, offreId){
+      soapMessage=
+        '<fr.protogen.connector.model.DataModel>'+
+        '<entity>user_disponibilite_offre_salarie</entity>'+
+        '<dataMap/>'+
+        '<rows>'+
+        '<fr.protogen.connector.model.DataRow>'+
+        '<dataRow>'+
+        '<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+        '<label>&lt;![CDATA[heure_debut]]&gt;</label>'+
+        ' <attributeReference>heure_debut</attributeReference>'+
+        '<type>TEXT</type>'+
+        '<value>'+heure_debut+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+        '<label>&lt;![CDATA[heure_fin]]&gt;</label>'+
+        ' <attributeReference>heure_fin</attributeReference>'+
+        '<type>TEXT</type>'+
+        '<value>'+heure_fin+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '<fr.protogen.connector.model.DataEntry>'+
+        '<label>&lt;![CDATA[OFFRE]]&gt;</label>'+
+        '<attributeReference>fk_user_disponibilite_offre_salarie_user_offre_salarie</attributeReference>'+
+        '<type>fk_user_disponibilite_offre_salarie_user_offre_salarie</type>'+
+        '<list/>'+
+        '<value>'+offreId+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '<fr.protogen.connector.model.DataEntry>'+
+        '<label>&lt;![CDATA[JOUR DE SEMAINE]]&gt;</label>'+
+        '<attributeReference>fk_user_jour_de_la_semaine</attributeReference>'+
+        '<type>fk_user_jour_de_la_semaine</type>'+
+        '<list/>'+
+        '<value>'+jourId+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '</dataRow>'+
+        '</fr.protogen.connector.model.DataRow>'+
+        '</rows>'+
+        '<token>'+
+        '<username></username>'+
+        '<password></password>'+
+        '<nom>Jakjoud Abdeslam</nom>'+
+        '<appId>FRZ48GAR4561FGD456T4E</appId>'+
+        '<sessionId>'+sessionID+'</sessionId>'+
+        '<status>SUCCES</status>'+
+        '<id>206</id>'+
+        '<beanId>0</beanId>'+
+        '</token>'+
+        '<expired></expired>'+
+        '<unrecognized></unrecognized>'+
+        '<status></status>'+
+        '<operation>PUT</operation>'+
+        '<clauses/>'+
+        '<page>1</page>'+
+        '<pages>5</pages>'+
+        '<nbpages>0</nbpages>'+
+        '<iddriver>0</iddriver>'+
+        '<ignoreList></ignoreList>'+
+        '</fr.protogen.connector.model.DataModel>';
+
+
+      return $http({
+        method: 'POST',
+        url: 'http://ns389914.ovh.net:8080/vit1job/api/das',
+        headers: {
+          "Content-Type": "text/xml"
+        },
+        data: soapMessage
+      });
+    };
 
 	this.persistInOffres=function(identifiant, titre, description, disponible_du, disponible_au, sessionID, employeurID, niveauID){
 

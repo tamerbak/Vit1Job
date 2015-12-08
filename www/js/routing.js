@@ -88,7 +88,8 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     })
 
     .state('contract', {
-      url: '/contract',
+      url: '/contract/:jobyer',
+      /*url: '/contract',*/
       templateUrl: 'templates/createContract.html',
       controller: 'contractCtrl'
     });

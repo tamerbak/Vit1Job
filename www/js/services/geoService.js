@@ -155,7 +155,78 @@ services
         });
 
         return deferred.promise;
+      },
+
+getAddressByPosition : function(latitude, longitude) {
+
+      var deferred = $q.defer();
+
+      var geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(latitude, longitude);
+
+      geocoder.geocode({'latLng': latlng}, function (results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            var address_components = results[0].address_components;
+            var postalCode = address_components[6] ? address_components[6].long_name : '';
+            var city = address_components[2].long_name;
+            var num = address_components[0] ? address_components[0].long_name : '';
+            var street = address_components[1]? address_components[1].long_name : '';
+            var complement = address_components[3].long_name+', '+ 
+            address_components[4].long_name+', '+
+            (address_components[5] ? address_components[5].long_name : '');
+            var fullAddress = results[0].formatted_address;
+
+            var address = {
+              'postalCode': postalCode,
+              'city': city,
+              'num': num,
+              'street': street,
+              'complement': complement,
+              'fullAddress': fullAddress
+            };
+
+            deferred.resolve(address);
+
+          } else {
+
+            deferred.reject('Location not found');
+
+          }
+        } else {
+
+          deferred.reject('Geocoder failed due to: ' + status);
+
+        }
+      });
+
+      return deferred.promise;
+    
+    },
+
+    getDistanceBetween : function(latitude1, longitude1, latitude2, longitude2) {
+
+        //var deferred = $q.defer();
+
+        var R = 6371; // km
+        //has a problem with the .toRad() method below.
+        var x1 = latitude2-latitude1;
+
+        var dLat = toRad(x1);
+        var x2 = longitude2-longitude1;
+        var dLon = toRad(x2);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(toRad(latitude1)) * Math.cos(toRad(latitude2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        //deferred.resolve(d);
+
+        //return deferred.promise;
+        return d;
       }
+
     };
 
     /**

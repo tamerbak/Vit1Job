@@ -32,12 +32,12 @@ starter
 	   if (!re.test(email))  {
 		  console.log("error email");
 		Global.showAlertValidation("Veuillez saisir un email valide.");
-		return;		  
+		return;
 	  }
       if (msg.length>0){
         Global.missedFieldsAlert(msg);
         return;
-      }	  
+      }
 	  /*
 	  if(isEmpty(email) || isEmpty(password)){
 		  Global.showAlertValidation("Veuillez saisir tous les champs.");
@@ -94,8 +94,8 @@ starter
 									var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
 									$cookieStore.put('connexion', connexion);
 
-									// USER REEL - REDIRECTION VERS accueil
-									$state.go("app");
+									// USER REEL - REDIRECTION VERS RECHERCHE
+									$state.go("search");
 								}
 								else	// MOT DE PASSE INCORRECT
 									Global.showAlertPassword("Mot de passe incorrect");

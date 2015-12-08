@@ -61,7 +61,7 @@
             </button>
             <button class="button button-positive rel">
               <i class="icon ion-pinpoint "></i>
-              <span ng-if="jobber.distance.value == 0" class="animate-if">C :</span>
+              <span ng-if="jobber.distance.value == 0" class="animate-if">Compte</span>
               <span ng-if="jobber.distance.value != 0 && jobber.distance.value <= position.minDistance * 1000" class="animate-if">P :</span>
               <span ng-if="jobber.distance.value > position.minDistance * 1000" class="animate-if">A :</span>
               <span ng-if="position.sortingMethod == 'byDistance'">{{jobber.distance.text}}</span>

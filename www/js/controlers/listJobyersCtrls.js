@@ -982,8 +982,8 @@ $scope.init = function () {
         }
       }
 
-      /*var index = $scope.jobyersNextToMe.length;
-      $scope.jobyersNextToMe.push({ 'name': 'Alain ' + index, 'distance': 10, 'availability': 0 });*/
+      reCalculateDistanceAndDurations();
+      reCalculateAvailabilities2();
       
       if ($scope.jobyersNextToMe.length == 16) {
         $scope.moredata = true;

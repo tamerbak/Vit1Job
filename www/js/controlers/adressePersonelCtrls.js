@@ -108,7 +108,7 @@ starter
 			console.log('hey, formData.zipCodes has changed!');
 			//console.log('zipCodes.length : '+$scope.formData.zipCodes.length);
 		});
-
+/*
 		$scope.$on('update-list-ville', function(event, args){
 
 			var params = args.params;
@@ -141,8 +141,39 @@ starter
 				//$rootScope.$broadcast('load-new-list', {newList: {codes}});
 			}
 		});
+*/
+    $scope.$on('update-list-code', function(event, args){
+      document.getElementById('ex0_value').value="";
+      var params = args.params;
+      console.log("params : "+JSON.stringify(params));
 
-		$scope.initForm=function(){
+      var list =params.list;
+      var pk_ville=params.fk;
+      var pk_user_code_postal;
+      allZipCodes=DataProvider.getZipCodes();
+      allVilles=DataProvider.getVilles();
+      newZipCodes=[];
+      for(var i=0; i<allVilles.length; i++) {
+        if (allVilles[i]['pk_user_ville'] === pk_ville) {
+          pk_user_code_postal = allVilles[i]['fk_user_code_postal'];
+        }
+      }
+      console.log("fk_user_code_postal : "+pk_user_code_postal);
+      for(var j=0; j<allZipCodes.length; j++){
+        if (allZipCodes[j]['pk_user_code_postal'] === pk_user_code_postal) {
+          newZipCodes.push(allZipCodes[j]);
+        }
+      }
+
+      $scope.formData.zipCodes=newZipCodes;
+      console.log("New $scope.formData.zipCodes : "+JSON.stringify($scope.formData.zipCodes));
+
+      // ENVOI AU AUTOCOMPLETE CONTROLLEUR
+      //$rootScope.$broadcast('load-new-list', {newList: {codes}});
+    });
+
+
+    $scope.initForm=function(){
 			/**var elm = angular.element(document.querySelector('#ex0_value'));
 			elm.val("Ville");**/
 			$scope.formData.zipCodes=DataProvider.getZipCodes();
@@ -212,41 +243,57 @@ starter
 			}
 		);
 
-		$scope.updateAutoCompleteZip= function(){
-			console.log("zip : "+$scope.formData.zipCodeSelected.pk);
-			var zipCodes=$scope.formData.zipCodes;
-			// RECHERCHE LIBELLE
-			for(var i=0; i<zipCodes.length; i++){
-				if(zipCodes[i]['pk_user_code_postal'] === $scope.formData.zipCodeSelected.pk){
-					$scope.formData.zipCodeSelected.libelle=zipCodes[i]['libelle'];
-					break;
-				}
-			}
+    $scope.updateAutoCompleteZip= function(){
+      console.log("zip : "+$scope.formData.zipCodeSelected.pk);
+      var zipCodes=$scope.formData.zipCodes;
+      // RECHERCHE LIBELLE
+      for(var i=0; i<zipCodes.length; i++){
+        if(zipCodes[i]['pk_user_code_postal'] === $scope.formData.zipCodeSelected.pk){
+          $scope.formData.zipCodeSelected.libelle=zipCodes[i]['libelle'];
+          break;
+        }
+      }
 
-			if(typeof $scope.formData.codePostal === 'undefined')
-				$scope.formData.codePostal={};
-			$scope.formData.codePostal.originalObject={'pk_user_code_postal': $scope.formData.zipCodeSelected.pk, 'libelle': $scope.formData.zipCodeSelected.libelle};
-			console.log("formData.codePostal : "+JSON.stringify($scope.formData.codePostal));
-			document.getElementById('ex0_value').value=$scope.formData.zipCodeSelected['libelle'];
-		};
+      if(typeof $scope.formData.codePostal === 'undefined')
+        $scope.formData.codePostal={};
+      $scope.formData.codePostal.originalObject={'pk_user_code_postal': $scope.formData.zipCodeSelected.pk, 'libelle': $scope.formData.zipCodeSelected.libelle};
+      console.log("formData.codePostal : "+JSON.stringify($scope.formData.codePostal));
+      document.getElementById('ex0_value').value=$scope.formData.zipCodeSelected['libelle'];
+      /*
 
-		$scope.updateAutoCompleteVille= function(){
-			console.log("ville : "+$scope.formData.villeSelected.pk);
-			var villes=$scope.formData.villes;
-			// RECHERCHE LIBELLE
-			for(var i=0; i<villes.length; i++){
-				if(villes[i]['pk_user_ville'] === $scope.formData.villeSelected.pk){
-					$scope.formData.villeSelected.libelle=villes[i]['libelle'];
-					break;
-				}
-			}
+       // VIDER LIST - VILLES
+       $scope.formData.villes=[];
+       var villes=DataProvider.getVilles();
+       for(var i=0; i<villes.length; i++){
+       if(villes[i]['fk_user_code_postal'] === $scope.formData.zipCodeSelected.pk)
+       $scope.formData.villes.push(villes[i]);
+       }
 
-			if(typeof $scope.formData.ville === 'undefined')
-				$scope.formData.ville={};
-			$scope.formData.ville.originalObject={'pk_user_ville': $scope.formData.villeSelected.pk, 'libelle': $scope.formData.villeSelected.libelle};
-			console.log("formData.ville : "+JSON.stringify($scope.formData.ville));
-			document.getElementById('ex1_value').value=$scope.formData.villeSelected['libelle'];
-		}
+       // RE-INITIALISE INPUT VILLE
+       document.getElementById('ex3_value').value='Villes';
+       $scope.formData.ville={};
+
+       */
+    };
+    $scope.updateAutoCompleteVille= function(){
+      console.log("ville : "+$scope.formData.villeSelected.pk);
+      var villes=$scope.formData.villes;
+      // RECHERCHE LIBELLE
+      for(var i=0; i<villes.length; i++){
+        if(villes[i]['pk_user_ville'] === $scope.formData.villeSelected.pk){
+          $scope.formData.villeSelected.libelle=villes[i]['libelle'];
+          break;
+        }
+      }
+
+      if(typeof $scope.formData.ville === 'undefined')
+        $scope.formData.ville={};
+      $scope.formData.ville.originalObject={'pk_user_ville': $scope.formData.villeSelected.pk, 'libelle': $scope.formData.villeSelected.libelle};
+      console.log("formData.ville : "+JSON.stringify($scope.formData.ville));
+      document.getElementById('ex1_value').value=$scope.formData.villeSelected['libelle'];
+      $rootScope.$broadcast('update-list-code', {params: {'fk':$scope.formData.villeSelected.pk, 'list':'ville'}});
+
+    };
 
 
     $scope.$on('show-pop-up-geo', function(event, args) {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.test212882" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Vit1job Employeur</name>
-  <description>&#xD;
-        An Ionic Framework and Cordova project.&#xD;
+  <description>&#xD;&#xD;
+        An Ionic Framework and Cordova project.&#xD;&#xD;
     </description>
-  <author email="t.elbakkali@vit1job.com" href="http://ionicframework.com/">&#xD;
-      Vit1job Team&#xD;
+  <author email="t.elbakkali@vit1job.com" href="http://ionicframework.com/">&#xD;&#xD;
+      Vit1job Team&#xD;&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>

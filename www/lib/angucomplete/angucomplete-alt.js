@@ -106,7 +106,7 @@
       });
 
 		scope.validatAutoComplete=function(elm, input){
-			
+
 			var data=scope.localData;
 			var isIn=0;
 			var list="";
@@ -122,9 +122,12 @@
 						if(obj ==='pk_user_metier'){
 						list="metier";
 						}
+            if(obj ==='pk_user_ville'){
+              list="ville";
+            }
 					}
 				}
-					
+
 				// CHAMP REMPLI
 				for(var i=0; i<data.length; i++){
 					if(data[i]['libelle'] === input){
@@ -137,11 +140,14 @@
 							if(list==="postal"){
 								fk=data[i]['pk_user_code_postal'];
 							}
+              if(list==="ville"){
+                fk=data[i]['pk_user_ville'];
+              }
 								/**if(ob !== 'libelle')
 									fk=data[i][ob];**/
 						}
 						break;
-					}	
+					}
 				}
 				if(isIn){
 					Validator.updateList(fk, list);
@@ -157,7 +163,7 @@
 					//elm.parentNode.classList.remove('has-success').add('has-warning');
 				//}
 		}
-	  
+
       scope.$watch('fieldRequired', function(newval, oldval) {
         if (newval !== oldval) {
           if (!newval) {

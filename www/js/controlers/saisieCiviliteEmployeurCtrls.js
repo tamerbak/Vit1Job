@@ -3,14 +3,15 @@
  */
 'use strict';
 starter
-	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state, UpdateInServer, UploadFile, $base64,
+	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state,$stateParams, UpdateInServer, UploadFile, $base64,
 				LoadList, formatString, DataProvider, Validator){
 
 		// FORMULAIRE
 		$scope.formData = {};
 		// IMAGE
 		//$scope.formData.image={};
-
+    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  JSON.parse($stateParams.steps);
 		$scope.updateCiviliteEmployeur = function(){
 
 			for(var obj in $scope.formData){
@@ -145,8 +146,7 @@ starter
 			}***/
 
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
-
-			$state.go('adressePersonel');
+      $state.go('adressePersonel',{"steps":JSON.stringify(steps)});
 		};
 
     $scope.selectImage = function() {

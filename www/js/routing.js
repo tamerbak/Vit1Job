@@ -64,19 +64,19 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'cMailCtrl'
     })
     .state('saisieCiviliteEmployeur', {
-      url: '/saisieCivilite',
+      url: '/saisieCivilite/:steps',
       templateUrl: 'templates/saisieCiviliteEmployeur.html',
       controller: 'saisieCiviliteEmployeurCtrl'
     })
 
     .state('adresseTravail', {
-      url: '/adresseTravail',
+      url: '/adresseTravail/:steps',
       templateUrl: 'templates/adresseTravail.html',
       controller: 'adresseTravailCtrl'
     })
 
     .state('adressePersonel', {
-      url: '/adressePersonel',
+      url: '/adressePersonel/:steps',
       templateUrl: 'templates/adressePersonel.html',
       controller: 'adressePersonelCtrl'
     })
@@ -85,6 +85,13 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       url: '/competence',
       templateUrl: 'templates/competences.html',
       controller: 'competenceCtrl'
+    })
+
+    .state('contract', {
+      url: '/contract/:jobyer',
+      /*url: '/contract',*/
+      templateUrl: 'templates/createContract.html',
+      controller: 'contractCtrl'
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');

@@ -53,7 +53,7 @@
         <div class="buttons">
             <button class="button button-positive rel">
               <i class="icon ion-information-circled"></i>
-              {{jobber.availability}} min
+              {{jobber.availability.text}}
             </button>
             <button class="button button-positive rel">
               <i class="icon ion-arrow-shrink"></i>
@@ -61,9 +61,9 @@
             </button>
             <button class="button button-positive rel">
               <i class="icon ion-pinpoint "></i>
-              <span ng-if="jobber.distance == 0" class="animate-if">C :</span>
-              <span ng-if="jobber.distance != 0 && jobber.distance <= position.minDistance" class="animate-if">P :</span>
-              <span ng-if="jobber.distance > position.minDistance" class="animate-if">A :</span>
+              <span ng-if="jobber.distance.value == 0" class="animate-if">C :</span>
+              <span ng-if="jobber.distance.value != 0 && jobber.distance.value <= position.minDistance * 1000" class="animate-if">P :</span>
+              <span ng-if="jobber.distance.value > position.minDistance * 1000" class="animate-if">A :</span>
               <span ng-if="position.sortingMethod == 'byDistance'">{{jobber.distance.text}}</span>
               <span ng-if="position.sortingMethod == 'byDuration'">{{jobber.duration.text}}</span>
             </button>
@@ -77,7 +77,7 @@
     ng-if="!moredata">
   </ion-infinite-scroll>
 
-    </div>
+    <!-- </div> -->
 
   </ion-content>
 </ion-view>

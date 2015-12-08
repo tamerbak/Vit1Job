@@ -744,13 +744,16 @@ $scope.init = function () {
     $scope.showMenuForContract = function(jobber){
       var hideSheet = $ionicActionSheet.show({
         buttons: [
-          { text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' }
+			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0
+			{ text: '<i class="ion-android-mail"> Contacter par Mail</i>' }, //Index = 1
+			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
+			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
         ],
-        titleText: 'Contractualisation',
+        titleText: 'Actions',
         cancelText: 'Annuler',
         buttonClicked: function(index) {
           //branchement de la page de contrat ou infos clients
-          if(index==0){
+          if(index==3){
             /*
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes

@@ -1,5 +1,5 @@
 
-<ion-modal-view style="background-color: white; width:94%; left:13px;">
+<ion-modal-view style="background-color: white; width:94%; left:13px;top:13px;height: 94%;border: solid 1px; border-radius: 23px;">
   <ion-header-bar class="bar-calm backgroundGray">
     <!-- <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="competence">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>-->
@@ -20,11 +20,11 @@
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label">Date de fin</span>
-        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin">
+        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais">
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label"></span>
-        <ion-checkbox style="border:none;" ng-model="formData.jamais" >Jamais</ion-checkbox>
+        <ion-checkbox style="border:none;" ng-model="formData.jamais" data-ng-change="initDateFin();">Jamais</ion-checkbox>
       </label>
     </div>
     <div class="item item-divider">

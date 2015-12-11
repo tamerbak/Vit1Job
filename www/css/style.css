@@ -476,3 +476,8 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 #disponibiliteContent .toggle{
   right: 3px;
 }
+.active .modal-backdrop-bg {
+  opacity: .5;
+  transition: opacity 300ms ease-in-out;
+  background-color: lightgray;
+}

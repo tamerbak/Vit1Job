@@ -830,5 +830,8 @@ starter
         $scope.modal.show();
       });
     };
-
+    $scope.initDateFin= function(){
+           if ($scope.formData.jamais)
+                $scope.formData.dateFin=null;
+          };
   });

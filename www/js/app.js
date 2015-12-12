@@ -71,7 +71,35 @@ var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingService
     );*/
 
   });
-});
+})
+//Add ionic loading
+    .config(function($httpProvider) {
+      $httpProvider.interceptors.push(function($rootScope) {
+          return {
+              request: function(request) {
+                $rootScope.$broadcast('loading:show');
+                return request;
+              },
+            response: function(response) {
+                $rootScope.$broadcast('loading:hide');
+                return response;
+              }
+          }
+        });
+    })
+
+  .run(function($rootScope, $ionicLoading) {
+      $rootScope.$on('loading:show', function() {
+          console.log("$ionicLoading.show");
+          $ionicLoading.show({template: 'Chargement'});
+        });
+
+        $rootScope.$on('loading:hide', function() {
+            console.log("$ionicLoading.hide");
+            $ionicLoading.hide();
+          });
+    });
+//End ionic loadin
 
 /**
  * Create module for services

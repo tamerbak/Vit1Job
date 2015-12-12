@@ -10,27 +10,27 @@ var sessionId = 'nn';
 var myCity = 'Paris';
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
-                            'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
-                            'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt'])
+  'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
+  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt'])
 
-  .run(function($ionicPlatform, $rootScope, $http, x2js, ngFB) {
+.run(function($ionicPlatform, $rootScope, $http, x2js, ngFB) {
   ngFB.init({appId: '426767167530378'});
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
+if(window.cordova && window.cordova.plugins.Keyboard) {
+  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  cordova.plugins.Keyboard.disableScroll(true);
+}
+if(window.StatusBar) {
+  StatusBar.styleDefault();
+}
 
-    $rootScope.jobyersForMe = [];
-    $rootScope.jobyersNextToMe = [];
-    $rootScope.nbJobyersForMe = 0;
-    $rootScope.nbJobyersNextToMe = 0;
-    $rootScope.queryText = '';
+$rootScope.jobyersForMe = [];
+$rootScope.jobyersNextToMe = [];
+$rootScope.nbJobyersForMe = 0;
+$rootScope.nbJobyersNextToMe = 0;
+$rootScope.queryText = '';
 
     //connecting to WS
     /*var soapMessage='<fr.protogen.connector.model.AmanToken>'+
@@ -68,9 +68,9 @@ var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingService
         alert("Error : "+response.data);
         jobbers = 'requete echoué !';
       }
-    );*/
+      );*/
 
-  });
+});
 })
 //Add ionic loading
     .config(function($httpProvider) {
@@ -101,17 +101,21 @@ var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingService
     });
 //End ionic loadin
 
+/*starter.config(function($httpProvider){
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});*/
+
 /**
  * Create module for services
  *
  * @type {module|*}
  */
-var services = angular.module('Services', []);
+ var services = angular.module('Services', []);
 
   /**
    .config(function($mdGestureProvider ){
 	   $mdGestureProvider.skipClickHijack();
-     })**/
+  })**/
 
 /*document.addEventListener("exitButton", function(){
   navigator.notification.confirm(

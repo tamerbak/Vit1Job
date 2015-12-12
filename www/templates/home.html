@@ -1,6 +1,6 @@
 <ion-view title="home">
   <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-university button-clear button-light">  </a>
+    <!--a class="button icon-left ion-chevron-left button-clear button-light">  </a-->
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <!--<h1 class="title">Connexion employeur</h1>-->
     <a class="button icon-left ion-log-out button-clear button-light" ng-click="exitVit()">  </a>
@@ -14,14 +14,14 @@
     <div class = "row sear" data-ng-init="initConnexion()">
       <div class="list list-inset">
         <label class="item item-input">
-          <input type="search" placeholder="Votre recherche ici..." ng-model="query" ng-enter = "getJobbers(query)" style="padding-right:0px;">
           <i class="icon ion-search placeholder-icon"></i>
-		  </label>
+          <input type="search" placeholder="Votre recherche ici..." ng-model="query" ng-enter = "getJobbers(query)">
+        </label>
       </div>
     </div>
 
     <div class = "row">
-      <h3 class="hslide1">Des milliers de jobyers immédiatement disponibles!</h3>
+      <h3 class="hslide1">Trouvez vos Jobyers immédiatement disponibles!</h3>
     </div>
 
 
@@ -38,7 +38,7 @@
     </div>
     <div class="row">
       <h6 style="width: 100%">
-        Version: VIT 0.0.8
+        Version: VIT 0.0.10
       </h6>
     </div>
 

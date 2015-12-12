@@ -11,6 +11,7 @@ starter
 		//$scope.formData.connexion= {};
 
     $scope.getJobbers = function (query) {
+
       var jobyersForMe = [];
       var jobyersNextToMe = [];
 
@@ -22,7 +23,6 @@ starter
       $rootScope.queryText = query;
 
       if (sessionId!=''){
-
         var soapMessage = 'user_salarie;' + query; //'C# sur paris';
         $http({
           method: 'POST',
@@ -33,7 +33,6 @@ starter
           data: soapMessage
         }).then(
           function(response){
-
             var jsonResp = x2js.xml_str2json(response.data);
             var jsonText = JSON.stringify (jsonResp);
             jsonText = jsonText.replace(/fr.protogen.connector.model.DataModel/g,"dataModel");

@@ -1,11 +1,12 @@
 /**
  * Created by Tamer on 09/10/2015.
  */
-'use strict';
+ 'use strict';
 
-starter
+ starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, $timeout, $cookies, localStorageService) {
+ .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, 
+  $timeout, $cookies, localStorageService, jobyerService, employerService) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -32,15 +33,15 @@ starter
           },
           data: soapMessage
         }).then(
-          function(response){
-            var jsonResp = x2js.xml_str2json(response.data);
-            var jsonText = JSON.stringify (jsonResp);
-            jsonText = jsonText.replace(/fr.protogen.connector.model.DataModel/g,"dataModel");
-            jsonText = jsonText.replace(/fr.protogen.connector.model.DataRow/g,"dataRow");
-            jsonText = jsonText.replace(/fr.protogen.connector.model.DataEntry/g,"dataEntry");
-            jsonText = jsonText.replace(/fr.protogen.connector.model.DataCouple/g, "dataCouple");
-            jsonText = jsonText.replace(/<!\[CDATA\[/g, '').replace(/\]\]\>/g,'');
-            jsonResp = JSON.parse(jsonText);
+        function(response){
+          var jsonResp = x2js.xml_str2json(response.data);
+          var jsonText = JSON.stringify (jsonResp);
+          jsonText = jsonText.replace(/fr.protogen.connector.model.DataModel/g,"dataModel");
+          jsonText = jsonText.replace(/fr.protogen.connector.model.DataRow/g,"dataRow");
+          jsonText = jsonText.replace(/fr.protogen.connector.model.DataEntry/g,"dataEntry");
+          jsonText = jsonText.replace(/fr.protogen.connector.model.DataCouple/g, "dataCouple");
+          jsonText = jsonText.replace(/<!\[CDATA\[/g, '').replace(/\]\]\>/g,'');
+          jsonResp = JSON.parse(jsonText);
 
            // var jsonResp = parsingService.formatString.formatServerResult(response.data);
 
@@ -49,11 +50,11 @@ starter
             //var rowsCount = jsonResp.dataModel.rows.dataRow.length;
             //if (typeof (jsonResp.dataModel.rows.dataRow.dataRow) == 'undefined') {
             //if (Array.isArray(jsonResp.dataModel.rows.dataRow)){
-            if (jsonResp.dataModel.rows.dataRow instanceof Array){
+              if (jsonResp.dataModel.rows.dataRow instanceof Array){
               //if (jsonResp.dataModel.rows.dataRow.length > 0){
               //if (rowsCount > 0){
 
-              for (var i = 0; i < jsonResp.dataModel.rows.dataRow.length; i++) {
+                for (var i = 0; i < jsonResp.dataModel.rows.dataRow.length; i++) {
 
                 //jsonResp = parsingService.formatString.formatServerResult(response.data);
 
@@ -80,11 +81,11 @@ starter
 
                 var ville = jsonResp.dataModel.rows.dataRow[i].dataRow.dataEntry[6].list.dataCouple[j].label;
                 jobyersForMe.push(
-					{
-						'firstName': prenom,
-						'lastName': nom,
-						'city': ville
-					});
+                {
+                  'firstName': prenom,
+                  'lastName': nom,
+                  'city': ville
+                });
               }
             } else {
               //One Instance returned or null!
@@ -141,9 +142,9 @@ starter
                  $timeout(function() {
                  myPopup.close(); //close the popup after 3 seconds for some reason
                  }, 3000);
-                 return;*/
-              }
-            }
+return;*/
+}
+}
 
             //sessionId = jsonResp.amanToken.sessionId;*/
             //console.log($scope.firstName + " " + $scope.secondName);
@@ -174,72 +175,70 @@ starter
           function(response){
             alert("Error : "+response.data);
           }
-        );
-      }
-    };
+          );
+}
+};
 
-    $scope.exitVit = function () {
-      navigator.app.exitApp();
-    };
+$scope.exitVit = function () {
+  navigator.app.exitApp();
+};
 
-	$scope.initConnexion= function(){
+$scope.initConnexion= function(){
 
-		$scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-		var cnx = $cookieStore.get('connexion');
-		if(cnx){
-			$scope.formData.connexion = cnx;
-			console.log("Employeur est connecté");
-		}
+  $scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
+  var cnx = $cookieStore.get('connexion');
+  if(cnx){
+   $scope.formData.connexion = cnx;
+   console.log("Employeur est connecté");
+ }
 
-		console.log("connexion[employeID] : "+$scope.formData.connexion.employeID);
-		console.log("connexion[libelle] : "+$scope.formData.connexion.libelle);
-		console.log("connexion[etat] : "+$scope.formData.connexion.etat);
-	};
+ console.log("connexion[employeID] : "+$scope.formData.connexion.employeID);
+ console.log("connexion[libelle] : "+$scope.formData.connexion.libelle);
+ console.log("connexion[etat] : "+$scope.formData.connexion.etat);
+};
 
-	$scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
-        if(states.fromCache && states.stateName == "app" ) {
-			$scope.initConnexion();
-        }
-    });
+$scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
+  if(states.fromCache && states.stateName == "app" ) {
+   $scope.initConnexion();
+ }
+});
 
-	$scope.modeConnexion= function(){
-		var estConnecte=0;
-		var cnx=$cookieStore.get('connexion');
-		if(cnx){
+$scope.modeConnexion= function(){
+  var estConnecte=0;
+  var cnx=$cookieStore.get('connexion');
+  if(cnx){
 			if(cnx.etat){ // IL S'AGIT D'UNE DECONNEXION
 				console.log("IL S'AGIT D'UNE DECONNEXION");
 
-				$cookieStore.remove('connexion');
-				$cookieStore.remove('sessionID');
-				var connexion = {'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-				$cookieStore.put('connexion', connexion);
+      $cookieStore.remove('connexion');
+      $cookieStore.remove('sessionID');
+      var connexion = {'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
+      $cookieStore.put('connexion', connexion);
 
-				console.log("New Connexion : "+JSON.stringify($cookieStore.get('connexion')));
-				$state.go("connection");
+      console.log("New Connexion : "+JSON.stringify($cookieStore.get('connexion')));
+      $state.go("connection");
 				/*** REMOVE ALL COOKIES
 				var cookies = $cookies.getAll();
 				angular.forEach(cookies, function (v, k) {
 					$cookieStore.remove(k);
 				});**/
 
-			}
+}
 			else{ // IL S'AGIT D'UNE CONNEXION
 				console.log("IL S'AGIT D'UNE CONNEXION");
-				$state.go("connection");
-			}
-		}
-		else
-			$state.go("connection");
-	}
+      $state.go("connection");
+    }
+  }
+  else
+   $state.go("connection");
+};
 
   //****************************************** NEW **********************************//
 
   var checkIsLogged = function(){
-
     var currentUser = localStorageService.get('currentUser');
     var isLogged = (currentUser) ? true : false;
     return isLogged;
-
   };
 
   $scope.isLogged = checkIsLogged();
@@ -249,45 +248,59 @@ starter
     $scope.isLogged = false;
   };
 
-  var getJobyersOffers = function(){
-
-  };
-
-  var showAddOfferConfirmPopup = function(query) {
-     var confirmPopup = $ionicPopup.confirm({
-       cancelText: 'Continuer',
-       title: 'VitOnJob',
-       template: 'Pour que la recherche soit plus précis, voulez vous créer une offre pour ' + query + '?'
-     });
-     confirmPopup.then(function(res) {
-       if(res) {
+  var showAddOfferConfirmPopup = function(job) {
+   var confirmPopup = $ionicPopup.confirm({
+     cancelText: 'Continuer',
+     title: 'VitOnJob',
+     template: 'Pour que la recherche soit plus précis, voulez vous créer une offre pour ' + job + '?'
+   });
+   confirmPopup.then(function(res) {
+     if(res) {
          // redirection vers la page d'ajout des offres employeur
+         $state.go("competence");
        } else {
-         getJobyersOffers(job);
+         getJobyersOffersByJob(job);
        }
      });
-   };
+ };
 
-   var getJobyersOffers = function(job){
+ var onGetJobyersOffersByJobSuccess = function(data){
+  //Traitement
+  $state.go("list");
+ };
 
-   };
+ var onIsEntrepriseOfferByJobExistsSuccess = function(data){
+    var isEntrepriseOfferByJobExists = data;
+    if(isEntrepriseOfferByJobExists){
+      getJobyersOffersByJob(job);
+    }else{
+      showAddOfferConfirmPopup(job);
+    }
+  };
 
-   var isEntrepriseOfferByJobExists = function(job){
-    //si oui
-    getJobyersOffers(job);
-    // si non
-    showAddOfferConfirmPopup(job);
-   };
+   var onError = function(data){
+    console.log(data);
+  };
 
-   $scope.LaunchSearchForJobyersOffers = function(job){
+  var getJobyersOffersByJob = function(job){
+    jobyerService.getJobyersOffersByJob(job).success(onGetJobyersOffersByJobSuccess).error(onError);
+  };
+
+  var isEntrepriseOfferByJobExists = function(job){
+    var currentUser = localStorageService.get('currentUser');
+    var employerId = currentUser.UserId;
+    employerService.isEntrepriseOfferByJobExists(employerId, job).success(onIsEntrepriseOfferByJobExistsSuccess).error(onError);
+  };
+
+  $scope.launchSearchForJobyersOffers = function(job){
     localStorageService.set('lastSearchedJob',job);
     var isLogged = checkIsLogged();
     if(isLogged){
       isEntrepriseOfferByJobExists(job);
     }
     else{
-      getJobyersOffers(job);
+      getJobyersOffersByJob(job);
     }
   };
 
-  });
+});

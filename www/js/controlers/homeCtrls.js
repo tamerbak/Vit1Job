@@ -5,7 +5,7 @@
 
 starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, $timeout, $cookies) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, $timeout, $cookies, localStorageService) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -185,9 +185,9 @@ starter
 	$scope.initConnexion= function(){
 
 		$scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-		var cnx=$cookieStore.get('connexion');
+		var cnx = $cookieStore.get('connexion');
 		if(cnx){
-			$scope.formData.connexion=cnx;
+			$scope.formData.connexion = cnx;
 			console.log("Employeur est connecté");
 		}
 
@@ -211,7 +211,7 @@ starter
 
 				$cookieStore.remove('connexion');
 				$cookieStore.remove('sessionID');
-				var connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
+				var connexion = {'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
 				$cookieStore.put('connexion', connexion);
 
 				console.log("New Connexion : "+JSON.stringify($cookieStore.get('connexion')));
@@ -231,5 +231,63 @@ starter
 		else
 			$state.go("connection");
 	}
+
+  //****************************************** NEW **********************************//
+
+  var checkIsLogged = function(){
+
+    var currentUser = localStorageService.get('currentUser');
+    var isLogged = (currentUser) ? true : false;
+    return isLogged;
+
+  };
+
+  $scope.isLogged = checkIsLogged();
+
+  $scope.logOut = function(){
+    localStorageService.remove('currentUser');
+    $scope.isLogged = false;
+  };
+
+  var getJobyersOffers = function(){
+
+  };
+
+  var showAddOfferConfirmPopup = function(query) {
+     var confirmPopup = $ionicPopup.confirm({
+       cancelText: 'Continuer',
+       title: 'VitOnJob',
+       template: 'Pour que la recherche soit plus précis, voulez vous créer une offre pour ' + query + '?'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+         // redirection vers la page d'ajout des offres employeur
+       } else {
+         getJobyersOffers(job);
+       }
+     });
+   };
+
+   var getJobyersOffers = function(job){
+
+   };
+
+   var isEntrepriseOfferByJobExists = function(job){
+    //si oui
+    getJobyersOffers(job);
+    // si non
+    showAddOfferConfirmPopup(job);
+   };
+
+   $scope.LaunchSearchForJobyersOffers = function(job){
+    localStorageService.set('lastSearchedJob',job);
+    var isLogged = checkIsLogged();
+    if(isLogged){
+      isEntrepriseOfferByJobExists(job);
+    }
+    else{
+      getJobyersOffers(job);
+    }
+  };
 
   });

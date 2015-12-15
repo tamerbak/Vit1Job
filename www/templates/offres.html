@@ -15,24 +15,28 @@
     <button ng-if="search.length" class="button button-icon ion-android-close input-button" ng-click="clearSearch()">
     </button>
     -->
-
-    <div class="list">
-      <div class="item item-divider">
-        Offres publiées
-      </div>
-
-      <ion-radio  ng-repeat="y in formData.offresPublies" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
+    <!--
+       <div class="list">
+         <div class="item item-divider">
+           Offres publiées
+         </div>
+         -->
+      <ion-radio  ng-repeat="y in offres" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
         {{y.titre}}
       </ion-radio>
     </div>
-    <div class="list">
-    <div class="item item-divider">
-      Offres non publiées
-    </div>
-      <ion-radio  ng-repeat="x in formData.offresNonPublies" data-ng-model="formData.offre"  ng-value="x" ng-change="offreChange(x)">
-        {{x.titre}}
-      </ion-radio>
-    </div>
+    <!--
+
+<div class="list">
+<div class="item item-divider">
+  Offres non publiées
+</div>
+  <ion-radio  ng-repeat="x in formData.offresNonPublies" data-ng-model="formData.offre"  ng-value="x" ng-change="offreChange(x)">
+    {{x.titre}}
+  </ion-radio>
+</div>
+-->
+    </br>
 
     <div class="button-bar">
       <a class="button icon ion-plus-circled" ui-sref="offreTabs"></a>

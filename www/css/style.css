@@ -452,18 +452,18 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 	padding-bottom : 4%!important;
 	padding-top : 4% !important;
 }
-#disponibiliteContent .header .col {
+#disponibiliteContent .header .col , #offresTabContent .header .col{
   background-color:lightgrey !important;
 }
 
-#disponibiliteContent .col {
+#disponibiliteContent .col ,  #offresTabContent .col{
   border: solid 1px grey !important;
-  border-bottom-style: none !important;
-  border-right-style: none !important;
+  //border-bottom-style: none !important;
+  //border-right-style: none !important;
 }
 
-#disponibiliteContent .col:last-child {
-  border-right: solid 1px grey !important;
+#disponibiliteContent .col:last-child , #offresTabContent .col:last-child {
+  border: solid 1px grey !important;
 }
 
 #disponibiliteContent .row:last-child .col {
@@ -488,4 +488,15 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 #offresContent .padding > .list .item{
   border-color: #14BAA6;
   text-align: left;
+}
+ion-tabs ion-nav-view{
+  left:0px;
+}
+#offresTabContent .item-input{
+border-radius: 27px;
+border-color: #14BAA6;
+}
+
+#offresTabContent .selectClass{
+  height: 36px;
 }

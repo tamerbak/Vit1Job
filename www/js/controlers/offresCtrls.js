@@ -5,17 +5,21 @@
 'use strict';
 starter
 
-	.controller('offresCtrl', function ($scope,Global){
+	.controller('offresCtrl', function ($scope,$rootScope,Global){
 		// FORMULAIRE
 
+    //
 		$scope.initAll = function(){
 
 			// GET LIST
       $scope.formData={'offresPublies':[],'offresNonPublies':[]};
       $scope.formData.offre={};
-      $scope.formData.offres=[{"titre":"Serveur",selected:false, etat:"publie"},{titre:"java",selected:false,etat:"publie"},{titre:"Chef cuisinier",etat:"noPublie"},{titre:"Serveur debutant",etat:"noPublie"},{titre:"Caissier",etat:"noPublie"}];
-
-      var offres=$scope.formData.offres;
+      console.log("roooot");
+      if($rootScope.offres==undefined)
+        $rootScope.offres=[{"titre":"Serveur",selected:false, etat:"publie"},{titre:"java",selected:false,etat:"publie"},{titre:"Chef cuisinier",etat:"noPublie"},{titre:"Serveur debutant",etat:"noPublie"},{titre:"Caissier",etat:"noPublie"}];
+      else
+      console.log($rootScope.offres.length);
+      var offres=$rootScope.offres;
       for(var i=0; i<offres.length;i++){
         if(offres[i].etat=="publie")
         $scope.formData.offresPublies.push(offres[i]);
@@ -36,9 +40,9 @@ starter
     $scope.supprimerOffre= function(){
       var offre=$scope.formData.offre;
       if(offre.selected){
-        var offres=$scope.formData.offres;
+        var offres=$rootScope.offres;
         var indexOffres=offres.indexOf(offre);
-        $scope.formData.offres.splice(indexOffres, 1);
+        $rootScope.offres.splice(indexOffres, 1);
         if(offre.etat=="publie")
           $scope.formData.offresPublies.splice($scope.formData.offresPublies.indexOf(offre), 1);
         else

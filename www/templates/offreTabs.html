@@ -1,0 +1,75 @@
+<ion-view title="offres">
+  <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offres">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+  </ion-header-bar>
+  <ion-content id="offresContent" padding="true" data-ng-init="initAll()">
+    <!-- Title -->
+
+     <ion-tabs class="tabs-icon-top">
+
+        <ion-tab title="Job" icon="ion-briefcase">
+          <ion-nav-view name="job-tab">
+            <ion-view view-title="Job">
+              <ion-content class="padding">
+                <div>
+                  <h3 class="titlePhone"><b>Job</b></h3>
+                </div>
+                <div class="list list-inset">
+                  <label class="item item-input">
+                    <input type="text" placeholder="Domaine">
+                  </label>
+                  <label class="item item-input">
+                    <input type="text" placeholder="Job">
+                  </label>
+                  <label class="item item-input">
+                    <input type="text" placeholder="Matrise">
+                  </label>
+                  <!-- ACTIONS -->
+                  <div class="buttonConnect">
+                    <button class="button button-full button-positive green">Valider</button>
+                  </div>
+                </div>
+            </ion-view>
+          </ion-nav-view>
+        </ion-tab>
+
+       <ion-tab title="QI" icon="ion-happy-outline">
+         <ion-nav-view name="qi-tab">
+           <ion-view view-title="Qi">
+             <ion-content class="padding">
+               <div>
+                 <h3 class="titlePhone"><b>QI</b></h3>
+               </div>
+           </ion-view>
+         </ion-nav-view>
+       </ion-tab>
+
+       <ion-tab title="Langues" icon="ion-earth">
+         <ion-nav-view name="langues-tab">
+           <ion-view view-title="langues">
+             <ion-content class="padding">
+               <div>
+                 <h3 class="titlePhone"><b>Langues</b></h3>
+               </div>
+           </ion-view>
+         </ion-nav-view>
+       </ion-tab>
+
+       <ion-tab title="Agenda" icon="ion-calendar">
+          <ion-nav-view name="agenda-tab">
+            <ion-view view-title="agenda">
+              <ion-content class="padding">
+                <div>
+                  <h3 class="titlePhone"><b>Agenda</b></h3>
+                </div>
+            </ion-view>
+          </ion-nav-view>
+        </ion-tab>
+
+      </ion-tabs>
+
+  </ion-content>
+</ion-view>
+

@@ -481,3 +481,11 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   transition: opacity 300ms ease-in-out;
   background-color: lightgray;
 }
+#offresContent .padding > .list .item:last-child{
+  border-radius: 0px;
+
+}
+#offresContent .padding > .list .item{
+  border-color: #14BAA6;
+  text-align: left;
+}

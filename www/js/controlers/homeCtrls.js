@@ -266,7 +266,7 @@ $scope.modeConnexion= function(){
 
  var onGetJobyersOffersByJobSuccess = function(data){
   //Traitement
-  $state.go("list");
+  $state.go("jobyersOffersTab.list");
  };
 
  var onIsEntrepriseOfferByJobExistsSuccess = function(data){

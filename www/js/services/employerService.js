@@ -1,21 +1,18 @@
 
 services.factory('employerService', ['$http', function($http) {
 
+	var prefixRequest = 'http://localhost:8080/VitOnJob/rest/';
+
 	var isEntrepriseOfferByJobExistsRequest = function(employerId, job){
-		return {
-			method : 'POST',
-			url : '',
-			headers : {
-				'Content-Type' : 'text/plain'
-			},
-			data : ''
-		};
+		var request = prefixRequest & 'entrepriseOffer/checkIfEntrepriseAOffrePourJob?idEmployeur=' + 
+		employerId + '&libelleJob=' + job;
+		return request;
 	};
 
 	var factory = {
 
 		isEntrepriseOfferByJobExists : function(employerId, job){
-			return $http(isEntrepriseOfferByJobExistsRequest(employerId, job));
+			return $http.get(isEntrepriseOfferByJobExistsRequest(employerId, job));
 		}
 
 	};

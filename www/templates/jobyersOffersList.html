@@ -1,26 +1,47 @@
 <ion-view view-title="{{AppLogo}}">
-	<ion-content>
-		<div class="list">
-			<a class="item item-avatar card" href="#">
-				<div class="item-icon-left">
-					<div><i class="icon ion-person"></i></div>
-				</div>
-				<h2>Venkman</h2>
-				<p>
-					<p><i class="icon ion-android-car">&nbsp;&nbsp;&nbsp;</i>3h 15min</p>
-					<p><i class="icon ion-arrow-shrink">&nbsp;&nbsp;&nbsp;</i>30 %</p>
-				</p>
-			</a>
-			<a class="item item-avatar card" href="#">
-				<div class="item-icon-left">
-					<div><i class="icon ion-person"></i></div>
-				</div>
-				<h2>Venkman</h2>
-				<p>
-					<p><i class="icon ion-android-car">&nbsp;&nbsp;&nbsp;</i>3h 15min</p>
-					<p><i class="icon ion-arrow-shrink">&nbsp;&nbsp;&nbsp;</i>30 %</p>
-				</p>
-			</a>
+<ion-content>
+<div class="item item-divider">
+	Critères de recherche
+</div>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Entreprise
+	</div>
+	<select>
+		<option>Entreprise 1</option>
+		<option selected>Entreprise 2</option>
+		<option>Entreprise 3</option>
+	</select>
+</label>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Offre
+	</div>
+	<select>
+		<option>Offre 1</option>
+		<option selected>Offre 2</option>
+		<option>Offre 3</option>
+	</select>
+</label>
+<div class="item item-divider item-light">
+	Méthode de tri
+</div>
+<ion-checkbox ng-model="filter.blue">Disponibilité</ion-checkbox>
+<ion-checkbox ng-model="filter.yellow">Correspondence</ion-checkbox>
+<div class="item item-divider">
+	Liste des offres jobyer
+</div>
+<div class="list">
+	<a class="item item-avatar card" href="#" ng-repeat="jobyerOffer in jobyersOffers | orderBy : SortOrder">
+		<div class="item-icon-left">
+			<div><i class="icon ion-person"></i></div>
 		</div>
-	</ion-content>
+		<h2>{{jobyerOffer.jobyerName}}</h2>
+		<p>
+			<p><i class="icon ion-android-car">&nbsp;&nbsp;&nbsp;</i>{{jobyerOffer.availability.text}}</p>
+			<p><i class="icon ion-arrow-shrink">&nbsp;&nbsp;&nbsp;</i>{{jobyerOffer.matching}} %</p>
+		</p>
+	</a>
+</div>
+</ion-content>
 </ion-view>

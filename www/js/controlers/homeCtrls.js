@@ -265,7 +265,8 @@ $scope.modeConnexion= function(){
  };
 
  var onGetJobyersOffersByJobSuccess = function(data){
-  //Traitement
+  var jobyersOffers = data;
+  localStorageService.set('jobyersOffers',jobyersOffers);
   $state.go("jobyersOffersTab.list");
  };
 

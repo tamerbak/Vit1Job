@@ -1,4 +1,41 @@
 <ion-view view-title="{{AppLogo}}">
-  <ion-content class="padding">
-  </ion-content>
+<ion-content>
+<div class="item item-divider">
+	Correspond à :
+</div>
+<label class="item item-input">
+	<div class="input-label">
+		Job
+	</div>
+	<input id="job" type="number" min="0" max="100" value="50" >
+	<div class="input-label">
+		%
+	</div>
+</label>
+<label class="item item-input">
+	<div class="input-label">
+		QI
+	</div>
+	<input id="qi" type="number" min="0" max="100" value="25">
+	<div class="input-label">
+		%
+	</div>
+</label>
+<label class="item item-input">
+	<div class="input-label">
+		Langue
+	</div>
+	<input id="language" type="number" min="0" max="100" value="25">
+	<div class="input-label">
+		%
+	</div>
+</label>
+<div class="item item-divider">
+	Mode de transport :
+</div>
+<ion-radio ng-model="choice" ng-value="'A'">Au volant</ion-radio>
+<ion-radio ng-model="choice" ng-value="'B'">En marchant</ion-radio>
+<ion-radio ng-model="choice" ng-value="'C'">Par vélo</ion-radio>
+<ion-radio ng-model="choice" ng-value="'D'">Transit</ion-radio>
+</ion-content>
 </ion-view>

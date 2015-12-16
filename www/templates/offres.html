@@ -16,14 +16,21 @@
     </button>
     -->
     <!--
-       <div class="list">
          <div class="item item-divider">
            Offres publiées
          </div>
          -->
+    <div class="list" ng-show="offres.length">
       <ion-radio  ng-repeat="y in offres" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
-        {{y.titre}}
+        <i ng-if="y.etat=='publie'" class="ion-eye"></i>
+        <i ng-if="y.etat=='noPublie'" class="ion-eye-disabled"></i>
+        <label>{{y.titre}}</label>
       </ion-radio>
+    </div>
+    <div class="card" ng-show="!offres.length">
+      <div class="item item-text-wrap">
+        Vous n’avez aucune offre pour le moment. Veuillez les ajouter pour trouver vos jobyers bien ciblés.
+      </div>
     </div>
     <!--
 
@@ -37,12 +44,15 @@
 </div>
 -->
     </br>
-
+    <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="app">Passer</button>
+  </ion-content>
+  <div class="bar bar-footer">
     <div class="button-bar">
       <a class="button icon ion-plus-circled" ui-sref="offreTabs"></a>
       <a class="button icon ion-android-create"></a>
+      <a class="button icon ion-ios-copy"></a>
       <a class="button icon ion-trash-b" ng-click="supprimerOffre();"></a>
     </div>
-  </ion-content>
+  </div>
 </ion-view>
 

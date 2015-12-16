@@ -92,14 +92,14 @@
                    </select>
                  </label>
                </div>
-               <button class="button button-full button-positive green" data-ng-click="ajouterQi();">Ajouter</button>
-               <div class="row header">
-                 <div class="col">Qualités indispensables</div>
+               <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterQi();"></a>
+               <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerQi();"></a>
+
+               <div class="list">
+                 <ion-radio  ng-repeat="data in formData.qiList">
+                   {{data.libelle}}
+                 </ion-radio>
                </div>
-               <div class="row" ng-repeat="data in formData.qiList" >
-                 <div class="col">{{data.libelle}}</div>
-               </div>
-               <button class="button button-full button-positive grey" data-ng-click="supprimerQi();">Supprimer</button>
            </ion-view>
          </ion-nav-view>
        </ion-tab>
@@ -130,15 +130,13 @@
                      <img src="img\tree4_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
                    </div>
                  </div>
-               <button class="button button-full button-positive green" data-ng-click="ajouterLangue();">Ajouter</button>
-               <div class="row header">
-                 <div class="col">Langues</div>
+               <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterLangue();"></a>
+               <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerLangue();"></a>
+               <div class="list">
+                 <ion-radio  ng-repeat="data in formData.languesList">
+                   {{data.libelle}}
+                 </ion-radio>
                </div>
-               <div class="row" ng-repeat="data in formData.languesList" >
-                 <div class="col">{{data.libelle}}</div>
-               </div>
-               <button class="button button-full button-positive grey" data-ng-click="supprimerLangue();">Supprimer</button>
-
            </ion-view>
          </ion-nav-view>
        </ion-tab>

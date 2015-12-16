@@ -147,8 +147,10 @@ starter
     };
 
     $scope.ajouterQi= function(){
-
-      var qi=JSON.parse($scope.formData.indisp);
+      var qi;
+      console.log($scope.formData.indisp);
+      if($scope.formData.indisp!="Qualités indispensables")
+        qi=JSON.parse($scope.formData.indisp);
       if(qi!=undefined) {
         var qiList=$scope.formData.qiList;
         for(var i= 0; i<qiList.length; i++) {
@@ -160,7 +162,7 @@ starter
         $scope.formData.qiList.push(qi);
 
       }else{
-        Global.showAlertValidation("Veuillez saisir une heure de début et une heure de fin.");
+        Global.showAlertValidation("Veuillez séléctionner une qualité.");
       }
     };
 
@@ -175,8 +177,9 @@ starter
     };
 
     $scope.ajouterLangue= function(){
-
-      var langue=JSON.parse($scope.formData.langue);
+      var langue;
+      if($scope.formData.langue!="Langue")
+        langue=JSON.parse($scope.formData.langue);
       if(langue!=undefined) {
         var langueList=$scope.formData.languesList;
         for(var i= 0; i<langueList.length; i++) {
@@ -188,7 +191,7 @@ starter
         $scope.formData.languesList.push(langue);
 
       }else{
-        Global.showAlertValidation("Veuillez saisir une heure de début et une heure de fin.");
+        Global.showAlertValidation("Veuillez séléctionner une langue.");
       }
     };
 

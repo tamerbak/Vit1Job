@@ -96,7 +96,7 @@
                <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerQi();"></a>
 
                <div class="list">
-                 <ion-radio  ng-repeat="data in formData.qiList">
+                 <ion-radio  ng-repeat="data in formData.qiList" data-ng-model="formData.qi"  ng-value="data" ng-change="onChange(data)">
                    {{data.libelle}}
                  </ion-radio>
                </div>
@@ -133,7 +133,7 @@
                <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterLangue();"></a>
                <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerLangue();"></a>
                <div class="list">
-                 <ion-radio  ng-repeat="data in formData.languesList">
+                 <ion-radio  ng-repeat="data in formData.languesList" data-ng-model="formData.selectedLangue"  ng-value="data" ng-change="onChange(data)">
                    {{data.libelle}}
                  </ion-radio>
                </div>

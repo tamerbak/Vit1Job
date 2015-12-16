@@ -86,7 +86,9 @@ starter
         heures:[],
         jours:DataProvider.getDays(),
         qiList:[],
-        languesList:[]
+        languesList:[],
+        qi:{},
+        selectedLangue:{}
       };
     };
 
@@ -169,21 +171,35 @@ starter
     $scope.supprimerQi= function(){
       var qiList=$scope.formData.qiList;
       if(qiList.length!=0) {
-        $scope.formData.qiList.pop();
-
+        var qi=$scope.formData.qi;
+        if(qi.selected){
+          var index=qiList.indexOf(qi);
+          $scope.formData.qiList.splice(index, 1);
+          $scope.formData.qi={selected:false};
+        }else
+          Global.showAlertValidation("Veuillez séléctionner une qualité.");
       }else{
         Global.showAlertValidation("La liste est vide.");
       }
     };
 
+    $scope.onChange=function(item){
+      console.log(item);
+      if(item.selected)
+        item.selected=false;
+      else
+        item.selected=true;
+      console.log(item.selected);
+    };
+
     $scope.ajouterLangue= function(){
       var langue;
-      if($scope.formData.langue!="Langue")
+      if($scope.formData.langue !="Langue")
         langue=JSON.parse($scope.formData.langue);
       if(langue!=undefined) {
-        var langueList=$scope.formData.languesList;
-        for(var i= 0; i<langueList.length; i++) {
-          if (langueList[i].pk_user_langue== langue.pk_user_langue) {
+        var languesList=$scope.formData.languesList;
+        for(var i= 0; i<languesList.length; i++) {
+          if (languesList[i].pk_user_langue== langue.pk_user_langue) {
             Global.showAlertValidation("Cette langue existe déjà dans la liste.");
             return;
           }
@@ -195,11 +211,17 @@ starter
       }
     };
 
-    $scope.supprimerLangue= function(){
-      var langueList=$scope.formData.languesList;
-      if(langueList.length!=0) {
-        $scope.formData.languesList.pop();
 
+    $scope.supprimerLangue= function(){
+      var languesList=$scope.formData.languesList;
+      if(languesList.length!=0) {
+        var langue=$scope.formData.selectedLangue;
+        if(langue.selected){
+          var index=languesList.indexOf(langue);
+          $scope.formData.languesList.splice(index, 1);
+          $scope.formData.selectedLangue={selected:false};
+        }else
+          Global.showAlertValidation("Veuillez séléctionner une langue.");
       }else{
         Global.showAlertValidation("La liste est vide.");
       }

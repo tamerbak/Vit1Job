@@ -2,7 +2,14 @@
 'use strict';
 
 starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', function($scope, $ionicLoading, $compile) {
+
+  $scope.$on('$ionicView.beforeEnter', function(){
+    if(!$scope.loaded) initialize();
+    $scope.loaded = true;
+  });
+
 function initialize() {
+
         var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
         
         var mapOptions = {

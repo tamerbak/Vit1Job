@@ -26,6 +26,7 @@
                 <div class ="xcontainer">
                   <div angucomplete-alt id="metiers"
                        placeholder="Domaine"
+                       initial-value="formData.metier"
                        maxlength="50"
                        pause="100"
                        selected-object="formData.metier"
@@ -36,7 +37,7 @@
                        input-class="form-control form-control-small"
                        match-class="highlight" class="autoCompl">
                   </div>
-                  <select class="arriere flat select" data-ng-model="formData.metier" data-ng-init="formData.metier='Metiers'" data-ng-change="updateAutoCompleteMetier()">
+                  <select class="arriere flat select" data-ng-model="formData.metier" data-ng-change="updateAutoCompleteMetier()"> <!-- data-ng-init="formData.metier='Metiers'" -->
                     <option selected disabled style="display: none;">Metiers</option>
                     <option id="metiers_value" data-ng-repeat="x in formData.metiers" value="{{x}}">{{x.libelle}}</option>
                   </select>
@@ -46,6 +47,7 @@
                   <div class ="xcontainer">
                     <div angucomplete-alt id="jobs"
                          placeholder="Job"
+                         initial-value="formData.job"
                          maxlength="50"
                          pause="100"
                          selected-object="formData.job"
@@ -56,7 +58,7 @@
                          input-class="form-control form-control-small"
                          match-class="highlight" class="autoCompl">
                     </div>
-                    <select  class="arriere flat select" data-ng-model="formData.job" data-ng-init="formData.job='Job'" data-ng-change="updateAutoCompleteJob()">
+                    <select  class="arriere flat select" data-ng-model="formData.job" data-ng-change="updateAutoCompleteJob()">
                       <option selected disabled style="display: none;">Job</option>
                       <option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
                     </select>
@@ -67,7 +69,7 @@
                   <div class="list rangeDiv">
                     <div class="item range range-calm">
                       <img src="img\tree1_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
-                      <input id="maitrise" type="range" name="volume" min="0" max="100" data-ng-model="formData.degre" data-ng-init="formData.degre=10" data-ng-change="rangeChange()">
+                      <input id="maitrise" type="range" name="volume" min="0" max="100" data-ng-model="formData.degre" data-ng-change="rangeChange()">
                       <img src="img\tree4_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
                     </div>
                   </div>
@@ -152,11 +154,11 @@
                   <div class="list" style="text-align: left;padding: 7px;border-radius: 20px;border: 1px solid lightgray">
                     <label class="item item-input" style="border:none;">
                       <span class="input-label">Date de début</span>
-                      <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut">
+                      <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut" value={{formData.dateDebut}}>
                     </label>
                     <label class="item item-input" style="border:none;">
                       <span class="input-label">Date de fin</span>
-                      <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais">
+                      <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais" value={{formData.dateFin}}>
                     </label>
                     <label class="item item-input" style="border:none;">
                       <span class="input-label"></span>

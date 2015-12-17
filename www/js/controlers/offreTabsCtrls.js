@@ -5,15 +5,17 @@
 'use strict';
 starter
 
-	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state){
+	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams){
 
     $scope.formData={};
-
-    $scope.formData.maitriseIcon = "img/tree1_small.png";
+    if($stateParams.offre)
+      $scope.offre= JSON.parse($stateParams.offre);
+    console.log($scope.offre);
+    $scope.formData.maitriseIcon = "tree1_small.png";
     $scope.formData.maitrise = "Débutant";
     $scope.formData.maitriseStyle = "display: inline;max-width: 33px;max-height: 50px;";
 
-    $scope.formData.maitriseLangueIcon = "img/tree1_small.png";
+    $scope.formData.maitriseLangueIcon = "tree1_small.png";
     $scope.formData.maitriseLangue = "Débutant";
     $scope.formData.maitriseLangueStyle = "display: inline;max-width: 33px;max-height: 50px;";
 
@@ -71,10 +73,43 @@ starter
       console.log("formData.job : "+JSON.stringify($scope.formData.job));
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
-
     $scope.initAll = function(){
-
-      $scope.formData={
+      if($scope.offre){
+        $scope.formData.metiers=DataProvider.getMetiers();
+        $scope.formData.langues=DataProvider.getLangues();
+        $scope.formData.jobs=DataProvider.getJobs();
+        $scope.formData.transvers=DataProvider.getTransvers();
+        $scope.formData.jours=DataProvider.getDays();
+        $scope.formData.degre=$scope.offre.degre;
+        $scope.rangeChange();
+        if($scope.offre.jours){
+          for(var i=0;i<$scope.offre.jours.length;i++) {
+            for (var j = 0; j < $scope.formData.jours.length; j++) {
+              if($scope.formData.jours[j].pk_user_jour_de_la_semaine==$scope.offre.jours[i].pk_user_jour_de_la_semaine)
+                $scope.formData.jours[j].checked = true;
+            }
+          }
+        }
+        if($scope.offre.titre)
+          $scope.formData.titre=$scope.offre.titre;
+        if($scope.offre.metier)
+          $scope.formData.metier=$scope.offre.metier;
+        if($scope.offre.job)
+          $scope.formData.job=$scope.offre.job;
+        if($scope.offre.qiList)
+          $scope.formData.qiList=$scope.offre.qiList;
+        if($scope.offre.languesList)
+          $scope.formData.languesList=$scope.offre.languesList;
+        if($scope.offre.remuneration)
+          $scope.formData.remuneration=$scope.offre.remuneration;
+        if($scope.offre.heures)
+          $scope.formData.heures=$scope.offre.heures;
+        if($scope.offre.dateDebut)
+          $scope.formData.dateDebut=$scope.offre.dateDebut;
+        if($scope.offre.dateFin)
+          $scope.formData.dateFin=$scope.offre.dateFin;
+      }else
+        $scope.formData={
         'maitrise': 'Débutant',
         'maitriseIcon': 'tree1_small.png',
         'maitriseLangue': 'Débutant',
@@ -88,6 +123,7 @@ starter
         qiList:[],
         languesList:[],
         qi:{},
+          degre:10,
         selectedLangue:{}
       };
     };
@@ -228,9 +264,40 @@ starter
     };
 
     $scope.validerOffre=function(){
-      var offre={};
-      offre.titre=$scope.formData.titre;
-      $rootScope.offres.push(offre);
+      $scope.offre={};
+      $scope.offre.degre=$scope.formData.degre;
+      /*
+      if($scope.offre.jours){
+        for(var i=0;i<$scope.offre.jours.length;i++) {
+          for (var j = 0; j < $scope.formData.jours.length; j++) {
+            if($scope.formData.jours[j].pk_user_jour_de_la_semaine==$scope.offre.jours[i].pk_user_jour_de_la_semaine)
+              $scope.formData.jours[j].checked = true;
+          }
+        }
+      }*/
+      $scope.offre.titre=$scope.formData.titre;
+      $scope.offre.metier=$scope.formData.metier;
+      $scope.offre.job=$scope.formData.job;
+      $scope.offre.qiList=$scope.formData.qiList;
+      $scope.offre.languesList=$scope.formData.languesList;
+      $scope.offre.remuneration=$scope.formData.remuneration;
+      $scope.offre.heures=$scope.formData.heures;
+      $scope.offre.dateDebut=$scope.formData.dateDebut;
+      $scope.offre.dateFin=$scope.formData.dateFin;
+      var offre=$scope.offre;
+      console.log(offre);
+      var exist=false;
+        for(var i=0; i<$rootScope.offres.length;i++){
+          if($rootScope.offres[i].pk==offre.pk) {
+            $rootScope.offres[i] = offre;
+            exist=true;
+            console.log($rootScope.offres[i]);
+          }
+        }
+      if(!exist) {
+        offre.etat="publie";
+        $rootScope.offres.push(offre);
+      }
       $state.go('offres');
 
     };

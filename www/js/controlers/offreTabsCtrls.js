@@ -48,7 +48,6 @@ starter
       document.getElementById('jobs_value').value='';
       //$scope.formData.job={};
     };
-
     $scope.updateAutoCompleteJob= function(){
       $scope.formData.job=JSON.parse($scope.formData.job);
 
@@ -69,7 +68,7 @@ starter
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
     $scope.initAll = function(){
-      console.log($scope.offre);
+      console.log("initAll : "+$scope.offre);
       if($scope.offre){
         console.log('test1');
         $scope.formData={

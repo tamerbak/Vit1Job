@@ -93,6 +93,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('offreTabs', {
       url: '/offreTabs/:offre',
+      cache: false,
       abstract: true,
       templateUrl: 'templates/offreTabs.html',
       controller: 'offreTabsCtrl'

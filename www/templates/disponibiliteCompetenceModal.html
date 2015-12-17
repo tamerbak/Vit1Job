@@ -1,5 +1,5 @@
 
-<ion-modal-view style="background-color: white; width:94%; left:13px;">
+<ion-modal-view style="background-color: white; width:94%; left:13px;top:13px;height: 94%;border: solid 1px; border-radius: 23px;">
   <ion-header-bar class="bar-calm backgroundGray">
     <!-- <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="competence">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>-->
@@ -20,29 +20,17 @@
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label">Date de fin</span>
-        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin">
+        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais">
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label"></span>
-        <ion-checkbox style="border:none;" ng-model="formData.jamais" >Jamais</ion-checkbox>
+        <ion-checkbox style="border:none;" ng-model="formData.jamais" data-ng-change="initDateFin();">Jamais</ion-checkbox>
       </label>
     </div>
     <div class="item item-divider">
       Répétitions
     </div>
     <div class="row" style="border: solid 1px gray;">
-      <!--
-      <div class="list" style="width: 34%;">
-          <button class="button" style="width: 100%;">Lundi</button>
-          <button class="button" style="width: 100%;">Mardi</button>
-          <button class="button" style="width: 100%;">Mercredi</button>
-          <button class="button" style="width: 100%;">Jeudi</button>
-          <button class="button" style="width: 100%;">Vendredi</button>
-          <button class="button" style="width: 100%;">Samedi</button>
-          <button class="button" style="width: 100%;">Dimanche</button>
-      </div>
-      -->
-
       <div class="list" style="width: 42%;">
         <ion-toggle ng-repeat="jour in formData.jours" toggle-class="toggle-light"
                     ng-model="jour.checked"
@@ -89,7 +77,7 @@
     <br>
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive grey" data-ng-click="">Valider</button>
+      <button class="button button-full button-positive grey" data-ng-click="saveDisponibilite();">Valider</button>
     </div>
   </ion-content>
 

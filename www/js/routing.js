@@ -86,7 +86,16 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/competences.html',
       controller: 'competenceCtrl'
     })
-
+    .state('offres', {
+      url: '/offres',
+      templateUrl: 'templates/offres.html',
+      controller: 'offresCtrl'
+    })
+    .state('offreTabs', {
+      url: '/offreTabs/:offre',
+      templateUrl: 'templates/offreTabs.html',
+      controller: 'offreTabsCtrl'
+    })
     .state('contract', {
       url: '/contract/:jobyer',
       /*url: '/contract',*/

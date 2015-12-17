@@ -400,7 +400,7 @@ angular.module('wsConnectors', ['ionic'])
     this.persistInDisponibilite=function(jourId, heure_debut, heure_fin, sessionID, offreId){
       soapMessage=
         '<fr.protogen.connector.model.DataModel>'+
-        '<entity>user_disponibilite_offre_salarie</entity>'+
+        '<entity>user_disponibilite_offre_employeur</entity>'+
         '<dataMap/>'+
         '<rows>'+
         '<fr.protogen.connector.model.DataRow>'+
@@ -417,13 +417,14 @@ angular.module('wsConnectors', ['ionic'])
         '<type>TEXT</type>'+
         '<value>'+heure_fin+'</value>'+
         '</fr.protogen.connector.model.DataEntry>'+
-        '<fr.protogen.connector.model.DataEntry>'+
-        '<label>&lt;![CDATA[OFFRE]]&gt;</label>'+
-        '<attributeReference>fk_user_disponibilite_offre_salarie_user_offre_salarie</attributeReference>'+
-        '<type>fk_user_disponibilite_offre_salarie_user_offre_salarie</type>'+
-        '<list/>'+
+          /*
+        '<fr.protogen.connector.model.DataEntry>'+		//
+        '<label>&lt;![CDATA[fk_user_disponibilite_offre_employeur_user_offre]]&gt;</label>'+
+        ' <attributeReference>fk_user_disponibilite_offre_employeur_user_offre</attributeReference>'+
+        '<type>TEXT</type>'+
         '<value>'+offreId+'</value>'+
         '</fr.protogen.connector.model.DataEntry>'+
+        */
         '<fr.protogen.connector.model.DataEntry>'+
         '<label>&lt;![CDATA[JOUR DE SEMAINE]]&gt;</label>'+
         '<attributeReference>fk_user_jour_de_la_semaine</attributeReference>'+
@@ -494,17 +495,17 @@ angular.module('wsConnectors', ['ionic'])
 							'<type>TEXT</type>'+
 							'<value>&lt;![CDATA['+description+']]&gt;</value>'+
         				'</fr.protogen.connector.model.DataEntry>'+
-						/**'<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+						'<fr.protogen.connector.model.DataEntry>'+		// disponible_du
           					'<label>&lt;![CDATA[Disponible du]]&gt;</label>'+
          					' <attributeReference>disponible_du</attributeReference>'+
           					'<type>DATE</type>'+
-          					'<value>&lt;![CDATA[2015-09-27 02:00:00.0]]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+	**/
+          					'<value>&lt;![CDATA['+disponible_du+']&gt;</value>'+
+        				'</fr.protogen.connector.model.DataEntry>'+
         				'<fr.protogen.connector.model.DataEntry>'+		// disponible_au
           					'<label>&lt;![CDATA[Disponible au]]&gt;</label>'+
           					'<attributeReference>disponible_au</attributeReference>'+
           					'<type>DATE</type>'+
-          					'<value>&lt;![CDATA[2015-12-12 08:00:00.0]]&gt;</value>'+
+          					'<value>&lt;![CDATA['+disponible_au+']]&gt;</value>'+
         				'</fr.protogen.connector.model.DataEntry>'+		// ID EMPLOYEUR
 						'<fr.protogen.connector.model.DataEntry>'+
 							'<label>&lt;![CDATA[Employeur]]&gt;</label>'+

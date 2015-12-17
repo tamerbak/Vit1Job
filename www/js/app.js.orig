@@ -70,7 +70,8 @@ $rootScope.queryText = '';
       }
       );*/
 
-});
+<<<<<<< HEAD
+  });
 })
 //Add ionic loading
     .config(function($httpProvider) {
@@ -100,10 +101,14 @@ $rootScope.queryText = '';
           });
     });
 //End ionic loadin
+=======
+});
+});
 
 /*starter.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });*/
+>>>>>>> db51858b5fe832e7fc28cf18855f8965537a9254
 
 /**
  * Create module for services

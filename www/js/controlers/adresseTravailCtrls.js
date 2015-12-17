@@ -10,7 +10,7 @@ starter
 		// FORMULAIRE
 		$scope.formData = {};
     $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  JSON.parse($stateParams.steps);
+    var steps =  $stateParams.steps;
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 
@@ -28,7 +28,8 @@ starter
 			if(typeof $scope.formData.ville !== 'undefined')
 				if(typeof $scope.formData.ville.originalObject !== 'undefined')
 					ville=Number($scope.formData.ville.originalObject.pk_user_ville);
-			var adresse1=$scope.formData.adresse1;
+      var num = $scope.formData.num;
+      var adresse1=$scope.formData.adresse1;
 			var adresse2=$scope.formData.adresse2;
 
 			console.log("codePostal: "+codePost);
@@ -43,12 +44,14 @@ starter
 			sessionId=$cookieStore.get('sessionID');
 
 			// TEST DE VALIDATION
-			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2){
+			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2 || num){
 				if(!adresse1)
 					adresse1='';
 				if(!adresse2)
 					adresse2='';
-				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville, adresse1, adresse2, sessionId)
+        if(!num)
+          num='';
+				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
 
 						// DONNEES ONT ETE SAUVEGARDES
@@ -230,8 +233,8 @@ starter
 					});
 			}***/
 
-			// REDIRECTION VERS PAGE - COMPETENCES
-			$state.go('competence');
+			// REDIRECTION VERS PAGE - offres
+			$state.go('offres');
 		};
 
 		// VALIDATION

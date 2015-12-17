@@ -43,7 +43,7 @@ starter
     $scope.modifierOffre=function(){
       var offre=$scope.formData.offre;
       console.log($scope.formData.offre);
-      if(offre.selected){
+      if(offre.pk){
         $state.go('offreTabs.job',{"offre":JSON.stringify(offre)});
       }else{
         Global.showAlertValidation("Veuillez séléctionner une offre.");
@@ -52,7 +52,7 @@ starter
 
     $scope.dupliquerOffre=function(){
       var offre=$scope.formData.offre;
-      if(offre.selected){
+      if(offre.pk){
         var offre1={};
         offre1.degre=offre.degre;
         if(offre.jours)
@@ -86,7 +86,7 @@ starter
 
     $scope.supprimerOffre= function(){
       var offre=$scope.formData.offre;
-      if(offre.selected){
+      if(offre.pk){
         var offres=$rootScope.offres;
         var indexOffres=offres.indexOf(offre);
         $rootScope.offres.splice(indexOffres, 1);

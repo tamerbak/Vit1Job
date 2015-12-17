@@ -10,7 +10,10 @@ starter
 		// FORMULAIRE
 		$scope.formData = {};
     $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  JSON.parse($stateParams.steps);
+    console.log($stateParams.steps);
+    var steps;
+    if($stateParams.steps)
+        steps=  JSON.parse($stateParams.steps);
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdressePersEmployeur = function(){
 

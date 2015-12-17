@@ -93,6 +93,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('offreTabs', {
       url: '/offreTabs/:offre',
+      abstract: true,
       templateUrl: 'templates/offreTabs.html',
       controller: 'offreTabsCtrl'
     })
@@ -101,7 +102,42 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       /*url: '/contract',*/
       templateUrl: 'templates/createContract.html',
       controller: 'contractCtrl'
+    })
+    .state('offreTabs.job', {
+      url: '/job/:offre',
+      views: {
+        'offreTabs-job': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/job.html'
+        }
+      }
+    })
+    .state('offreTabs.qualites', {
+      url: '/qualites',
+      views: {
+        'offreTabs-qualites': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/qualites.html'
+        }
+      }
+    })
+    .state('offreTabs.langues', {
+      url: '/langues',
+      views: {
+        'offreTabs-langues': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/langues.html'
+        }
+      }
+    })
+    .state('offreTabs.agenda', {
+      url: '/agenda',
+      views: {
+        'offreTabs-agenda': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/agenda.html'
+        }
+      }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app');
+ $urlRouterProvider.otherwise('/app');
 });

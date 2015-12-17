@@ -1,69 +1,69 @@
-<ion-nav-view name="job-tab">
-  <ion-view view-title="Job">
-    <ion-header-bar class="bar-calm">
-      <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offres">  </a>
-      <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
-      <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
-    </ion-header-bar>
-    <ion-content class="padding" padding="true">
-      <div>
-        <h3 class="titlePhone"><b>Job</b></h3>
+<ion-view view-title="Job">
+  <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offres">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offreTabs.qualites">  </a>
+  </ion-header-bar>
+  <ion-content class="padding" padding="true">
+    <div>
+      <h3 class="titlePhone"><b>Job</b></h3>
+    </div>
+    <!-- TITRE -->
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" id="titreOffre" placeholder="Titre de l'offre" data-ng-model="formData.titre">
+      </label>
+    </div>
+    <!-- METIERS -->
+    <div class ="xcontainer">
+      <div angucomplete-alt id="metiers"
+           placeholder="Domaine"
+           initial-value="formData.metier"
+           maxlength="50"
+           pause="100"
+           selected-object="formData.metier"
+           local-data="formData.metiers"
+           search-fields="libelle"
+           title-field="libelle"
+           minlength="1"
+           input-class="form-control form-control-small"
+           match-class="highlight" class="autoCompl">
       </div>
-      <!-- TITRE -->
-      <div class="list">
-        <label class="item item-input">
-          <input type="text" id="titreOffre" placeholder="Titre de l'offre" data-ng-model="formData.titre">
-        </label>
+      <select class="arriere flat select" data-ng-model="formData.metier" data-ng-change="updateAutoCompleteMetier()"> <!-- data-ng-init="formData.metier='Metiers'" -->
+        <option selected disabled style="display: none;">Metiers</option>
+        <option id="metiers_value" data-ng-repeat="x in formData.metiers" value="{{x}}">{{x.libelle}}</option>
+      </select>
+    </div>
+    <!--  <div id="maitriseDiv"> -->
+    <!-- JOBS -->
+    <div class ="xcontainer">
+      <div angucomplete-alt id="jobs"
+           placeholder="Job"
+           initial-value="formData.job"
+           maxlength="50"
+           pause="100"
+           selected-object="formData.job"
+           local-data="formData.jobs"
+           search-fields="libelle"
+           title-field="libelle"
+           minlength="1"
+           input-class="form-control form-control-small"
+           match-class="highlight" class="autoCompl">
       </div>
-      <!-- METIERS -->
-      <div class ="xcontainer">
-        <div angucomplete-alt id="metiers"
-             placeholder="Domaine"
-             maxlength="50"
-             pause="100"
-             selected-object="formData.metier"
-             local-data="formData.metiers"
-             search-fields="libelle"
-             title-field="libelle"
-             minlength="1"
-             input-class="form-control form-control-small"
-             match-class="highlight" class="autoCompl">
-        </div>
-        <select class="arriere flat select" data-ng-model="formData.metier" data-ng-init="formData.metier='Metiers'" data-ng-change="updateAutoCompleteMetier()">
-          <option selected disabled style="display: none;">Metiers</option>
-          <option id="metiers_value" data-ng-repeat="x in formData.metiers" value="{{x}}">{{x.libelle}}</option>
-        </select>
+      <select  class="arriere flat select" data-ng-model="formData.job" data-ng-change="updateAutoCompleteJob()">
+        <option selected disabled style="display: none;">Job</option>
+        <option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
+      </select>
+    </div>
+    <!-- MAITRISE -->
+    <img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>
+    <label for="maitrise" style="display: inline-block; color:#757575;vertical-align: middle;" > {{formData.maitrise}}</label>
+    <div class="list rangeDiv">
+      <div class="item range range-calm">
+        <img src="img\tree1_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
+        <input id="maitrise" type="range" name="volume" min="0" max="100" data-ng-model="formData.degre" data-ng-change="rangeChange()">
+        <img src="img\tree4_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
       </div>
-      <!--  <div id="maitriseDiv"> -->
-      <!-- JOBS -->
-      <div class ="xcontainer">
-        <div angucomplete-alt id="jobs"
-             placeholder="Job"
-             maxlength="50"
-             pause="100"
-             selected-object="formData.job"
-             local-data="formData.jobs"
-             search-fields="libelle"
-             title-field="libelle"
-             minlength="1"
-             input-class="form-control form-control-small"
-             match-class="highlight" class="autoCompl">
-        </div>
-        <select  class="arriere flat select" data-ng-model="formData.job" data-ng-init="formData.job='Job'" data-ng-change="updateAutoCompleteJob()">
-          <option selected disabled style="display: none;">Job</option>
-          <option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
-        </select>
-      </div>
-      <!-- MAITRISE -->
-      <img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>
-      <label for="maitrise" style="display: inline-block; color:#757575;vertical-align: middle;" > {{formData.maitrise}}</label>
-      <div class="list rangeDiv">
-        <div class="item range range-calm">
-          <img src="img\tree1_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
-          <input id="maitrise" type="range" name="volume" min="0" max="100" data-ng-model="formData.degre" data-ng-init="formData.degre=10" data-ng-change="rangeChange()">
-          <img src="img\tree4_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
-        </div>
-      </div>
-      <!-- </div> -->
-  </ion-view>
-</ion-nav-view>
+    </div>
+    <!-- </div> -->
+</ion-view>

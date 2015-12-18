@@ -1,12 +1,29 @@
-
-  <ion-modal-view>
-    <ion-header-bar>
-      <h1 class="title">Options de la disponibilité</h1>
-    </ion-header-bar>
-    <ion-content class="modalContent">
-      <p>Veuillez définir dans combien de temps vos jobyers sont disponibles : </p>
-      <div class="row">
-        <div class="col col-33"></div>
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Options de la disponibilité</h1>
+  </ion-header-bar>
+  <ion-content class="modalContent">
+    <!--<p>Veuillez définir dans combien de temps vos jobyers sont disponibles : </p>-->
+    <p>Veuillez définir les dates entre les quelles vous souhaiter que vos jobyers soient disponible : </p>
+    <div class="row">
+      <div class="col col-33">
+        <label class="item-input" for="start_date">Date de début :</label>
       </div>
-    </ion-content>
-  </ion-modal-view>
+      <div class="col col-67">
+        <label class="item item-input">
+          <input id="start_date" type="date" ng-model="availability.startDate" min="{{availability.currentDate | date:'yyyy-MM-dd'}}" />
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-43">
+        <label class="item-input" for="end_date">Date de fin :</label>
+      </div>
+      <div class="col col-67">
+        <label class="item item-input">
+          <input id="end_date" type="date" ng-model="availability.endDate" min="{{availability.currentDate | date:'yyyy-MM-dd'}}" />
+        </label>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

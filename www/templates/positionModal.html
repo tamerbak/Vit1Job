@@ -4,6 +4,44 @@
     <h1 class="title">Options de la position</h1>
   </ion-header-bar>
   <ion-content class="modalContent">
-    Options de la position
+  <div class="row">
+    <div class="col col-50">
+      <label for="sortingmethod">Méthode de tri :</label>
+    </div>
+    <div class="col col-25" >
+      <select id="sortingmethod" style="width: 100%;padding-left: 10px;" ng-model="position.sortingMethod">
+        <option value="byDistance">Par distance</option>
+        <option value="byDuration">Par durée</option>
+      </select>
+    </div>
+    <div class="col col-25" >
+    </div>
+  </div>
+  <div class="row" ng-if="position.sortingMethod == 'byDistance'">
+    <div class="col col-50">
+      <label for="comp">Distance minimale :</label>
+    </div>
+    <div class="col col-25" >
+      <input id="comp" type="number" style="width: 100%;padding-left: 10px;" min="0" max="10000000" ng-model="position.minDistance" >
+    </div>
+    <div class="col col-25" >
+      Km
+    </div>
+  </div>
+  <div class="row" ng-if="position.sortingMethod == 'byDuration'">
+    <div class="col col-50">
+      <label for="transportationmode">Mode de transport :</label>
+    </div>
+    <div class="col col-25" >
+      <select id="transportationmode" style="width: 100%;padding-left: 10px;" ng-model="position.transportationMode" >
+        <option value="driving">Au volant</option>
+        <option value="walking">En marchant</option>
+        <option value="bicycling">Par vélo</option>
+        <option value="transit">Transit</option>
+      </select>
+    </div>
+    <div class="col col-25" >
+    </div>
+  </div>
   </ion-content>
 </ion-modal-view>

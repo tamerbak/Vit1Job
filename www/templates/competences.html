@@ -87,8 +87,8 @@
 	<!-- INDESPENSABLES -->
     <div class="list">
       <label class="item item-input">
-        <select class="flat" data-ng-model="formData.indisp" data-ng-init="formData.indisp='Les indispensables'">
-          <option selected disabled style="display: none;">Les indispensables</option>
+        <select class="flat" data-ng-model="formData.indisp" data-ng-init="formData.indisp='Qualités indispensables'">
+          <option selected disabled style="display: none;">Qualités indispensables</option>
           <option data-ng-repeat="x in formData.transvers" value="{{x.pk_user_competence_transverse}}">{{x.libelle}}</option>
         </select>
       </label>
@@ -117,6 +117,7 @@
     <br>
     <!-- ACTIONS -->
     <div class="buttonConnect">
+      <button class="button button-full button-positive grey" data-ng-click="addDispo()">Horaires du Travail</button>
       <button class="button button-full button-positive green" data-ng-click="saveJobyers()">Valider</button>
       <button class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="app">Passer</button>
     </div>

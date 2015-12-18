@@ -140,6 +140,7 @@ starter
 									/*** LOAD LIST VILLES ***/
 									var villes=localStorageService.get('villes');
 									//if(!villes){
+                  /*
 										LoadList.loadList("user_offre", sessionId)
 											.success(function(response){
 														console.log("response "+response);
@@ -175,6 +176,7 @@ starter
 														console.log("error : LOAD DATA");
 														console.log("error in loadListVilles : "+ err);
 											});
+                  */
 									//}
 								})
 								.error(function (data){

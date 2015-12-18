@@ -9,8 +9,23 @@ starter
 
 		// FORMULAIRE
 		$scope.formData = {};
-    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  JSON.parse($stateParams.steps);
+    $scope.disableTagButton = ($stateParams.steps!='')?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  ($stateParams.steps!='') ? JSON.parse($stateParams.steps) : '';
+    if(steps!='')
+    {
+      $ionicPopup.show({
+        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+        buttons : [
+          {
+            text: '<b>OK</b>',
+            type: 'button-dark',
+            onTap: function(e) {
+            }
+          }
+        ]
+      });
+    }
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 

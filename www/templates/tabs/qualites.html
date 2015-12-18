@@ -1,0 +1,28 @@
+<ion-view view-title="Qi">
+  <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offreTabs.job">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offreTabs.langues">  </a>
+  </ion-header-bar>
+  <ion-content class="padding" padding="true">
+    <div>
+      <h3 class="titlePhone"><b>Qualités indispensables</b></h3>
+    </div>
+    <!-- INDESPENSABLES -->
+    <div class="list">
+      <label class="item item-input">
+        <select class="flat selectClass" data-ng-model="formData.indisp" data-ng-init="formData.indisp='Qualités indispensables'">
+          <option selected disabled style="display: none;">Qualités indispensables</option>
+          <option data-ng-repeat="x in formData.transvers" value="{{x}}">{{x.libelle}}</option>
+        </select>
+      </label>
+    </div>
+    <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterQi();"></a>
+    <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerQi();"></a>
+
+    <div class="list">
+      <ion-radio  ng-repeat="data in formData.qiList" data-ng-model="formData.qi"  ng-value="data" ng-change="onChange(data)" style="border-radius: 0;border-color: lightgray;">
+        {{data.libelle}}
+      </ion-radio>
+    </div>
+</ion-view>

@@ -7,17 +7,12 @@ starter
 
 	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams){
 
-    $scope.formData={};
-    if($stateParams.offre)
-      $scope.offre= JSON.parse($stateParams.offre);
+    //$scope.formData={};
+    if($stateParams.offre) {
+      $scope.offre = JSON.parse($stateParams.offre);
+      console.log($stateParams.offre);
+    }
     console.log($scope.offre);
-    $scope.formData.maitriseIcon = "tree1_small.png";
-    $scope.formData.maitrise = "Débutant";
-    $scope.formData.maitriseStyle = "display: inline;max-width: 33px;max-height: 50px;";
-
-    $scope.formData.maitriseLangueIcon = "tree1_small.png";
-    $scope.formData.maitriseLangue = "Débutant";
-    $scope.formData.maitriseLangueStyle = "display: inline;max-width: 33px;max-height: 50px;";
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);
@@ -53,7 +48,6 @@ starter
       document.getElementById('jobs_value').value='';
       //$scope.formData.job={};
     };
-
     $scope.updateAutoCompleteJob= function(){
       $scope.formData.job=JSON.parse($scope.formData.job);
 
@@ -74,7 +68,17 @@ starter
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
     $scope.initAll = function(){
+      console.log("initAll : "+$scope.offre);
       if($scope.offre){
+        console.log('test1');
+        $scope.formData={
+          'maitrise': 'Débutant',
+          'maitriseIcon': 'tree1_small.png',
+          'maitriseStyle': "display: inline;max-width: 33px;max-height: 50px;",
+          'maitriseLangueIcon': 'tree1_small.png',
+          'maitriseLangue': 'Débutant',
+          'maitriseLangueStyle': "display: inline;max-width: 33px;max-height: 50px;"
+        };
         $scope.formData.metiers=DataProvider.getMetiers();
         $scope.formData.langues=DataProvider.getLangues();
         $scope.formData.jobs=DataProvider.getJobs();
@@ -112,9 +116,11 @@ starter
         $scope.formData={
         'maitrise': 'Débutant',
         'maitriseIcon': 'tree1_small.png',
-        'maitriseLangue': 'Débutant',
+        'maitriseStyle': "display: inline;max-width: 33px;max-height: 50px;",
         'maitriseLangueIcon': 'tree1_small.png',
-        'metiers': DataProvider.getMetiers(),
+        'maitriseLangue': 'Débutant',
+        'maitriseLangueStyle': "display: inline;max-width: 33px;max-height: 50px;",
+          'metiers': DataProvider.getMetiers(),
         'langues': DataProvider.getLangues(),
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
@@ -264,7 +270,9 @@ starter
     };
 
     $scope.validerOffre=function(){
-      $scope.offre={};
+      console.log($scope.formData);
+      if(!$scope.offre)
+        $scope.offre={};
       $scope.offre.degre=$scope.formData.degre;
       /*
       if($scope.offre.jours){
@@ -315,45 +323,6 @@ starter
       }
     });
 
-
-    /* for disponibility  */
-    $scope.formData.jours=DataProvider.getDays();
-    console.log($scope.formData.jours.length);
-    $scope.saveDisponibilite= function(){
-
-      var jobeyerCourant=$rootScope.jobyers[Number($rootScope.jobyerCurrent.indice)-1];
-
-      var dateDebut=new Date($scope.formData.dateDebut);
-      var dayDebut = dateDebut.getDate();
-      var monthIndexDebut = dateDebut.getMonth()+1;
-      var yearDebut = dateDebut.getFullYear();
-      var dateDebutFormatted=yearDebut+"-"+monthIndexDebut+"-"+dayDebut+" 00:00:00.0";
-
-      var dateFin=new Date($scope.formData.dateFin);
-      var dayFin = dateFin.getDate();
-      var monthIndexFin = dateFin.getMonth()+1;
-      var yearFin = dateFin.getFullYear();
-      var dateFinFormatted=yearFin+"-"+monthIndexFin+"-"+dayFin+" 00:00:00.0";
-
-      var jours=$scope.formData.jours;
-      var joursCheked=[];
-      for(var j=0;j<7;j++){
-        console.log(jours[j]);
-        if(jours[j]['checked']==true)
-          joursCheked.push(jours[j]);
-      }
-
-      jobeyerCourant['dateDebut']=dateDebutFormatted;
-      jobeyerCourant['dateFin']=dateFinFormatted;
-      jobeyerCourant['jamais']=$scope.formData.jamais;
-      jobeyerCourant['jours']=joursCheked;
-      jobeyerCourant['remuneration']=$scope.formData.remuneration;
-      jobeyerCourant['heures']=$scope.formData.heures;
-
-      console.log(JSON.stringify($scope.formData));
-      $scope.modal.hide();
-    };
-
     $scope.ajouterHeures= function(){
 
       var hdebut=$scope.formData.heureDebut;
@@ -376,15 +345,6 @@ starter
       if( $scope.formData.heures.length!=0){
         $scope.formData.heures.pop();
       }
-    };
-
-    $scope.addDispo = function(){
-      $ionicModal.fromTemplateUrl('templates/disponibiliteCompetenceModal.html', {
-        scope: $scope
-      }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
-      });
     };
 
     $scope.initDateFin= function(){

@@ -21,8 +21,6 @@ starter
           {pk:3,titre:"Chef cuisinier",remuneration:"99$",jours:[{"pk_user_jour_de_la_semaine":"40","nom":"Lundi"}],dateFin:$filter("date")(Date.now(), 'yyyy-MM-dd'),dateDebut:$filter("date")(Date.now(), 'yyyy-MM-dd'),heures:[{"heureDebut": "2h30min", "heureFin": "4h15min"}],etat:"noPublie",degre:89,metier:{"pk_user_metier":"44","libelle":"Transport"},job:{"pk_user_competence":"60","libelle":"Conducteur","fk_user_metier":"44"},qiList:[{"pk_user_competence_transverse":"40","libelle":"Sérieux"},{"pk_user_competence_transverse":"42","libelle":"Dynamique"}],languesList:[{"pk_user_langue":"40","libelle":"Français"}]},
           {pk:4,titre:"Serveur debutant",remuneration:"99$",jours:[{"pk_user_jour_de_la_semaine":"40","nom":"Lundi"}],dateFin:$filter("date")(Date.now(), 'yyyy-MM-dd'),dateDebut:$filter("date")(Date.now(), 'yyyy-MM-dd'),heures:[{"heureDebut": "2h30min", "heureFin": "4h15min"}],etat:"noPublie",degre:89,metier:{"pk_user_metier":"44","libelle":"Transport"},job:{"pk_user_competence":"60","libelle":"Conducteur","fk_user_metier":"44"},qiList:[{"pk_user_competence_transverse":"40","libelle":"Sérieux"},{"pk_user_competence_transverse":"42","libelle":"Dynamique"}],languesList:[{"pk_user_langue":"40","libelle":"Français"}]},
           {pk:5,titre:"Caissier",remuneration:"99$",jours:[{"pk_user_jour_de_la_semaine":"40","nom":"Lundi"}],dateFin:$filter("date")(Date.now(), 'yyyy-MM-dd'),dateDebut:$filter("date")(Date.now(), 'yyyy-MM-dd'),heures:[{"heureDebut": "2h30min", "heureFin": "4h15min"}],etat:"noPublie",degre:89,metier:{"pk_user_metier":"44","libelle":"Transport"},job:{"pk_user_competence":"60","libelle":"Conducteur","fk_user_metier":"44"},qiList:[{"pk_user_competence_transverse":"40","libelle":"Sérieux"},{"pk_user_competence_transverse":"42","libelle":"Dynamique"},{"pk_user_competence_transverse":"44","libelle":"Souriant"}],languesList:[{"pk_user_langue":"40","libelle":"Français"}]}];
-      else
-      console.log($rootScope.offres.length);
       var offres=$rootScope.offres;
       for(var i=0; i<offres.length;i++){
         if(offres[i].etat=="publie")
@@ -44,8 +42,9 @@ starter
 
     $scope.modifierOffre=function(){
       var offre=$scope.formData.offre;
-      if(offre.selected){
-        $state.go('offreTabs',{"offre":JSON.stringify(offre)});
+      console.log($scope.formData.offre);
+      if(offre.pk){
+        $state.go('offreTabs.job',{"offre":JSON.stringify(offre)});
       }else{
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
@@ -53,7 +52,7 @@ starter
 
     $scope.dupliquerOffre=function(){
       var offre=$scope.formData.offre;
-      if(offre.selected){
+      if(offre.pk){
         var offre1={};
         offre1.degre=offre.degre;
         if(offre.jours)
@@ -87,7 +86,7 @@ starter
 
     $scope.supprimerOffre= function(){
       var offre=$scope.formData.offre;
-      if(offre.selected){
+      if(offre.pk){
         var offres=$rootScope.offres;
         var indexOffres=offres.indexOf(offre);
         $rootScope.offres.splice(indexOffres, 1);
@@ -105,12 +104,6 @@ starter
 				console.log("Initialisation : beforeEnter(competence)");
 				$scope.formData['currentFeuille']=1;
 				$scope.formData['allFeuilles']=1;
-
-				// FEUILLE N°1
-				$rootScope.jobyerCurrent={};
-				$rootScope.jobyerCurrent['indice']=1;
-				$rootScope.jobyers=[];
-				$rootScope.jobyers.push($rootScope.jobyerCurrent);
 			}
 		});
   });

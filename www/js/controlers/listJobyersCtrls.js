@@ -3,7 +3,7 @@
  */
 'use strict';
 starter
-  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, $cookieStore, $state) {
+  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, localStorageService, $state) {
     $scope.jobyersForMe = $rootScope.jobyersForMe;
     $scope.matchingOptions = {
       'comp' : 20,
@@ -123,7 +123,7 @@ starter
             var isAuth = UserService.isAuthenticated();
             if(isAuth){
               console.log("check and then redirect to contract page");
-              var employer = $cookieStore.get('employeur');
+              var employer = localStorageService.get('employeur');
               var redirectToStep1 = (typeof (employer) == "undefined");
               var redirectToStep1 = (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined");
               var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;

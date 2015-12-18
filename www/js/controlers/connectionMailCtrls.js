@@ -4,7 +4,7 @@
 
 'use strict';
 starter
-  .controller('cMailCtrl', function ($scope, $rootScope, $cookieStore, $state, x2js, AuthentificatInServer, PullDataFromServer,
+  .controller('cMailCtrl', function ($scope, $rootScope, localStorageService, $state, x2js, AuthentificatInServer, PullDataFromServer,
 			formatString, PersistInServer, Global, Validator){
 
 	 // FORMULAIRE
@@ -58,7 +58,7 @@ starter
           sessionId = jsonResp.amanToken.sessionId;
           console.log("sessionId : "+sessionId);
           console.log("email : "+email);
-		  $cookieStore.put('sessionID', sessionId);
+		  localStorageService.set('sessionID', sessionId);
 
           // INTERROGE PHONE_TABLE
           PullDataFromServer.pullDATA("user_employeur", sessionId, "email", email, email)
@@ -92,7 +92,7 @@ starter
 										employeurId=listEntry[0].value;
 
 									var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
-									$cookieStore.put('connexion', connexion);
+									localStorageService.set('connexion', connexion);
 
 									// USER REEL - REDIRECTION VERS RECHERCHE
 									$state.go("search");
@@ -118,9 +118,9 @@ starter
               var employeur=formatString.formatServerResult(response);
 
 								if(employeur.dataModel.status){// Bind to local storage service
-									$cookieStore.remove('connexion');
+									localStorageService.remove('connexion');
 									connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeur.dataModel.status)};
-									$cookieStore.put('connexion', connexion);
+									localStorageService.set('connexion', connexion);
 
 									$rootScope.employeur.id=Number(employeur.dataModel.status);
 									$rootScope.employeur.email=email;

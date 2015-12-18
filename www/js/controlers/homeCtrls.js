@@ -5,7 +5,7 @@
 
 starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, $timeout, $cookies) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -185,7 +185,7 @@ starter
 	$scope.initConnexion= function(){
 
 		$scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-		var cnx=$cookieStore.get('connexion');
+		var cnx=localStorageService.get('connexion');
 		if(cnx){
 			$scope.formData.connexion=cnx;
 			console.log("Employeur est connecté");
@@ -204,22 +204,22 @@ starter
 
 	$scope.modeConnexion= function(){
 		var estConnecte=0;
-		var cnx=$cookieStore.get('connexion');
+		var cnx=localStorageService.get('connexion');
 		if(cnx){
 			if(cnx.etat){ // IL S'AGIT D'UNE DECONNEXION
 				console.log("IL S'AGIT D'UNE DECONNEXION");
 
-				$cookieStore.remove('connexion');
-				$cookieStore.remove('sessionID');
+				localStorageService.remove('connexion');
+				localStorageService.remove('sessionID');
 				var connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-				$cookieStore.put('connexion', connexion);
+				localStorageService.set('connexion', connexion);
 
-				console.log("New Connexion : "+JSON.stringify($cookieStore.get('connexion')));
+				console.log("New Connexion : "+JSON.stringify(localStorageService.get('connexion')));
 				$state.go("connection");
 				/*** REMOVE ALL COOKIES
 				var cookies = $cookies.getAll();
 				angular.forEach(cookies, function (v, k) {
-					$cookieStore.remove(k);
+					localStorageService.remove(k);
 				});**/
 
 			}

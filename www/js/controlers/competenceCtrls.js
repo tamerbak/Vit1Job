@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state,$ionicHistory, x2js, AuthentificatInServer,
+	.controller('competenceCtrl', function ($scope, $rootScope, localStorageService, $state,$ionicHistory, x2js, AuthentificatInServer,
 						Global, DataProvider, PullDataFromServer, PersistInServer, LoadList, formatString, UploadFile,$ionicPopup){
 		// FORMULAIRE
 		$scope.formData={};
@@ -458,12 +458,12 @@ starter
       $rootScope.jobyers[idex].maitriseLangueIcon=$scope.formData.maitriseLangueIcon;
 
 			// RECUPERATION CONNEXION
-			var connexion=$cookieStore.get('connexion');
+			var connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
 			console.log("connexion : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=$cookieStore.get('sessionID');
+			sessionId=localStorageService.get('sessionID');
 
 			console.log("Offres A Persister : "+JSON.stringify($rootScope.jobyers));
 
@@ -481,7 +481,7 @@ starter
 						// GET SESSION ID
           				sessionId = jsonResp.amanToken.sessionId;
           				console.log("New sessionId : "+sessionId);
-		  				$cookieStore.put('sessionID', sessionId);
+		  				localStorageService.set('sessionID', sessionId);
 						hasSessionID=1;
 					})
 					.error(function (err){
@@ -533,7 +533,7 @@ starter
 									if(ofre.dataModel.status || ofre.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 										offreId=Number(ofre.dataModel.status);
 										console.log("offreId : "+offreId);
-										// $cookieStore.put('offreID', Number(ofre.dataModel.status));
+										// localStorageService.set('offreID', Number(ofre.dataModel.status));
 									}
 									// DONNEES ONT ETE SAUVEGARDES
 									console.log("offreID a été bien récuperé : "+offreId);
@@ -617,7 +617,7 @@ starter
 								ofre=formatString.formatServerResult(response);
 								if(ofre.dataModel.status || ofre.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 									offreId=Number(ofre.dataModel.status);
-									// $cookieStore.put('offreID', Number(ofre.dataModel.status));
+									// localStorageService.set('offreID', Number(ofre.dataModel.status));
 								}
 
 								// DONNEES ONT ETE SAUVEGARDES

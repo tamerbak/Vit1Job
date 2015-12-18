@@ -3,11 +3,11 @@
  */
 
 services
-  .factory('UserService', function($cookieStore) {
+  .factory('UserService', function(localStorageService) {
 
       var user = {
         getUserInfos : function() {
-            return $cookieStore.get('connexion');
+            return localStorageService.get('connexion');
           },
 
         isAuthenticated : function() {

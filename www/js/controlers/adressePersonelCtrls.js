@@ -4,7 +4,7 @@
 
 starter
 
-	.controller('adressePersonelCtrl', function ($scope, $rootScope, $cookieStore, $state,$stateParams, UpdateInServer,
+	.controller('adressePersonelCtrl', function ($scope, $rootScope, $state,$stateParams, UpdateInServer,
 			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ){
 
 		// FORMULAIRE
@@ -38,12 +38,12 @@ starter
 			console.log("ville : "+ville);
 
 			// RECUPERATION CONNEXION
-			connexion=$cookieStore.get('connexion');
+			connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
-			console.log("$cookieStore.get(connexion) : "+JSON.stringify(connexion));
+			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=$cookieStore.get('sessionID');
+			sessionId=localStorageService.get('sessionID');
 
 			// TEST DE VALIDATION
 			//if(codePostal !== '' && ville !== '' && adresse1 !== '' && adresse2 !== ''){
@@ -62,7 +62,7 @@ starter
 						console.log("les donnes ont été sauvegarde");
 						console.log("response"+response);
 
-						employeur=$cookieStore.get('employeur');
+						employeur=localStorageService.get('employeur');
 						if(!employeur)
 							var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adressePersonel={};
@@ -70,7 +70,7 @@ starter
 						employeur.adressePersonel=adressePersonel;
 
 						// PUT IN SESSION
-						$cookieStore.put('employeur', employeur);
+						localStorageService.set('employeur', employeur);
 						console.log("employeur : "+JSON.stringify(employeur));
 
 						var code="", vi="";
@@ -185,7 +185,7 @@ starter
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
 				$scope.initForm();
 				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
-				//employeur=$cookieStore.get('employeur');
+				//employeur=localStorageService.get('employeur');
 				if(isNaN($scope.formData.codePostal) && isNaN($scope.formData.ville) && !$scope.formData.adresse1 && !$scope.formData.adresse2 && !$scope.formData.num){
 					// INITIALISATION FORMULAIRE
 						GeoService.getUserAddress()
@@ -229,7 +229,7 @@ starter
 
 
 			/**
-			 * employeur=$cookieStore.get('employeur');
+			 * employeur=localStorageService.get('employeur');
 			 * if(employeur && employeur['adressePersonel']){
 			 * // INITIALISATION FORMULAIRE
 			 * if(employeur['adressePersonel'].codePostal)

@@ -5,7 +5,7 @@
 'use strict';
 
 starter
-  .controller('cPhoneCtrl', function ($scope, $rootScope, $cookieStore, $state, x2js, AuthentificatInServer, PullDataFromServer,
+  .controller('cPhoneCtrl', function ($scope, $rootScope, localStorageService, $state, x2js, AuthentificatInServer, PullDataFromServer,
 				formatString, PersistInServer, LoadList, Global, DataProvider, Validator){
 
     // FORMULAIRE
@@ -46,7 +46,7 @@ starter
           // PUT SESSION ID
           sessionId = jsonResp.amanToken.sessionId;
           console.log("sessionId : "+sessionId);
-          $cookieStore.put('sessionID', sessionId);
+          localStorageService.set('sessionID', sessionId);
 
           // INTERROGE PHONE_TABLE
           PullDataFromServer.pullDATA("user_employeur", sessionId, "telephone", phone, phone)
@@ -74,7 +74,7 @@ starter
                           employeurId=listEntry[0].value;
 
                         var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
-                        $cookieStore.put('connexion', connexion);
+                        localStorageService.set('connexion', connexion);
                         Global.showAlertValidation("Bienvenu dans Vit1job. Vous pouvez lancer les recherches des jobyers que vous souhaitez.");
                         // USER REEL - REDIRECTION VERS RECHERCHE
                         $state.go("app");
@@ -99,7 +99,7 @@ starter
 
 								if(employeur.dataModel.status || employeur.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 									connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeur.dataModel.status)};
-									$cookieStore.put('connexion', connexion);
+									localStorageService.set('connexion', connexion);
                   Global.showAlertValidation("Bienvenue dans Vit1job. Veuillez saisir vos informations. Elles seront utilisées uniquement en cas de signature du contrat de travail.");
 									$rootScope.employeur.id=Number(employeur.dataModel.status);
 									$rootScope.employeur.phone=phone;
@@ -108,7 +108,7 @@ starter
 								}
 
 								/*** LOAD LIST CIVILITES
-								civilites=$cookieStore.get('civilites');
+								civilites=localStorageService.get('civilites');
 								if(!civilites){
 									LoadList.loadListCivilites(sessionId)
 										.success(function (response){
@@ -136,7 +136,7 @@ starter
 
 											console.log("civilites.length : "+civilites.length);
 											// PUT IN SESSION
-											$cookieStore.put('civilites', civilites);
+											localStorageService.set('civilites', civilites);
 											console.log("civilites : "+JSON.stringify(civilites));
 										}).error(function (err){
 											console.log("error : LOAD DATA");
@@ -168,7 +168,7 @@ starter
 		$scope.initForm=function(){
 			// GET LIST
 			$scope.formData={'pays': DataProvider.getPays()};
-			//$scope.formData={ 'villes': $cookieStore.get('villes')};
+			//$scope.formData={ 'villes': localStorageService.get('villes')};
 		};
 
 		$scope.loadCodeInter=function(){

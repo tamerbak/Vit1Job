@@ -4,7 +4,7 @@
 
 angular.module('globalServices', ['ionic', 'cb.x2js','ngCookies'])
 
-  .service('Global', function ($http, $ionicPopup, $cookieStore) {
+  .service('Global', function ($http, $ionicPopup, localStorageService) {
 
 	  this.showAlert=function(temp){
 

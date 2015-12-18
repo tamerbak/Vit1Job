@@ -4,7 +4,7 @@
 'use strict';
 starter
 
-	.controller('adresseTravailCtrl', function ($scope, $rootScope, $cookieStore, $state, $stateParams,formatString,
+	.controller('adresseTravailCtrl', function ($scope, $rootScope, localStorageService, $state, $stateParams,formatString,
 					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory){
 
 		// FORMULAIRE
@@ -35,12 +35,12 @@ starter
 			console.log("ville : "+ville);
 
 			// RECUPERATION CONNEXION
-			var connexion=$cookieStore.get('connexion');
+			var connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
-			console.log("$cookieStore.get(connexion) : "+JSON.stringify(connexion));
+			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=$cookieStore.get('sessionID');
+			sessionId=localStorageService.get('sessionID');
 
 			// TEST DE VALIDATION
 			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2){
@@ -55,7 +55,7 @@ starter
 						console.log("les donnes ont été sauvegarde");
 						console.log("response"+response);
 
-						employeur=$cookieStore.get('employeur');
+						employeur=localStorageService.get('employeur');
 						if(!employeur)
               var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adresseTravail={};
@@ -63,7 +63,7 @@ starter
 						employeur.adresseTravail=adresseTravail;
 
 						// PUT IN SESSION
-						$cookieStore.put('employeur', employeur);
+						localStorageService.set('employeur', employeur);
 						console.log("employeur : "+JSON.stringify(employeur));
 					}).error(function (err){
 						console.log("error : insertion DATA");
@@ -72,7 +72,7 @@ starter
 			}
 
 			/*** CHARGEMENT METIERS
-			metiers=$cookieStore.get('metiers');
+			metiers=localStorageService.get('metiers');
 			//metiers=$rootScope.metiers;
 			if(!metiers){
 				// CHARGEMENT DES DONNES AUPRES BD
@@ -105,7 +105,7 @@ starter
 						console.log("metiers.length : "+metiers.length);
 
 						// PUT IN SESSION
-						$cookieStore.put('metiers', metiers);
+						localStorageService.set('metiers', metiers);
 						console.log("metiers : "+JSON.stringify(metiers));
 					}).error(function (err){
 						console.log("error : GET DATA from metiers");
@@ -114,7 +114,7 @@ starter
 			}
 
 			// CHARGEMENT LANGUES
-			langues=$cookieStore.get('langues');
+			langues=localStorageService.get('langues');
 			if(!langues){
 				// CHARGEMENT DES DONNES AUPRES BD
 				LoadList.loadListLangues(sessionId)
@@ -144,7 +144,7 @@ starter
 
 						console.log("langues.length : "+langues.length);
 						// PUT IN SESSION
-						$cookieStore.put('langues', langues);
+						localStorageService.set('langues', langues);
 						console.log("langues : "+JSON.stringify(langues));
 					}).error(function (err){
 						console.log("error : GET DATA from langues");
@@ -153,7 +153,7 @@ starter
 			}
 
 			// CHARGEMENT JOBS
-			jobs=$cookieStore.get('jobs');
+			jobs=localStorageService.get('jobs');
 			if(!jobs){
 				// CHARGEMENT DES DONNES AUPRES BD
 				LoadList.loadListJobs(sessionId)
@@ -183,7 +183,7 @@ starter
 
 						console.log("jobs.length : "+jobs.length);
 						// PUT IN SESSION
-						$cookieStore.put('jobs', jobs);
+						localStorageService.set('jobs', jobs);
 						console.log("jobs : "+JSON.stringify(jobs));
 					}).error(function (err){
 						console.log("error : GET DATA from jobs");
@@ -192,7 +192,7 @@ starter
 			}
 
 			// CHARGEMENT COMPETENCES INDISPENSABLES
-			transvers=$cookieStore.get('transvers');
+			transvers=localStorageService.get('transvers');
 			if(!transvers){
 				// CHARGEMENT DES DONNES AUPRES BD
 				LoadList.loadListIndespensables(sessionId)
@@ -222,7 +222,7 @@ starter
 
 						console.log("transvers.length : "+transvers.length);
 						// PUT IN SESSION
-						$cookieStore.put('transvers', transvers);
+						localStorageService.set('transvers', transvers);
 						console.log("transvers : "+JSON.stringify(transvers));
 					}).error(function (err){
 						console.log("error : GET DATA from transvers");
@@ -389,7 +389,7 @@ starter
 				if($ionicHistory.backView() === "adressePersonel"){}
 				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
 
-				var employeur=$cookieStore.get('employeur');
+				var employeur=localStorageService.get('employeur');
 				if(employeur){
 					// INITIALISATION FORMULAIRE
 					if(employeur['adresseTravail']){

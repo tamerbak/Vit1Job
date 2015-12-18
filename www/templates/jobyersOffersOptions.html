@@ -1,5 +1,25 @@
 <ion-view view-title="{{AppLogo}}">
 <ion-content>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Entreprise
+	</div>
+	<select>
+		<option>Entreprise 1</option>
+		<option selected>Entreprise 2</option>
+		<option>Entreprise 3</option>
+	</select>
+</label>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Offre
+	</div>
+	<select>
+		<option>Offre 1</option>
+		<option selected>Offre 2</option>
+		<option>Offre 3</option>
+	</select>
+</label>
 <div class="item item-divider">
 	Correspond à :
 </div>
@@ -14,7 +34,7 @@
 </label>
 <label class="item item-input">
 	<div class="input-label">
-		QI
+		Qualités indispensables
 	</div>
 	<input id="qi" type="number" min="0" max="100" ng-model="jobyerListSetting.qi">
 	<div class="input-label">
@@ -36,6 +56,6 @@
 <ion-radio ng-model="jobyerListSetting.transportationmode" value="driving">Au volant</ion-radio>
 <ion-radio ng-model="jobyerListSetting.transportationmode" value="walking">En marchant</ion-radio>
 <ion-radio ng-model="jobyerListSetting.transportationmode" value="bicycling">Par vélo</ion-radio>
-<ion-radio ng-model="jobyerListSetting.transportationmode" value="transit">Transit</ion-radio>
+<ion-radio ng-model="jobyerListSetting.transportationmode" value="transit">Transports publics</ion-radio>
 </ion-content>
 </ion-view>

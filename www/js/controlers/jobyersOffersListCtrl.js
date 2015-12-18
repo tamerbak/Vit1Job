@@ -29,7 +29,7 @@ starter.controller('jobyersOffersListCtrl',
 		$scope.jobyersOffers = [{
 			jobyerName : 'Jérôme',
 			availability : {
-				value : 10,
+				value : 210,
 				text : '3h 30min'
 			},
 			matching : 60

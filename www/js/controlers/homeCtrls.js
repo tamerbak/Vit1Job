@@ -6,7 +6,7 @@
  starter
 
  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, 
-  $timeout, $cookies, localStorageService, jobyerService, employerService) {
+  $timeout, $cookies, localStorageService, jobyerService) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -236,15 +236,15 @@ $scope.modeConnexion= function(){
   //****************************************** NEW **********************************//
 
   var checkIsLogged = function(){
-    var currentUser = localStorageService.get('currentUser');
-    var isLogged = (currentUser) ? true : false;
+    var currentEmployer = localStorageService.get('currentEmployer');
+    var isLogged = (currentEmployer) ? true : false;
     return isLogged;
   };
 
   $scope.isLogged = checkIsLogged();
 
   $scope.logOut = function(){
-    localStorageService.remove('currentUser');
+    localStorageService.remove('currentEmployer');
     $scope.isLogged = false;
   };
 
@@ -270,15 +270,6 @@ $scope.modeConnexion= function(){
   $state.go("jobyersOffersTab.list");
  };
 
- var onIsEntrepriseOfferByJobExistsSuccess = function(data){
-    var isEntrepriseOfferByJobExists = data;
-    if(isEntrepriseOfferByJobExists){
-      getJobyersOffersByJob(job);
-    }else{
-      showAddOfferConfirmPopup(job);
-    }
-  };
-
    var onError = function(data){
     console.log(data);
   };
@@ -288,16 +279,55 @@ $scope.modeConnexion= function(){
   };
 
   var isEntrepriseOfferByJobExists = function(job){
-    var currentUser = localStorageService.get('currentUser');
-    var employerId = currentUser.UserId;
-    employerService.isEntrepriseOfferByJobExists(employerId, job).success(onIsEntrepriseOfferByJobExistsSuccess).error(onError);
+    if(!job) return;
+    var currentEmployer = localStorageService.get('currentEmployer');
+    if(!currentEmployer) return;
+    var entreprises = currentEmployer.entreprises;
+    var found = false;
+    if(entreprises && entreprises.length > 0){
+      var i = 0;
+      var offers = [];
+      var pricticesJob = [];
+      var j;
+      var k;
+      while(!found && i < entreprises.length){
+        offers = entreprises[i].offers;
+        if(offers && offers.length > 0){
+          j = 0;
+          while(!found && j < offers.length){
+            pricticesJob = offers[j].pricticesJob;
+            if(pricticesJob && pricticesJob.length > 0){
+              while(!found && k < pricticesJob.length){
+                found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
+                if(found){
+                  localStorageService.set('currentOffer',offers[j]);
+                  localStorageService.set('currentEntreprise',offers[i]);
+                }
+                else{
+                  k++;
+                }
+              }
+            }
+            if(!found) j++;
+          }
+        }
+        if(!found) i++;
+      }
+    }
+    return found;
   };
 
   $scope.launchSearchForJobyersOffers = function(job){
     localStorageService.set('lastSearchedJob',job);
+    localStorageService.remove('currentOffer');
+    localStorageService.remove('currentEntreprise');
     var isLogged = checkIsLogged();
     if(isLogged){
-      isEntrepriseOfferByJobExists(job);
+      if(isEntrepriseOfferByJobExists(job)){
+        getJobyersOffersByJob(job);
+      }else{
+        showAddOfferConfirmPopup(job);
+      }
     }
     else{
       getJobyersOffersByJob(job);

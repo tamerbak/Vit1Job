@@ -8,18 +8,18 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
     $scope.loaded = true;
   });
 
-function initialize() {
+  function initialize() {
 
-        var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
-        
-        var mapOptions = {
-          center: myLatlng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
-        
+    var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+    
+    var mapOptions = {
+      center: myLatlng,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map"),
+      mapOptions);
+    
         //Marker + infowindow + angularjs compiled ng-click
         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
         var compiled = $compile(contentString)($scope);
@@ -63,4 +63,4 @@ function initialize() {
       $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
       };
-}]);
+    }]);

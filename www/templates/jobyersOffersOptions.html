@@ -1,7 +1,15 @@
 <ion-view view-title="{{AppLogo}}">
+
+<ion-nav-buttons side="primary">
+<button class="button button-clear button-small" ui-sref="app">
+  <i class="icon ion-ios-arrow-back"></i>
+</button>
+</ion-nav-buttons>
+
 <ion-content>
+
 <label class="item item-input item-select">
-	<div class="input-label">
+	<div class="input-label" style="padding:0px;margin-left:-6px;">
 		Entreprise
 	</div>
 	<select>
@@ -11,7 +19,7 @@
 	</select>
 </label>
 <label class="item item-input item-select">
-	<div class="input-label">
+	<div class="input-label" style="padding:0px;margin-left:-6px;">
 		Offre
 	</div>
 	<select>
@@ -20,42 +28,71 @@
 		<option>Offre 3</option>
 	</select>
 </label>
-<div class="item item-divider">
+
+<div class="item item-divider" style="padding:2px 0px 2px 5px;height:30px;">
 	Correspond à :
 </div>
-<label class="item item-input">
+<label class="item range range-calm" style="border-color:#ccc;height: 40px;">
 	<div class="input-label">
 		Job
 	</div>
-	<input id="job" type="number" min="0" max="100" ng-model="jobyerListSetting.job">
-	<div class="input-label">
-		%
-	</div>
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="job" type="range" name="volume" min="0" max="100" ng-model="jobyerListSetting.job">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
 </label>
-<label class="item item-input">
+<label class="item range range-calm" style="border-color:#ccc;height: 40px;">
 	<div class="input-label">
 		Qualités indispensables
 	</div>
-	<input id="qi" type="number" min="0" max="100" ng-model="jobyerListSetting.qi">
-	<div class="input-label">
-		%
-	</div>
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="qi" type="range" name="volume" min="0" max="100" ng-model="jobyerListSetting.qi">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
 </label>
-<label class="item item-input">
+<label class="item range range-calm" style="border-color:#ccc;height: 40px;">
 	<div class="input-label">
 		Langue
 	</div>
-	<input id="language" type="number" min="0" max="100" ng-model="jobyerListSetting.language">
-	<div class="input-label">
-		%
-	</div>
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="language" type="range" name="volume" min="0" max="100" ng-model="jobyerListSetting.language">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
 </label>
-<div class="item item-divider">
+
+<div class="item item-divider" style="padding:2px 0px 2px 5px;height:30px;">
 	Mode de transport :
 </div>
-<ion-radio ng-model="jobyerListSetting.transportationmode" value="driving">Au volant</ion-radio>
-<ion-radio ng-model="jobyerListSetting.transportationmode" value="walking">En marchant</ion-radio>
-<ion-radio ng-model="jobyerListSetting.transportationmode" value="bicycling">Par vélo</ion-radio>
-<ion-radio ng-model="jobyerListSetting.transportationmode" value="transit">Transports publics</ion-radio>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="driving">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Au volant
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="walking">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		En marchant
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="bicycling">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Par vélo
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="transit">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Transports publics
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 50px 2px;"></i>
+</label>
 </ion-content>
 </ion-view>
+
+<style type="text/css">
+.input-label{
+	width: 40%;
+}
+</style>

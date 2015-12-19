@@ -1,0 +1,91 @@
+<ion-view view-title="{{AppLogo}}">
+
+<ion-nav-buttons side="primary">
+<button class="button button-clear button-small" ui-sref="app">
+	<i class="icon ion-ios-arrow-back"></i>
+</button>
+</ion-nav-buttons>
+
+<ion-content>
+
+<label class="item item-input item-select">
+	<div class="input-label" style="padding:0px;margin-left:-6px;">
+		Entreprise
+	</div>
+	<select name="entreprises" id="entreprises" ng-model="selctedEntrepriseId" ng-change="loadOffers()">
+      <option ng-repeat="item in entreprises" value="{{item.id}}" selected="{{item.id == selctedEntrepriseId}}">{{item.entreprise}}</option>
+    </select>
+</label>
+<label class="item item-input item-select">
+	<div class="input-label" style="padding:0px;margin-left:-6px;">
+		Offre
+	</div>
+	<select name="offers" id="offers" ng-model="selectedOfferId">
+      <option ng-repeat="item in offers" value="{{item.id}}" selected="{{item.id == selectedOfferId}}">{{item.offer}}</option>
+    </select>
+</label>
+
+<div class="item item-divider" style="padding:2px 0px 2px 5px;height:30px;">
+	Correspond à :
+</div>
+
+<div class="input-label" style="border-color:#ccc;height:30px;margin-left:10px;">
+	Job
+</div>
+<div class="item range range-calm" style="border-color:#ccc;height: 40px;">
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="job" type="range" name="job" min="0" max="100" ng-model="jobyerListSetting.job">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+</div>
+
+<div class="input-label" style="border-color:#ccc;height:30px;width:auto;margin-left:10px;">
+	Qualités indispensables
+</div>
+<div class="item range range-calm" style="border-color:#ccc;height: 40px;">
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="qi" type="range" name="qi" min="0" max="100" ng-model="jobyerListSetting.qi">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+</div>
+
+<div class="input-label" style="border-color:#ccc;height:30px;width:auto;margin-left:10px;">
+	Langue
+</div>
+<div class="item range range-calm" style="border-color:#ccc;height:40px;">
+	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+	<input id="language" type="range" name="language" min="0" max="100" ng-model="jobyerListSetting.language">
+	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
+</div>
+
+<div class="item item-divider" style="padding:2px 0px 2px 5px;height:30px;">
+	Mode de transport :
+</div>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="driving">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Au volant
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="walking">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		En marchant
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="bicycling">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Par vélo
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
+</label>
+<label class="item item-radio">
+	<input type="radio" ng-model="jobyerListSetting.transportationmode" value="transit">
+	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
+		Transports publics
+	</div>
+	<i class="radio-icon ion-checkmark" style="padding:2px 50px 2px;"></i>
+</label>
+</ion-content>
+</ion-view>

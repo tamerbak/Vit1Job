@@ -75,7 +75,7 @@ starter
 
                         var connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeurId)};
                         $cookieStore.put('connexion', connexion);
-                        Global.showAlertValidation("Bienvenu dans Vit1job. Vous pouvez lancer les recherches des jobyers que vous souhaitez.");
+                        Global.showAlertValidation("Vous venez de rentrer dans votre espace employeur.<br>Vous pouvez lancer la recherche de jobs selon vos critères.");
                         // USER REEL - REDIRECTION VERS RECHERCHE
                         $state.go("app");
                       }
@@ -93,14 +93,14 @@ starter
 						('', '', 0, 0, 0, '', '', '', phone, '', password, '', '', '', '', '', sessionId)
 							.success(function (response){
 								console.log("ID EMPLOYEUR : "+response);
-
-								// RECUPERATION EMPLOYEUR ID
+                console.log("phone : "+phone);
+                // RECUPERATION EMPLOYEUR ID
 								var employeur=formatString.formatServerResult(response);
 
 								if(employeur.dataModel.status || employeur.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 									connexion={'etat': true, 'libelle': 'Se déconnecter', 'employeID': Number(employeur.dataModel.status)};
 									$cookieStore.put('connexion', connexion);
-                  Global.showAlertValidation("Bienvenue dans Vit1job. Veuillez saisir vos informations. Elles seront utilisées uniquement en cas de signature du contrat de travail.");
+                  //Global.showAlertValidation("Bienvenue dans Vit1job. Veuillez saisir vos informations. Elles seront utilisées uniquement en cas de signature du contrat de travail.");
 									$rootScope.employeur.id=Number(employeur.dataModel.status);
 									$rootScope.employeur.phone=phone;
 									$rootScope.employeur.index=index;
@@ -167,7 +167,7 @@ starter
 
 		$scope.initForm=function(){
 			// GET LIST
-			$scope.formData={'pays': DataProvider.getPays()};
+      $scope.formData={'pays': DataProvider.getPays(),'index':"0033"};
 			//$scope.formData={ 'villes': $cookieStore.get('villes')};
 		};
 

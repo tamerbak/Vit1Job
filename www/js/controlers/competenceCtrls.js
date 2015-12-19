@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state,$ionicHistory, x2js, AuthentificatInServer,
+	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state,$ionicHistory,$ionicModal, x2js, AuthentificatInServer,
 						Global, DataProvider, PullDataFromServer, PersistInServer, LoadList, formatString, UploadFile,$ionicPopup){
 		// FORMULAIRE
 		$scope.formData={};
@@ -191,7 +191,7 @@ starter
 
 			//if(metier === null || job === null || !$scope.isValid(indisp) || !$scope.isValid(langue)){
       console.log(metier+" job "+job+" indisp "+indisp+" langue "+langue);
-			if(metier === "Metiers" || (job === "Job" && indisp==="Les indispensables" && langue==="langue")){
+			if(metier === "Metiers" || (job === "Job" && indisp==="Qualités indispensables" && langue==="langue")){
 				Global.showAlertValidation("Veuillez saisir d’abord les informations du premier jobyer.");
 				return;
 			}
@@ -501,7 +501,7 @@ starter
 
 						var offre=$rootScope.jobyers[i];
             console.log(offre.metier+":::"+offre.job+":::"+offre.indisp+":::"+offre.langue);
-						if(offre.metier === 'Metiers' || (offre.job === 'Job' && offre.indisp==='Les indispensables' && offre.langue==='Langue')){
+						if(offre.metier === 'Metiers' || (offre.job === 'Job' && offre.indisp==='Qualités indispensables' && offre.langue==='Langue')){
 							console.log("Il manque des informations");
               Global.showAlertValidation("Remplir tous les champs.");
               return;
@@ -518,11 +518,14 @@ starter
 						if(niveau){
 							console.log("niveau : "+niveau);
 						}
-
+          if(!offre.dateDebut)
+            offre.dateDebut= '2015-09-27 02:00:00.0';
+          if(!offre.dateFin)
+            offre.dateFin= '2015-12-12 08:00:00.0';
 
 						// PERSISTENCE OFFRE N°i
-						PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", new Date().getTime(), new Date().getTime()+2592000 , sessionId, employeId, niveau)
-							.then(
+          PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", offre.dateDebut, offre.dateFin , sessionId, employeId, niveau)
+            .then(
 								function (response){
 									console.log("response : "+JSON.stringify(response));
 
@@ -582,7 +585,20 @@ starter
                                       .then(
                                         function (response){
                                           console.log("success : persistInOffres_Niveaux_Langue"+JSON.stringify(response));
-
+                                          if(offre.heures!= undefined && offre.jours!=undefined) {
+                                            var heure_d = offre.heures[0].heureDebut.split('h')[0];
+                                            var heure_f = offre.heures[0].heureFin.split('h')[0];
+                                            var jourId = offre.jours[0].pk_user_jour_de_la_semaine;
+                                            PersistInServer.persistInDisponibilite(Number(jourId), Number(heure_d), Number(heure_f), sessionId, offreId)
+                                              .then(
+                                                function (response) {
+                                                  console.log("response persistInDisponibilite : " + JSON.stringify(response));
+                                                }, function (err) {
+                                                  console.log("error In persistInDisponibilite: " + err);
+                                                  Global.showAlertValidation("Une erreur est survenue, Veuillez réssayer.");
+                                                }
+                                              );
+                                          }
                                         },function (err){
                                           console.log("error : insertion DATA");
                                           console.log("error In persistInOffres_Niveaux_Langue: "+err);
@@ -670,10 +686,6 @@ starter
 							});**/
 
 				}
-
-				// SHOW MODAL
-				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
-				// REDIRECTION VERS home
         var myPopup = $ionicPopup.show({
           template: "Votre compte a été crée avec succés <br>",
           title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -684,7 +696,10 @@ starter
             }
           ]
         });
-				$state.go("app");
+        $state.go("app");
+				// SHOW MODAL
+				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
+				// REDIRECTION VERS home
 			}
 		};
 	  $scope.backbutton = function()
@@ -723,6 +738,100 @@ starter
 		$scope.isValid=function(field){
 
 			return !isNaN(Number(field));
-		}
+		};
 
+    $scope.formData.jours=DataProvider.getDays();
+    console.log($scope.formData.jours.length);
+    $scope.saveDisponibilite= function(){
+
+      var jobeyerCourant=$rootScope.jobyers[Number($rootScope.jobyerCurrent.indice)-1];
+
+      var dateDebut=new Date($scope.formData.dateDebut);
+      var dayDebut = dateDebut.getDate();
+      var monthIndexDebut = dateDebut.getMonth()+1;
+      var yearDebut = dateDebut.getFullYear();
+      var dateDebutFormatted=yearDebut+"-"+monthIndexDebut+"-"+dayDebut+" 00:00:00.0";
+
+      var dateFin=new Date($scope.formData.dateFin);
+      var dayFin = dateFin.getDate();
+      var monthIndexFin = dateFin.getMonth()+1;
+      var yearFin = dateFin.getFullYear();
+      var dateFinFormatted=yearFin+"-"+monthIndexFin+"-"+dayFin+" 00:00:00.0";
+
+      var jours=$scope.formData.jours;
+      var joursCheked=[];
+      for(var j=0;j<7;j++){
+        console.log(jours[j]);
+        if(jours[j]['checked']==true)
+          joursCheked.push(jours[j]);
+      }
+
+      jobeyerCourant['dateDebut']=dateDebutFormatted;
+      jobeyerCourant['dateFin']=dateFinFormatted;
+      jobeyerCourant['jamais']=$scope.formData.jamais;
+      jobeyerCourant['jours']=joursCheked;
+      jobeyerCourant['remuneration']=$scope.formData.remuneration;
+      jobeyerCourant['heures']=$scope.formData.heures;
+
+      console.log(JSON.stringify($scope.formData));
+      $scope.modal.hide();
+    };
+
+    $scope.initModalAll = function(){
+      /*
+       var soapMessage = 'select * from user_jour_de_la_semaine'; //'C# sur paris';
+       $http({
+       method: 'POST',
+       url: 'http://ns389914.ovh.net:8080/vit1job/api/sql',
+       headers: {
+       "Content-Type": "text/plain"
+       },
+       data: soapMessage
+       }).then(
+       function (response){
+       console.log("sql : "+JSON.stringify(response));
+       }
+
+       );
+       */
+      // GET LIST
+      $scope.formData.heures=[];
+
+      $scope.formData.jours=DataProvider.getDays();
+    };
+
+    $scope.ajouterHeures= function(){
+
+      var hdebut=$scope.formData.heureDebut;
+      var hfin=$scope.formData.heureFin;
+      var mdebut=$scope.formData.minDebut;
+      var mfin=$scope.formData.minFin;
+
+      if(hdebut!=undefined && hfin!=undefined && mdebut!=undefined && mfin!=undefined) {
+        if(hfin > hdebut)
+          $scope.formData.heures.push({"heureDebut": hdebut+"h"+mdebut+"min", "heureFin": hfin+"h"+mfin+"min"});
+        else
+          Global.showAlertValidation("L'heure de fin doit être supérieur.");
+      }else{
+        Global.showAlertValidation("Veuillez saisir une heure de début et une heure de fin.");
+      }
+    };
+    $scope.supprimerHeures= function(){
+
+      if( $scope.formData.heures.length!=0){
+        $scope.formData.heures.pop();
+      }
+    };
+    $scope.addDispo = function(){
+      $ionicModal.fromTemplateUrl('templates/disponibiliteCompetenceModal.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    };
+    $scope.initDateFin= function(){
+           if ($scope.formData.jamais)
+                $scope.formData.dateFin=null;
+          };
   });

@@ -396,7 +396,77 @@ angular.module('wsConnectors', ['ionic'])
         },
         data: soapMessage
       });
-	}
+	};
+    this.persistInDisponibilite=function(jourId, heure_debut, heure_fin, sessionID, offreId){
+      soapMessage=
+        '<fr.protogen.connector.model.DataModel>'+
+        '<entity>user_disponibilite_offre_employeur</entity>'+
+        '<dataMap/>'+
+        '<rows>'+
+        '<fr.protogen.connector.model.DataRow>'+
+        '<dataRow>'+
+        '<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+        '<label>&lt;![CDATA[heure_debut]]&gt;</label>'+
+        ' <attributeReference>heure_debut</attributeReference>'+
+        '<type>TEXT</type>'+
+        '<value>'+heure_debut+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+        '<label>&lt;![CDATA[heure_fin]]&gt;</label>'+
+        ' <attributeReference>heure_fin</attributeReference>'+
+        '<type>TEXT</type>'+
+        '<value>'+heure_fin+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+          /*
+        '<fr.protogen.connector.model.DataEntry>'+		//
+        '<label>&lt;![CDATA[fk_user_disponibilite_offre_employeur_user_offre]]&gt;</label>'+
+        ' <attributeReference>fk_user_disponibilite_offre_employeur_user_offre</attributeReference>'+
+        '<type>TEXT</type>'+
+        '<value>'+offreId+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        */
+        '<fr.protogen.connector.model.DataEntry>'+
+        '<label>&lt;![CDATA[JOUR DE SEMAINE]]&gt;</label>'+
+        '<attributeReference>fk_user_jour_de_la_semaine</attributeReference>'+
+        '<type>fk_user_jour_de_la_semaine</type>'+
+        '<list/>'+
+        '<value>'+jourId+'</value>'+
+        '</fr.protogen.connector.model.DataEntry>'+
+        '</dataRow>'+
+        '</fr.protogen.connector.model.DataRow>'+
+        '</rows>'+
+        '<token>'+
+        '<username></username>'+
+        '<password></password>'+
+        '<nom>Jakjoud Abdeslam</nom>'+
+        '<appId>FRZ48GAR4561FGD456T4E</appId>'+
+        '<sessionId>'+sessionID+'</sessionId>'+
+        '<status>SUCCES</status>'+
+        '<id>206</id>'+
+        '<beanId>0</beanId>'+
+        '</token>'+
+        '<expired></expired>'+
+        '<unrecognized></unrecognized>'+
+        '<status></status>'+
+        '<operation>PUT</operation>'+
+        '<clauses/>'+
+        '<page>1</page>'+
+        '<pages>5</pages>'+
+        '<nbpages>0</nbpages>'+
+        '<iddriver>0</iddriver>'+
+        '<ignoreList></ignoreList>'+
+        '</fr.protogen.connector.model.DataModel>';
+
+
+      return $http({
+        method: 'POST',
+        url: 'http://ns389914.ovh.net:8080/vit1job/api/das',
+        headers: {
+          "Content-Type": "text/xml"
+        },
+        data: soapMessage
+      });
+    };
 
 	this.persistInOffres=function(identifiant, titre, description, disponible_du, disponible_au, sessionID, employeurID, niveauID){
 
@@ -425,17 +495,17 @@ angular.module('wsConnectors', ['ionic'])
 							'<type>TEXT</type>'+
 							'<value>&lt;![CDATA['+description+']]&gt;</value>'+
         				'</fr.protogen.connector.model.DataEntry>'+
-						/**'<fr.protogen.connector.model.DataEntry>'+		// disponible_du
+						'<fr.protogen.connector.model.DataEntry>'+		// disponible_du
           					'<label>&lt;![CDATA[Disponible du]]&gt;</label>'+
          					' <attributeReference>disponible_du</attributeReference>'+
           					'<type>DATE</type>'+
-          					'<value>&lt;![CDATA[2015-09-27 02:00:00.0]]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+	**/
+          					'<value>&lt;![CDATA['+disponible_du+']&gt;</value>'+
+        				'</fr.protogen.connector.model.DataEntry>'+
         				'<fr.protogen.connector.model.DataEntry>'+		// disponible_au
           					'<label>&lt;![CDATA[Disponible au]]&gt;</label>'+
           					'<attributeReference>disponible_au</attributeReference>'+
           					'<type>DATE</type>'+
-          					'<value>&lt;![CDATA[2015-12-12 08:00:00.0]]&gt;</value>'+
+          					'<value>&lt;![CDATA['+disponible_au+']]&gt;</value>'+
         				'</fr.protogen.connector.model.DataEntry>'+		// ID EMPLOYEUR
 						'<fr.protogen.connector.model.DataEntry>'+
 							'<label>&lt;![CDATA[Employeur]]&gt;</label>'+

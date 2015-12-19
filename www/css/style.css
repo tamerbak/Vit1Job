@@ -206,7 +206,7 @@ button.button.button-positive.rel {
   width: 79%;
   background-color: #14BAA6;
   border-color: black;
-  color: white;
+  //color: white;
 }
 
 ion-content.modalContent.scroll-content.ionic-scroll.has-header {
@@ -435,7 +435,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   padding-right: 0 !important;
 }
 
-#maitriseDiv {
+#maitriseDiv ,#maitriseLangueDiv{
     margin-top: 23px;
     margin-bottom: 23px;
 	border-radius: 27px;
@@ -451,4 +451,63 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 #competenceContent .list label{
 	padding-bottom : 4%!important;
 	padding-top : 4% !important;
+}
+#disponibiliteContent .header .col , #offresTabContent .header .col{
+  background-color:lightgrey !important;
+}
+
+#disponibiliteContent .col ,  #offresTabContent .col{
+  border: solid 1px grey !important;
+  //border-bottom-style: none !important;
+  //border-right-style: none !important;
+}
+
+#disponibiliteContent .col:last-child , #offresTabContent .col:last-child {
+  border: solid 1px grey !important;
+}
+
+#disponibiliteContent .row:last-child .col {
+  border-bottom: solid 1px grey !important;
+}
+#disponibiliteContent .item-toggle, #disponibiliteContent .item-toggle.item-complex .item-content {
+  padding-right: 135px;
+  padding-left:1px;
+}
+#disponibiliteContent .toggle{
+  right: 3px;
+}
+.active .modal-backdrop-bg {
+  opacity: .5;
+  transition: opacity 300ms ease-in-out;
+  background-color: lightgray;
+}
+#offresContent .padding > .list .item:last-child{
+  border-radius: 0px;
+
+}
+#offresContent .padding > .list .item{
+  border-color: #14BAA6;
+  text-align: left;
+}
+ion-tabs ion-nav-view{
+  left:0px;
+}
+#offresTabContent .item-input{
+border-radius: 27px;
+border-color: #14BAA6;
+}
+
+#offresTabContent .selectClass{
+  height: 36px;
+}
+.popup-open .popup{
+  width:85%;
+}
+.error{
+  color: red;
+  text-align: left !important;
+}
+/*##################################" Agenda #######################################*/
+.itemHoraire{
+   padding: 5px;
 }

@@ -5,12 +5,12 @@
 starter
 
 	.controller('adresseTravailCtrl', function ($scope, $rootScope, $cookieStore, $state, $stateParams,formatString,
-					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory){
+					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory,localStorageService){
 
 		// FORMULAIRE
 		$scope.formData = {};
     $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  JSON.parse($stateParams.steps);
+    var steps =  $stateParams.steps;
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 
@@ -28,7 +28,8 @@ starter
 			if(typeof $scope.formData.ville !== 'undefined')
 				if(typeof $scope.formData.ville.originalObject !== 'undefined')
 					ville=Number($scope.formData.ville.originalObject.pk_user_ville);
-			var adresse1=$scope.formData.adresse1;
+      var num = $scope.formData.num;
+      var adresse1=$scope.formData.adresse1;
 			var adresse2=$scope.formData.adresse2;
 
 			console.log("codePostal: "+codePost);
@@ -43,12 +44,14 @@ starter
 			sessionId=$cookieStore.get('sessionID');
 
 			// TEST DE VALIDATION
-			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2){
+			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2 || num){
 				if(!adresse1)
 					adresse1='';
 				if(!adresse2)
 					adresse2='';
-				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville, adresse1, adresse2, sessionId)
+        if(!num)
+          num='';
+				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
 
 						// DONNEES ONT ETE SAUVEGARDES
@@ -230,8 +233,8 @@ starter
 					});
 			}***/
 
-			// REDIRECTION VERS PAGE - COMPETENCES
-			$state.go('competence');
+			// REDIRECTION VERS PAGE - offres
+			$state.go('offres');
 		};
 
 		// VALIDATION
@@ -348,22 +351,65 @@ starter
       //$rootScope.$broadcast('load-new-list', {newList: {codes}});
     });
 
-		$scope.$on('show-pop-up', function(event, args){
+    $rootScope.$on('show-pop-up', function(event, args){
 
 			var params = args.params;
 			console.log("params : "+JSON.stringify(params));
 
 			var myPopup = $ionicPopup.show({
 
-			  template: "Adresse du travail est identique à l'adresse du siège social? <br>",
+			  template: "L'adresse de travail est-elle différente de l'adresse du siège social (OUI/ NON) ? <br>",
 			  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 			  buttons: [
 				{
-					text: '<b>Non</b>',
-					type: 'button-dark'
-				},{
 					text: '<b>Oui</b>',
 					type: 'button-calm',
+          onTap: function(e) {
+            if (!params.geolocated) {
+              var myPopup0 = $ionicPopup.show({
+                //Votre géolocalisation pour renseigner votre adresse du siège social?
+                template: "Localisation: êtes-vous dans votre lieu de travail? (OUI/ NON)<br>",
+                title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                buttons: [
+                  {
+                    text: '<b>Non</b>',
+                    type: 'button-dark'
+                  }, {
+                    text: '<b>Oui</b>',
+                    type: 'button-calm',
+                    onTap: function (e) {
+                      var myPopup1 = $ionicPopup.show({
+                        //Votre géolocalisation pour renseigner votre adresse du siège social?
+                        template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail. (OUI/ NON ?)<br>",
+                        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                        buttons: [
+                          {
+                            text: '<b>Non</b>',
+                            type: 'button-dark'
+                          }, {
+                            text: '<b>Oui</b>',
+                            type: 'button-calm',
+                            onTap: function (e) {
+                              var geoAddress = localStorageService.get('user_address');
+                              console.log(geoAddress);
+                              $scope.formData.adresse1 = geoAddress.street;
+                              $scope.formData.adresse2 = geoAddress.complement;
+                              $scope.formData.num = geoAddress.num;
+                              $scope.formData.initialCity = geoAddress.city;
+                              $scope.formData.initialPC = geoAddress.postalCode;
+                            }
+                          }
+                        ]
+                      });
+                    }
+                  }
+                ]
+              });
+            }
+          }
+				},{
+					text: '<b>Non</b>',
+					type: 'button-dark',
 					onTap: function(e){
 						$scope.formData.adresse1= params.adresse1;
 						$scope.formData.adresse2= params.adresse2;

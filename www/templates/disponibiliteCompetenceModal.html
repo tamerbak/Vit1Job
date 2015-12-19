@@ -1,0 +1,84 @@
+
+<ion-modal-view style="background-color: white; width:94%; left:13px;top:13px;height: 94%;border: solid 1px; border-radius: 23px;">
+  <ion-header-bar class="bar-calm backgroundGray">
+    <!-- <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="competence">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>-->
+    <!-- <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a> -->
+
+    <div>
+      <h3 style="text-align: center;color:white;">Horaires de travail</h3>
+    </div>
+  </ion-header-bar>
+
+  <ion-content id="disponibiliteContent" padding="true" data-ng-init="initModalAll()">
+    <!-- Title -->
+
+    <div class="list" style="text-align: left;padding: 7px;border-radius: 20px;border: 1px solid lightgray">
+      <label class="item item-input" style="border:none;">
+        <span class="input-label">Date de début</span>
+        <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut">
+      </label>
+      <label class="item item-input" style="border:none;">
+        <span class="input-label">Date de fin</span>
+        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais">
+      </label>
+      <label class="item item-input" style="border:none;">
+        <span class="input-label"></span>
+        <ion-checkbox style="border:none;" ng-model="formData.jamais" data-ng-change="initDateFin();">Jamais</ion-checkbox>
+      </label>
+    </div>
+    <div class="item item-divider">
+      Répétitions
+    </div>
+    <div class="row" style="border: solid 1px gray;">
+      <div class="list" style="width: 42%;">
+        <ion-toggle ng-repeat="jour in formData.jours" toggle-class="toggle-light"
+                    ng-model="jour.checked"
+                    ng-checked="jour.checked">
+          {{ jour.nom }}
+        </ion-toggle>
+
+      </div>
+      <div class="list" style="margin-left: 19px;">
+        <label style="text-align: left;" class="item item-input item-stacked-label">
+          <span class="input-label">Heure de début:</span>
+          <div class="row">
+            <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureDebut" />H&nbsp;&nbsp;
+            <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minDebut" />min
+          </div>
+        </label>
+        <label style="text-align: left;" class="item item-input item-stacked-label">
+          <span class="input-label">Heure de fin:</span>
+          <div class="row">
+            <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureFin" />H&nbsp;&nbsp;
+            <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minFin" />min
+          </div>
+        </label>
+        <br/>
+        <button class="button" ng-click="ajouterHeures();">Ajouter</button>
+        <br/><br/>
+
+        <div class="row header">
+          <div class="col">Heure de début</div>
+          <div class="col">Heure de fin</div>
+        </div>
+        <div class="row" ng-repeat="data in formData.heures" >
+          <div class="col">{{data.heureDebut}}</div>
+          <div class="col">{{data.heureFin}}</div>
+        </div>
+        <br/>
+        <button class="button" ng-click="supprimerHeures();">Supprimer</button>
+        <br/><br/>
+        <label class="item item-input">
+          <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
+        </label>
+      </div>
+    </div>
+    <br>
+    <!-- ACTIONS -->
+    <div class="buttonConnect">
+      <button class="button button-full button-positive grey" data-ng-click="saveDisponibilite();">Valider</button>
+    </div>
+  </ion-content>
+
+</ion-modal-view>

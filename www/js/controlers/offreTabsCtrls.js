@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams){
+	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams, $cordovaDatePicker){
 
     //$scope.formData={};
     if($stateParams.offre) {
@@ -124,6 +124,11 @@ starter
         'langues': DataProvider.getLangues(),
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
+        'dateFin': "Jamais",
+        'heureDebut': 0,
+        'heureFin': 0,
+        'heureDebutFormat': '00h00',
+        'heureFinFormat': '00h00',
         heures:[],
         jours:DataProvider.getDays(),
         qiList:[],
@@ -132,6 +137,7 @@ starter
           degre:10,
         selectedLangue:{}
       };
+      $scope.formData.jours[0].checked = true;
     };
 
     $scope.rangeChange = function(){
@@ -347,8 +353,44 @@ starter
       }
     };
 
-    $scope.initDateFin= function(){
-      if ($scope.formData.jamais)
-        $scope.formData.dateFin=null;
-    };
+
+    var options = {
+    date: new Date(),
+    mode: 'date', // or 'time'
+    minDate: new Date() - 10000,
+    allowOldDates: true,
+    allowFutureDates: false,
+    doneButtonLabel: 'DONE',
+    doneButtonColor: '#F2F3F4',
+    cancelButtonLabel: 'CANCEL',
+    cancelButtonColor: '#000000'
+  };
+
+  $scope.dateDebut = function () {
+
+    $cordovaDatePicker.show(options).then(function(date){
+        $scope.formData.dateDebut = date;
+    });
+
+  };
+
+  $scope.dateFin = function () {
+
+    $cordovaDatePicker.show(options).then(function(date){
+        $scope.formData.dateFin = date;
+    });
+
+  };
+
+  $scope.heureChange = function (params) {
+  if (params === 'debut'){
+    $scope.formData.heureDebutFormat = ($scope.formData.heureDebut === "0" ? "00h00" : Math.floor($scope.formData.heureDebut / 60) + "h" + $scope.formData.heureDebut % 60);
+  }
+  else if(params === 'fin'){
+    $scope.formData.heureFinFormat = ($scope.formData.heureFin === "0" ? "00h00" : Math.floor($scope.formData.heureFin / 60) + "h" + $scope.formData.heureFin % 60);
+  }
+
+  }
+
+
   });

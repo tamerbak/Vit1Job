@@ -247,7 +247,7 @@ $scope.modeConnexion= function(){
                 "title":"offer1",
                 "pricticesJob":[
                       {"pricticeJobId":1,
-                      "job":"job1",
+                      "job":"serveur",
                       "level":"Bien"}],
                 "pricticesLanguage":[
                       {"pricticeLanguageId":1,
@@ -257,10 +257,10 @@ $scope.modeConnexion= function(){
                 "title":"offer2",
                 "pricticesJob":[
                       {"pricticeJobId":3,
-                      "job":"job2",
+                      "job":"java",
                       "level":"Excellent"},
                       {"pricticeJobId":2,
-                      "job":"job1",
+                      "job":"serveur",
                       "level":"Excellent"}],
                 "pricticesLanguage":[
                       {"pricticeLanguageId":2,

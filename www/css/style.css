@@ -507,3 +507,7 @@ border-color: #14BAA6;
   color: red;
   text-align: left !important;
 }
+/*##################################" Agenda #######################################*/
+.itemHoraire{
+   padding: 5px;
+}

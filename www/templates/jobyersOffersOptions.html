@@ -12,17 +12,18 @@
 	<div class="input-label" style="padding:0px;margin-left:-6px;">
 		Entreprise
 	</div>
-	<select name="entreprises" id="entreprises" ng-model="selctedEntrepriseId" ng-change="loadOffers()">
-      <option ng-repeat="item in entreprises" value="{{item.id}}" selected="{{item.id == selctedEntrepriseId}}">{{item.entreprise}}</option>
-    </select>
+    <select name="entreprises" id="entreprises"
+      ng-options="option.label for option in entreprises track by option.id"
+      ng-model="selectedEntreprise"></select>
 </label>
+
 <label class="item item-input item-select">
 	<div class="input-label" style="padding:0px;margin-left:-6px;">
 		Offre
 	</div>
-	<select name="offers" id="offers" ng-model="selectedOfferId">
-      <option ng-repeat="item in offers" value="{{item.id}}" selected="{{item.id == selectedOfferId}}">{{item.offer}}</option>
-    </select>
+    <select name="offers" id="offers"
+      ng-options="option.label for option in offers track by option.id"
+      ng-model="selectedOffer"></select>
 </label>
 
 <div class="item item-divider" style="padding:2px 0px 2px 5px;height:30px;">
@@ -30,7 +31,7 @@
 </div>
 
 <div class="input-label" style="border-color:#ccc;height:30px;margin-left:10px;">
-	Job
+	Job ({{jobyerListSetting.job}}%)
 </div>
 <div class="item range range-calm" style="border-color:#ccc;height: 40px;">
 	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
@@ -38,8 +39,8 @@
 	<img src="img\tree4_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
 </div>
 
-<div class="input-label" style="border-color:#ccc;height:30px;width:auto;margin-left:10px;">
-	Qualités indispensables
+<div class="input-label" style="border-color:#ccc;height:30px;width:auto;margin-left:10px;max-width:none;">
+	Qualités indispensables ({{jobyerListSetting.qi}}%)
 </div>
 <div class="item range range-calm" style="border-color:#ccc;height: 40px;">
 	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
@@ -48,7 +49,7 @@
 </div>
 
 <div class="input-label" style="border-color:#ccc;height:30px;width:auto;margin-left:10px;">
-	Langue
+	Langue ({{jobyerListSetting.language}}%)
 </div>
 <div class="item range range-calm" style="border-color:#ccc;height:40px;">
 	<img src="img\tree1_small.png" style="display: inline;max-width: 30px;max-height: 30px;">
@@ -85,7 +86,7 @@
 	<div class="item-content" style="padding:8px 0px 0px 10px;height:40px">
 		Transports publics
 	</div>
-	<i class="radio-icon ion-checkmark" style="padding:2px 50px 2px;"></i>
+	<i class="radio-icon ion-checkmark" style="padding:2px 15px;"></i>
 </label>
 </ion-content>
 </ion-view>

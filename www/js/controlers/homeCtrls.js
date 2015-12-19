@@ -291,12 +291,12 @@ $scope.modeConnexion= function(){
    var confirmPopup = $ionicPopup.confirm({
      cancelText: 'Continuer',
      title: 'VitOnJob',
-     template: 'Pour que la recherche soit plus précis, voulez vous créer une offre pour ' + job + '?'
+     template: 'Pour que la recherche soit plus précise, voulez vous créer une offre pour ' + job + '?'
    });
    confirmPopup.then(function(res) {
      if(res) {
          // redirection vers la page d'ajout des offres employeur
-         $state.go("competence");
+         $state.go("offres");
        } else {
          getJobyersOffersByJob(job);
        }
@@ -341,13 +341,13 @@ $scope.modeConnexion= function(){
                 found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
                 if(found){
                   var currentOffer = {
-                    'id' : offers[j].offerId,
-                    'offer' : offers[j].title
+                    'id' : offers[j].offerId.toString(),
+                    'label' : offers[j].title
                   };
                   localStorageService.set('currentOffer',currentOffer);
                   var currentEntreprise = {
-                    'id' : entreprises[i].entrepriseId,
-                    'entreprise' : entreprises[i].name
+                    'id' : entreprises[i].entrepriseId.toString(),
+                    'label' : entreprises[i].name
                   };
                   localStorageService.set('currentEntreprise',currentEntreprise);
                   loadCurrentEmployerEntreprises();
@@ -380,15 +380,15 @@ $scope.modeConnexion= function(){
         if(currentEmployerEntreprises[i] && currentEmployerEntreprises[i].offers && currentEmployerEntreprises[i].offers.length > 0){
           for(var j = 0; j < currentEmployerEntreprises[i].offers.length; j++){
             offer = {
-              'id' : currentEmployerEntreprises[i].offers[j].offerId,
-              'offer' : currentEmployerEntreprises[i].offers[j].title
+              'id' : currentEmployerEntreprises[i].offers[j].offerId.toString(),
+              'label' : currentEmployerEntreprises[i].offers[j].title
             };
             offers.push(offer);
           }
         }
         entreprise = {
-          'id' : currentEmployerEntreprises[i].entrepriseId,
-          'entreprise' : currentEmployerEntreprises[i].name,
+          'id' : currentEmployerEntreprises[i].entrepriseId.toString(),
+          'label' : currentEmployerEntreprises[i].name,
           'offers' : offers
         }
         entreprises.push(entreprise);

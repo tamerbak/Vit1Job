@@ -136,8 +136,8 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'offreTabsCtrl'
     })
     .state('contract', {
-      url: '/contract/:jobyer',
-      /*url: '/contract',*/
+      url: '/contract',
+      params: {jobyer: null},
       templateUrl: 'templates/createContract.html',
       controller: 'contractCtrl'
     })

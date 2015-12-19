@@ -83,7 +83,10 @@ starter
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
     };
-
+    $scope.compteCree= function(){
+      Global.showAlertValidation("Bienvenue dans VitOjob.<br>Vous venez de créer votre compte.<br>Vous pouvez lancer la recherche de jobyers selon vos critères.");
+      $state.go('app');
+    };
     $scope.supprimerOffre= function(){
       var offre=$scope.formData.offre;
       if(offre.pk){

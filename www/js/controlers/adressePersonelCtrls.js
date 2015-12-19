@@ -8,6 +8,7 @@ starter
 			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ){
 
 		// FORMULAIRE
+    var geolocated=false;
 		$scope.formData = {};
     $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     console.log($stateParams.steps);
@@ -50,14 +51,14 @@ starter
 
 			// TEST DE VALIDATION
 			//if(codePostal !== '' && ville !== '' && adresse1 !== '' && adresse2 !== ''){
-			if(!isNaN(codePostal) || !isNaN(ville) || adresse1 || adresse2 || num){
-				if(!adresse1)
-					adresse1='';
-				if(!adresse2)
-					adresse2='';
-        if(!num)
-          num='';
-
+			if(!isNaN(codePostal) || !isNaN(ville) || adresse1 || adresse2 || num) {
+        if (!adresse1)
+          adresse1 = '';
+        if (!adresse2)
+          adresse2 = '';
+        if (!num)
+          num = '';
+      }
 				UpdateInServer.updateAdressePersEmployeur(employeId, codePostal, ville, num, adresse1, adresse2, sessionId)
 					.success(function (response){
 
@@ -91,14 +92,15 @@ starter
 								'adresse1': adresse1,
 								'adresse2': adresse2,
 								'vi': vi,
-								'code': code
+								'code': code,
+                'geolocated':geolocated
 							}
 								});
 					}).error(function (err){
 						console.log("error : insertion DATA");
 						console.log("error In updateAdressePersEmployeur: "+err);
 					});
-			}
+        // }
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
 			$state.go('adresseTravail',{"steps":JSON.stringify(steps)});
 		};
@@ -195,7 +197,7 @@ starter
 								.then(function() {
 									var myPopup = $ionicPopup.show({
 										//Votre géolocalisation pour renseigner votre adresse du siège social?
-										template: "Pour remplir rapidement votre adresse du siège social, veuillez vous localiser <br>",
+										template: "Localisation: êtes-vous dans votre siège social? (OUI/ NON)<br>",
 										title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 										buttons: [
 											{
@@ -205,12 +207,29 @@ starter
 												text: '<b>Oui</b>',
 												type: 'button-calm',
 												onTap: function(e){
-													var geoAddress = localStorageService.get('user_address');
-													$scope.formData.adresse1 = geoAddress.street;
-													$scope.formData.adresse2 = geoAddress.complement;
-													$scope.formData.num = geoAddress.num;
-													$scope.formData.initialCity = geoAddress.city;
-													$scope.formData.initialPC = geoAddress.postalCode;
+                          var myPopup2 = $ionicPopup.show({
+                            //Votre géolocalisation pour renseigner votre adresse du siège social?
+                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social. (OUI/ NON ?)<br>",
+                            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                            buttons: [
+                              {
+                                text: '<b>Non</b>',
+                                type: 'button-dark'
+                              },{
+                                text: '<b>Oui</b>',
+                                type: 'button-calm',
+                                onTap: function(e){
+                                  geolocated=true;
+                                  var geoAddress = localStorageService.get('user_address');
+                                  $scope.formData.adresse1 = geoAddress.street;
+                                  $scope.formData.adresse2 = geoAddress.complement;
+                                  $scope.formData.num = geoAddress.num;
+                                  $scope.formData.initialCity = geoAddress.city;
+                                  $scope.formData.initialPC = geoAddress.postalCode;
+                                }
+                              }
+                            ]
+                          });
 												}
 											}
 										]

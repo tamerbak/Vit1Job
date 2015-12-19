@@ -500,3 +500,10 @@ border-color: #14BAA6;
 #offresTabContent .selectClass{
   height: 36px;
 }
+.popup-open .popup{
+  width:85%;
+}
+.error{
+  color: red;
+  text-align: left !important;
+}

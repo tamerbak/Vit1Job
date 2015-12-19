@@ -3,7 +3,7 @@
  */
 'use strict';
 
-starter.controller('contractCtrl',function($scope,$cookieStore,$stateParams,DataProvider){
+starter.controller('contractCtrl',function($scope,$cookieStore,$stateParams,DataProvider,$ionicPopup,$state){
   var employeur = $cookieStore.get('employeur');
   var civilites = DataProvider.getCivilites();
   var civilite = "";
@@ -17,7 +17,18 @@ starter.controller('contractCtrl',function($scope,$cookieStore,$stateParams,Data
   var adrTrv = employeur.adresseTravail;
   $scope.lieu = adrTrv.adresse1 + " " + adrTrv.adresse2 + " " + adrTrv.codePostal + " " + adrTrv.ville;
   var jobyer = $stateParams.jobyer;
-  //$scope.cityJ = jobyer.city;
   $scope.firstNameJ = jobyer.name;
   $scope.lastNameJ = jobyer.name;
+
+  // An alert dialog
+  $scope.showAlert = function() {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Succès',
+      template: 'Vous avez bien établi un contrat avec '+jobyer.name
+    });
+    alertPopup.then(function() {
+      $state.go("app");
+    });
+  };
+
 });

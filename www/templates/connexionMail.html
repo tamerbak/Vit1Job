@@ -20,17 +20,20 @@
 		<span class="error" >Not valid email!</span>-->
       </label>
 	</div>
-	
+
 	<!-- PASSWORD -->
-	<div class="list">
+	<div class="list" style="margin-bottom: 0px;">
 	  <label class="item item-input">
-        <input type="password" placeholder="Mot de passe" data-ng-model="formData.password" ng-minlength="6">
+        <input type="password" placeholder="Mot de passe" data-ng-model="formData.password" >
       </label>
+  </div>
+    <div class="error">
+    <span ng-if="!passwordIsValid();">*Taille minimale: 6 caractères.</span>
     </div>
 
-	<!-- ACTIONS -->
+    <!-- ACTIONS -->
 	<div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="connexionByMail()" ng-disabled="!formData.email || !formData.password">Connecter</button>
+      <button class="button button-full button-positive green" data-ng-click="connexionByMail()" ng-disabled="!formData.email || !formData.password || formData.password.length < 6">Connecter</button>
       <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
     </div>
   </ion-content>

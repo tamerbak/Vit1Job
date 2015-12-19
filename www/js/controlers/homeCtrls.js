@@ -235,6 +235,45 @@ $scope.modeConnexion= function(){
 
   //****************************************** NEW **********************************//
 
+  //************** Pour les tests********************//
+  var currentEmployer = {
+    "email":"rachid@test.com",
+    "employerId":1,
+    "entreprises":[
+          {"entrepriseId":1,
+          "name":"entreprise1",
+          "offers":[
+                {"offerId":1,
+                "title":"offer1",
+                "pricticesJob":[
+                      {"pricticeJobId":1,
+                      "job":"job1",
+                      "level":"Bien"}],
+                "pricticesLanguage":[
+                      {"pricticeLanguageId":1,
+                      "language":"Français",
+                      "level":"Bien"}]},
+                {"offerId":2,
+                "title":"offer2",
+                "pricticesJob":[
+                      {"pricticeJobId":3,
+                      "job":"job2",
+                      "level":"Excellent"},
+                      {"pricticeJobId":2,
+                      "job":"job1",
+                      "level":"Excellent"}],
+                "pricticesLanguage":[
+                      {"pricticeLanguageId":2,
+                      "language":"Anglais",
+                      "level":"Bien"}]
+                }]
+          }]
+  };
+
+  localStorageService.set('currentEmployer', currentEmployer)
+  
+  //*************************************************//
+
   var checkIsLogged = function(){
     var currentEmployer = localStorageService.get('currentEmployer');
     var isLogged = (currentEmployer) ? true : false;
@@ -297,11 +336,21 @@ $scope.modeConnexion= function(){
           while(!found && j < offers.length){
             pricticesJob = offers[j].pricticesJob;
             if(pricticesJob && pricticesJob.length > 0){
+              k = 0;
               while(!found && k < pricticesJob.length){
                 found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
                 if(found){
-                  localStorageService.set('currentOffer',offers[j]);
-                  localStorageService.set('currentEntreprise',offers[i]);
+                  var currentOffer = {
+                    'id' : offers[j].offerId,
+                    'offer' : offers[j].title
+                  };
+                  localStorageService.set('currentOffer',currentOffer);
+                  var currentEntreprise = {
+                    'id' : entreprises[i].entrepriseId,
+                    'entreprise' : entreprises[i].name
+                  };
+                  localStorageService.set('currentEntreprise',currentEntreprise);
+                  loadCurrentEmployerEntreprises();
                 }
                 else{
                   k++;
@@ -317,10 +366,42 @@ $scope.modeConnexion= function(){
     return found;
   };
 
+  var loadCurrentEmployerEntreprises = function(){
+    var currentEmployer = localStorageService.get('currentEmployer');
+    if(!currentEmployer) return;
+    var currentEmployerEntreprises = currentEmployer.entreprises;
+    if(currentEmployerEntreprises && currentEmployerEntreprises.length > 0){
+      var entreprises = [];
+      var entreprise;
+      var offers = [];
+      var offer;
+      for(var i = 0; i < currentEmployerEntreprises.length; i++){
+        offers = [];
+        if(currentEmployerEntreprises[i] && currentEmployerEntreprises[i].offers && currentEmployerEntreprises[i].offers.length > 0){
+          for(var j = 0; j < currentEmployerEntreprises[i].offers.length; j++){
+            offer = {
+              'id' : currentEmployerEntreprises[i].offers[j].offerId,
+              'offer' : currentEmployerEntreprises[i].offers[j].title
+            };
+            offers.push(offer);
+          }
+        }
+        entreprise = {
+          'id' : currentEmployerEntreprises[i].entrepriseId,
+          'entreprise' : currentEmployerEntreprises[i].name,
+          'offers' : offers
+        }
+        entreprises.push(entreprise);
+      }
+      localStorageService.set('currentEmployerEntreprises',entreprises);
+    }
+  }
+
   $scope.launchSearchForJobyersOffers = function(job){
     localStorageService.set('lastSearchedJob',job);
     localStorageService.remove('currentOffer');
     localStorageService.remove('currentEntreprise');
+    localStorageService.remove('currentEmployerEntreprises');
     var isLogged = checkIsLogged();
     if(isLogged){
       if(isEntrepriseOfferByJobExists(job)){

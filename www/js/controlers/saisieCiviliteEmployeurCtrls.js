@@ -11,7 +11,7 @@ starter
 		// IMAGE
 		//$scope.formData.image={};
     $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  JSON.parse($stateParams.steps);
+    var steps =  $stateParams.steps;
 		$scope.updateCiviliteEmployeur = function(){
 
 			for(var obj in $scope.formData){

@@ -1,26 +1,22 @@
-
-<ion-modal-view style="background-color: white; width:94%; left:13px;top:13px;height: 94%;border: solid 1px; border-radius: 23px;">
-  <ion-header-bar class="bar-calm backgroundGray">
-    <!-- <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="competence">  </a>
-    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>-->
-    <!-- <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a> -->
-
-    <div>
-      <h3 style="text-align: center;color:white;">Horaires de travail</h3>
-    </div>
+<ion-view view-title="agenda">
+  <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offreTabs.langues">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offres">  </a>
   </ion-header-bar>
-
   <ion-content id="disponibiliteContent" padding="true" data-ng-init="initModalAll()">
     <!-- Title -->
-
+    <div>
+      <h3 class="titlePhone"><b>Horaires de travail</b></h3>
+    </div>
     <div class="list" style="text-align: left;padding: 7px;border-radius: 20px;border: 1px solid lightgray">
       <label class="item item-input" style="border:none;">
         <span class="input-label">Date de début</span>
-        <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut">
+        <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut" value={{formData.dateDebut}}>
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label">Date de fin</span>
-        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais">
+        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais" value={{formData.dateFin}}>
       </label>
       <label class="item item-input" style="border:none;">
         <span class="input-label"></span>
@@ -40,21 +36,24 @@
 
       </div>
       <div class="list" style="margin-left: 19px;">
-        <label style="text-align: left;" class="item item-input item-stacked-label">
-          <span class="input-label">Heure de début:</span>
-          <div class="row">
-            <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureDebut" />H&nbsp;&nbsp;
-            <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minDebut" />min
-          </div>
-        </label>
-        <label style="text-align: left;" class="item item-input item-stacked-label">
-          <span class="input-label">Heure de fin:</span>
-          <div class="row">
-            <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureFin" />H&nbsp;&nbsp;
-            <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minFin" />min
-          </div>
-        </label>
-        <br/>
+        <div class="list">
+          <label style="text-align: left;" class="item item-input item-stacked-label">
+            <span class="input-label">Heure de début:</span>
+            <div class="row">
+              <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureDebut" />H&nbsp;&nbsp;
+              <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minDebut" />min
+            </div>
+          </label>
+        </div>
+        <div class="list">
+          <label style="text-align: left;" class="item item-input item-stacked-label">
+            <span class="input-label">Heure de fin:</span>
+            <div class="row">
+              <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureFin" />H&nbsp;&nbsp;
+              <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minFin" />min
+            </div>
+          </label>
+        </div>
         <button class="button" ng-click="ajouterHeures();">Ajouter</button>
         <br/><br/>
 
@@ -77,8 +76,8 @@
     <br>
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive grey" data-ng-click="saveDisponibilite();">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="validerOffre();">Valider</button>
     </div>
   </ion-content>
 
-</ion-modal-view>
+</ion-view>

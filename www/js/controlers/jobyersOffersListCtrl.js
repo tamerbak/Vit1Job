@@ -79,18 +79,18 @@ starter.controller('jobyersOffersListCtrl',
 		return st.charAt(0).toUpperCase() + st.slice(1);
 	};
 
-	var setDefaultJobyerListSetting = function(property, newValue){
+	var setJobyerListSetting = function(property, newValue){
 		var jobyerListSetting = localStorageService.get('jobyerListSetting');
 		jobyerListSetting[property] = newValue;
 		localStorageService.set('jobyerListSetting', jobyerListSetting);
 	};
 
 	$scope.$watch('jobyerListSetting.orderByAvialability', function (newValue, oldValue) {
-		setDefaultJobyerListSetting('orderByAvialability', newValue);
+		setJobyerListSetting('orderByAvialability', newValue);
 	});
 
 	$scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
-		setDefaultJobyerListSetting('orderByCorrespondence', newValue);
+		setJobyerListSetting('orderByCorrespondence', newValue);
 	});
 
 	$scope.showMenuForContract = function(jobber){

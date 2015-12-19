@@ -45,6 +45,43 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'MapCtrl'
 
     })
+
+    .state('jobyersOffersTab', {
+      url: '/jobyersOffersTab',
+      abstract: true,
+      templateUrl: 'templates/jobyersOffersTab.html',
+    })
+
+    .state('jobyersOffersTab.list', {
+      url: '/list',
+      views: {
+        'jobyersOffersTab-list': {
+          templateUrl: 'templates/jobyersOffersList.html',
+          controller: 'jobyersOffersListCtrl'
+        }
+      }
+    })
+
+    .state('jobyersOffersTab.map', {
+      url: '/map',
+      views: {
+        'jobyersOffersTab-map': {
+          templateUrl: 'templates/jobyersMap.html',
+          controller: 'jobyersMapCtrl'
+        }
+      }
+    })
+
+    .state('jobyersOffersTab.options', {
+      url: '/options',
+      views: {
+        'jobyersOffersTab-options': {
+          templateUrl: 'templates/jobyersOffersOptions.html',
+          controller: 'jobyersOffersOptionsCtrl'
+        }
+      }
+    })
+
     .state('listNext', {
       url: '/listNext',
       templateUrl: 'templates/listJobyersNext.html',

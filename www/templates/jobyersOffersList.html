@@ -1,0 +1,54 @@
+<ion-view view-title="{{AppLogo}}">
+
+<ion-nav-buttons side="primary">
+<button class="button button-clear button-small" ui-sref="app">
+	<i class="icon ion-ios-arrow-back"></i>
+</button>
+</ion-nav-buttons>
+
+<ion-content>
+
+<div class="item item-divider" style="padding:3px 10px 3px 10px;">
+	<label style="float:left;padding-top:5px;"><b>{{OfferLabel}}</b></label>
+	<button class="button button-small button-light ion-ios-settings-strong" style="float:right;" ui-sref="jobyersOffersTab.options"></button>
+	<button class="button button-small button-light ion-edit" style="float:right;"></button>
+</div>
+
+<ion-checkbox ng-model="jobyerListSetting.orderByAvialability" class="checkbox-calm" style="padding:8px;" ng-change="sort()">
+<label class="calm" style="padding-left:40px;">Disponible via &nbsp;&nbsp;&nbsp;
+	<i class="icon ion-android-car calm" ng-if="transportationmode == 'driving'"></i>
+	<i class="icon ion-android-walk calm" ng-if="transportationmode == 'walking'"></i>
+	<i class="icon ion-android-bicycle calm" ng-if="transportationmode == 'bicycling'"></i>
+	<i class="icon ion-android-bus calm" ng-if="transportationmode == 'transit'"></i>
+</label>
+</ion-checkbox>
+<ion-checkbox ng-model="jobyerListSetting.orderByCorrespondence" class="checkbox-stable" style="padding:8px;" ng-change="sort()">
+<label style="color:gray;padding-left:40px;">% de correspondance à la demande</label>
+</ion-checkbox>
+
+<div class="list">
+	<a class="item item-avatar card" style="margin:6px;" ng-repeat="jobyerOffer in jobyersOffers | orderBy : SortOrder">
+		<div class="item-icon-left">
+			<div><i class="icon ion-person"></i></div>
+		</div>
+		<h2>{{jobyerOffer.jobyerName}}</h2>
+		<p>
+			<p>
+				<i class="icon ion-android-car calm" ng-if="transportationmode == 'driving'"></i>
+				<i class="icon ion-android-walk calm" ng-if="transportationmode == 'walking'"></i>
+				<i class="icon ion-android-bicycle calm" ng-if="transportationmode == 'bicycling'"></i>
+				<i class="icon ion-android-bus calm" ng-if="transportationmode == 'transit'"></i>
+				<label class="calm">&nbsp;&nbsp;{{jobyerOffer.availability.text}}</label></p>
+				<p><i class="icon ion-arrow-shrink"></i><label style="color:gray;">&nbsp;&nbsp;{{jobyerOffer.matching}} %</label></p>
+			</p>
+			<div class="item-button-right">
+				<button class="button button-clear" style="padding-top:11px;" ng-disabled="jobyerOffer.contacted" ng-click="showMenuForContract(jobyerOffer)">
+					<i class="icon ion-power calm" ng-if="jobyerOffer.contacted"></i>
+					<i class="icon ion-power" style="color:gainsboro;" ng-if="!jobyerOffer.contacted"></i>
+				</button>
+			</div>
+		</a>
+	</div>
+
+</ion-content>
+</ion-view>

@@ -32,7 +32,7 @@ angular.module('globalServices', ['ionic', 'cb.x2js','ngCookies'])
 		 });
 	  };
 
-	  this.showAlertValidation=function(temp){
+	    this.showAlertValidation=function(temp){
 
 		  var myPopup = $ionicPopup.show({
 

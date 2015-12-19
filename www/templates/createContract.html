@@ -95,6 +95,8 @@
         SIRET 480 167 543 000 10-RCS AMIENS<br/>
         GARANT FINANCIER CREDIT DU NORD<br/>
       </div>
+      <ion-checkbox ng-model="checked">J'accepte toutes les clauses du contrat</ion-checkbox>
+      <button class="button button-stable" style="margin-top:20px;" ng-model="button" ng-disabled="!checked" ng-click="showAlert()">Valider</button>
     </div>
   </ion-content>
 </ion-view>

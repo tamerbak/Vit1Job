@@ -17,7 +17,7 @@ angular.module('wsConnectors', ['ionic'])
           "login": JSON.stringify(user),
         }
       });*/
-      var wsRs= {"email":"rachid@test.com","employerId":1,isNew : false,
+      var wsRs= {"email":"rachid@test.com","employerId":1,isNew : true,
         "entreprises":[{"entrepriseId":1,"name":"entreprise1",
           "offers":[{"offerId":1,"title":"titre offer 1",
             "pricticesJob":[{"pricticeJobId":1,"job":"job 1","level":"Bien"}],

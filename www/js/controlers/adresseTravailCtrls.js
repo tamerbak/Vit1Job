@@ -249,7 +249,9 @@ starter
 			}***/
 
 			// REDIRECTION VERS PAGE - offres
-			$state.go('offres');
+      if ($stateParams.steps!=''){
+        $state.go('contract');
+      } else $state.go('offres');
 		};
 
 		// VALIDATION

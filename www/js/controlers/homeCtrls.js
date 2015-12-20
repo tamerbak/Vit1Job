@@ -5,8 +5,7 @@
 
  starter
 
- .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, $cookieStore, 
-  $timeout, $cookies, localStorageService, jobyerService) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -185,12 +184,12 @@ $scope.exitVit = function () {
 
 $scope.initConnexion= function(){
 
-  $scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-  var cnx = $cookieStore.get('connexion');
-  if(cnx){
-   $scope.formData.connexion = cnx;
-   console.log("Employeur est connecté");
- }
+		$scope.formData.connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
+		var cnx=localStorageService.get('connexion');
+		if(cnx){
+			$scope.formData.connexion=cnx;
+			console.log("Employeur est connecté");
+		}
 
  console.log("connexion[employeID] : "+$scope.formData.connexion.employeID);
  console.log("connexion[libelle] : "+$scope.formData.connexion.libelle);
@@ -203,24 +202,24 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
  }
 });
 
-$scope.modeConnexion= function(){
-  var estConnecte=0;
-  var cnx=$cookieStore.get('connexion');
-  if(cnx){
+	$scope.modeConnexion= function(){
+		var estConnecte=0;
+		var cnx=localStorageService.get('connexion');
+		if(cnx){
 			if(cnx.etat){ // IL S'AGIT D'UNE DECONNEXION
 				console.log("IL S'AGIT D'UNE DECONNEXION");
 
-      $cookieStore.remove('connexion');
-      $cookieStore.remove('sessionID');
-      var connexion = {'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
-      $cookieStore.put('connexion', connexion);
+				localStorageService.remove('connexion');
+				localStorageService.remove('sessionID');
+				var connexion={'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
+				localStorageService.set('connexion', connexion);
 
-      console.log("New Connexion : "+JSON.stringify($cookieStore.get('connexion')));
-      $state.go("connection");
+				console.log("New Connexion : "+JSON.stringify(localStorageService.get('connexion')));
+				$state.go("connection");
 				/*** REMOVE ALL COOKIES
 				var cookies = $cookies.getAll();
 				angular.forEach(cookies, function (v, k) {
-					$cookieStore.remove(k);
+					localStorageService.remove(k);
 				});**/
 
 }
@@ -271,7 +270,7 @@ $scope.modeConnexion= function(){
   };
 
   localStorageService.set('currentEmployer', currentEmployer)
-  
+
   //*************************************************//
 
   var checkIsLogged = function(){

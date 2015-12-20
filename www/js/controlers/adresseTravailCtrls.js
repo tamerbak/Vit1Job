@@ -258,10 +258,15 @@ starter
 			Validator.checkField(id);
 		};
 
-		$scope.initForm=function(){
-			$scope.formData.zipCodes=DataProvider.getZipCodes();
-			$scope.formData.villes=DataProvider.getVilles();
-		};
+    $scope.$on("$ionicView.beforeEnter", function () {
+      $scope.formData.zipCodes=DataProvider.getZipCodes();
+      $scope.formData.villes=DataProvider.getVilles();
+    });
+
+		//$scope.initForm=function(){
+			//$scope.formData.zipCodes=DataProvider.getZipCodes();
+			//$scope.formData.villes=DataProvider.getVilles();
+		//};
 /*
 		$scope.$on('update-list-ville', function(event, args){
 

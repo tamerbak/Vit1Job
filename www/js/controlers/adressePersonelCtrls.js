@@ -191,12 +191,17 @@ starter
     });
 
 
-    $scope.initForm=function(){
+    $scope.$on("$ionicView.beforeEnter", function () {
+      $scope.formData.zipCodes=DataProvider.getZipCodes();
+      $scope.formData.villes=DataProvider.getVilles();
+    });
+
+    //$scope.initForm=function(){
 			/**var elm = angular.element(document.querySelector('#ex0_value'));
 			elm.val("Ville");**/
-			$scope.formData.zipCodes=DataProvider.getZipCodes();
-			$scope.formData.villes=DataProvider.getVilles();
-		};
+			//$scope.formData.zipCodes=DataProvider.getZipCodes();
+			//$scope.formData.villes=DataProvider.getVilles();
+		//};
 
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&

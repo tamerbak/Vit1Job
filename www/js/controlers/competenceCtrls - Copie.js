@@ -5,7 +5,7 @@
 angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalServices',
 		'providerServices', 'parsingServices', 'fileServices', "angucomplete-alt"])
 
-	.controller('competenceCtrl', function ($scope, $rootScope, $cookieStore, $state, x2js, AuthentificatInServer,
+	.controller('competenceCtrl', function ($scope, $rootScope, localStorageService, $state, x2js, AuthentificatInServer,
 						Global, DataProvider, PullDataFromServer, PersistInServer, LoadList, formatString, UploadFile){
 		// FORMULAIRE
 		$scope.formData={};
@@ -390,12 +390,12 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 			$rootScope.jobyers[idex].maitriseIcon=$scope.formData.maitriseIcon;
 
 			// RECUPERATION CONNEXION
-			connexion=$cookieStore.get('connexion');
+			connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			employeId=connexion.employeID;
 			console.log("connexion : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=$cookieStore.get('sessionID');
+			sessionId=localStorageService.get('sessionID');
 
 			console.log("Offres A Persister : "+JSON.stringify($rootScope.jobyers));
 
@@ -413,7 +413,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 						// GET SESSION ID
           				sessionId = jsonResp.amanToken.sessionId;
           				console.log("New sessionId : "+sessionId);
-		  				$cookieStore.put('sessionID', sessionId);
+		  				localStorageService.set('sessionID', sessionId);
 						hasSessionID=1;
 					})
 					.error(function (err){
@@ -424,7 +424,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 
 			if(hasSessionID){
 				console.log("Je suis dans : hasSessionID");
-				
+
 				// PARCOURIR ALL JOBYERS
 				for(var i=0; i<$rootScope.jobyers.length; i++){
 					offre=$rootScope.jobyers[i];
@@ -432,7 +432,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 						console.log("Il manque des informations")
 						return;
 					}
-					
+
 					// GET NIVEAU
 					list=DataProvider.getNiveauxMaitrise();
 					niveau=0;
@@ -454,12 +454,12 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 							ofre=formatString.formatServerResult(response);
 							if(ofre.dataModel.status || ofre.dataModel.status !== 'FAILURE'){	// BIND IN COOKIES
 								offreId=Number(ofre.dataModel.status);
-								// $cookieStore.put('offreID', Number(ofre.dataModel.status));
+								// localStorageService.set('offreID', Number(ofre.dataModel.status));
 							}
 
 							// DONNEES ONT ETE SAUVEGARDES
 							console.log("offreID a été bien récuperé : "+offreId);
-							
+
 							if(offreId){
 								if(offre.job){
 									console.log("offreId : "+offreId);
@@ -473,7 +473,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 													console.log("error In persistInOffres_Competences: "+err);
 											});
 								}
-									
+
 								if(!isNaN(offre.indisp)){
 									console.log("offreId : "+offreId);
 									console.log("indisp : "+offre.indisp);
@@ -486,7 +486,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 													console.log("error In persistInOffres_Transvers: "+err);
 											});
 								}
-									
+
 								if(!isNaN(offre.langue)){
 										console.log("offreId : "+offreId);
 										console.log("langue : "+offre.langue);
@@ -498,7 +498,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 													console.log("error : insertion DATA");
 													console.log("error In persistInOffres_Langues: "+err);
 											});
-									}				
+									}
 							}
 
 						}).error(function (err){
@@ -506,7 +506,7 @@ angular.module('competenceCtrls', ['ionic', 'wsConnectors','ngCookies', 'globalS
 							console.log("error In PullDataFromServer.pullDATA: "+err);
 						});
 				}
-				
+
 				// SHOW MODAL
 				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
 				// REDIRECTION VERS home

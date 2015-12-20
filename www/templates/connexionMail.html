@@ -33,7 +33,7 @@
 
     <!-- ACTIONS -->
 	<div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="connexionByMail()" ng-disabled="!formData.email || !formData.password || formData.password.length < 6">Connecter</button>
+      <button class="button button-full button-positive green" data-ng-click="Authenticate()" ng-disabled="!formData.email || !formData.password">Connecter</button>
       <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
     </div>
   </ion-content>

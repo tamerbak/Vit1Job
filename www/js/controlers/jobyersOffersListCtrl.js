@@ -1,7 +1,7 @@
 'use strict';
 
-starter.controller('jobyersOffersListCtrl', 
-	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 
+starter.controller('jobyersOffersListCtrl',
+	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state',
 	function($scope, localStorageService, $ionicActionSheet, UserService, $state) {
 
 		var init = function(){
@@ -95,7 +95,8 @@ starter.controller('jobyersOffersListCtrl',
 	$scope.showMenuForContract = function(jobber){
 
 		jobber.contacted = true;
-
+    localStorageService.remove('Selectedjobyer');
+    localStorageService.put('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
 			buttons: [
 			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0
@@ -112,7 +113,7 @@ starter.controller('jobyersOffersListCtrl',
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
               */
-              
+
               var isAuth = UserService.isAuthenticated();
               if (isAuth) {
                 console.log("check and then redirect to contract page");

@@ -1,118 +1,118 @@
 'use strict';
 
-starter.controller('jobyersOffersListCtrl',
-  ['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state',
-    function ($scope, localStorageService, $ionicActionSheet, UserService, $state,$ionicPopup) {
+starter.controller('jobyersOffersListCtrl', 
+	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 
+	function($scope, localStorageService, $ionicActionSheet, UserService, $state) {
 
-      var init = function () {
+		var init = function(){
 
-        $scope.OfferLabel = capitalize(localStorageService.get('lastSearchedJob'));
-        $scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
-        if (!$scope.jobyerListSetting) {
-          $scope.jobyerListSetting = {
-            orderByAvialability: false,
-            orderByCorrespondence: false,
-            job: 50,
-            qi: 25,
-            language: 25,
-            transportationmode: 'driving'
-          };
-          localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
-        }
-        ;
+			$scope.OfferLabel = capitalize(localStorageService.get('lastSearchedJob'));
+			$scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
+			if(!$scope.jobyerListSetting){
+				$scope.jobyerListSetting = {
+					orderByAvialability : false,
+					orderByCorrespondence : false,
+					job : 50,
+					qi : 25,
+					language : 25,
+					transportationmode : 'driving'
+				};
+				localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
+			};
 
-        //*/
+			//*/
 
-        $scope.jobyersOffers = [{
-          jobyerName: 'Jérôme',
-          availability: {
-            value: 210,
-            text: '8h 30min'
-          },
-          matching: 60,
-          contacted: false,
-          latitude: 0,
-          longitude: 0
-        },
-          {
-            jobyerName: 'Alain',
-            availability: {
-              value: 20,
-              text: '3h 30min'
-            },
-            matching: 20,
-            contacted: true,
-            latitude: 0,
-            longitude: 0
-          },
-          {
-            jobyerName: 'Philippe',
-            availability: {
-              value: 1000,
-              text: '17h 30min'
-            },
-            matching: 10,
-            contacted: false,
-            latitude: 0,
-            longitude: 0
-          }];
-        //*/
-        /*
-         $scope.jobyersOffers = localStorageService.get('jobyersOffers');
-         //*/
+			$scope.jobyersOffers = [{
+				jobyerName : 'Jérôme',
+				availability : {
+					value : 210,
+					text : '8h 30min'
+				},
+				matching : 60,
+				contacted : false,
+				latitude : 0,
+				longitude : 0
+			},
+			{
+				jobyerName : 'Alain',
+				availability : {
+					value : 20,
+					text : '3h 30min'
+				},
+				matching : 20,
+				contacted : true,
+				latitude : 0,
+				longitude : 0
+			},
+			{
+				jobyerName : 'Philippe',
+				availability : {
+					value : 1000,
+					text : '17h 30min'
+				},
+				matching : 10,
+				contacted : false,
+				latitude : 0,
+				longitude : 0
+			}];
+		//*/
+		/*
+		$scope.jobyersOffers = localStorageService.get('jobyersOffers');
+		//*/
 
-        $scope.transportationmode = $scope.jobyerListSetting.transportationmode;
+		$scope.transportationmode = $scope.jobyerListSetting.transportationmode;
 
-        $scope.sort();
-      };
+		$scope.sort();
+	};
 
-      $scope.$on('$ionicView.beforeEnter', function () {
-        init();
-      });
+	$scope.$on('$ionicView.beforeEnter', function(){
+		init();
+	});
 
-      $scope.sort = function () {
-        if ($scope.jobyerListSetting.orderByCorrespondence) $scope.SortOrder = '+matching';
-        if ($scope.jobyerListSetting.orderByAvialability) $scope.SortOrder = '+availability.value';
-      };
+	$scope.sort = function(){
+		if($scope.jobyerListSetting.orderByCorrespondence) $scope.SortOrder = '+matching';
+		if($scope.jobyerListSetting.orderByAvialability) $scope.SortOrder = '+availability.value';
+	};
 
-      var capitalize = function (st) {
-        return st.charAt(0).toUpperCase() + st.slice(1);
-      };
+	var capitalize = function(st) {
+		return st.charAt(0).toUpperCase() + st.slice(1);
+	};
 
-      var setJobyerListSetting = function (property, newValue) {
-        var jobyerListSetting = localStorageService.get('jobyerListSetting');
-        jobyerListSetting[property] = newValue;
-        localStorageService.set('jobyerListSetting', jobyerListSetting);
-      };
+	var setJobyerListSetting = function(property, newValue){
+		var jobyerListSetting = localStorageService.get('jobyerListSetting');
+		jobyerListSetting[property] = newValue;
+		localStorageService.set('jobyerListSetting', jobyerListSetting);
+	};
 
-      $scope.$watch('jobyerListSetting.orderByAvialability', function (newValue, oldValue) {
-        setJobyerListSetting('orderByAvialability', newValue);
-      });
+	$scope.$watch('jobyerListSetting.orderByAvialability', function (newValue, oldValue) {
+		setJobyerListSetting('orderByAvialability', newValue);
+	});
 
-      $scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
-        setJobyerListSetting('orderByCorrespondence', newValue);
-      });
+	$scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
+		setJobyerListSetting('orderByCorrespondence', newValue);
+	});
 
-      $scope.showMenuForContract = function (jobber) {
+	$scope.showMenuForContract = function(jobber){
 
-        jobber.contacted = true;
+		jobber.contacted = true;
 
-        var hideSheet = $ionicActionSheet.show({
-          buttons: [
-            {text: '<i class="ion-android-textsms"> Contacter par SMS</i>'}, //Index = 0
-            {text: '<i class="ion-android-mail"> Contacter par Mail</i>'}, //Index = 1
-            {text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>'}, //Index = 2
-            {text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>'} //Index = 3
-          ],
-          titleText: 'Actions',
-          cancelText: 'Annuler',
-          buttonClicked: function (index) {
-            //branchement de la page de contrat ou infos clients
-            if (index == 3) {
-              /*
-               recuperation des données de l'emplyeur et calcule dans une variable boolean
-               si toutes les informations sont présentes
-               */
+		var hideSheet = $ionicActionSheet.show({
+			buttons: [
+			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0
+			{ text: '<i class="ion-android-mail"> Contacter par Mail</i>' }, //Index = 1
+			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
+			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
+			],
+			titleText: 'Mise en relation',
+			cancelText: 'Annuler',
+			buttonClicked: function(index) {
+          //branchement de la page de contrat ou infos clients
+          if(index==3){
+            /*
+              recuperation des données de l'emplyeur et calcule dans une variable boolean
+              si toutes les informations sont présentes
+              */
+              
               var isAuth = UserService.isAuthenticated();
               if (isAuth) {
                 console.log("check and then redirect to contract page");

@@ -279,7 +279,9 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     return isLogged;
   };
 
-  $scope.isLogged = checkIsLogged();
+  $scope.$on('$ionicView.beforeEnter', function(){
+      $scope.isLogged = checkIsLogged();
+    });
 
   $scope.logOut = function(){
     localStorageService.remove('currentEmployer');

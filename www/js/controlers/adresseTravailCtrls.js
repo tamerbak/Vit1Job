@@ -374,7 +374,7 @@ starter
 
 			var myPopup = $ionicPopup.show({
 
-			  template: "L'adresse de travail est-elle différente de l'adresse du siège social (OUI/ NON) ? <br>",
+			  template: "L'adresse de travail est-elle différente de l'adresse du siège social? <br>",
 			  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 			  buttons: [
 				{
@@ -384,7 +384,7 @@ starter
             if (!params.geolocated) {
               var myPopup0 = $ionicPopup.show({
                 //Votre géolocalisation pour renseigner votre adresse du siège social?
-                template: "Localisation: êtes-vous dans votre lieu de travail? (OUI/ NON)<br>",
+                template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
                 title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
                 buttons: [
                   {
@@ -396,7 +396,7 @@ starter
                     onTap: function (e) {
                       var myPopup1 = $ionicPopup.show({
                         //Votre géolocalisation pour renseigner votre adresse du siège social?
-                        template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail. (OUI/ NON ?)<br>",
+                        template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
                         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
                         buttons: [
                           {

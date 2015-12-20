@@ -1419,6 +1419,26 @@ $scope.init = function () {
               $state.go("connection");
             }
           }
+
+          if (index == 1){
+            window.plugins.webintent.hasExtra(window.plugins.webintent.EXTRA_TEXT,
+              function (has) {
+                // has is true iff it has the extra
+                window.plugins.webintent.startActivity({
+                    action: window.plugins.webintent.ACTION_VIEW,
+                    url: 'smsto:' + ''
+                  },
+                  function () {
+                  },
+                  function () {
+                    alert('Erreur système - Plugin Webintent')
+                  });
+              }, function () {
+                // Something really bad happened.
+                alert('Erreur système - Plugin Webintent');
+              }
+            );
+          }
           return true;
         }
       });

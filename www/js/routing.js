@@ -140,5 +140,5 @@ starter.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     });
- $urlRouterProvider.otherwise('/app');
+ $urlRouterProvider.otherwise('/offres');
 });

@@ -6,8 +6,8 @@
 
 'use strict';
 
-var sessionId = 'nn';
-var myCity = 'Paris';
+//var sessionId = 'nn';
+//var myCity = 'Paris';
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
@@ -26,11 +26,14 @@ if(window.StatusBar) {
   StatusBar.styleDefault();
 }
 
-$rootScope.jobyersForMe = [];
+/*$rootScope.jobyersForMe = [];
 $rootScope.jobyersNextToMe = [];
 $rootScope.nbJobyersForMe = 0;
 $rootScope.nbJobyersNextToMe = 0;
-$rootScope.queryText = '';
+$rootScope.queryText = '';*/
+
+$rootScope.AppLogo = '<div class="vimgBar"><img src="img/vit1job-mini.png"></div>';
+$rootScope.previousView = '';
 
     //connecting to WS
     /*var soapMessage='<fr.protogen.connector.model.AmanToken>'+

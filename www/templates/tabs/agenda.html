@@ -6,140 +6,50 @@
     <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offres">  </a>
   </ion-header-bar>
   <ion-content class="has-header" id="disponibiliteContent" overflow-scroll="true" padding="true" data-ng-init="initModalAll()">
-     <div>
-      <h3 class="titlePhone"><b>Horaires de travail</b></h3>
-    </div>
-
-
-      <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateDebut()"> Date de début : {{ formData.dateDebut | date : 'dd/MM/yyyy'}}</button>
-
-      <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
-
-       <ion-item class="item-icon-right itemHoraire">
-                <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
-          </ion-item>
-        </form>
-        </br>
-
-            <div class="item item-divider">Répétitions</div>
-            <div class="item item-body">
-
-                    <label class="item item-select">
-                        <span class="input-label" >Jour de la semaine</span>
-                        <select ng-model="formData.jourSelect">
-                            <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
-                        </select>
-                    </label>
-                    <ion-item class="range range-positive">
-                        <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
-                        <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut" data-ng-change="heureChange('debut')">
-                    </ion-item>
-                    <ion-item class="range range-positive">
-                    <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
-                        <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
-                    </ion-item>
-                </form>
-            </div>
-
-        <ion-list>
-            <ion-radio ng-repeat="horaire in formData.horaires" ng-model = "formData.horaireSelect" ng-value = "{{ $index }}" value = "{{ $index }}">{{ horaire.jour }} de {{horaire.heureDebut}} à {{horaire.heureFin}} </ion-radio>
-        </ion-list>
-        <div class="button-bar">
-            <button class="button button-light button-block  icon ion-plus-circled" ng-click="ajouterHoraire()"></button>
-            <button class="button button-light button-block  icon ion-trash-b" ng-click="supprimerHoraire()"></button>
-            <button class="button button-light button-block  icon ion-edit"></button>
-        </div>
-        <ion-list></ion-list>
-        <ion-list></ion-list>
-        <ion-list></ion-list>
-        <ion-list></ion-list>
-        <div class="buttonConnect">
-          <button class="button button-full button-positive green" data-ng-click="validerOffre();">Valider</button>
-        </div>
-    </ion-content>
-</ion-view>
-
-<!-- <ion-view view-title="agenda">
-  <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offreTabs.langues">  </a>
-    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
-    <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offres">  </a>
-  </ion-header-bar>
-  <ion-content id="disponibiliteContent" padding="true" data-ng-init="initModalAll()">
-
     <div>
       <h3 class="titlePhone"><b>Horaires de travail</b></h3>
     </div>
-    <div class="list" style="text-align: left;padding: 7px;border-radius: 20px;border: 1px solid lightgray">
-      <label class="item item-input" style="border:none;">
-        <span class="input-label">Date de début</span>
-        <input type="date" placeholder="Date de début" data-ng-model="formData.dateDebut" value={{formData.dateDebut}}>
-      </label>
-      <label class="item item-input" style="border:none;">
-        <span class="input-label">Date de fin</span>
-        <input type="date" placeholder="Date de fin" data-ng-model="formData.dateFin" ng-disabled="formData.jamais" value={{formData.dateFin}}>
-      </label>
-      <label class="item item-input" style="border:none;">
-        <span class="input-label"></span>
-        <ion-checkbox style="border:none;" ng-model="formData.jamais" data-ng-change="initDateFin();">Jamais</ion-checkbox>
-      </label>
-    </div>
-    <div class="item item-divider">
-      Répétitions
-    </div>
-    <div class="row" style="border: solid 1px gray;">
-      <div class="list" style="width: 42%;">
-        <ion-toggle ng-repeat="jour in formData.jours" toggle-class="toggle-light"
-                    ng-model="jour.checked"
-                    ng-checked="jour.checked">
-          {{ jour.nom }}
-        </ion-toggle>
 
-      </div>
-      <div class="list" style="margin-left: 19px;">
-        <div class="list">
-          <label style="text-align: left;" class="item item-input item-stacked-label">
-            <span class="input-label">Heure de début:</span>
-            <div class="row">
-              <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureDebut" />H&nbsp;&nbsp;
-              <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minDebut" />min
-            </div>
-          </label>
-        </div>
-        <div class="list">
-          <label style="text-align: left;" class="item item-input item-stacked-label">
-            <span class="input-label">Heure de fin:</span>
-            <div class="row">
-              <input type="number"  step="1" value="0" min="0" max="24" placeholder="0" data-ng-model="formData.heureFin" />H&nbsp;&nbsp;
-              <input type="number"  step="15" value="0" min="0" max="45" placeholder="0" data-ng-model="formData.minFin" />min
-            </div>
-          </label>
-        </div>
-        <button class="button" ng-click="ajouterHeures();">Ajouter</button>
-        <br/><br/>
 
-        <div class="row header">
-          <div class="col">Heure de début</div>
-          <div class="col">Heure de fin</div>
-        </div>
-        <div class="row" ng-repeat="data in formData.heures" >
-          <div class="col">{{data.heureDebut}}</div>
-          <div class="col">{{data.heureFin}}</div>
-        </div>
-        <br/>
-        <button class="button" ng-click="supprimerHeures();">Supprimer</button>
-        <br/><br/>
-        <label class="item item-input">
-          <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
-        </label>
-      </div>
+    <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateDebut()"> Date de début : {{ formData.dateDebut | date : 'dd/MM/yyyy'}}</button>
+
+    <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
+
+     <ion-item class="item-icon-right itemHoraire">
+              <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
+    </ion-item>
+    </br>
+
+    <div class="item item-divider">Répétitions</div>
+    <div class="item item-body">
+      <label class="item item-select">
+          <span class="input-label" >Jour de la semaine</span>
+          <select ng-model="formData.jourSelect">
+              <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
+          </select>
+      </label>
+      <ion-item class="range range-positive">
+          <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
+          <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut" data-ng-change="heureChange('debut')">
+      </ion-item>
+      <ion-item class="range range-positive">
+      <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
+          <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
+      </ion-item>
     </div>
-    <br>
+
+    <ion-list style="text-align: left;">
+        <ion-radio ng-change ="changeEditState()" ng-repeat="horaire in formData.horaires" ng-model = "formData.horaireSelect" ng-value = "{{ $index }}" value = "{{ $index }}">{{ horaire.jour }} de {{horaire.heureDebut}} à {{horaire.heureFin}} </ion-radio>
+    </ion-list>
+    <div class="button-bar">
+        <button class="button button-light button-block  icon ion-plus-circled " ng-click="ajouterHoraire()"></button>
+        <button class="button button-light button-block  icon ion-trash-b " ng-click="supprimerHoraire()"></button>
+        <button class="button button-light button-block  icon ion-edit " ng-show="!formData.editShow" ng-click="editerHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
+        <button class="button button-light button-block  icon ion-loop " ng-show="formData.editShow" ng-click="saveEditHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
+    </div>
 
     <div class="buttonConnect">
       <button class="button button-full button-positive green" data-ng-click="validerOffre();">Valider</button>
     </div>
   </ion-content>
-
 </ion-view>
- -->

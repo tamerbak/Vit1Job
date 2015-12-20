@@ -26,26 +26,27 @@
 
                     <label class="item item-select">
                         <span class="input-label" >Jour de la semaine</span>
-                        <select>
-                            <option ng-repeat="jour in formData.jours" ng-model="jour.checked" ng-checked="jour.checked">{{ jour.nom }}</option>
+                        <select ng-model="formData.jourSelect">
+                            <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
                         </select>
                     </label>
-                    <ion-item class="range range-positive">de {{ formData.heureDebutFormat }}
+                    <ion-item class="range range-positive">
+                        <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
                         <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut" data-ng-change="heureChange('debut')">
                     </ion-item>
-                    <ion-item class="range range-positive">à {{ formData.heureFinFormat }}
+                    <ion-item class="range range-positive">
+                    <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
                         <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
                     </ion-item>
                 </form>
             </div>
 
         <ion-list>
-            <ion-radio>Samedi du 17h00 à 21h00</ion-radio>
-            <ion-radio>Lundi du 12h00 à 18h00</ion-radio>
+            <ion-radio ng-repeat="horaire in formData.horaires" ng-model = "formData.horaireSelect" ng-value = "{{ $index }}" value = "{{ $index }}">{{ horaire.jour }} de {{horaire.heureDebut}} à {{horaire.heureFin}} </ion-radio>
         </ion-list>
         <div class="button-bar">
-            <button class="button button-light button-block  icon ion-plus-circled"></button>
-            <button class="button button-light button-block  icon ion-trash-b"></button>
+            <button class="button button-light button-block  icon ion-plus-circled" ng-click="ajouterHoraire()"></button>
+            <button class="button button-light button-block  icon ion-trash-b" ng-click="supprimerHoraire()"></button>
             <button class="button button-light button-block  icon ion-edit"></button>
         </div>
         <ion-list></ion-list>

@@ -125,19 +125,19 @@ starter
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
         'dateFin': "Jamais",
+        'jourSelect': "Lundi",
         'heureDebut': 0,
         'heureFin': 0,
         'heureDebutFormat': '00h00',
         'heureFinFormat': '00h00',
-        heures:[],
+        horaires:[],
         jours:DataProvider.getDays(),
         qiList:[],
         languesList:[],
         qi:{},
-          degre:10,
+        degre:10,
         selectedLangue:{}
       };
-      $scope.formData.jours[0].checked = true;
     };
 
     $scope.rangeChange = function(){
@@ -329,28 +329,16 @@ starter
       }
     });
 
-    $scope.ajouterHeures= function(){
+    $scope.ajouterHoraire= function(){
 
-      var hdebut=$scope.formData.heureDebut;
-      var hfin=$scope.formData.heureFin;
-      var mdebut=$scope.formData.minDebut;
-      var mfin=$scope.formData.minFin;
+      $scope.formData.horaires.push({"jour": $scope.formData.jourSelect, "heureDebut": $scope.formData.heureDebutFormat, "heureFin": $scope.formData.heureFinFormat});
 
-      if(hdebut!=undefined && hfin!=undefined && mdebut!=undefined && mfin!=undefined) {
-        if(hfin > hdebut)
-          $scope.formData.heures.push({"heureDebut": hdebut+"h"+mdebut+"min", "heureFin": hfin+"h"+mfin+"min"});
-        else
-          Global.showAlertValidation("L'heure de fin doit être supérieur.");
-      }else{
-        Global.showAlertValidation("Veuillez saisir une heure de début et une heure de fin.");
-      }
     };
 
-    $scope.supprimerHeures= function(){
+    $scope.supprimerHoraire= function(){
 
-      if( $scope.formData.heures.length!=0){
-        $scope.formData.heures.pop();
-      }
+      if( $scope.formData.horaires.length != 0){
+        $scope.formData.horaires.splice(parseInt($scope.formData.horaireSelect), 1);      }
     };
 
 
@@ -384,10 +372,12 @@ starter
 
   $scope.heureChange = function (params) {
   if (params === 'debut'){
-    $scope.formData.heureDebutFormat = ($scope.formData.heureDebut === "0" ? "00h00" : Math.floor($scope.formData.heureDebut / 60) + "h" + $scope.formData.heureDebut % 60);
+    var restofdiv = ($scope.formData.heureDebut % 60 === 0 ? "00" : $scope.formData.heureDebut % 60)
+    $scope.formData.heureDebutFormat = ($scope.formData.heureDebut === "0" ? "00h00" : Math.floor($scope.formData.heureDebut / 60) + "h" + restofdiv);
   }
   else if(params === 'fin'){
-    $scope.formData.heureFinFormat = ($scope.formData.heureFin === "0" ? "00h00" : Math.floor($scope.formData.heureFin / 60) + "h" + $scope.formData.heureFin % 60);
+    var restofdiv = ($scope.formData.heureFin % 60 === 0 ? "00" : $scope.formData.heureFin % 60)
+    $scope.formData.heureFinFormat = ($scope.formData.heureFin === "0" ? "00h00" : Math.floor($scope.formData.heureFin / 60) + "h" + restofdiv);
   }
 
   }

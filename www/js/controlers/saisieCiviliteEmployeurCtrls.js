@@ -4,7 +4,7 @@
 'use strict';
 starter
 	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, localStorageService, $state,$stateParams, UpdateInServer, UploadFile, $base64,
-				LoadList, formatString, DataProvider, Validator){
+				LoadList, formatString, DataProvider, Validator,$ionicPopup){
 
 		// FORMULAIRE
 		$scope.formData = {};
@@ -47,7 +47,7 @@ starter
 			var employeId=connexion.employeID;
 			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=localStorageService.get('sessionID');
+			var sessionId=localStorageService.get('sessionID');
 
 			if(!isNaN(titre) || nom || prenom || entreprise || siret || ape || numUssaf){
 				if(!nom)

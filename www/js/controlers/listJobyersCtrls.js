@@ -1,9 +1,9 @@
 /**
  * Created by Tamer on 14/10/2015.
- */
+
 'use strict';
 starter
-  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, $cookieStore, $state,$http,x2js,GeoService) {
+  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, localStorageService, $state,$http,x2js,GeoService) {
 
 $scope.init = function () {
 
@@ -1374,7 +1374,7 @@ $scope.init = function () {
             /*
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
-            */
+
             var isAuth = UserService.isAuthenticated();
             if(isAuth){
               console.log("check and then redirect to contract page");
@@ -1425,3 +1425,4 @@ $scope.init = function () {
     }
   })
 ;
+ */

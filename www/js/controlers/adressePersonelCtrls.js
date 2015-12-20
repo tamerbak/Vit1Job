@@ -10,8 +10,8 @@ starter
 		// FORMULAIRE
     var geolocated=false;
 		$scope.formData = {};
-    $scope.disableTagButton = ($stateParams.steps!='')?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  ($stateParams.steps!='') ? JSON.parse($stateParams.steps) : '';
+    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
     {
       $ionicPopup.show({
@@ -114,7 +114,7 @@ starter
 					});
         // }
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
-			$state.go('adresseTravail',{"steps":JSON.stringify(steps)});
+			$state.go('adresseTravail');
 		};
 
 		// VALIDATION - FIELD

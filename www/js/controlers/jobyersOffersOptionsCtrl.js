@@ -62,26 +62,26 @@ starter.controller('jobyersOffersOptionsCtrl',
 		$scope.$watch('jobyerListSetting.job', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('job', parseInt(newValue));
-			validateMatchingValues('job');
+			//validateMatchingValues('job');
 		});
 
 		$scope.$watch('jobyerListSetting.qi', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('qi', parseInt(newValue));
-			validateMatchingValues('qi');
+			//validateMatchingValues('qi');
 		});
 
 		$scope.$watch('jobyerListSetting.language', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('language', parseInt(newValue));
-			validateMatchingValues('language');
+			//validateMatchingValues('language');
 		});
 
 		$scope.$watch('jobyerListSetting.transportationmode', function (newValue, oldValue) {
 			setJobyerListSetting('transportationmode', newValue);
 		});
 
-		var validateMatchingValues = function(property){
+		/*var validateMatchingValues = function(property){
 			var value = 0;
 			if(!(property == 'job')){
 				value = 100 - parseInt($scope.jobyerListSetting.qi) - parseInt($scope.jobyerListSetting.language);
@@ -95,6 +95,6 @@ starter.controller('jobyersOffersOptionsCtrl',
 				value = 100 - parseInt($scope.jobyerListSetting.qi) - parseInt($scope.jobyerListSetting.job);
 				$scope.jobyerListSetting.language = value >= 0 ? value : 0;
 			}
-		}
+		}*/
 
 	}]);

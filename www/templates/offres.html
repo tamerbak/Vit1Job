@@ -1,0 +1,71 @@
+<ion-view title="{{AppLogo}}">
+  <!-- <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="adresseTravail">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+  </ion-header-bar> -->
+
+<ion-nav-buttons side="primary">
+<button class="button button-clear button-small" ui-sref="adresseTravail">
+  <i class="icon ion-ios-arrow-back"></i>
+</button>
+</ion-nav-buttons>
+
+<ion-nav-buttons side="right">
+<button class="button button-clear button-small" ui-sref="app">
+  <i class="icon icon-right ion-ios-arrow-forward"></i>
+</button>
+</ion-nav-buttons>
+
+  <ion-content id="offresContent" padding="true" data-ng-init="initAll()">
+    <!-- Title -->
+    <div>
+      <h3 class="titlePhone"><b>Offres</b></h3>
+    </div>
+
+    <!--
+    <input type="search" placeholder="Filtrer..." ng-model="search" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" class="full-width">
+    <button ng-if="search.length" class="button button-icon ion-android-close input-button" ng-click="clearSearch()">
+    </button>
+    -->
+    <!--
+         <div class="item item-divider">
+           Offres publiées
+         </div>
+         -->
+    <div class="list" ng-show="offres.length">
+      <ion-radio  ng-repeat="y in offres" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
+        <i ng-if="y.etat=='publie'" class="ion-eye"></i>
+        <i ng-if="y.etat=='noPublie'" class="ion-eye-disabled"></i>
+        <label>{{y.titre}}</label>
+      </ion-radio>
+    </div>
+    <div class="card" ng-show="!offres.length">
+      <div class="item item-text-wrap">
+        Vous n’avez aucune offre pour le moment. Veuillez les ajouter pour trouver vos jobyers bien ciblés.
+      </div>
+    </div>
+    <!--
+
+<div class="list">
+<div class="item item-divider">
+  Offres non publiées
+</div>
+  <ion-radio  ng-repeat="x in formData.offresNonPublies" data-ng-model="formData.offre"  ng-value="x" ng-change="offreChange(x)">
+    {{x.titre}}
+  </ion-radio>
+</div>
+-->
+    </br>
+    <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer</button>
+  </ion-content>
+  <div class="bar bar-footer">
+    <div class="button-bar">
+      <a class="button icon ion-plus-circled" ui-sref="offreTabs.job"></a>
+      <a class="button icon ion-android-create" ng-click="modifierOffre();"></a>
+      <a class="button icon ion-ios-copy" ng-click="dupliquerOffre();"></a>
+      <a class="button icon ion-trash-b" ng-click="supprimerOffre();"></a>
+    </div>
+  </div>
+</ion-view>
+

@@ -1,10 +1,10 @@
-<ion-view title="connection">
-  <ion-header-bar class="bar-calm">
+<ion-view title="{{AppLogo}}">
+  <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection"> </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <!--<h1 class="title">Connexion</h1>-->
-    <a class="button icon-right ion-home button-clear button-light" ui-sref="app"> </a>
-  </ion-header-bar>
+    <!--<a class="button icon-right ion-home button-clear button-light" ui-sref="app"> </a>
+  </ion-header-bar> -->
   <ion-content padding="true">
 	<!-- Title -->
     <div>
@@ -22,13 +22,16 @@
 	</div>
 
 	<!-- PASSWORD -->
-	<div class="list">
+	<div class="list" style="margin-bottom: 0px;">
 	  <label class="item item-input">
-        <input type="password" placeholder="Mot de passe" data-ng-model="formData.password" ng-minlength="6">
+        <input type="password" placeholder="Mot de passe" data-ng-model="formData.password" >
       </label>
+  </div>
+    <div class="error">
+    <span ng-if="!passwordIsValid();">*Taille minimale: 6 caractères.</span>
     </div>
 
-	<!-- ACTIONS -->
+    <!-- ACTIONS -->
 	<div class="buttonConnect">
       <button class="button button-full button-positive green" data-ng-click="Authenticate()" ng-disabled="!formData.email || !formData.password">Connecter</button>
       <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>

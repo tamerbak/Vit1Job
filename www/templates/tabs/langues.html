@@ -1,0 +1,50 @@
+<ion-view view-title="{{AppLogo}}">
+  <!-- <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offreTabs.qualites">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offreTabs.agenda">  </a>
+  </ion-header-bar> -->
+
+  <ion-nav-buttons side="primary">
+<button class="button button-clear button-small" ui-sref="offreTabs.qualites">
+  <i class="icon ion-ios-arrow-back"></i>
+</button>
+</ion-nav-buttons>
+
+<ion-nav-buttons side="right">
+<button class="button button-clear button-small" ui-sref="offreTabs.agenda">
+  <i class="icon icon-right ion-ios-arrow-forward"></i>
+</button>
+</ion-nav-buttons>
+
+  <ion-content class="padding" padding="true">
+    <div>
+      <h3 class="titlePhone"><b>Langues</b></h3>
+    </div>
+    <!-- LANGUES -->
+    <div class ="list">
+      <label class="autoCompl item item-input">
+        <select class="flat selectClass" data-ng-model="formData.langue" data-ng-init="formData.langue='Langue'">
+          <option selected disabled style="display: none;">Langue</option>
+          <option data-ng-repeat="x in formData.langues" value="{{x}}">{{x.libelle}}</option>
+        </select>
+      </label>
+    </div>
+    <!-- MAITRISE Langue-->
+    <img ng-src="img/{{formData.maitriseLangueIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>
+    <label for="maitriseLangue" style="display: inline-block; color:#757575;vertical-align: middle;" > {{formData.maitriseLangue}}</label>
+    <div class="list rangeDiv">
+      <div class="item range range-calm">
+        <img src="img\tree1_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
+        <input id="maitriseLangue" type="range" name="volume" min="0" max="100" data-ng-model="formData.degreLangue" data-ng-init="formData.degreLangue=10" data-ng-change="rangeLangueChange()">
+        <img src="img\tree4_small.png" style="display: inline;max-width: 60px;max-height: 80px;">
+      </div>
+    </div>
+    <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterLangue();"></a>
+    <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerLangue();"></a>
+    <div class="list">
+      <ion-radio  ng-repeat="data in formData.languesList" data-ng-model="formData.selectedLangue"  ng-value="data" ng-change="onChange(data)" style="border-radius: 0;border-color: lightgray;">
+        {{data.libelle}}
+      </ion-radio>
+    </div>
+</ion-view>

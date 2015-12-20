@@ -518,11 +518,14 @@ starter
 						if(niveau){
 							console.log("niveau : "+niveau);
 						}
-
+          if(!offre.dateDebut)
+            offre.dateDebut= '2015-09-27 02:00:00.0';
+          if(!offre.dateFin)
+            offre.dateFin= '2015-12-12 08:00:00.0';
 
 						// PERSISTENCE OFFRE N°i
-						PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", new Date().getTime(), new Date().getTime()+2592000 , sessionId, employeId, niveau)
-							.then(
+          PersistInServer.persistInOffres(employeId, "Titre_4", "Description_4", offre.dateDebut, offre.dateFin , sessionId, employeId, niveau)
+            .then(
 								function (response){
 									console.log("response : "+JSON.stringify(response));
 
@@ -582,7 +585,20 @@ starter
                                       .then(
                                         function (response){
                                           console.log("success : persistInOffres_Niveaux_Langue"+JSON.stringify(response));
-
+                                          if(offre.heures!= undefined && offre.jours!=undefined) {
+                                            var heure_d = offre.heures[0].heureDebut.split('h')[0];
+                                            var heure_f = offre.heures[0].heureFin.split('h')[0];
+                                            var jourId = offre.jours[0].pk_user_jour_de_la_semaine;
+                                            PersistInServer.persistInDisponibilite(Number(jourId), Number(heure_d), Number(heure_f), sessionId, offreId)
+                                              .then(
+                                                function (response) {
+                                                  console.log("response persistInDisponibilite : " + JSON.stringify(response));
+                                                }, function (err) {
+                                                  console.log("error In persistInDisponibilite: " + err);
+                                                  Global.showAlertValidation("Une erreur est survenue, Veuillez réssayer.");
+                                                }
+                                              );
+                                          }
                                         },function (err){
                                           console.log("error : insertion DATA");
                                           console.log("error In persistInOffres_Niveaux_Langue: "+err);
@@ -670,10 +686,6 @@ starter
 							});**/
 
 				}
-
-				// SHOW MODAL
-				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
-				// REDIRECTION VERS home
         var myPopup = $ionicPopup.show({
           template: "Votre compte a été crée avec succés <br>",
           title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -684,7 +696,10 @@ starter
             }
           ]
         });
-				$state.go("app");
+        $state.go("app");
+				// SHOW MODAL
+				//Global.showAlertPassword("Merci! Vos Offres sont été bien publiés.");
+				// REDIRECTION VERS home
 			}
 		};
 	  $scope.backbutton = function()
@@ -724,84 +739,64 @@ starter
 
 			return !isNaN(Number(field));
 		};
-    ;
 
     $scope.formData.jours=DataProvider.getDays();
     console.log($scope.formData.jours.length);
     $scope.saveDisponibilite= function(){
-      var dateDebut= $scope.formData.dateDebut;
-      var dateFin= $scope.formData.dateFin;
-      var jamais = $scope.formData.jamais;
-      var jours= $scope.formData.jours;
-      var remuneration= $scope.formData.remuneration;
-      var heures=$scope.formData.heures;
-      console.log(JSON.stringify($scope.formData));
-      if(dateDebut && (dateFin || jamais) && jours && remuneration && !heures.$isEmpty()) {
 
-        // RECUPERATION CONNEXION
-        var connexion=$cookieStore.get('connexion');
-        // RECUPERATION JOBEYER ID
-        var jobeyeId=connexion.jobeyeId;
-        // RECUPERATION SESSION ID
-        sessionId=$cookieStore.get('sessionID');
-        var hasSessionID=0;
-        if(sessionId)
-          hasSessionID=1;
-        else{	// RECUPERATION SESSION-ID
-          AuthentificatInServer.getSessionId()
-            .success(function (response){
-              var jsonResp = x2js.xml_str2json(response);
-              var jsonText = JSON.stringify (jsonResp);
-              jsonText = jsonText.replace("fr.protogen.connector.model.AmanToken","amanToken");
-              jsonResp = JSON.parse(jsonText);
+      var jobeyerCourant=$rootScope.jobyers[Number($rootScope.jobyerCurrent.indice)-1];
 
-              // GET SESSION ID
-              sessionId = jsonResp.amanToken.sessionId;
-              console.log("New sessionId : "+sessionId);
-              $cookieStore.put('sessionID', sessionId);
-              hasSessionID=1;
-            })
-            .error(function (err){
-              console.log("error : Récuperation Session ID");
-              console.log("error In saveJobyers: "+err);
-            });
-        }
-        var heure_d=heures[0].heureDebut;
-        var heure_f=heures[0].heureFin;
-        if(hasSessionID){
-          PersistInServer.persistInDisponibilite(jourId, heure_d, heure_f, sessionId, offreId)
-            .then(
-              function (response){
-                console.log("response : "+JSON.stringify(response));
+      var dateDebut=new Date($scope.formData.dateDebut);
+      var dayDebut = dateDebut.getDate();
+      var monthIndexDebut = dateDebut.getMonth()+1;
+      var yearDebut = dateDebut.getFullYear();
+      var dateDebutFormatted=yearDebut+"-"+monthIndexDebut+"-"+dayDebut+" 00:00:00.0";
 
-                var myPopup = $ionicPopup.show({
-                  template: "Votre compte a été crée avec succés <br>",
-                  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                  buttons: [
-                    {
-                      text: '<b>OK</b>',
-                      type: 'button-calm'
-                    }
-                  ]
-                });
-                $state.go("app");
-              },function (err){
-                console.log("error : insertion DATA");
-                console.log("error In PullDataFromServer.pullDATA: "+err);
-              }
-            );
-        }
+      var dateFin=new Date($scope.formData.dateFin);
+      var dayFin = dateFin.getDate();
+      var monthIndexFin = dateFin.getMonth()+1;
+      var yearFin = dateFin.getFullYear();
+      var dateFinFormatted=yearFin+"-"+monthIndexFin+"-"+dayFin+" 00:00:00.0";
 
-      }else{
-        Global.showAlertValidation("Veuillez saisir tous les champs");
+      var jours=$scope.formData.jours;
+      var joursCheked=[];
+      for(var j=0;j<7;j++){
+        console.log(jours[j]);
+        if(jours[j]['checked']==true)
+          joursCheked.push(jours[j]);
       }
 
+      jobeyerCourant['dateDebut']=dateDebutFormatted;
+      jobeyerCourant['dateFin']=dateFinFormatted;
+      jobeyerCourant['jamais']=$scope.formData.jamais;
+      jobeyerCourant['jours']=joursCheked;
+      jobeyerCourant['remuneration']=$scope.formData.remuneration;
+      jobeyerCourant['heures']=$scope.formData.heures;
+
+      console.log(JSON.stringify($scope.formData));
+      $scope.modal.hide();
     };
 
     $scope.initModalAll = function(){
+      /*
+       var soapMessage = 'select * from user_jour_de_la_semaine'; //'C# sur paris';
+       $http({
+       method: 'POST',
+       url: 'http://ns389914.ovh.net:8080/vit1job/api/sql',
+       headers: {
+       "Content-Type": "text/plain"
+       },
+       data: soapMessage
+       }).then(
+       function (response){
+       console.log("sql : "+JSON.stringify(response));
+       }
 
+       );
+       */
       // GET LIST
       $scope.formData.heures=[];
+
       $scope.formData.jours=DataProvider.getDays();
     };
 
@@ -835,5 +830,8 @@ starter
         $scope.modal.show();
       });
     };
-
+    $scope.initDateFin= function(){
+           if ($scope.formData.jamais)
+                $scope.formData.dateFin=null;
+          };
   });

@@ -1,9 +1,9 @@
-<ion-view title="contract">
-  <ion-header-bar class="bar-calm">
+<ion-view title="{{AppLogo}}">
+  <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="list"></a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"/></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app"></a>
-  </ion-header-bar>
+  </ion-header-bar> -->
   <ion-content padding="true">
     <div>
       <div class="row">
@@ -95,6 +95,8 @@
         SIRET 480 167 543 000 10-RCS AMIENS<br/>
         GARANT FINANCIER CREDIT DU NORD<br/>
       </div>
+      <ion-checkbox ng-model="checked">J'accepte toutes les clauses du contrat</ion-checkbox>
+      <button class="button button-stable" style="margin-top:20px;" ng-model="button" ng-disabled="!checked" ng-click="showAlert()">Valider</button>
     </div>
   </ion-content>
 </ion-view>

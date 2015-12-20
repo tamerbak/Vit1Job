@@ -6,8 +6,8 @@
 
 'use strict';
 
-//var sessionId = 'nn';
-//var myCity = 'Paris';
+var sessionId = 'nn';
+var myCity = 'Paris';
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
@@ -26,14 +26,11 @@ if(window.StatusBar) {
   StatusBar.styleDefault();
 }
 
-/*$rootScope.jobyersForMe = [];
+$rootScope.jobyersForMe = [];
 $rootScope.jobyersNextToMe = [];
 $rootScope.nbJobyersForMe = 0;
 $rootScope.nbJobyersNextToMe = 0;
-$rootScope.queryText = '';*/
-
-$rootScope.AppLogo = '<div class="vimgBar"><img src="img/vit1job-mini.png"></div>';
-$rootScope.previousView = '';
+$rootScope.queryText = '';
 
     //connecting to WS
     /*var soapMessage='<fr.protogen.connector.model.AmanToken>'+
@@ -73,7 +70,8 @@ $rootScope.previousView = '';
       }
       );*/
 
-});
+<<<<<<< HEAD
+  });
 })
 //Add ionic loading
     .config(function($httpProvider) {
@@ -103,10 +101,14 @@ $rootScope.previousView = '';
           });
     });
 //End ionic loadin
+=======
+});
+});
 
 /*starter.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });*/
+>>>>>>> db51858b5fe832e7fc28cf18855f8965537a9254
 
 /**
  * Create module for services

@@ -45,6 +45,43 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'MapCtrl'
 
     })
+
+    .state('jobyersOffersTab', {
+      url: '/jobyersOffersTab',
+      abstract: true,
+      templateUrl: 'templates/jobyersOffersTab.html',
+    })
+
+    .state('jobyersOffersTab.list', {
+      url: '/list',
+      views: {
+        'jobyersOffersTab-list': {
+          templateUrl: 'templates/jobyersOffersList.html',
+          controller: 'jobyersOffersListCtrl'
+        }
+      }
+    })
+
+    .state('jobyersOffersTab.map', {
+      url: '/map',
+      views: {
+        'jobyersOffersTab-map': {
+          templateUrl: 'templates/jobyersMap.html',
+          controller: 'jobyersMapCtrl'
+        }
+      }
+    })
+
+    .state('jobyersOffersTab.options', {
+      url: '/options',
+      views: {
+        'jobyersOffersTab-options': {
+          templateUrl: 'templates/jobyersOffersOptions.html',
+          controller: 'jobyersOffersOptionsCtrl'
+        }
+      }
+    })
+
     .state('listNext', {
       url: '/listNext',
       templateUrl: 'templates/listJobyersNext.html',
@@ -86,13 +123,59 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/competences.html',
       controller: 'competenceCtrl'
     })
-
+    .state('offres', {
+      url: '/offres',
+      templateUrl: 'templates/offres.html',
+      controller: 'offresCtrl'
+    })
+    .state('offreTabs', {
+      url: '/offreTabs/:offre',
+      cache: false,
+      abstract: true,
+      templateUrl: 'templates/offreTabs.html',
+      controller: 'offreTabsCtrl'
+    })
     .state('contract', {
-      url: '/contract/:jobyer',
-      /*url: '/contract',*/
+      url: '/contract',
+      params: {jobyer: null},
       templateUrl: 'templates/createContract.html',
       controller: 'contractCtrl'
+    })
+    .state('offreTabs.job', {
+      url: '/job/:offre',
+      views: {
+        'offreTabs-job': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/job.html'
+        }
+      }
+    })
+    .state('offreTabs.qualites', {
+      url: '/qualites',
+      views: {
+        'offreTabs-qualites': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/qualites.html'
+        }
+      }
+    })
+    .state('offreTabs.langues', {
+      url: '/langues',
+      views: {
+        'offreTabs-langues': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/langues.html'
+        }
+      }
+    })
+    .state('offreTabs.agenda', {
+      url: '/agenda',
+      views: {
+        'offreTabs-agenda': {
+          controller: 'offreTabsCtrl',
+          templateUrl: 'templates/tabs/agenda.html'
+        }
+      }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app');
+ $urlRouterProvider.otherwise('/app');
 });

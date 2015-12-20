@@ -5,6 +5,31 @@
 angular.module('wsConnectors', ['ionic'])
 
   .service('AuthentificatInServer', function ($http){
+
+    var srvURi = "http://localhost:8080/VitOnJob/rest/public/";
+
+    this.AuthenticateUser = function(user){
+      /*return $http({
+        method: 'POST',
+        url: srvURi+"/account/login",
+        headers: {
+          "Content-Type": "application/json",
+          "login": JSON.stringify(user),
+        }
+      });*/
+      var wsRs= {"email":"rachid@test.com","employerId":1,isNew : false,
+        "entreprises":[{"entrepriseId":1,"name":"entreprise1",
+          "offers":[{"offerId":1,"title":"titre offer 1",
+            "pricticesJob":[{"pricticeJobId":1,"job":"job 1","level":"Bien"}],
+            "pricticesLanguage":[{"pricticeLanguageId":1,"language":"Français","level":"Bien"}]},
+            {"offerId":2,"title":"titre offer 2",
+              "pricticesJob":[{"pricticeJobId":3,"job":"job 2","level":"Excellent"},
+                {"pricticeJobId":2,"job":"job 1","level":"Excellent"}],
+              "pricticesLanguage":[{"pricticeLanguageId":2,"language":"Anglais","level":"Bien"}]}]}]};
+      return wsRs;
+    }
+
+    /*************************OLD***************************/
     this.getSessionId=function(){
 
       var soapMessage=

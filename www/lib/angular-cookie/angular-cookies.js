@@ -181,7 +181,7 @@ angular.module('ngCookies', ['ng']).
 angular.module('ngCookies').
 /**
  * @ngdoc service
- * @name $cookieStore
+ * @name localStorageService
  * @deprecated
  * @requires $cookies
  *
@@ -193,7 +193,7 @@ angular.module('ngCookies').
  * Requires the {@link ngCookies `ngCookies`} module to be installed.
  *
  * <div class="alert alert-danger">
- * **Note:** The $cookieStore service is **deprecated**.
+ * **Note:** The localStorageService service is **deprecated**.
  * Please use the {@link ngCookies.$cookies `$cookies`} service instead.
  * </div>
  *
@@ -201,22 +201,22 @@ angular.module('ngCookies').
  *
  * ```js
  * angular.module('cookieStoreExample', ['ngCookies'])
- *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
+ *   .controller('ExampleController', ['localStorageService', function(localStorageService) {
  *     // Put cookie
- *     $cookieStore.put('myFavorite','oatmeal');
+ *     localStorageService.set('myFavorite','oatmeal');
  *     // Get cookie
- *     var favoriteCookie = $cookieStore.get('myFavorite');
+ *     var favoriteCookie = localStorageService.get('myFavorite');
  *     // Removing a cookie
- *     $cookieStore.remove('myFavorite');
+ *     localStorageService.remove('myFavorite');
  *   }]);
  * ```
  */
- factory('$cookieStore', ['$cookies', function($cookies) {
+ factory('localStorageService', ['$cookies', function($cookies) {
 
     return {
       /**
        * @ngdoc method
-       * @name $cookieStore#get
+       * @name localStorageService#get
        *
        * @description
        * Returns the value of given cookie key
@@ -230,7 +230,7 @@ angular.module('ngCookies').
 
       /**
        * @ngdoc method
-       * @name $cookieStore#put
+       * @name localStorageService#put
        *
        * @description
        * Sets a value for given cookie key
@@ -244,7 +244,7 @@ angular.module('ngCookies').
 
       /**
        * @ngdoc method
-       * @name $cookieStore#remove
+       * @name localStorageService#remove
        *
        * @description
        * Remove given cookie

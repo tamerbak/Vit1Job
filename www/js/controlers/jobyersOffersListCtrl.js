@@ -1,4 +1,3 @@
-
 'use strict';
 
 starter.controller('jobyersOffersListCtrl', 
@@ -113,53 +112,54 @@ starter.controller('jobyersOffersListCtrl',
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
               */
+              
               var isAuth = UserService.isAuthenticated();
-              if(isAuth){
-              	console.log("check and then redirect to contract page");
-              	var employer = $cookieStore.get('employeur');
-              	var redirectToStep1 = (typeof (employer) == "undefined");
-              	var redirectToStep1 = (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined");
-              	var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
-              	var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
-              	if(employer && !redirectToStep1){
-              		for (var key in employer){
-              			redirectToStep1 = (employer[key])=="";
-              			if(redirectToStep1) break;
-              		}
-              		if(!redirectToStep1){
-              			for (var key in employer.adressePersonel){
-              				redirectToStep2 = (employer.adressePersonel[key])=="";
-              				if(redirectToStep2) break;
-              			}
-              		}
-              		if(!redirectToStep2){
-              			for (var key in employer.adresseTravail){
-              				redirectToStep3 = (employer.adresseTravail[key])=="";
-              				if(redirectToStep3) break;
-              			}
-              		}
-              	}
-              	var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
-              	var objRedirect = {"step1":redirectToStep1,"step2":redirectToStep2,"step3":redirectToStep3};
-              	if(dataInformed){
-                //show contract page //TODO
-                $state.go("contract", { jobyer: jobber });
-                console.log(jobber);
-                console.log("redirect to contract pages");
+              if (isAuth) {
+                console.log("check and then redirect to contract page");
+                var employer = localStorageService.get('employeur');
+                var redirectToStep1 = (typeof (employer) == "undefined");
+                var redirectToStep1 = (employer) ? (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined") : true;
+                var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
+                var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
+                if (employer && !redirectToStep1) {
+                  for (var key in employer) {
+                    redirectToStep1 = (employer[key]) == "";
+                    if (redirectToStep1) break;
+                  }
+                  if (!redirectToStep1) {
+                    for (var key in employer.adressePersonel) {
+                      redirectToStep2 = (employer.adressePersonel[key]) == "";
+                      if (redirectToStep2) break;
+                    }
+                  }
+                  if (!redirectToStep2) {
+                    for (var key in employer.adresseTravail) {
+                      redirectToStep3 = (employer.adresseTravail[key]) == "";
+                      if (redirectToStep3) break;
+                    }
+                  }
+                }
+                var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
+                var objRedirect = {"step1": redirectToStep1, "step2": redirectToStep2, "step3": redirectToStep3};
+                if (dataInformed) {
+                  //show contract page //TODO
+                  $state.go("contract", {jobyer: jobber});
+                  console.log(jobber);
+                  console.log("redirect to contract pages");
+                }
+                else {
+                  console.log(employer);
+                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {"steps": JSON.stringify(objRedirect)});
+                  else if (redirectToStep2) $state.go("adressePersonel", {"steps": JSON.stringify(objRedirect)});
+                  else if (redirectToStep3) $state.go("adresseTravail", {"steps": JSON.stringify(objRedirect)});
+                }
+              } else {
+                $state.go("connection");
+              }
             }
-            else{
-            	console.log(employer);
-            	if(redirectToStep1) $state.go("saisieCiviliteEmployeur",{ "steps": JSON.stringify(objRedirect)});
-            	else if(redirectToStep2) $state.go("adressePersonel",{ "steps": JSON.stringify(objRedirect)});
-            	else if(redirectToStep3) $state.go("adresseTravail",{ "steps": JSON.stringify(objRedirect)});
-            }
-        }else{
-        	$state.go("connection");
-        }
-    }
-    return true;
-}
-});
-    }
+            return true;
+          }
+        });
+      }
 
-}]);
+    }]);

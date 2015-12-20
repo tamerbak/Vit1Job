@@ -1,9 +1,9 @@
 /**
  * Created by Tamer on 14/10/2015.
- */
+
 'use strict';
 starter
-  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, $cookieStore, $state,$http,x2js,GeoService) {
+  .controller('listCtrl', function ($scope, $rootScope,$ionicModal,$ionicActionSheet,UserService, localStorageService, $state,$http,x2js,GeoService) {
 
 $scope.init = function () {
 
@@ -558,19 +558,19 @@ $scope.init = function () {
         query = query.toLowerCase();
         var jobyersList = [];
         switch(query){
-          case 'serveur' : 
+          case 'serveur' :
           jobyersList = [
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Alain', 
+            'jobyerOfferId' : -1,
+            'name': 'Alain',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 4
@@ -578,16 +578,16 @@ $scope.init = function () {
             'address' : '2 Rue de la mairesse, st georges baillargeux, 86130, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Jérôme', 
+            'jobyerOfferId' : -1,
+            'name': 'Jérôme',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 7
@@ -595,16 +595,16 @@ $scope.init = function () {
             'address' : '35 RUE GUY MOQUET, 4 ETAGE G, PARIS, 75017, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Phillipe', 
+            'jobyerOfferId' : -1,
+            'name': 'Phillipe',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 2
@@ -612,16 +612,16 @@ $scope.init = function () {
             'address' : '12 ALLEE BERGERE, VERNEUIL SUR SEINE, 78480, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Renald', 
+            'jobyerOfferId' : -1,
+            'name': 'Renald',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 1
@@ -629,16 +629,16 @@ $scope.init = function () {
             'address' : '54 RUE DE NEUILLY, CLICHY, 92110, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Jean-Michel', 
+            'jobyerOfferId' : -1,
+            'name': 'Jean-Michel',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 8
@@ -646,16 +646,16 @@ $scope.init = function () {
             'address' : '54 RUE DE NEUILLY, CLICHY, 92110, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Mickael', 
+            'jobyerOfferId' : -1,
+            'name': 'Mickael',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 4
@@ -663,16 +663,16 @@ $scope.init = function () {
             'address' : '6 RUE CHRISTOPHE COLOMB, BOURGES, 18000, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Nicolas', 
+            'jobyerOfferId' : -1,
+            'name': 'Nicolas',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 3
@@ -680,16 +680,16 @@ $scope.init = function () {
             'address' : '12  B RUE HUYENS CHRISTIAN, VITROLLES, 13127, France'
           },
           {
-            'jobyerOfferId' : -1, 
-            'name': 'Wilfried', 
+            'jobyerOfferId' : -1,
+            'name': 'Wilfried',
             'distance': {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'duration' : {
               'text' : '',
               'value' : 0
-            }, 
+            },
             'availability': {
               'text' : '',
               'value' : 3600 * 13
@@ -698,7 +698,7 @@ $scope.init = function () {
           }
           ];
           break;
-          case 'serveur' : 
+          case 'serveur' :
 
           break;
         }
@@ -710,16 +710,16 @@ $scope.init = function () {
     var loadOtherJobyers = function(){
       var jobyersList = [
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Francis', 
+        'jobyerOfferId' : -1,
+        'name': 'Francis',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 5
@@ -727,16 +727,16 @@ $scope.init = function () {
         'address' : '8 RUE DE LA VIEILLE VIGNE, MASSY, 91300, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Albert', 
+        'jobyerOfferId' : -1,
+        'name': 'Albert',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 5
@@ -744,16 +744,16 @@ $scope.init = function () {
         'address' : '17  CLOS NOLLET, ATHIS MONS, 91200, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Augustine', 
+        'jobyerOfferId' : -1,
+        'name': 'Augustine',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 4
@@ -761,16 +761,16 @@ $scope.init = function () {
         'address' : '12 ALLEE BERGERE, VERNEUIL SUR SEINE, 78480, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Coralie', 
+        'jobyerOfferId' : -1,
+        'name': 'Coralie',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 2
@@ -778,16 +778,16 @@ $scope.init = function () {
         'address' : '37 RUE DU HAMEAU DE SEINE, SAINTRY SUR SEINE, 91250, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Florence', 
+        'jobyerOfferId' : -1,
+        'name': 'Florence',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 4
@@ -795,16 +795,16 @@ $scope.init = function () {
         'address' : '11 RUE HENRI BARBUSSE, NANTERRE, 92000, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Mickael', 
+        'jobyerOfferId' : -1,
+        'name': 'Mickael',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 7
@@ -812,16 +812,16 @@ $scope.init = function () {
         'address' : '7 RUE JEAN PASSEL, IGNY, 91430, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Tristan', 
+        'jobyerOfferId' : -1,
+        'name': 'Tristan',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 5
@@ -829,49 +829,49 @@ $scope.init = function () {
         'address' : '34 AVENUE DU VERT GALANT, VILLEPINTE , 93420, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Romuald', 
+        'jobyerOfferId' : -1,
+        'name': 'Romuald',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 13
         },
         'address' : '34 ALLEE DE BELLEVUE, BAT A, LE PERREUX SUR MARNE, 94170, France'
       },{
-        'jobyerOfferId' : -1, 
-        'name': 'Arthur', 
+        'jobyerOfferId' : -1,
+        'name': 'Arthur',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
-          'value' : 3600 * 1.5  
+          'value' : 3600 * 1.5
         },
         'address' : '2 RUE DE LA MAIRESSE, ST GEORGES BAILLARGEAUX, 86130, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Jacques', 
+        'jobyerOfferId' : -1,
+        'name': 'Jacques',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 0.5
@@ -879,16 +879,16 @@ $scope.init = function () {
         'address' : '35 RUE GUY MOQUET, PARIS, 75017, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Nelson', 
+        'jobyerOfferId' : -1,
+        'name': 'Nelson',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 12
@@ -896,16 +896,16 @@ $scope.init = function () {
         'address' : '12 ALLEE BERGERE, VERNEUIL SUR SEINE, 78480, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Aline', 
+        'jobyerOfferId' : -1,
+        'name': 'Aline',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 2
@@ -913,16 +913,16 @@ $scope.init = function () {
         'address' : '6 ALLEE DE LA PLAINE HENRI, SANTEUIL, 95640, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Jacqueline', 
+        'jobyerOfferId' : -1,
+        'name': 'Jacqueline',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 3.5
@@ -930,16 +930,16 @@ $scope.init = function () {
         'address' : '9 RUE DE LA SOURCE, PELTRE, 57245, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Marie', 
+        'jobyerOfferId' : -1,
+        'name': 'Marie',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 24
@@ -947,16 +947,16 @@ $scope.init = function () {
         'address' : '6 RUE CHRISTOPHE COLOMB, BOURGES, 18000, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Gisèle', 
+        'jobyerOfferId' : -1,
+        'name': 'Gisèle',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 6
@@ -964,16 +964,16 @@ $scope.init = function () {
         'address' : '12 B RUE HUYENS CHRISTIAN, VITROLLES, 13127, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Solène', 
+        'jobyerOfferId' : -1,
+        'name': 'Solène',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 1
@@ -981,16 +981,16 @@ $scope.init = function () {
         'address' : '3 RUE MARIA CHAPDELAINE, QUIMPER, 29000, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Georges', 
+        'jobyerOfferId' : -1,
+        'name': 'Georges',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 2.5
@@ -998,16 +998,16 @@ $scope.init = function () {
         'address' : "5 RUE DE L\'HORLOGE, VOISINES, 89260, France"
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Maya', 
+        'jobyerOfferId' : -1,
+        'name': 'Maya',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 7
@@ -1015,16 +1015,16 @@ $scope.init = function () {
         'address' : '13 RUE SANTOS DUMONT, BALMA, 31130, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Pierre', 
+        'jobyerOfferId' : -1,
+        'name': 'Pierre',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 4
@@ -1032,16 +1032,16 @@ $scope.init = function () {
         'address' : '55 LES JARDINS DU CENTRE, LA MURETTE, 38140, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Astrid', 
+        'jobyerOfferId' : -1,
+        'name': 'Astrid',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 3.5
@@ -1049,16 +1049,16 @@ $scope.init = function () {
         'address' : '2 B RUELLE DE LA RAVINE, PONTOISE, 95300, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Laeticia', 
+        'jobyerOfferId' : -1,
+        'name': 'Laeticia',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 9
@@ -1066,16 +1066,16 @@ $scope.init = function () {
         'address' : '7 RUE CHAPTAL, LEVALLOIS PERRET, 92300, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Xavier', 
+        'jobyerOfferId' : -1,
+        'name': 'Xavier',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 1
@@ -1083,16 +1083,16 @@ $scope.init = function () {
         'address' : '7 RUE CHAPTAL, LEVALLOIS PERRET, NANTES, 44200, France'
       },
       {
-        'jobyerOfferId' : -1, 
-        'name': 'Jean-Pierre', 
+        'jobyerOfferId' : -1,
+        'name': 'Jean-Pierre',
         'distance': {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 3600 * 1.5
@@ -1150,7 +1150,7 @@ $scope.init = function () {
         'duration' : {
           'text' : '',
           'value' : 0
-        }, 
+        },
         'availability': {
           'text' : '',
           'value' : 0
@@ -1246,7 +1246,7 @@ $scope.init = function () {
 
       reCalculateDistanceAndDurations();
       reCalculateAvailabilities2();
-      
+
       if ($scope.jobyersNextToMe.length == 31) {
         $scope.moredata = true;
       }
@@ -1374,11 +1374,11 @@ $scope.init = function () {
             /*
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
-            */
+
             var isAuth = UserService.isAuthenticated();
             if(isAuth){
               console.log("check and then redirect to contract page");
-              var employer = $cookieStore.get('employeur');
+              var employer = localStorageService.get('employeur');
               var redirectToStep1 = (typeof (employer) == "undefined");
               var redirectToStep1 = (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined");
               var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
@@ -1425,3 +1425,4 @@ $scope.init = function () {
     }
   })
 ;
+ */

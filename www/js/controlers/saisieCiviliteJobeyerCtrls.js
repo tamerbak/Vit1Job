@@ -4,7 +4,7 @@
 'use strict';
 starter
 
-	.controller('saisieCiviliteJobeyerCtrl', function ($scope, $state, UpdateInServer, GlobalService, LocalStorageService){
+	.controller('saisieCiviliteJobeyerCtrl', function ($scope, $state, UpdateInServer, GlobalService, LocalStorageService,$ionicPopup){
 
 		var employeId=GlobalService.getEmployeId();
 		$scope.updateCivilite = function(titre, nom, prenom, entreprise, siret, ape, numUssaf){

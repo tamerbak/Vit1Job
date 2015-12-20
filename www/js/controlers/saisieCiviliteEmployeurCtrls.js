@@ -3,15 +3,30 @@
  */
 'use strict';
 starter
-	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, $cookieStore, $state,$stateParams, UpdateInServer, UploadFile, $base64,
-				LoadList, formatString, DataProvider, Validator){
+	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, localStorageService, $state,$stateParams, UpdateInServer, UploadFile, $base64,
+				LoadList, formatString, DataProvider, Validator,$ionicPopup){
 
 		// FORMULAIRE
 		$scope.formData = {};
 		// IMAGE
 		//$scope.formData.image={};
-    $scope.disableTagButton = ($stateParams.steps)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  $stateParams.steps;
+    $scope.disableTagButton = ($stateParams.steps!='')?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  ($stateParams.steps!='') ? JSON.parse($stateParams.steps) : '';
+    if(steps!='')
+    {
+      $ionicPopup.show({
+        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+        buttons : [
+          {
+            text: '<b>OK</b>',
+            type: 'button-dark',
+            onTap: function(e) {
+            }
+          }
+        ]
+      });
+    }
 		$scope.updateCiviliteEmployeur = function(){
 
 			for(var obj in $scope.formData){
@@ -27,12 +42,12 @@ starter
 			var numUssaf=$scope.formData.numUssaf;
 
 			// RECUPERATION CONNEXION
-			var connexion=$cookieStore.get('connexion');
+			var connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
-			console.log("$cookieStore.get(connexion) : "+JSON.stringify(connexion));
+			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
-			sessionId=$cookieStore.get('sessionID');
+			var sessionId=localStorageService.get('sessionID');
 
 			if(!isNaN(titre) || nom || prenom || entreprise || siret || ape || numUssaf){
 				if(!nom)
@@ -57,7 +72,7 @@ starter
 							console.log("les donnes ont été sauvegarde");
 							console.log("response"+response);
 
-							var employeur=$cookieStore.get('employeur');
+							var employeur=localStorageService.get('employeur');
 							if(!employeur)
 								employeur={};
 
@@ -71,7 +86,7 @@ starter
 
 							console.log("employeur : "+JSON.stringify(employeur));
 							// PUT IN SESSION
-							$cookieStore.put('employeur', employeur);
+							localStorageService.set('employeur', employeur);
 
 						}).error(function (err){
 							console.log("error : insertion DATA");
@@ -101,7 +116,7 @@ starter
 			}
 
 			/*** LOAD LIST ZIP-CODE
-			codePostals=$cookieStore.get('zipCodes');
+			codePostals=localStorageService.get('zipCodes');
 			if(!codePostals){
 				LoadList.loadZipCodes(sessionId)
 					.success(function (response){
@@ -113,7 +128,7 @@ starter
 							if(typeof zipCodesObjects === 'undefined' || zipCodesObjects.length<=0 || zipCodesObjects===""){
 								console.log('Aucune résultat trouvé');
 								// PUT IN SESSION
-								$cookieStore.put('zipCodes', []);
+								localStorageService.set('zipCodes', []);
 								return;
 							}
 
@@ -137,7 +152,7 @@ starter
 
 							console.log("zipCodes.length : "+zipCodes.length);
 							// PUT IN SESSION
-							//$cookieStore.put('zipCodes', zipCodes);
+							//localStorageService.set('zipCodes', zipCodes);
 							console.log("zipCodes : "+JSON.stringify(zipCodes));
 						}).error(function (err){
 							console.log("error : LOAD DATA");
@@ -197,7 +212,7 @@ starter
 				$scope.initForm();
 
 				console.log("Je suis ds $ionicView.beforeEnter(saisieCivilite)");
-			  var employeur=$cookieStore.get('employeur');
+			  var employeur=localStorageService.get('employeur');
 				console.log("employeur : "+JSON.stringify(employeur));
 				if(employeur){
 					// INITIALISATION FORMULAIRE

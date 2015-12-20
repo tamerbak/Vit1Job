@@ -104,7 +104,7 @@ starter.controller('jobyersOffersListCtrl',
 			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
 			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
 			],
-			titleText: 'Actions',
+			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
           //branchement de la page de contrat ou infos clients

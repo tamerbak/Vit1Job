@@ -10,7 +10,7 @@ starter
 
     $scope.formData = {};
     $rootScope.employeur = {};
-
+    localStorageService.remove("steps");
     /*********************New code*********************/
     $scope.Authenticate = function () {
       var phone=$scope.formData.phone;

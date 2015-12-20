@@ -3,7 +3,7 @@
 starter.controller('jobyersOffersListCtrl',
 	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state',
 	function($scope, localStorageService, $ionicActionSheet, UserService, $state) {
-
+    localStorageService.remove("steps");
 		var init = function(){
 
 			$scope.OfferLabel = capitalize(localStorageService.get('lastSearchedJob'));
@@ -149,10 +149,11 @@ starter.controller('jobyersOffersListCtrl',
                   console.log("redirect to contract pages");
                 }
                 else {
+                  localStorageService.set("steps",JSON.stringify(objRedirect));
                   console.log(employer);
-                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {"steps": JSON.stringify(objRedirect)});
-                  else if (redirectToStep2) $state.go("adressePersonel", {"steps": JSON.stringify(objRedirect)});
-                  else if (redirectToStep3) $state.go("adresseTravail", {"steps": JSON.stringify(objRedirect)});
+                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur");
+                  else if (redirectToStep2) $state.go("adressePersonel");
+                  else if (redirectToStep3) $state.go("adresseTravail");
                 }
               } else {
                 $state.go("connection");

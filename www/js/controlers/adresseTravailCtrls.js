@@ -9,8 +9,8 @@ starter
 
 		// FORMULAIRE
 		$scope.formData = {};
-    $scope.disableTagButton = ($stateParams.steps!='')?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  ($stateParams.steps!='') ? JSON.parse($stateParams.steps) : '';
+    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
     {
       $ionicPopup.show({
@@ -249,7 +249,8 @@ starter
 			}***/
 
 			// REDIRECTION VERS PAGE - offres
-			$state.go('offres');
+			if(steps == '')$state.go('offres');
+      else $state.go('contract');
 		};
 
 		// VALIDATION

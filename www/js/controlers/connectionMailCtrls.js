@@ -56,7 +56,7 @@ starter
           Global.showAlertValidation("Bienvenue! Merci de saisir vos informations avant de lancer votre recherche.");
           $state.go("saisieCiviliteEmployeur");
         } else {
-          $state.go("search");
+          $state.go("app");
         }
       }
     }

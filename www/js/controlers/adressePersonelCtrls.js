@@ -5,7 +5,7 @@
 starter
 
 	.controller('adressePersonelCtrl', function ($scope, $rootScope, $state,$stateParams, UpdateInServer,
-			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ){
+			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ,$ionicPopup){
 
 		// FORMULAIRE
     var geolocated=false;

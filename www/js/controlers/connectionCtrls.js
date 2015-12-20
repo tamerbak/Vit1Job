@@ -121,7 +121,7 @@ starter
 
 					$scope.loadAllVilles = function(){
 
-						sessionId=localStorageService.get('sessionID');
+						var sessionId=localStorageService.get('sessionID');
 						//if(!sessionId){
 							// CONNEXION AU SERVEUR
 							AuthentificatInServer.getSessionId()
@@ -187,7 +187,7 @@ starter
 						$state.go("cPhone");
 					};
 
-					$scope.$on( "$ionicView.beforeEnter", function( scopes, states ){
+					/*$scope.$on( "$ionicView.beforeEnter", function( scopes, states ){
 						if(states.fromCache && states.stateName == "connection" ){
 							// VERIFICATION S'IL EST CONNECTE OU PAS
 
@@ -198,6 +198,6 @@ starter
 									$state.go("search");
 							}
 						}
-					});
+					});*/
 				})
 ;

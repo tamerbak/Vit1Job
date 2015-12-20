@@ -5,7 +5,7 @@
 
  starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies,jobyerService) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};

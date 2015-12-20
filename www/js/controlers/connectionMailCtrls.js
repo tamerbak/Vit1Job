@@ -10,7 +10,7 @@ starter
     // FORMULAIRE
     $scope.formData = {};
     $rootScope.employeur = {};
-
+    localStorageService.remove("steps");
     /*********************New code*********************/
     $scope.Authenticate = function () {
       var email = $scope.formData.email;

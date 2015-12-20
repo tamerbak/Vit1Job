@@ -13,9 +13,9 @@ angular.module('wsConnectors', ['ionic'])
         method: 'POST',
         url: srvURi+"/account/login",
         headers: {
-          "Content-Type": "application/json"
-        },
-        data: user
+          "Content-Type": "application/json",
+          "login": JSON.stringify(user),
+        }
       });*/
       var wsRs= {"email":"rachid@test.com","employerId":1,isNew : false,
         "entreprises":[{"entrepriseId":1,"name":"entreprise1",

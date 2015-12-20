@@ -177,5 +177,5 @@ starter.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     });
- $urlRouterProvider.otherwise('/offres');
+ $urlRouterProvider.otherwise('/app');
 });

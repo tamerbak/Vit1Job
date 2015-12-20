@@ -3,8 +3,9 @@
  */
 'use strict';
 
-starter.controller('contractCtrl',function($scope,$cookieStore,$stateParams,DataProvider,$ionicPopup,$state){
-  var employeur = $cookieStore.get('employeur');
+starter.controller('contractCtrl',function($scope,localStorageService,$stateParams,DataProvider,$ionicPopup,$state){
+  var employeur = localStorageService.get('employeur');
+  var jobyer = localStorageService.get('selectedJobyer');
   var civilites = DataProvider.getCivilites();
   var civilite = "";
   for (var i in civilites)

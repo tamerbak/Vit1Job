@@ -10,9 +10,8 @@ starter
     //$scope.formData={};
     if($stateParams.offre) {
       $scope.offre = JSON.parse($stateParams.offre);
-      console.log($stateParams.offre);
     }
-    console.log($scope.offre);
+
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);
@@ -22,7 +21,6 @@ starter
       for(var i=0; i<metiers.length; i++){
         if(metiers[i]['pk_user_metier'] === $scope.formData.metier.pk_user_metier){
           $scope.formData.metier.libelle=metiers[i]['libelle'];
-          console.log("metiers[i]['libelle']: "+metiers[i]['libelle']);
           break;
         }
       }
@@ -30,7 +28,6 @@ starter
       if(typeof $scope.formData.metier === 'undefined')
         $scope.formData.metier={};
       //$scope.formData.metier.originalObject={'pk_user_metier': $scope.formData.metier.pk_user_metier, 'libelle': $scope.formData.metier.libelle};
-      console.log("formData.metier : "+$scope.formData.metier);
       document.getElementById('metiers_value').value=$scope.formData.metier['libelle'];
       //$rootScope.$broadcast('update-list-job', {params: {'fk':$scope.formData.metier.pk_user_metier, 'list':'metier'}});
 
@@ -40,7 +37,6 @@ starter
       for(var i=0; i<jobs.length; i++){
         if(jobs[i]['fk_user_metier'] === $scope.formData.metier.pk_user_metier){
           $scope.formData.jobs.push(jobs[i]);
-          console.log("teeest");
         }
       }
 
@@ -51,7 +47,6 @@ starter
     $scope.updateAutoCompleteJob= function(){
       $scope.formData.job=JSON.parse($scope.formData.job);
 
-      console.log("job : "+$scope.formData.job.pk);
       var jobs=$scope.formData.jobs;
       // RECHERCHE LIBELLE
       for(var i=0; i<jobs.length; i++){
@@ -64,20 +59,25 @@ starter
       if(typeof $scope.formData.job === 'undefined')
         $scope.formData.job={};
       $scope.formData.job.originalObject={'pk_user_competence': $scope.formData.job.pk, 'libelle': $scope.formData.job.libelle};
-      console.log("formData.job : "+JSON.stringify($scope.formData.job));
+
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
     $scope.initAll = function(){
-      console.log("initAll : "+$scope.offre);
+
       if($scope.offre){
-        console.log('test1');
+
         $scope.formData={
           'maitrise': 'Débutant',
           'maitriseIcon': 'tree1_small.png',
           'maitriseStyle': "display: inline;max-width: 33px;max-height: 50px;",
           'maitriseLangueIcon': 'tree1_small.png',
           'maitriseLangue': 'Débutant',
-          'maitriseLangueStyle': "display: inline;max-width: 33px;max-height: 50px;"
+          'maitriseLangueStyle': "display: inline;max-width: 33px;max-height: 50px;",
+          'heureDebut': 0,
+          'heureFin': 0,
+          'heureDebutFormat': '00h00',
+          'heureFinFormat': '00h00',
+          'jourSelect': "Lundi"
         };
         $scope.formData.metiers=DataProvider.getMetiers();
         $scope.formData.langues=DataProvider.getLangues();
@@ -106,12 +106,14 @@ starter
           $scope.formData.languesList=$scope.offre.languesList;
         if($scope.offre.remuneration)
           $scope.formData.remuneration=$scope.offre.remuneration;
-        if($scope.offre.heures)
-          $scope.formData.heures=$scope.offre.heures;
+        if($scope.offre.horaires)
+          $scope.formData.horaires = $scope.offre.horaires;
         if($scope.offre.dateDebut)
-          $scope.formData.dateDebut=$scope.offre.dateDebut;
+          $scope.formData.dateDebut = $scope.offre.dateDebut;
         if($scope.offre.dateFin)
-          $scope.formData.dateFin=$scope.offre.dateFin;
+          $scope.formData.dateFin = $scope.offre.dateFin;
+        else
+          $scope.formData.dateFin = "Jamais";
       }else
         $scope.formData={
         'maitrise': 'Débutant',
@@ -125,24 +127,24 @@ starter
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
         'dateFin': "Jamais",
+        'jourSelect': "Lundi",
         'heureDebut': 0,
         'heureFin': 0,
         'heureDebutFormat': '00h00',
         'heureFinFormat': '00h00',
-        heures:[],
+        horaires:[],
         jours:DataProvider.getDays(),
         qiList:[],
         languesList:[],
         qi:{},
-          degre:10,
+        degre:10,
         selectedLangue:{}
       };
-      $scope.formData.jours[0].checked = true;
     };
 
     $scope.rangeChange = function(){
       var rangeModel=$scope.formData.degre;
-      console.log("rangeModel : "+rangeModel);
+
       if (rangeModel <= 25 ){
         $scope.formData.maitrise = "Débutant";
         $scope.formData.maitriseIcon = "tree1_small.png";
@@ -170,7 +172,7 @@ starter
 
     $scope.rangeLangueChange = function(){
       var rangeModel=$scope.formData.degreLangue;
-      console.log("rangeLangueModel : "+rangeModel);
+
       if (rangeModel <= 25 ){
         $scope.formData.maitriseLangue = "Débutant";
         $scope.formData.maitriseLangueIcon = "tree1_small.png";
@@ -198,7 +200,7 @@ starter
 
     $scope.ajouterQi= function(){
       var qi;
-      console.log($scope.formData.indisp);
+
       if($scope.formData.indisp!="Qualités indispensables")
         qi=JSON.parse($scope.formData.indisp);
       if(qi!=undefined) {
@@ -232,12 +234,12 @@ starter
     };
 
     $scope.onChange=function(item){
-      console.log(item);
+
       if(item.selected)
         item.selected=false;
       else
         item.selected=true;
-      console.log(item.selected);
+
     };
 
     $scope.ajouterLangue= function(){
@@ -276,7 +278,7 @@ starter
     };
 
     $scope.validerOffre=function(){
-      console.log($scope.formData);
+
       if(!$scope.offre)
         $scope.offre={};
       $scope.offre.degre=$scope.formData.degre;
@@ -295,17 +297,21 @@ starter
       $scope.offre.qiList=$scope.formData.qiList;
       $scope.offre.languesList=$scope.formData.languesList;
       $scope.offre.remuneration=$scope.formData.remuneration;
-      $scope.offre.heures=$scope.formData.heures;
-      $scope.offre.dateDebut=$scope.formData.dateDebut;
-      $scope.offre.dateFin=$scope.formData.dateFin;
+      $scope.offre.horaires = $scope.formData.horaires;
+      $scope.offre.dateDebut =$scope.formData.dateDebut;
+      $scope.offre.dateFin = $scope.formData.dateFin;
+
       var offre=$scope.offre;
-      console.log(offre);
+
       var exist=false;
         for(var i=0; i<$rootScope.offres.length;i++){
           if($rootScope.offres[i].pk==offre.pk) {
             $rootScope.offres[i] = offre;
             exist=true;
-            console.log($rootScope.offres[i]);
+          }
+          else
+          {
+            offre.pk = $rootScope.offres.length + 1;
           }
         }
       if(!exist) {
@@ -318,7 +324,6 @@ starter
     $scope.$on('update-list-job', function(event, args){
 
       var params = args.params;
-      console.log("params : "+JSON.stringify(params));
 
       // VIDER LIST - JOBS
       $scope.formData.jobs=[];
@@ -329,27 +334,44 @@ starter
       }
     });
 
-    $scope.ajouterHeures= function(){
+    $scope.ajouterHoraire = function(){
 
-      var hdebut=$scope.formData.heureDebut;
-      var hfin=$scope.formData.heureFin;
-      var mdebut=$scope.formData.minDebut;
-      var mfin=$scope.formData.minFin;
+      var valid = $scope.validateHoraire();
 
-      if(hdebut!=undefined && hfin!=undefined && mdebut!=undefined && mfin!=undefined) {
-        if(hfin > hdebut)
-          $scope.formData.heures.push({"heureDebut": hdebut+"h"+mdebut+"min", "heureFin": hfin+"h"+mfin+"min"});
-        else
-          Global.showAlertValidation("L'heure de fin doit être supérieur.");
-      }else{
-        Global.showAlertValidation("Veuillez saisir une heure de début et une heure de fin.");
+      if (valid){
+        $scope.formData.horaires.push({"jour": $scope.formData.jourSelect, "heureDebut": $scope.formData.heureDebutFormat, "heureFin": $scope.formData.heureFinFormat, "minuteDebut":$scope.formData.heureDebut, "minuteFin": $scope.formData.heureFin });
       }
     };
 
-    $scope.supprimerHeures= function(){
+    $scope.supprimerHoraire = function(){
 
-      if( $scope.formData.heures.length!=0){
-        $scope.formData.heures.pop();
+      if( $scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
+        $scope.formData.horaires.splice($scope.formData.horaireSelect, 1);
+        $scope.formData.editShow = false;
+        delete $scope.formData.horaireSelect;
+      }
+    };
+
+    $scope.editerHoraire = function(){
+
+      if( $scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
+        var horaireSelect = $scope.formData.horaires[$scope.formData.horaireSelect];
+
+        $scope.formData.jourSelect = horaireSelect.jour;
+        $scope.formData.heureDebut = horaireSelect.minuteDebut;
+        $scope.formData.heureDebutFormat = horaireSelect.heureDebut;
+        $scope.formData.heureFin = horaireSelect.minuteFin;
+        $scope.formData.heureFinFormat = horaireSelect.heureFin;
+        $scope.formData.editShow = true;
+      }
+    };
+
+    $scope.saveEditHoraire = function(){
+
+      var valid = $scope.validateHoraire("update");
+      if (valid){
+        $scope.formData.horaires[$scope.formData.horaireSelect] = {"jour": $scope.formData.jourSelect, "heureDebut": $scope.formData.heureDebutFormat, "heureFin": $scope.formData.heureFinFormat, "minuteDebut":$scope.formData.heureDebut, "minuteFin": $scope.formData.heureFin};
+        $scope.formData.editShow = false;
       }
     };
 
@@ -383,14 +405,56 @@ starter
   };
 
   $scope.heureChange = function (params) {
-  if (params === 'debut'){
-    $scope.formData.heureDebutFormat = ($scope.formData.heureDebut === "0" ? "00h00" : Math.floor($scope.formData.heureDebut / 60) + "h" + $scope.formData.heureDebut % 60);
-  }
-  else if(params === 'fin'){
-    $scope.formData.heureFinFormat = ($scope.formData.heureFin === "0" ? "00h00" : Math.floor($scope.formData.heureFin / 60) + "h" + $scope.formData.heureFin % 60);
-  }
+    if (params === 'debut'){
+      var restofdiv = ($scope.formData.heureDebut % 60 === 0 ? "00" : $scope.formData.heureDebut % 60)
+      $scope.formData.heureDebutFormat = ($scope.formData.heureDebut === "0" ? "00h00" : Math.floor($scope.formData.heureDebut / 60) + "h" + restofdiv);
+    }
+    else if(params === 'fin'){
+      var restofdiv = ($scope.formData.heureFin % 60 === 0 ? "00" : $scope.formData.heureFin % 60)
+      $scope.formData.heureFinFormat = ($scope.formData.heureFin === "0" ? "00h00" : Math.floor($scope.formData.heureFin / 60) + "h" + restofdiv);
+    }
+  };
 
-  }
+  $scope.validateHoraire = function (params){
+    if(parseInt($scope.formData.heureDebut) >= parseInt($scope.formData.heureFin)){
+      Global.showAlertValidation("L'heure de fin doit être supérieur à l'heure de début.");
+      return false;
+    }
+    else if ($scope.horaireExist(params)){
+      Global.showAlertValidation("La marge horaire choisie existe déja.");
+      return false
+    }
+
+    return true;
+
+  };
+
+  $scope.horaireExist = function(params){
+
+    for (var index in $scope.formData.horaires){
+
+      var horaire = $scope.formData.horaires[index];
+
+      if (horaire.jour === $scope.formData.jourSelect){
+
+        if(params !== "update" || parseInt(index) !== $scope.formData.horaireSelect){
+          if(parseInt(horaire.minuteDebut) >= parseInt($scope.formData.heureDebut) && parseInt(horaire.minuteDebut) <= parseInt($scope.formData.heureFin)){
+            return true;
+          }
+          else if(parseInt($scope.formData.heureDebut) >= parseInt(horaire.minuteDebut) && parseInt($scope.formData.heureDebut) <= parseInt(horaire.minuteFin)){
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  $scope.changeEditState = function(){
+    if ($scope.formData.editShow){
+      $scope.formData.editShow = false
+    }
+  };
 
 
   });

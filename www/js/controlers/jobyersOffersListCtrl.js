@@ -96,7 +96,7 @@ starter.controller('jobyersOffersListCtrl',
 
 		jobber.contacted = true;
     localStorageService.remove('Selectedjobyer');
-    localStorageService.put('Selectedjobyer',jobber);
+    localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
 			buttons: [
 			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0

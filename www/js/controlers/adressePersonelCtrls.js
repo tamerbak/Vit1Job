@@ -205,7 +205,7 @@ starter
 
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
-				$scope.initForm();
+				//$scope.initForm();
 				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
 				//employeur=localStorageService.get('employeur');
 				if(isNaN($scope.formData.codePostal) && isNaN($scope.formData.ville) && !$scope.formData.adresse1 && !$scope.formData.adresse2 && !$scope.formData.num){

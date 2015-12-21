@@ -450,7 +450,7 @@ starter
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			if(states.fromCache && states.stateName == "adresseTravail" ){
-				$scope.initForm();
+				//$scope.initForm();
 
 				// AFFICHE POPUP - SI JE VIENS
 				if($ionicHistory.backView() === "adressePersonel"){}

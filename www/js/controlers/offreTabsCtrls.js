@@ -254,6 +254,7 @@ starter
             return;
           }
         }
+        langue.maitriseLangue = $scope.formData.maitriseLangue;
         $scope.formData.languesList.push(langue);
 
       }else{

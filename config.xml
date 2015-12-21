@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.vitonjob212882" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>VitOnjob Employeur</name>
-  <description>&#xD;&#xD;
-        Application de micro-jobbing.&#xD;&#xD;
+  <description>&#xD;&#xD;&#xD;
+        Application de micro-jobbing.&#xD;&#xD;&#xD;
     </description>
-  <author email="t.elbakkali@vitonjob.com" href="http://ionicframework.com/">&#xD;&#xD;
-      VitOnJob Team&#xD;&#xD;
+  <author email="t.elbakkali@vitonjob.com" href="http://ionicframework.com/">&#xD;&#xD;&#xD;
+      VitOnJob Team&#xD;&#xD;&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>

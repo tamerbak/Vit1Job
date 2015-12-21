@@ -422,7 +422,7 @@ starter
       return false;
     }
     else if ($scope.horaireExist(params)){
-      Global.showAlertValidation("La marge horaire choisie existe déja.");
+      Global.showAlertValidation("L horaire choisie existe déja.");
       return false
     }
 

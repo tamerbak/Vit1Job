@@ -17,7 +17,7 @@
 </button>
 </ion-nav-buttons> -->
 
-  <ion-content id="offresContent" padding="true" data-ng-init="initAll()">
+  <ion-content id="offresContent" class="has-header" overflow-scroll="true" padding="true" data-ng-init="initAll()">
     <!-- Title -->
     <div>
       <h3 class="titlePhone"><b>Offres</b></h3>
@@ -33,13 +33,13 @@
            Offres publiées
          </div>
          -->
-    <div class="list" ng-show="offres.length">
+    <ion-list class="list" ng-show="offres.length">
       <ion-radio  ng-repeat="y in offres" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
         <i ng-if="y.etat=='publie'" class="ion-eye"></i>
         <i ng-if="y.etat=='noPublie'" class="ion-eye-disabled"></i>
         <label>{{y.titre}}</label>
       </ion-radio>
-    </div>
+    </ion-list>
     <div class="card" ng-show="!offres.length">
       <div class="item item-text-wrap">
         Vous n’avez aucune offre pour le moment. Veuillez les ajouter pour trouver vos jobyers bien ciblés.
@@ -56,16 +56,15 @@
   </ion-radio>
 </div>
 -->
-    </br>
-    <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer</button>
-  </ion-content>
-  <div class="bar bar-footer">
+
     <div class="button-bar">
-      <a class="button icon ion-plus-circled" ui-sref="offreTabs.job"></a>
-      <a class="button icon ion-android-create" ng-click="modifierOffre();"></a>
-      <a class="button icon ion-ios-copy" ng-click="dupliquerOffre();"></a>
-      <a class="button icon ion-trash-b" ng-click="supprimerOffre();"></a>
-    </div>
+      <a class="button button-light button-block icon ion-plus-circled" ui-sref="offreTabs.job"></a>
+      <a class="button button-light button-block icon ion-android-create" ng-click="modifierOffre();"></a>
+      <a class="button button-light button-block icon ion-ios-copy" ng-click="dupliquerOffre();"></a>
+      <a class="button button-light button-block icon ion-trash-b" ng-click="supprimerOffre();"></a>
   </div>
+  </br>
+  <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer</button>
+  </ion-content>
 </ion-view>
 

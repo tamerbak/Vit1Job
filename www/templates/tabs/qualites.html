@@ -32,7 +32,7 @@
     <a class="button button-icon  icon ion-plus-circled" data-ng-click="ajouterQi();"></a>
     <a class="button button-icon icon ion-trash-b" data-ng-click="supprimerQi();"></a>
 
-    <div class="list">
+    <div class="list" style="text-align:left;">
       <ion-radio  ng-repeat="data in formData.qiList" data-ng-model="formData.qi"  ng-value="data" ng-change="onChange(data)" style="border-radius: 0;border-color: lightgray;">
         {{data.libelle}}
       </ion-radio>

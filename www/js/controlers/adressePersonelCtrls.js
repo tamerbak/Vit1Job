@@ -191,12 +191,17 @@ starter
     });
 
 
-    $scope.initForm=function(){
+    $scope.$on("$ionicView.beforeEnter", function () {
+      $scope.formData.zipCodes=DataProvider.getZipCodes();
+      $scope.formData.villes=DataProvider.getVilles();
+    });
+
+    //$scope.initForm=function(){
 			/**var elm = angular.element(document.querySelector('#ex0_value'));
 			elm.val("Ville");**/
-			$scope.formData.zipCodes=DataProvider.getZipCodes();
-			$scope.formData.villes=DataProvider.getVilles();
-		};
+			//$scope.formData.zipCodes=DataProvider.getZipCodes();
+			//$scope.formData.villes=DataProvider.getVilles();
+		//};
 
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
@@ -209,7 +214,7 @@ starter
 								.then(function() {
 									var myPopup = $ionicPopup.show({
 										//Votre géolocalisation pour renseigner votre adresse du siège social?
-										template: "Localisation: êtes-vous dans votre siège social? (OUI/ NON)<br>",
+										template: "Localisation: êtes-vous dans votre siège social?<br>",
 										title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 										buttons: [
 											{
@@ -221,7 +226,7 @@ starter
 												onTap: function(e){
                           var myPopup2 = $ionicPopup.show({
                             //Votre géolocalisation pour renseigner votre adresse du siège social?
-                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social. (OUI/ NON ?)<br>",
+                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
                             title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
                             buttons: [
                               {

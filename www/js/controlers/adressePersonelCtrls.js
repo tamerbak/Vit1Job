@@ -219,7 +219,10 @@ starter
 										buttons: [
 											{
 												text: '<b>Non</b>',
-												type: 'button-dark'
+												type: 'button-dark',
+                        onTap: function(e) {
+                          myPopup.close();
+                        }
 											},{
 												text: '<b>Oui</b>',
 												type: 'button-calm',
@@ -233,11 +236,15 @@ starter
                               buttons: [
                                 {
                                   text: '<b>Non</b>',
-                                  type: 'button-dark'
+                                  type: 'button-dark',
+                                  onTap: function (e) {
+                                    myPopup2.close();
+                                  }
                                 }, {
                                   text: '<b>Oui</b>',
                                   type: 'button-calm',
                                   onTap: function (e) {
+                                    myPopup2.close();
                                     geolocated = true;
                                     var geoAddress = localStorageService.get('user_address');
                                     $scope.formData.adresse1 = geoAddress.street;
@@ -255,7 +262,8 @@ starter
 										]
 									});
 								}, function(error) {
-								});
+                  Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
+                });
 
 					/**if(employeur['adressePersonel'].codePostal)
 					 *  document.getElementById('ex0_value').value=employeur['adressePersonel']['codePostal'];

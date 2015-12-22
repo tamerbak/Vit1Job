@@ -26,6 +26,7 @@ services
            // current GPS coordinates
            //
            var onSuccess = function (position) {
+             console.log("onSuccess");
 
              userGeo = {
                'latitude': position.coords.latitude,
@@ -41,12 +42,14 @@ services
            // onError Callback receives a PositionError object
            //
            var onError = function (error) {
+             Global.showAlertValidation("Echec de geolocalisation 2 : "+error.message);
+
              console.log('GeoService getUserGeo error : code: ' + error.code + '\n' +
                'message: ' + error.message + '\n');
 
              deferred.reject(error);
            };
-
+            console.log("befooore geolocation");
            navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
           return deferred.promise;
@@ -98,29 +101,29 @@ services
        */
       getUserAddress : function() {
         var deferred = $q.defer();
-
-        var userAddress = localStorageService.get('user_address');
+        var userAddress;
+        /*var userAddress = localStorageService.get('user_address');
 
         if(userAddress) {
           deferred.resolve(userAddress);
           return deferred.promise;
         }
-
+*/
         this.getUserGeo()
           .then(function(userGeo) {
 
             var lat = userGeo.latitude;
             var long = userGeo.longitude;
+              console.log("testt");
 
             var geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(lat, long);
             geocoder.geocode({'latLng': latlng}, function (results, status) {
+              console.log(results);
               if (status == google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
-
                   var address_components = results[0].address_components;
-
-                  var postalCode = address_components[6] ? address_components[6].long_name : '';
+                 var postalCode = address_components[5] ? address_components[5].long_name : '';
                   var city = address_components[2].long_name;
                   var num = address_components[0] ? address_components[0].long_name : '';
                   var street = address_components[1]? address_components[1].long_name : '';
@@ -137,7 +140,7 @@ services
                     'complement': complement,
                     'fullAddress': fullAddress
                   };
-
+                  console.log(userAddress);
                   localStorageService.set('user_address', userAddress);
                   deferred.resolve(userAddress);
                 } else {
@@ -150,7 +153,8 @@ services
 
           },
           function(error) {
-          console.log('GeoService getUserAddress error : ', error);
+            Global.showAlertValidation("Echec de geolocalisation 1 : "+error.message);
+            console.log('GeoService getUserAddress error : ', error);
           deferred.reject(error);
         });
 
@@ -169,11 +173,11 @@ getAddressByPosition : function(latitude, longitude) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             var address_components = results[0].address_components;
-            var postalCode = address_components[6] ? address_components[6].long_name : '';
+            var postalCode = address_components[5] ? address_components[5].long_name : '';
             var city = address_components[2].long_name;
             var num = address_components[0] ? address_components[0].long_name : '';
             var street = address_components[1]? address_components[1].long_name : '';
-            var complement = address_components[3].long_name+', '+ 
+            var complement = address_components[3].long_name+', '+
             address_components[4].long_name+', '+
             (address_components[5] ? address_components[5].long_name : '');
             var fullAddress = results[0].formatted_address;
@@ -202,7 +206,7 @@ getAddressByPosition : function(latitude, longitude) {
       });
 
       return deferred.promise;
-    
+
     },
 
     getDistanceBetween : function(latitude1, longitude1, latitude2, longitude2) {

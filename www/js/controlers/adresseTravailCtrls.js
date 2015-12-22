@@ -377,7 +377,7 @@ starter
 			var params = args.params;
 			console.log("params : "+JSON.stringify(params));
 
-			var myPopup = $ionicPopup.show({
+			var popup = $ionicPopup.show({
 
 			  template: "L'adresse de travail est-elle différente de l'adresse du siège social? <br>",
 			  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -386,38 +386,46 @@ starter
 					text: '<b>Oui</b>',
 					type: 'button-calm',
           onTap: function(e) {
-            myPopup.close();
+            popup.close();
             $timeout( function () {
               if (!params.geolocated) {
                 GeoService.getUserAddress()
                   .then(function () {
-                    var myPopup1 = $ionicPopup.show({
+                    var popup1 = $ionicPopup.show({
                       //Votre géolocalisation pour renseigner votre adresse du siège social?
                       template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
                       title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
                       buttons: [
                         {
                           text: '<b>Non</b>',
-                          type: 'button-dark'
+                          type: 'button-dark',
+                          onTap: function (e) {
+                            popup1.close();
+                          }
                         }, {
                           text: '<b>Oui</b>',
                           type: 'button-calm',
                           onTap: function (e) {
-                            myPopup1.close();
+                            popup1.close();
                             $timeout(function () {
-                              var myPopup2 = $ionicPopup.show({
+                              var popup2 = $ionicPopup.show({
                                 //Votre géolocalisation pour renseigner votre adresse du siège social?
                                 template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
                                 title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
                                 buttons: [
                                   {
                                     text: '<b>Non</b>',
-                                    type: 'button-dark'
+                                    type: 'button-dark',
+                                    onTap: function (e) {
+                                      popup2.close();
+                                    }
                                   }, {
                                     text: '<b>Oui</b>',
                                     type: 'button-calm',
                                     onTap: function (e) {
+                                      popup2.close();
                                       var geoAddress = localStorageService.get('user_address');
+                                      console.log(geoAddress);
                                       $scope.formData.adresse1 = geoAddress.street;
                                       $scope.formData.adresse2 = geoAddress.complement;
                                       $scope.formData.num = geoAddress.num;
@@ -433,15 +441,17 @@ starter
                       ]
                     });
                   }, function (error) {
+                    Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
                   });
               }
-            });
+            },1000);
           }
 				},{
 					text: '<b>Non</b>',
 					type: 'button-dark',
 					onTap: function(e){
-						$scope.formData.adresse1= params.adresse1;
+            popup.close();
+            $scope.formData.adresse1= params.adresse1;
 						$scope.formData.adresse2= params.adresse2;
 						$scope.formData.num= params.num;
 						if(params.code)

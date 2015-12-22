@@ -11,7 +11,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
   function initialize() {
 
     var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
-    
+
     var mapOptions = {
       center: myLatlng,
       zoom: 16,
@@ -19,7 +19,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
     };
     var map = new google.maps.Map(document.getElementById("map"),
       mapOptions);
-    
+
         //Marker + infowindow + angularjs compiled ng-click
         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
         var compiled = $compile(contentString)($scope);
@@ -41,7 +41,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
         $scope.map = map;
       }
       google.maps.event.addDomListener(window, 'load', initialize);
-      
+
       $scope.centerOnMe = function() {
         if(!$scope.map) {
           return;
@@ -53,13 +53,65 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
         });
 
         navigator.geolocation.getCurrentPosition(function(pos) {
+          console.log(pos);
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+          var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: $scope.map,
+            icon: pinImage
+            //label: labels[labelIndex++ % labels.length]
+          });
+          var jobyersOffers= [{
+            jobyerName : 'Jérôme',
+            availability : {
+              value : 210,
+              text : '8h 30min'
+            },
+            matching : 60,
+            contacted : false,
+            latitude : pos.coords.latitude+0.1,
+            longitude : pos.coords.longitude+0.1
+          },
+            {
+              jobyerName : 'Alain',
+              availability : {
+                value : 20,
+                text : '3h 30min'
+              },
+              matching : 20,
+              contacted : true,
+              latitude : pos.coords.latitude+0.2,
+              longitude : pos.coords.longitude+0.2
+            },
+            {
+              jobyerName : 'Philippe',
+              availability : {
+                value : 1000,
+                text : '17h 30min'
+              },
+              matching : 10,
+              contacted : false,
+              latitude : pos.coords.latitude+0.3,
+              longitude : pos.coords.longitude+0.3
+            }];
+          for( var i=0;i<jobyersOffers.length;i++){
+            var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+            var marker2 = new google.maps.Marker({
+              position: myLatLng2,
+              map: $scope.map
+              //label: labels[labelIndex++ % labels.length]
+            });
+          }
           $scope.loading.hide();
         }, function(error) {
-          alert('Unable to get location: ' + error.message);
+          alert('Impossible de vous localiser, veuillez vérifier vos paramétres de localisation:');
+          $scope.loading.hide();
+
         });
       };
-      
+
       $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
       };

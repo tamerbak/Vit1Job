@@ -5,7 +5,7 @@
 starter
 
 	.controller('adresseTravailCtrl', function ($scope, $rootScope, localStorageService, $state, $stateParams,formatString,
-					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory){
+					UpdateInServer, LoadList, DataProvider, Validator, Global, $ionicPopup, $ionicHistory,GeoService,$timeout){
 
 		// FORMULAIRE
 		$scope.formData = {};
@@ -386,47 +386,56 @@ starter
 					text: '<b>Oui</b>',
 					type: 'button-calm',
           onTap: function(e) {
-            if (!params.geolocated) {
-              var myPopup0 = $ionicPopup.show({
-                //Votre géolocalisation pour renseigner votre adresse du siège social?
-                template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
-                title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                buttons: [
-                  {
-                    text: '<b>Non</b>',
-                    type: 'button-dark'
-                  }, {
-                    text: '<b>Oui</b>',
-                    type: 'button-calm',
-                    onTap: function (e) {
-                      var myPopup1 = $ionicPopup.show({
-                        //Votre géolocalisation pour renseigner votre adresse du siège social?
-                        template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
-                        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                        buttons: [
-                          {
-                            text: '<b>Non</b>',
-                            type: 'button-dark'
-                          }, {
-                            text: '<b>Oui</b>',
-                            type: 'button-calm',
-                            onTap: function (e) {
-                              var geoAddress = localStorageService.get('user_address');
-                              console.log(geoAddress);
-                              $scope.formData.adresse1 = geoAddress.street;
-                              $scope.formData.adresse2 = geoAddress.complement;
-                              $scope.formData.num = geoAddress.num;
-                              $scope.formData.initialCity = geoAddress.city;
-                              $scope.formData.initialPC = geoAddress.postalCode;
-                            }
+            myPopup.close();
+            $timeout( function () {
+              if (!params.geolocated) {
+                GeoService.getUserAddress()
+                  .then(function () {
+                    var myPopup1 = $ionicPopup.show({
+                      //Votre géolocalisation pour renseigner votre adresse du siège social?
+                      template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
+                      title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                      buttons: [
+                        {
+                          text: '<b>Non</b>',
+                          type: 'button-dark'
+                        }, {
+                          text: '<b>Oui</b>',
+                          type: 'button-calm',
+                          onTap: function (e) {
+                            myPopup1.close();
+                            $timeout(function () {
+                              var myPopup2 = $ionicPopup.show({
+                                //Votre géolocalisation pour renseigner votre adresse du siège social?
+                                template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
+                                title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                                buttons: [
+                                  {
+                                    text: '<b>Non</b>',
+                                    type: 'button-dark'
+                                  }, {
+                                    text: '<b>Oui</b>',
+                                    type: 'button-calm',
+                                    onTap: function (e) {
+                                      var geoAddress = localStorageService.get('user_address');
+                                      $scope.formData.adresse1 = geoAddress.street;
+                                      $scope.formData.adresse2 = geoAddress.complement;
+                                      $scope.formData.num = geoAddress.num;
+                                      $scope.formData.initialCity = geoAddress.city;
+                                      $scope.formData.initialPC = geoAddress.postalCode;
+                                    }
+                                  }
+                                ]
+                              });
+                            });
                           }
-                        ]
-                      });
-                    }
-                  }
-                ]
-              });
-            }
+                        }
+                      ]
+                    });
+                  }, function (error) {
+                  });
+              }
+            });
           }
 				},{
 					text: '<b>Non</b>',
@@ -439,6 +448,8 @@ starter
 							document.getElementById('ex2_value').value=params.code;
 						if(params.vi)
 							document.getElementById('ex3_value').value=params.vi;
+            $scope.formData.initialCity = geoAddress.city;
+            $scope.formData.initialPC = geoAddress.postalCode;
 						$scope.updateAdresseTravEmployeur();
 						// REDIRECTION VERS PAGE - COMPETENCES
 						//$state.go('competence');

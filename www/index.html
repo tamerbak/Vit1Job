@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">
+      <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <title></title>
 
         <!-- compiled css output -->
@@ -17,7 +17,9 @@
         <link href="css/popupStyles.css" rel="stylesheet">
         <link href="css/competenceStyle.css" rel="stylesheet">
 
-        <!-- ionic/angularjs js -->
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&sensor=false"></script>
+
+      <!-- ionic/angularjs js -->
         <script src="lib/ionic/js/ionic.bundle.js"></script>
 
         <!-- cordova script (this will be a 404 during development) -->
@@ -85,8 +87,8 @@
         <!-- Local storage -->
         <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
-        <!-- google maps javascript -->
-        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&amp;sensor=true"></script>
+        <!-- google maps javascript
+        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&amp;sensor=true"></script> -->
 
     </head>
     <body ng-app="starter">

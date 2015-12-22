@@ -96,10 +96,12 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               latitude : pos.coords.latitude+0.3,
               longitude : pos.coords.longitude+0.3
             }];
+          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|bfc0c6");
           for( var i=0;i<jobyersOffers.length;i++){
             var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
             var marker2 = new google.maps.Marker({
               position: myLatLng2,
+              icon:pinImage2,
               map: $scope.map
               //label: labels[labelIndex++ % labels.length]
             });

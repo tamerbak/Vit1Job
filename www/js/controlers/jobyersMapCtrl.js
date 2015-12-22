@@ -1,7 +1,7 @@
 
 'use strict';
 
-starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', function($scope, $ionicLoading, $compile) {
+starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global', function($scope, $ionicLoading, $compile,Global) {
 
   $scope.$on('$ionicView.beforeEnter', function(){
     if(!$scope.loaded) initialize();
@@ -51,7 +51,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
           content: 'Getting current location...',
           showBackdrop: false
         });
-
+        var success=false;
         navigator.geolocation.getCurrentPosition(function(pos) {
           console.log(pos);
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
@@ -104,12 +104,19 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile', func
               //label: labels[labelIndex++ % labels.length]
             });
           }
-          $scope.loading.hide();
+          success=true;
+          $ionicLoading.hide();
         }, function(error) {
-          alert('Impossible de vous localiser, veuillez vérifier vos paramétres de localisation:');
-          $scope.loading.hide();
+          success=false;
+          Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+          $ionicLoading.hide();
 
+        },{
+          timeout : 5000
         });
+        console.log(success);
+        //if(success==false)
+          //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
       };
 
       $scope.clickTest = function() {

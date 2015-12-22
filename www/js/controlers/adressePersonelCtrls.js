@@ -5,7 +5,7 @@
 starter
 
 	.controller('adressePersonelCtrl', function ($scope, $rootScope, $state,$stateParams, UpdateInServer,
-			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ,$ionicPopup){
+			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ,$ionicPopup,$timeout){
 
 		// FORMULAIRE
     var geolocated=false;
@@ -224,28 +224,31 @@ starter
 												text: '<b>Oui</b>',
 												type: 'button-calm',
 												onTap: function(e){
-                          var myPopup2 = $ionicPopup.show({
-                            //Votre géolocalisation pour renseigner votre adresse du siège social?
-                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
-                            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                            buttons: [
-                              {
-                                text: '<b>Non</b>',
-                                type: 'button-dark'
-                              },{
-                                text: '<b>Oui</b>',
-                                type: 'button-calm',
-                                onTap: function(e){
-                                  geolocated=true;
-                                  var geoAddress = localStorageService.get('user_address');
-                                  $scope.formData.adresse1 = geoAddress.street;
-                                  $scope.formData.adresse2 = geoAddress.complement;
-                                  $scope.formData.num = geoAddress.num;
-                                  $scope.formData.initialCity = geoAddress.city;
-                                  $scope.formData.initialPC = geoAddress.postalCode;
+                          myPopup.close();
+                          $timeout( function () {
+                            var myPopup2 = $ionicPopup.show({
+                              //Votre géolocalisation pour renseigner votre adresse du siège social?
+                              template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
+                              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                              buttons: [
+                                {
+                                  text: '<b>Non</b>',
+                                  type: 'button-dark'
+                                }, {
+                                  text: '<b>Oui</b>',
+                                  type: 'button-calm',
+                                  onTap: function (e) {
+                                    geolocated = true;
+                                    var geoAddress = localStorageService.get('user_address');
+                                    $scope.formData.adresse1 = geoAddress.street;
+                                    $scope.formData.adresse2 = geoAddress.complement;
+                                    $scope.formData.num = geoAddress.num;
+                                    $scope.formData.initialCity = geoAddress.city;
+                                    $scope.formData.initialPC = geoAddress.postalCode;
+                                  }
                                 }
-                              }
-                            ]
+                              ]
+                            });
                           });
 												}
 											}

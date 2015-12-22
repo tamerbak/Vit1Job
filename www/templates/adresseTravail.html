@@ -21,7 +21,8 @@
         search-fields="libelle"
         title-field="libelle"
         minlength="1"
-        input-class="form-control form-control-small"
+           initial-value = "formData.initialCity"
+           input-class="form-control form-control-small"
         match-class="highlight" class="autoCompl">
       </div>
       <select class="arriere flat select" data-ng-model="formData.villeSelected.pk" data-ng-change="updateAutoCompleteVille()">
@@ -41,7 +42,8 @@
         search-fields="libelle"
         title-field="libelle"
         minlength="1"
-        input-class="form-control form-control-small"
+           initial-value = "formData.initialPC"
+           input-class="form-control form-control-small"
         match-class="highlight" class="autoCompl">
       </div>
       <select class="arriere flat select" data-ng-model="formData.zipCodeSelected.pk" data-ng-change="updateAutoCompleteZip()">

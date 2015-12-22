@@ -101,14 +101,14 @@ services
        */
       getUserAddress : function() {
         var deferred = $q.defer();
-
-        var userAddress = localStorageService.get('user_address');
+        var userAddress;
+        /*var userAddress = localStorageService.get('user_address');
 
         if(userAddress) {
           deferred.resolve(userAddress);
           return deferred.promise;
         }
-
+*/
         this.getUserGeo()
           .then(function(userGeo) {
 
@@ -119,12 +119,11 @@ services
             var geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(lat, long);
             geocoder.geocode({'latLng': latlng}, function (results, status) {
+              console.log(results);
               if (status == google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
-
                   var address_components = results[0].address_components;
-                  console.log(address_components);
-                  var postalCode = address_components[6] ? address_components[6].long_name : '';
+                 var postalCode = address_components[5] ? address_components[5].long_name : '';
                   var city = address_components[2].long_name;
                   var num = address_components[0] ? address_components[0].long_name : '';
                   var street = address_components[1]? address_components[1].long_name : '';
@@ -141,7 +140,7 @@ services
                     'complement': complement,
                     'fullAddress': fullAddress
                   };
-
+                  console.log(userAddress);
                   localStorageService.set('user_address', userAddress);
                   deferred.resolve(userAddress);
                 } else {
@@ -174,7 +173,7 @@ getAddressByPosition : function(latitude, longitude) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             var address_components = results[0].address_components;
-            var postalCode = address_components[6] ? address_components[6].long_name : '';
+            var postalCode = address_components[5] ? address_components[5].long_name : '';
             var city = address_components[2].long_name;
             var num = address_components[0] ? address_components[0].long_name : '';
             var street = address_components[1]? address_components[1].long_name : '';

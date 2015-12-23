@@ -60,7 +60,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     if(employeur)
       address = getAddress(employeur);
     if(!address)
-      address="5 Rue de Copenhague, 93290 Tremblay-en-France";
+      address="6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris";
 
     $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).
       success(function(data) {

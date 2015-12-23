@@ -511,3 +511,10 @@ border-color: #14BAA6;
 .itemHoraire{
    padding: 5px;
 }
+.placeholder-icon:last-child {
+  padding-right: 11px;
+}
+.item-radio input:checked + div + i{
+  /* show the checkmark icon when its checked */
+  visibility: visible;
+}

@@ -3,6 +3,7 @@
 
 starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global','GeoService','$http','localStorageService', function($scope, $ionicLoading, $compile,Global,GeoService,$http,localStorageService) {
   var adressTravailMarker;
+
   $scope.$on('$ionicView.beforeEnter', function(){
     if(!$scope.loaded) initialize();
     $scope.loaded = true;
@@ -22,9 +23,9 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       address=address.replace(/\+/g, ' ');
       //address = address.replace(new RegExp(' ', 'g'), '+');
       /*if(address.startsWith('+')){
-        address = address.replace('+','');
-      }
-      */
+       address = address.replace('+','');
+       }
+       */
     }
     console.log("address : "+address);
     return address;
@@ -52,7 +53,10 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $scope.map = map;
   }
+
   function initialize() {
+
+    $scope.addresses=[{libelle:"18 pl Honoré Combe, 45320 COURTENAY"},{libelle:"31 rue Croix des Petits-Champs 75001 PARIS"},{libelle:"5 Rue de Copenhague, 93290 Tremblay-en-France"}];
 
     var myLatlng,address;
     var employeur=localStorageService.get('employeur');
@@ -60,7 +64,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     if(employeur)
       address = getAddress(employeur);
     if(!address)
-      address="6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris";
+      address="5 Rue de Copenhague, 93290 Tremblay-en-France";
 
     $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).
       success(function(data) {
@@ -75,96 +79,141 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       .error(function(){
         Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
       });
-        //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
+    //Marker + infowindow + angularjs compiled ng-click
+    var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+    var compiled = $compile(contentString)($scope);
 
-        var infowindow = new google.maps.InfoWindow({
-          content: compiled[0]
-        });
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
+    var infowindow = new google.maps.InfoWindow({
+      content: compiled[0]
+    });
+  }
 
-      $scope.centerOnMe = function() {
-        if(!$scope.map) {
-          return;
-        }
-        adressTravailMarker.setMap(null);
-        $scope.loading = $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });
-        var success=false;
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          console.log(pos);
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-          var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
-          var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: $scope.map,
-            icon: pinImage
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  $scope.centerOnMe = function() {
+    if(!$scope.map) {
+      return;
+    }
+    adressTravailMarker.setMap(null);
+    $scope.loading = $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+    var success=false;
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      console.log(pos);
+      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: $scope.map,
+        icon: pinImage
+        //label: labels[labelIndex++ % labels.length]
+      });
+      var jobyersOffers= [{
+        jobyerName : 'Jérôme',
+        availability : {
+          value : 210,
+          text : '8h 30min'
+        },
+        matching : 60,
+        contacted : false,
+        latitude : pos.coords.latitude+0.1,
+        longitude : pos.coords.longitude+0.1,
+        address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
+      },
+        {
+          jobyerName : 'Alain',
+          availability : {
+            value : 20,
+            text : '3h 30min'
+          },
+          matching : 20,
+          contacted : true,
+          //latitude : pos.coords.latitude+0.2,
+          //longitude : pos.coords.longitude+0.2,
+          address:"18 pl Honoré Combe, 45320 COURTENAY"
+        },
+        {
+          jobyerName : 'Philippe',
+          availability : {
+            value : 1000,
+            text : '17h 30min'
+          },
+          matching : 10,
+          contacted : false,
+          //latitude : pos.coords.latitude+0.3,
+          //longitude : pos.coords.longitude+0.3,
+          address:"31 rue Croix des Petits-Champs 75001 PARIS"
+        }];
+      var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
+      for( var i=0;i<jobyersOffers.length;i++) {
+        if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
+          var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
+          //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+          var marker2 = new google.maps.Marker({
+            position: myLatLng2,
+            icon: pinImage2,
+            map: $scope.map
             //label: labels[labelIndex++ % labels.length]
           });
-          var jobyersOffers= [{
-            jobyerName : 'Jérôme',
-            availability : {
-              value : 210,
-              text : '8h 30min'
-            },
-            matching : 60,
-            contacted : false,
-            latitude : pos.coords.latitude+0.1,
-            longitude : pos.coords.longitude+0.1
-          },
-            {
-              jobyerName : 'Alain',
-              availability : {
-                value : 20,
-                text : '3h 30min'
-              },
-              matching : 20,
-              contacted : true,
-              latitude : pos.coords.latitude+0.2,
-              longitude : pos.coords.longitude+0.2
-            },
-            {
-              jobyerName : 'Philippe',
-              availability : {
-                value : 1000,
-                text : '17h 30min'
-              },
-              matching : 10,
-              contacted : false,
-              latitude : pos.coords.latitude+0.3,
-              longitude : pos.coords.longitude+0.3
-            }];
-          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
-          for( var i=0;i<jobyersOffers.length;i++){
-            var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-            var marker2 = new google.maps.Marker({
-              position: myLatLng2,
-              icon:pinImage2,
-              map: $scope.map
-              //label: labels[labelIndex++ % labels.length]
+        } else {
+          $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
+            success(function (data) {
+              var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+              console.log(location.lat);
+              console.log(location.lng);
+              var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+              //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+              var marker2 = new google.maps.Marker({
+                position: myLatLng2,
+                icon: pinImage2,
+                map: $scope.map
+                //label: labels[labelIndex++ % labels.length]
+              });
+            })
+            .error(function () {
+              Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
             });
-          }
-          success=true;
-          $ionicLoading.hide();
-        }, function(error) {
-          success=false;
-          Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
-          $ionicLoading.hide();
+        }
+      }
+      success=true;
+      $ionicLoading.hide();
+    }, function(error) {
+      success=false;
+      Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+      $ionicLoading.hide();
 
-        },{
-          timeout : 5000
-        });
-        console.log(success);
-        //if(success==false)
-          //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
-      };
+    },{
+      timeout : 5000
+    });
+    console.log(success);
+    //if(success==false)
+    //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+  };
 
-      $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-      };
-    }]);
+  $scope.clickTest = function() {
+    alert('Example of infowindow with ng-click')
+  };
+
+  $scope.addressSelected=function(selected){
+    console.log(selected.originalObject.libelle);
+    $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+selected.originalObject.libelle).
+      success(function(data) {
+        console.log(data);
+        var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : null;
+        if(location) {
+          var myLatlng = new google.maps.LatLng(location.lat, location.lng);
+          console.log(myLatlng);
+          displayMap(myLatlng);
+        }else{
+          Global.showAlertValidation("Cette adresse n'existe pas.");
+        }
+      })
+      .error(function(){
+        Global.showAlertValidation("Une erreur est survenue. Veuillez réssayer plus tard.");
+      });
+
+  };
+}]);

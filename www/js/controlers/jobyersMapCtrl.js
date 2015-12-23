@@ -1,25 +1,80 @@
 
 'use strict';
 
-starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global', function($scope, $ionicLoading, $compile,Global) {
-
+starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global','GeoService','$http','localStorageService', function($scope, $ionicLoading, $compile,Global,GeoService,$http,localStorageService) {
+  var adressTravailMarker;
   $scope.$on('$ionicView.beforeEnter', function(){
     if(!$scope.loaded) initialize();
     $scope.loaded = true;
   });
 
-  function initialize() {
+  var getAddress = function(empl){
+    var address;
+    var number = (empl.adresseTravail.num && empl.adresseTravail.num.toUpperCase() != "NULL") ? empl.adresseTravail.num : '';
+    var street = (empl.adresseTravail.adresse1 && empl.adresseTravail.adresse1.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.adresse1 : '';
+    var complement = (empl.adresseTravail.adresse2 && empl.adresseTravail.adresse2.toUpperCase() != "NULL") ? '+' +  empl.adresseTravail.adresse2 : '';
+    var zipCode = (empl.adresseTravail.codePostal && empl.adresseTravail.codePostal.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.codePostal : '';
+    var city = (empl.adresseTravail.ville && empl.adresseTravail.ville.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.ville : '';
+    var country = (empl.adresseTravail.country && empl.adresseTravail.country.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.country : '';
 
-    var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+    var address = number + street + complement + zipCode + city + country;
+    if(address){
+      address=address.replace(/\+/g, ' ');
+      //address = address.replace(new RegExp(' ', 'g'), '+');
+      /*if(address.startsWith('+')){
+        address = address.replace('+','');
+      }
+      */
+    }
+    console.log("address : "+address);
+    return address;
+  };
 
+  function displayMap(myLatlng){
     var mapOptions = {
       center: myLatlng,
       zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+
     var map = new google.maps.Map(document.getElementById("map"),
       mapOptions);
+    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      icon:pinImage
+    });
+    adressTravailMarker=marker;
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map,marker);
+    });
 
+    $scope.map = map;
+  }
+  function initialize() {
+
+    var myLatlng,address;
+    var employeur=localStorageService.get('employeur');
+    console.log(employeur);
+    if(employeur)
+      address = getAddress(employeur);
+    if(!address)
+      address="5 Rue de Copenhague, 93290 Tremblay-en-France";
+
+    $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).
+      success(function(data) {
+        console.log(data);
+        var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+        console.log(location.lat);
+        console.log(location.lng);
+        myLatlng=new google.maps.LatLng(location.lat,location.lng);
+        console.log(myLatlng);
+        displayMap(myLatlng);
+      })
+      .error(function(){
+        Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
+      });
         //Marker + infowindow + angularjs compiled ng-click
         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
         var compiled = $compile(contentString)($scope);
@@ -27,18 +82,6 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         var infowindow = new google.maps.InfoWindow({
           content: compiled[0]
         });
-
-        var marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-          title: 'Uluru (Ayers Rock)'
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
-        });
-
-        $scope.map = map;
       }
       google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -46,7 +89,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         if(!$scope.map) {
           return;
         }
-
+        adressTravailMarker.setMap(null);
         $scope.loading = $ionicLoading.show({
           content: 'Getting current location...',
           showBackdrop: false
@@ -96,7 +139,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               latitude : pos.coords.latitude+0.3,
               longitude : pos.coords.longitude+0.3
             }];
-          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|bfc0c6");
+          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
           for( var i=0;i<jobyersOffers.length;i++){
             var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
             var marker2 = new google.maps.Marker({

@@ -387,7 +387,9 @@ starter
 					text: '<b>Oui</b>',
 					type: 'button-calm',
           onTap: function(e) {
+            e.preventDefault();
             popup.close();
+            console.log('popup oui');
             $timeout( function () {
               if (!params.geolocated) {
                 GeoService.getUserAddress()
@@ -400,14 +402,18 @@ starter
                         {
                           text: '<b>Non</b>',
                           type: 'button-dark',
-                          onTap: function (e) {
+                          onTap: function (e1) {
+                            e1.preventDefault();
                             popup1.close();
+                            console.log('popup1 non');
                           }
                         }, {
                           text: '<b>Oui</b>',
                           type: 'button-calm',
-                          onTap: function (e) {
+                          onTap: function (e2) {
+                            e2.preventDefault();
                             popup1.close();
+                            console.log('popup1 oui');
                             $timeout(function () {
                               var popup2 = $ionicPopup.show({
                                 //Votre géolocalisation pour renseigner votre adresse du siège social?
@@ -417,14 +423,18 @@ starter
                                   {
                                     text: '<b>Non</b>',
                                     type: 'button-dark',
-                                    onTap: function (e) {
+                                    onTap: function (e3) {
+                                      e3.preventDefault();
                                       popup2.close();
+                                      console.log('popup2 non');
                                     }
                                   }, {
                                     text: '<b>Oui</b>',
                                     type: 'button-calm',
-                                    onTap: function (e) {
+                                    onTap: function (e4) {
+                                      e4.preventDefault();
                                       popup2.close();
+                                      console.log('popup2 oui');
                                       var geoAddress = localStorageService.get('user_address');
                                       console.log(geoAddress);
                                       $scope.formData.adresse1 = geoAddress.street;
@@ -453,10 +463,13 @@ starter
 					text: '<b>Non</b>',
 					type: 'button-dark',
 					onTap: function(e){
+            e.preventDefault();
             popup.close();
+            console.log('popup non');
             $scope.formData.adresse1= params.adresse1;
 						$scope.formData.adresse2= params.adresse2;
 						$scope.formData.num= params.num;
+            $scope.formData.addressTravail=params.address;
 						if(params.code)
 							document.getElementById('ex2_value').value=params.code;
 						if(params.vi)

@@ -94,7 +94,6 @@ starter.controller('jobyersOffersListCtrl',
 
 	$scope.showMenuForContract = function(jobber){
 
-		jobber.contacted = true;
     localStorageService.remove('Selectedjobyer');
     localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
@@ -107,7 +106,8 @@ starter.controller('jobyersOffersListCtrl',
 			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
-          //branchement de la page de contrat ou infos clients
+        jobber.contacted = true;
+        //branchement de la page de contrat ou infos clients
           if(index==3){
             /*
               recuperation des données de l'emplyeur et calcule dans une variable boolean

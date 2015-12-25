@@ -4,7 +4,7 @@
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <!--<h1 class="title">Connexion</h1>-->
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app"> </a>
-  </ion-header-bar> 
+  </ion-header-bar>
   <ion-content padding="true">
 	<!-- Title -->
     <div>
@@ -33,7 +33,7 @@
 
     <!-- ACTIONS -->
 	<div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="Authenticate()" ng-disabled="!formData.email || !formData.password">Connecter</button>
+      <button class="button button-full button-positive green" data-ng-click="Authenticate()" ng-disabled="!formData.email || !formData.password || formData.password.length<6">Connecter</button>
       <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
     </div>
   </ion-content>

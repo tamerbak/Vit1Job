@@ -433,6 +433,7 @@ starter
                                       $scope.formData.initialCity = geoAddress.city;
                                       $scope.formData.initialPC = geoAddress.postalCode;
                                       $scope.formData.addressTravail= geoAddress.fullAddress;
+                                      console.log($scope.formData.addressTravail);
                                     }
                                   }
                                 ]
@@ -446,7 +447,7 @@ starter
                     Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
                   });
               }
-            },1000);
+            });
           }
 				},{
 					text: '<b>Non</b>',

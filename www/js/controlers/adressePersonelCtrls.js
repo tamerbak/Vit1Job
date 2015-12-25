@@ -10,6 +10,7 @@ starter
 		// FORMULAIRE
     var geolocated=false;
 		$scope.formData = {};
+    $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
@@ -27,9 +28,14 @@ starter
         ]
       });
     }
+    $scope.geocodeOptions = {
+      componentRestrictions: {
+        country : 'FR'
+      }
+    };
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdressePersEmployeur = function(){
-
+      console.log($scope.formData.address);
 			for(var obj in $scope.formData){
 				//console.log("formData["+obj+"] : "+$scope.formData[obj]);
 			}
@@ -247,11 +253,15 @@ starter
                                     myPopup2.close();
                                     geolocated = true;
                                     var geoAddress = localStorageService.get('user_address');
+
                                     $scope.formData.adresse1 = geoAddress.street;
                                     $scope.formData.adresse2 = geoAddress.complement;
                                     $scope.formData.num = geoAddress.num;
                                     $scope.formData.initialCity = geoAddress.city;
                                     $scope.formData.initialPC = geoAddress.postalCode;
+
+                                    $scope.formData.address=geoAddress.fullAddress;
+
                                   }
                                 }
                               ]

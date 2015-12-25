@@ -1,0 +1,105 @@
+<ion-view title="{{AppLogo}}">
+  <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="adressePersonel">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+  </ion-header-bar>
+  <ion-content padding="true">
+	<!-- Title -->
+    <div>
+      <h3 class="titlePhone"><b>Adresse de Travail</b></h3>
+    </div>
+
+	  <!-- VILLE -->
+    <div class ="xcontainer">
+      <div angucomplete-alt id="ex3"
+        placeholder="Ville"
+        maxlength="50"
+        pause="100"
+        selected-object="formData.ville"
+        local-data="formData.villes"
+        search-fields="libelle"
+        title-field="libelle"
+        minlength="1"
+           initial-value = "formData.initialCity"
+           input-class="form-control form-control-small"
+        match-class="highlight" class="autoCompl">
+      </div>
+      <select class="arriere flat select" data-ng-model="formData.villeSelected.pk" data-ng-change="updateAutoCompleteVille()">
+        <option data-ng-repeat="x in formData.villes" value="{{x.pk_user_ville}}">{{x.libelle}}</option>
+      </select>
+    </div>
+
+
+	<!-- CODE POSTAL -->
+    <div class ="xcontainer">
+      <div angucomplete-alt id="ex2"
+        placeholder="Code postal"
+        maxlength="50"
+        pause="100"
+        selected-object="formData.codePostal"
+        local-data="formData.zipCodes"
+        search-fields="libelle"
+        title-field="libelle"
+        minlength="1"
+           initial-value = "formData.initialPC"
+           input-class="form-control form-control-small"
+        match-class="highlight" class="autoCompl">
+      </div>
+      <select class="arriere flat select" data-ng-model="formData.zipCodeSelected.pk" data-ng-change="updateAutoCompleteZip()">
+        <option data-ng-repeat="x in formData.zipCodes" value="{{x.pk_user_code_postal}}">{{x.libelle}}</option>
+      </select>
+      </div>
+
+
+	<!--<div>
+		<autocomplete ng-model="formData.codePostal" data="formData.listCodes" on-type="updateZipCodes"></autocomplete>
+			<angucomplete id="ex1"
+              placeholder="Recherche Code Postal"
+              pause="100"
+              selectedobject="codePostal"
+              localdata="formData.zipCodes"
+              searchfields="libelle"
+              titlefield="libelle"
+              minlength="1"
+              inputclass="form-control form-control-small"/>
+		</div>-->
+
+    <!-- Numéro + rue  -->
+    <div class="list xtel" align="left">
+      <div class="row" >
+        <div class="col-20 num">
+          <label class="item item-input it1">
+            <input type="text" id="addressP0" placeholder="N°" data-ng-model="formData.num">
+          </label>
+        </div>
+        <div class="col-80 rue">
+          <label class="item item-input it2">
+            <input type="text" id="addressP1" placeholder="Rue" data-ng-model="formData.adresse1">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rue
+    <div class="list" align="left">
+        <label class="item item-input">
+          <input type="text" id="addressP1" placeholder="Rue" data-ng-model="formData.adresse1">
+        </label>
+    </div>-->
+
+    <!-- Complément -->
+    <div class="list" align="left">
+      <label class="item item-input">
+        <input type="text" id="addressP2" placeholder="Complément" data-ng-model="formData.adresse2">
+      </label>
+    </div>
+
+	<br>
+	<!-- ACTIONS -->
+	<div class="buttonConnect">
+      <button class="button button-full button-positive green" data-ng-click="updateAdresseTravEmployeur()">Valider</button>
+    <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="offres">Passer</button>
+    </div>
+  </ion-content>
+</ion-view>

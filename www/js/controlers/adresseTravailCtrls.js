@@ -9,6 +9,7 @@ starter
 
 		// FORMULAIRE
 		$scope.formData = {};
+    $scope.formData.addressTravail="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
@@ -431,6 +432,7 @@ starter
                                       $scope.formData.num = geoAddress.num;
                                       $scope.formData.initialCity = geoAddress.city;
                                       $scope.formData.initialPC = geoAddress.postalCode;
+                                      $scope.formData.addressTravail= geoAddress.fullAddress;
                                     }
                                   }
                                 ]

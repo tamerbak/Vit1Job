@@ -121,7 +121,7 @@ starter
 					});
         // }
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
-			$state.go('adresseTravail');
+			$state.go('adresseTravail',{"geolocated":geolocated,addressPers:$scope.formData.address});
 		};
 
 		// VALIDATION - FIELD

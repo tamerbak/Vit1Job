@@ -107,7 +107,10 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     })
 
     .state('adresseTravail', {
-      url: '/adresseTravail/:steps',
+      url: '/adresseTravail/',
+      params: {
+        'geolocated': false, 'addressPers': null , steps:null
+      },
       templateUrl: 'templates/adresseTravail.html',
       controller: 'adresseTravailCtrl'
     })

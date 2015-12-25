@@ -78,7 +78,7 @@ starter
 						if(!employeur)
               var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adresseTravail={};
-						 adresseTravail={'codePostal': codePost, 'ville': ville, 'adresse1': adresse1, 'adresse2': adresse2};
+						 adresseTravail={'codePostal': codePost, 'ville': ville, 'adresse1': adresse1, 'adresse2': adresse2, fullAddress:$scope.formData.addressTravail};
 						employeur.adresseTravail=adresseTravail;
 
 						// PUT IN SESSION
@@ -507,9 +507,11 @@ starter
 						if(employeur.adresseTravail.ville)
 							document.getElementById('ex3_value').value=employeur['adresseTravail']['ville'];**/
 						if(employeur['adresseTravail']){
-							$scope.formData['adresse1']=employeur['adresseTravail']['adresse1'];
-							$scope.formData['adresse2']=employeur['adresseTravail']['adresse2'];
-						}
+							//$scope.formData['adresse1']=employeur['adresseTravail']['adresse1'];
+							//$scope.formData['adresse2']=employeur['adresseTravail']['adresse2'];
+              $scope.formData['addressTravail']=employeur['adresseTravail']['fullAddress'];
+
+            }
 					}
 				}
 			}

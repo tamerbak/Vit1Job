@@ -60,7 +60,7 @@ starter
 			var sessionId=localStorageService.get('sessionID');
 
 			// TEST DE VALIDATION
-			if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2 || num){
+			//if(!isNaN(codePost) || !isNaN(ville) || adresse1  || adresse2 || num){
 				if(!adresse1)
 					adresse1='';
 				if(!adresse2)
@@ -88,7 +88,7 @@ starter
 						console.log("error : insertion DATA");
 						console.log("error In updateAdresseTravEmployeur: "+err);
 					});
-			}
+			//}
 
 			/*** CHARGEMENT METIERS
 			metiers=localStorageService.get('metiers');

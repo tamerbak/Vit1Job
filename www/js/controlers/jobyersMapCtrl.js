@@ -54,10 +54,39 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $scope.map = map;
   }
-
+  var loopThroughJobyers=function(jobyers, img, i,myLatLng,markers){
+    if(!markers) markers=new Array();
+    var marker2;
+    console.log(markers.length);
+    if (jobyers[i].latitude && jobyers[i].longitude) {
+      var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
+      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
+      markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+      if (i != jobyers.length-1) {
+        i+=1;
+        return loopThroughJobyers(jobyers, img, i,myLatLng,markers);
+      }else return markers;
+    } else {
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyers[i].address).
+        success(function (data) {
+          var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+          var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+          var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
+          markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+          if (i!=jobyers.length-1) {
+            i+=1;
+            return loopThroughJobyers(jobyers, img, i,myLatLng,markers);
+          }else return markers;
+        })
+        .error(function () {
+          Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
+        });
+    }
+  }
   function initialize() {
 
     var myLatlng,address;
+    $scope.markers=[];
     var employeur=localStorageService.get('employeur');
     console.log(employeur);
     if(employeur!=null && employeur!=undefined)
@@ -102,8 +131,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         navigator.geolocation.getCurrentPosition(function(pos) {
           console.log(pos);
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          //var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-          var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude)
+          var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
           var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
           var marker = new google.maps.Marker({
             position: myLatLng,
@@ -149,6 +177,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
             }];
           var colors=[], markers=[];
           var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
+         /*
           for( var i=0;i<jobyersOffers.length;i++) {
             if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
               var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
@@ -179,17 +208,28 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
             }
 
           }
+          */
+          markers=new Array();
+          loopThroughJobyers(jobyersOffers, pinImage2, 0,myLatLng,markers);
+          console.log(markers.length);
           var sortedMarkers=markers.sort(function(a, b) {
             return parseFloat(a.distance) - parseFloat(b.distance);
           });
-          console.log(sortedMarkers.length);
           for(var j=0;j<sortedMarkers.length;j++){
             var marker2 = new google.maps.Marker({
-              position: sortedMarkers.myLatLng2,
-              icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575"),
-              map: $scope.map
+              position: sortedMarkers[j].position,
+              icon: pinImage2,
+              map: $scope.map,
+              info: sortedMarkers[j].info
               //label: labels[labelIndex++ % labels.length]
             });
+            var infowindowj = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker2, 'click', function() {
+              infowindowj.setContent(this.info);
+              infowindowj.open(this.map, this);
+            });
+
           }
           success=true;
           $ionicLoading.hide();

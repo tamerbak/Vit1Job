@@ -10,14 +10,16 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   var getAddress = function(empl){
     var address;
+    /*
     var number = (empl.adresseTravail.num && empl.adresseTravail.num.toUpperCase() != "NULL") ? empl.adresseTravail.num : '';
     var street = (empl.adresseTravail.adresse1 && empl.adresseTravail.adresse1.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.adresse1 : '';
     var complement = (empl.adresseTravail.adresse2 && empl.adresseTravail.adresse2.toUpperCase() != "NULL") ? '+' +  empl.adresseTravail.adresse2 : '';
     var zipCode = (empl.adresseTravail.codePostal && empl.adresseTravail.codePostal.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.codePostal : '';
     var city = (empl.adresseTravail.ville && empl.adresseTravail.ville.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.ville : '';
     var country = (empl.adresseTravail.country && empl.adresseTravail.country.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.country : '';
-
-    var address = number + street + complement + zipCode + city + country;
+*/
+    console.log(empl);
+    var address = empl.adresseTravail.fullAddress;
     if(address){
       address=address.replace(/\+/g, ' ');
       //address = address.replace(new RegExp(' ', 'g'), '+');
@@ -57,7 +59,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     var myLatlng,address;
     var employeur=localStorageService.get('employeur');
     console.log(employeur);
-    if(employeur)
+    if(employeur!=null && employeur!=undefined)
       address = getAddress(employeur);
     if(!address)
       address="5 Rue de Copenhague, 93290 Tremblay-en-France";

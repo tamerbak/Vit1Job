@@ -54,6 +54,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $scope.map = map;
   }
+
   function initialize() {
 
     var myLatlng,address;
@@ -85,9 +86,10 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           content: compiled[0]
         });
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
 
-      $scope.centerOnMe = function() {
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  $scope.centerOnMe = function() {
         if(!$scope.map) {
           return;
         }
@@ -100,7 +102,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         navigator.geolocation.getCurrentPosition(function(pos) {
           console.log(pos);
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+          //var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+          var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude)
           var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
           var marker = new google.maps.Marker({
             position: myLatLng,
@@ -144,6 +147,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               //longitude : pos.coords.longitude+0.3,
               address:"31 rue Croix des Petits-Champs 75001 PARIS"
             }];
+          var colors=[], markers=[];
           var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
           for( var i=0;i<jobyersOffers.length;i++) {
             if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
@@ -155,25 +159,37 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
                 map: $scope.map
                 //label: labels[labelIndex++ % labels.length]
               });
+              markers[i]={key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)};
+              console.log("i = "+i+" markers[i] = "+markers[i]);
             } else {
               $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
                 success(function (data) {
                   var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
-                  console.log(location.lat);
-                  console.log(location.lng);
                   var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
                   //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-                  var marker2 = new google.maps.Marker({
-                    position: myLatLng2,
-                    icon: pinImage2,
-                    map: $scope.map
-                    //label: labels[labelIndex++ % labels.length]
-                  });
-                })
+                  markers[i]={key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)};
+                  console.log("i = "+i+" markers[i] = "+markers[i]);
+              })
                 .error(function () {
                   Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
                 });
             }
+            if(markers.length==jobyersOffers.length){
+                console.log("if");
+            }
+
+          }
+          var sortedMarkers=markers.sort(function(a, b) {
+            return parseFloat(a.distance) - parseFloat(b.distance);
+          });
+          console.log(sortedMarkers.length);
+          for(var j=0;j<sortedMarkers.length;j++){
+            var marker2 = new google.maps.Marker({
+              position: sortedMarkers.myLatLng2,
+              icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575"),
+              map: $scope.map
+              //label: labels[labelIndex++ % labels.length]
+            });
           }
           success=true;
           $ionicLoading.hide();
@@ -190,7 +206,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
       };
 
-      $scope.clickTest = function() {
+  $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
       };
     }]);

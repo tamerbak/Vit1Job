@@ -56,6 +56,65 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     $scope.map = map;
   }
 
+  var infos = [];
+  function loopThroughJobyers(jobyers, img, i){
+    var marker2;
+    console.log(jobyers, i);
+    if (jobyers[i].latitude && jobyers[i].longitude) {
+      var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
+      //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p>";
+      var infowindowj = new google.maps.InfoWindow();
+      marker2 = new google.maps.Marker({
+        position: myLatLng2,
+        icon: img,
+        map: $scope.map,
+        info: content
+        //label: labels[labelIndex++ % labels.length]
+      });
+      google.maps.event.addListener(marker2, 'click', function() {
+        infowindowj.setContent(this.info);
+        infowindowj.open(this.map, this);
+      });
+      if (i != jobyers.length-1) {
+        i+=1;
+        loopThroughJobyers(jobyers, img, i);
+      }
+    } else {
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyers[i].address).
+        success(function (data) {
+          var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+          console.log(location.lat);
+          console.log(location.lng);
+          var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+          //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+          var infowindowj = new google.maps.InfoWindow();
+
+          var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
+
+          marker2 = new google.maps.Marker({
+            position: myLatLng2,
+            icon: img,
+            map: $scope.map,
+            info: content
+            //label: labels[labelIndex++ % labels.length]
+          });
+          google.maps.event.addListener(marker2, 'click', function() {
+            infowindowj.setContent(this.info);
+            infowindowj.open(this.map, this);
+          });
+          if (i!=jobyers.length-1) {
+            i+=1;
+            loopThroughJobyers(jobyers, img, i);
+          }
+
+        })
+        .error(function () {
+          Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
+        });
+    }
+  }
+
   function initialize() {
 
     //document.getElementsByClassName("scroll").className.replace(/\scroll\b/,'');
@@ -152,36 +211,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               address:"31 rue Croix des Petits-Champs 75001 PARIS"
         }];
       var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
-          for( var i=0;i<jobyersOffers.length;i++) {
-            if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
-              var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
-              //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-              var marker2 = new google.maps.Marker({
-                position: myLatLng2,
-                icon: pinImage2,
-                map: $scope.map
-                //label: labels[labelIndex++ % labels.length]
-              });
-            } else {
-              $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
-                success(function (data) {
-                  var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
-                  console.log(location.lat);
-              console.log(location.lng);
-              var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
-              //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-              var marker2 = new google.maps.Marker({
-                position: myLatLng2,
-                icon: pinImage2,
-                map: $scope.map
-                //label: labels[labelIndex++ % labels.length]
-              });
-            })
-            .error(function () {
-              Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
-            });
-        }
-     }
+      loopThroughJobyers(jobyersOffers, pinImage2, 0);
       success=true;
       $ionicLoading.hide();
     }, function(error) {

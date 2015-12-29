@@ -59,11 +59,28 @@ starter
           $state.go("app");
         }
       }
-    }
+    };
+
+    $scope.displayEmailTooltip = function() {
+      $scope.emailToolTip = 'Veuillez saisir un email valide.';
+      $scope.showEmailTooltip = true;
+    };
+
+    $scope.displayPwdTooltip = function() {
+      $scope.showPwdTooltip = true;
+    };
 
     $scope.validatEmail = function (id) {
       Validator.checkEmail(id);
-    }
+    };
+    $scope.emailIsValid = function() {
+      var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+      if (!re.test($scope.formData.email)) {
+        return false;
+      } else {
+        return true;
+      }
+    };
 	 $scope.validatEmail= function(id){
 		 Validator.checkEmail(id);
 	 };

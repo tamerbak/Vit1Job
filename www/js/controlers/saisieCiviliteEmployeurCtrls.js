@@ -9,7 +9,7 @@ starter
 		// FORMULAIRE
 		$scope.formData = {};
 		// IMAGE
-		//$scope.formData.image={};
+		$scope.formData.image={};
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
@@ -165,9 +165,25 @@ starter
 		};
 
     $scope.selectImage = function() {
+      navigator.camera.getPicture(function(imageURI){
+        console.log("success");
+        document.getElementById("uploadPreview").src = imageURI;
+      }, function(){
+        console.log("erroe");
+      }, {
+        quality : 50,
+        sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+        mediaType : navigator.camera.MediaType.ALLMEDIA,
+        destinationType: Camera.DestinationType.FILE_URI
+//        saveToPhotoAlbum: true
+      });
+    };
+  /*
+    $scope.selectImage = function() {
+      console.log("selectImage");
       document.getElementById('image').click();
     };
-
+*/
 		$scope.loadImage=function(img){
 
 			console.log("files.length : "+img.files.length);

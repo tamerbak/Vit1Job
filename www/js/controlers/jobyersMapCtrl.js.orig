@@ -58,8 +58,6 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   function initialize() {
 
-    //document.getElementsByClassName("scroll").className.replace(/\scroll\b/,'');
-
     $scope.addresses=[{libelle:"18 pl Honoré Combe, 45320 COURTENAY"},{libelle:"31 rue Croix des Petits-Champs 75001 PARIS"},{libelle:"5 Rue de Copenhague, 93290 Tremblay-en-France"}];
 
     var myLatlng,address;
@@ -124,8 +122,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         matching : 60,
         contacted : false,
         latitude : pos.coords.latitude+0.1,
-            longitude : pos.coords.longitude+0.1,
-            address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
+        longitude : pos.coords.longitude+0.1,
+        address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
       },
         {
           jobyerName : 'Alain',
@@ -135,9 +133,9 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           },
           matching : 20,
           contacted : true,
-              //latitude : pos.coords.latitude+0.2,
-              //longitude : pos.coords.longitude+0.2,
-              address:"18 pl Honoré Combe, 45320 COURTENAY"
+          //latitude : pos.coords.latitude+0.2,
+          //longitude : pos.coords.longitude+0.2,
+          address:"18 pl Honoré Combe, 45320 COURTENAY"
         },
         {
           jobyerName : 'Philippe',
@@ -147,14 +145,71 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           },
           matching : 10,
           contacted : false,
+          //latitude : pos.coords.latitude+0.3,
+          //longitude : pos.coords.longitude+0.3,
+          address:"31 rue Croix des Petits-Champs 75001 PARIS"
+        }];
+      var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
+      for( var i=0;i<jobyersOffers.length;i++) {
+        if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
+          var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
+          //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+          var marker2 = new google.maps.Marker({
+            position: myLatLng2,
+            icon: pinImage2,
+            map: $scope.map
+            //label: labels[labelIndex++ % labels.length]
+          });
+<<<<<<< HEAD
+          var jobyersOffers= [{
+            jobyerName : 'Jérôme',
+            availability : {
+              value : 210,
+              text : '8h 30min'
+            },
+            matching : 60,
+            contacted : false,
+            latitude : pos.coords.latitude+0.1,
+            longitude : pos.coords.longitude+0.1,
+            address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
+          },
+            {
+              jobyerName : 'Alain',
+              availability : {
+                value : 20,
+                text : '3h 30min'
+              },
+              matching : 20,
+              contacted : true,
+              //latitude : pos.coords.latitude+0.2,
+              //longitude : pos.coords.longitude+0.2,
+              address:"18 pl Honoré Combe, 45320 COURTENAY"
+            },
+            {
+              jobyerName : 'Philippe',
+              availability : {
+                value : 1000,
+                text : '17h 30min'
+              },
+              matching : 10,
+              contacted : false,
               //latitude : pos.coords.latitude+0.3,
               //longitude : pos.coords.longitude+0.3,
               address:"31 rue Croix des Petits-Champs 75001 PARIS"
-        }];
-      var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
+            }];
+          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
           for( var i=0;i<jobyersOffers.length;i++) {
             if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
               var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
+=======
+        } else {
+          $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
+            success(function (data) {
+              var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+              console.log(location.lat);
+              console.log(location.lng);
+              var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+>>>>>>> aec60e2f074d89c25e507414c3ba18eda5c6fd06
               //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
               var marker2 = new google.maps.Marker({
                 position: myLatLng2,
@@ -162,26 +217,53 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
                 map: $scope.map
                 //label: labels[labelIndex++ % labels.length]
               });
+<<<<<<< HEAD
             } else {
               $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
                 success(function (data) {
                   var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
                   console.log(location.lat);
-              console.log(location.lng);
-              var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
-              //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-              var marker2 = new google.maps.Marker({
-                position: myLatLng2,
-                icon: pinImage2,
-                map: $scope.map
-                //label: labels[labelIndex++ % labels.length]
-              });
+                  console.log(location.lng);
+                  var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+                  //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+                  var marker2 = new google.maps.Marker({
+                    position: myLatLng2,
+                    icon: pinImage2,
+                    map: $scope.map
+                    //label: labels[labelIndex++ % labels.length]
+                  });
+                })
+                .error(function () {
+                  Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
+                });
+            }
+          }
+          success=true;
+          $ionicLoading.hide();
+        }, function(error) {
+          success=false;
+          Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+          $ionicLoading.hide();
+
+        },{
+          timeout : 5000
+        });
+        console.log(success);
+        //if(success==false)
+          //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+      };
+
+      $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+      };
+    }]);
+=======
             })
             .error(function () {
               Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
             });
         }
-     }
+      }
       success=true;
       $ionicLoading.hide();
     }, function(error) {
@@ -221,3 +303,4 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   };
 }]);
+>>>>>>> aec60e2f074d89c25e507414c3ba18eda5c6fd06

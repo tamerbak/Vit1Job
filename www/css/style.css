@@ -535,26 +535,46 @@ border-color: #14BAA6;
   height: 34px;
   border: solid 1px #14baa6;
 }
-#pwdPopup, #mailPopup {
-  transition: .5s;
-  overflow: hidden;
-  color: white;
-  font-size: 14px;
-  margin-top: 5px;
-  background-color: #14baa6;
-  height: auto;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: left;
-  border-radius: 24px;
-}
-#pwdPopup.hidden, #mailPopup.hidden{
-  display: none;
-}
-
 @media screen and (max-width: 360px) {
   .hidden-text {
     display:none !important;
   }
+}
+#conxionMailView .list , #connexionPhoneView .list{
+  margin-bottom: 10px !important;
+}
+
+#mailPopup, #pwdPopup {
+  transition: .5s;
+  overflow: hidden;
+  color: white;
+  font-size: 14px;
+  background-color: #14baa6;
+  height: auto;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  display: block;
+}
+
+#mailPopup{
+  margin-bottom: 10px;
+}
+.arrow-up {
+  width: 0;
+  height: 0;
+  margin-left: 15px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #14baa6;
+}
+
+#popupCntPwd, #popupCntMail{
+  margin-top: -8px;
+}
+
+#popupCntPwd.hidden, #popupCntMail.hidden{
+  display: none;
 }

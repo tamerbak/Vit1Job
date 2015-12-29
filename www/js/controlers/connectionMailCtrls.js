@@ -59,7 +59,16 @@ starter
           $state.go("app");
         }
       }
-    }
+    };
+
+    $scope.displayEmailTooltip = function() {
+      $scope.emailToolTip = 'Veuillez saisir un email valide.';
+      $scope.showEmailTooltip = true;
+    };
+
+    $scope.displayPwdTooltip = function() {
+      $scope.showPwdTooltip = true;
+    };
 
     $scope.validatEmail = function (id) {
       Validator.checkEmail(id);

@@ -62,7 +62,23 @@ starter
           $state.go("app");
         }
       }
-    }
+    };
+    $scope.displayPwdTooltip = function() {
+      $scope.showPwdTooltip = true;
+    };
+    $scope.passwordIsValid= function(){
+      if($scope.formData.password!=undefined) {
+        if (Number($scope.formData.password.length) >= 6) {
+          console.log('test');
+          return true;
+        }
+        else
+          return false;
+      }else
+        return false;
+
+
+    };
 
 		$scope.validatElement=function(id){
 			Validator.checkField(id);

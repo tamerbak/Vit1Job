@@ -1,4 +1,4 @@
-<ion-view title="{{AppLogo}}">
+<ion-view id="civiliteView" title="{{AppLogo}}">
   <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -6,106 +6,74 @@
   </ion-header-bar>
   <ion-content padding="true" data-ng-init="initForm()">
 
-      <!-- Title -->
-      <div>
-          <h3 class="titlePhone"><b>Saisie de la Civilité</b></h3>
-      </div>
+    <!-- Title -->
+    <div>
+      <h3 class="titlePhone"><b>Saisie de la civilité</b></h3>
+    </div>
 
-      <!-- TITRE -->
-      <div class="list">
-          <label class="item item-input">
-            <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
-              <option selected disabled style="display: none;">Titre</option>
-              <option data-ng-repeat="x in formData.civilites" value="{{x.pk_user_civilite}}">{{x.libelle}}</option>
-            </select>
-          </label>
-      </div>
+    <!-- TITRE -->
+    <div class="list">
+      <label class="item item-input">
+        <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
+          <option selected disabled style="display: none;">Titre</option>
+          <option data-ng-repeat="x in formData.civilites" value="{{x.pk_user_civilite}}">{{x.libelle}}</option>
+        </select>
+      </label>
+      <label class="item item-input">
+        <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="prenom" placeholder="Prenom" data-ng-model="formData.prenom">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret">
+      </label>
 
-      <!-- NOM -->
-      <div class="list">
-          <label class="item item-input">
-            <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom">
-          </label>
-      </div>
+      <label class="item item-input">
+        <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape">
+      </label>
+      <label class="item item-input">
+        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+      </label>
 
-      <!-- PRENOM -->
-      <div class="list">
-          <label class="item item-input">
-            <input type="text" id="prenom" placeholder="Prenom" data-ng-model="formData.prenom">
-          </label>
-      </div>
+    </div>
 
-      <!-- NOM ENTREPRISE -->
-      <div class="list">
-          <label class="item item-input">
-              <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise">
-          </label>
-      </div>
+    <!-- NATIONALITE
+    <div angucomplete id="ex0"
+                placeholder="Nationalité"
+                pause="100"
+                selectedobject="formData.nationalite"
+                localdata="formData.nationalites"
+                searchfields="libelle"
+                titlefield="libelle"
+                minlength="1"
+                inputclass="form-control form-control-small inputAutoCompl" class="autoCompl">
+    </div>-->
 
-      <!-- SIRET -->
-      <div class="list">
-          <label class="item item-input">
-              <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret">
-          </label>
-      </div>
+    <div align="list">
+      <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
+      <button class="button button-full button-positive green" data-ng-click="selectImage()">
+        Charger un scan de votre extrait k-bis
+      </button>
+      <img id="uploadPreview" style="max-width: 100px; max-height: 100px;" />
+    </div>
 
-      <!-- CODE APE -->
-      <div class="list">
-          <label class="item item-input">
-              <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape">
-          </label>
-      </div>
+    <!--&lt;!&ndash; Image uploader &ndash;&gt;
+    <div class="list">
+        <label class="item item-input">
+          &lt;!&ndash;<input id="image" type="file" class="upload" data-ng-model="formData.image" multiple onchange="angular.element(this).scope().loadImage()">
+          <input id="image" type="file" class="upload" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().takePicture()">&ndash;&gt;
+          <input id="image" type="file" class="upload" capture="camera" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().loadImage(this)">
+        </label>
+    </div>-->
 
-      <!-- N°URSSAF -->
-      <div class="list">
-          <label class="item item-input">
-              <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
-          </label>
-      </div>
-
-      <!-- NATIONALITE
-      <div angucomplete id="ex0"
-                  placeholder="Nationalité"
-                  pause="100"
-                  selectedobject="formData.nationalite"
-                  localdata="formData.nationalites"
-                  searchfields="libelle"
-                  titlefield="libelle"
-                  minlength="1"
-                  inputclass="form-control form-control-small inputAutoCompl" class="autoCompl">
-      </div>-->
-
-      <div align="list">
-          <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
-          <button class="button button-full button-positive green" data-ng-click="selectImage()">
-              Charger un scan de votre extrait k-bis
-          </button>
-          <input id="image"
-                 type="file"
-                 class="upload"
-                 style="display: none"
-                 capture="camera"
-                 accept="image/*"
-                 data-ng-model="formData.image"
-                 onchange="angular.element(this).scope().loadImage(this)">
-
-          <img id="uploadPreview" style="max-width: 100px; max-height: 100px;" />
-      </div>
-
-      <!--&lt;!&ndash; Image uploader &ndash;&gt;
-      <div class="list">
-          <label class="item item-input">
-            &lt;!&ndash;<input id="image" type="file" class="upload" data-ng-model="formData.image" multiple onchange="angular.element(this).scope().loadImage()">
-            <input id="image" type="file" class="upload" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().takePicture()">&ndash;&gt;
-            <input id="image" type="file" class="upload" capture="camera" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().loadImage(this)">
-          </label>
-      </div>-->
-
-      <!-- ACTIONS -->
-      <div class="buttonConnect">
-          <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()">Valider</button>
-          <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="adressePersonel">Passer</button>
-      </div>
+    <!-- ACTIONS -->
+    <div class="buttonConnect">
+      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()">Valider</button>
+    </div>
 
   </ion-content>
 </ion-view>

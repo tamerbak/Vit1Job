@@ -518,3 +518,43 @@ border-color: #14BAA6;
   /* show the checkmark icon when its checked */
   visibility: visible;
 }
+/*#########################################################################*/
+#civiliteView .row{
+  border: solid #14BAA6 1px !important;
+  border-radius: 24px;
+  margin-top: 8px !important;
+}
+#civiliteView .col input{
+  width: 100%;
+}
+#civiliteView .card .item:last-child, #civiliteView .list-inset .item:last-child, #civiliteView .padding > .list .item:last-child{
+  border-radius: 0px;
+  border-color: #14baa6;
+}
+#civiliteView label.item.item-input {
+  height: 34px;
+  border: solid 1px #14baa6;
+}
+#pwdPopup, #mailPopup {
+  transition: .5s;
+  overflow: hidden;
+  color: white;
+  font-size: 14px;
+  margin-top: 5px;
+  background-color: #14baa6;
+  height: auto;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  border-radius: 24px;
+}
+#pwdPopup.hidden, #mailPopup.hidden{
+  display: none;
+}
+
+@media screen and (max-width: 360px) {
+  .hidden-text {
+    display:none !important;
+  }
+}

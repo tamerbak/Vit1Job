@@ -58,6 +58,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   function initialize() {
 
+    //document.getElementsByClassName("scroll").className.replace(/\scroll\b/,'');
+
     $scope.addresses=[{libelle:"18 pl Honoré Combe, 45320 COURTENAY"},{libelle:"31 rue Croix des Petits-Champs 75001 PARIS"},{libelle:"5 Rue de Copenhague, 93290 Tremblay-en-France"}];
 
     var myLatlng,address;
@@ -165,20 +167,6 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
                 success(function (data) {
                   var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
                   console.log(location.lat);
-                  console.log(location.lng);
-                  var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
-                  //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-                  var marker2 = new google.maps.Marker({
-                    position: myLatLng2,
-                    icon: pinImage2,
-                    map: $scope.map
-                    //label: labels[labelIndex++ % labels.length]
-                  });
-                })
-                .error(function () {
-                  Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
-                });
-            }
               console.log(location.lng);
               var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
               //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
@@ -193,7 +181,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
             });
         }
-      }
+     }
       success=true;
       $ionicLoading.hide();
     }, function(error) {

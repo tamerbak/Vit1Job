@@ -8,8 +8,19 @@ starter
 
 		// FORMULAIRE
 		$scope.formData = {};
+    $scope.siretValide =true;
+    $scope.apeValide =true;
 		// IMAGE
 		$scope.formData.image={};
+
+    $scope.validateSiret= function(id){
+      $scope.siretValide =Validator.checkSiret(id);
+
+    };
+    $scope.validateApe= function(id){
+      $scope.apeValide = Validator.checkApe(id);
+    };
+
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
@@ -58,6 +69,22 @@ starter
 					entreprise="";
 				if(!siret)
 					siret="";
+        else{
+          if(!$scope.siretValide){
+            var myPopup = $ionicPopup.show({
+              template: "Le format du SIRET est incorrect <br>",
+              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+              buttons: [
+                {
+                  text: '<b>Non</b>',
+                  type: 'button-dark'
+                }
+              ]
+            });
+            return;
+          }
+
+        }
 				if(!ape)
 					ape="";
 				if(!numUssaf)

@@ -37,6 +37,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     var mapOptions = {
       center: myLatlng,
       zoom: 16,
+      mapTypeControl : false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -54,6 +55,44 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     });
 
     $scope.map = map;
+    //autoComplete search
+    var searchText = document.getElementById('address');
+    console.log(searchText);
+    var autoCompleteOptions = {
+      componentRestrictions: {country: 'fr'}
+    }
+    var autoComplete = new google.maps.places.Autocomplete(searchText, autoCompleteOptions);
+
+    autoComplete.bindTo('bounds', map);
+    google.maps.event.addListener(autoComplete, 'place_changed', function() {
+      marker.setVisible(false);
+      var place = autoComplete.getPlace();
+      if (!place.geometry) {
+        console.log("Autocomplete's returned place contains no geometry");
+        return;
+      }
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+
+      var a = '';
+      if (place.address_components) {
+        a = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+      console.log(a);
+
+    });
+    //autoComplete search end
+
   }
 
   var infos = [];

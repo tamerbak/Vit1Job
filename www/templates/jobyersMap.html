@@ -12,26 +12,15 @@
   </ion-nav-buttons> -->
 
   <ion-content>
-    <div style="height: 12%;background-color: #444444;" class="row">
-      <div class="col">
-        <a ng-click="centerOnMe()" style="color:white;" class="button button-icon icon ion-navigate">Me localiser</a>
-      </div>
-      <div class="col">
-        <div angucomplete-alt id="exAdress"
-             placeholder="Adresse"
-             maxlength="50"
-             selected-object="addressSelected"
-             local-data="addresses"
-             search-fields="libelle"
-             title-field="libelle"
-             minlength="1"
-             input-class="form-control form-control-small"
-             match-class="highlight" class="autoCompl">
-        </div>
-      </div>
+    <div id="floating-panel">
+      <i class="icon ion-search"></i>
+      <input id="address" type="textbox" placeholder="Search">
     </div>
-    <div id="map" data-tap-disabled="true" style="height: 88%;"></div>
+    <div id="map" data-tap-disabled="true"></div>
   </ion-content>
+  <ion-footer-bar class="bar-dark">
+    <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Me localiser</a>
+  </ion-footer-bar>
 </ion-view>
 
 <style>

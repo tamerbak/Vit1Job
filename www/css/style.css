@@ -585,3 +585,21 @@ ion-tabs ion-nav-view{
 #popupCntPwd.hidden, #popupCntMail.hidden{
   display: none;
 }
+#floating-panel{
+  position: absolute;
+  top: 10px;
+  left: 10%;
+  z-index: 5;
+  width: 80%;
+  background-color: #fff;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+  border: none;
+}
+
+#floating-panel input{
+  border: none;
+}

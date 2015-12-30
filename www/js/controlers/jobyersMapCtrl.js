@@ -41,11 +41,11 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     var map = new google.maps.Map(document.getElementById("map"),
       mapOptions);
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
+    //var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
     var marker = new google.maps.Marker({
       position: myLatlng,
       map: map,
-      icon:pinImage
+      //icon:pinImage
     });
     adressTravailMarker=marker;
     google.maps.event.addListener(marker, 'click', function() {
@@ -65,7 +65,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     });
     console.log("sortedMarkers.length :"+sortedMarkers.length);
     for(var j=0; j<sortedMarkers.length;j++){
-      var code1=100+((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))*50)/ (parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance));
+      var code1=100+((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))*100)/ (parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance));
       var hexaCode1=parseInt(code1).toString(16);
       console.log("hexaCode1 :"+hexaCode1);
       var hexaCode=hexaCode1+""+hexaCode1+""+hexaCode1;
@@ -168,11 +168,11 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           console.log(pos);
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
           var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
-          var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
+          //var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|009900");
           var marker = new google.maps.Marker({
             position: myLatLng,
             map: $scope.map,
-            icon: pinImage
+            //icon: pinImage
             //label: labels[labelIndex++ % labels.length]
           });
           var jobyersOffers= [{

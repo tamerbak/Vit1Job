@@ -1,4 +1,3 @@
-
 'use strict';
 
 starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global','GeoService','$http','localStorageService', function($scope, $ionicLoading, $compile,Global,GeoService,$http,localStorageService) {
@@ -12,13 +11,13 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   var getAddress = function(empl){
     var address;
     /*
-    var number = (empl.adresseTravail.num && empl.adresseTravail.num.toUpperCase() != "NULL") ? empl.adresseTravail.num : '';
-    var street = (empl.adresseTravail.adresse1 && empl.adresseTravail.adresse1.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.adresse1 : '';
-    var complement = (empl.adresseTravail.adresse2 && empl.adresseTravail.adresse2.toUpperCase() != "NULL") ? '+' +  empl.adresseTravail.adresse2 : '';
-    var zipCode = (empl.adresseTravail.codePostal && empl.adresseTravail.codePostal.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.codePostal : '';
-    var city = (empl.adresseTravail.ville && empl.adresseTravail.ville.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.ville : '';
-    var country = (empl.adresseTravail.country && empl.adresseTravail.country.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.country : '';
-*/
+     var number = (empl.adresseTravail.num && empl.adresseTravail.num.toUpperCase() != "NULL") ? empl.adresseTravail.num : '';
+     var street = (empl.adresseTravail.adresse1 && empl.adresseTravail.adresse1.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.adresse1 : '';
+     var complement = (empl.adresseTravail.adresse2 && empl.adresseTravail.adresse2.toUpperCase() != "NULL") ? '+' +  empl.adresseTravail.adresse2 : '';
+     var zipCode = (empl.adresseTravail.codePostal && empl.adresseTravail.codePostal.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.codePostal : '';
+     var city = (empl.adresseTravail.ville && empl.adresseTravail.ville.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.ville : '';
+     var country = (empl.adresseTravail.country && empl.adresseTravail.country.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.country : '';
+     */
     console.log(empl);
     var address = empl.adresseTravail.fullAddress;
     if(address){
@@ -96,13 +95,21 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   }
 
   var infos = [];
+  $scope.infos = infos;
+  function closeLastInfo(infos, info){
+    if(infos.length >= 1){
+      infos[infos.length-1].close();
+      infos.splice(infos.length-1, 1);
+    }
+    infos[infos.length] = info;
+  }
   function loopThroughJobyers(jobyers, img, i){
     var marker2;
-    console.log(jobyers, i);
+
     if (jobyers[i].latitude && jobyers[i].longitude) {
       var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
       //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p>";
+      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p><p>Correspondance : "+jobyers[i].matching+"%</p>";
       var infowindowj = new google.maps.InfoWindow();
       marker2 = new google.maps.Marker({
         position: myLatLng2,
@@ -112,6 +119,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         //label: labels[labelIndex++ % labels.length]
       });
       google.maps.event.addListener(marker2, 'click', function() {
+        closeLastInfo($scope.infos, infowindowj);
         infowindowj.setContent(this.info);
         infowindowj.open(this.map, this);
       });
@@ -129,7 +137,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
           var infowindowj = new google.maps.InfoWindow();
 
-          var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
+          var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p><p>Correspondance : "+jobyers[i].matching+"%</p>";;
 
           marker2 = new google.maps.Marker({
             position: myLatLng2,
@@ -139,6 +147,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
             //label: labels[labelIndex++ % labels.length]
           });
           google.maps.event.addListener(marker2, 'click', function() {
+            closeLastInfo($scope.infos, infowindowj);
             infowindowj.setContent(this.info);
             infowindowj.open(this.map, this);
           });
@@ -222,8 +231,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         matching : 60,
         contacted : false,
         latitude : pos.coords.latitude+0.1,
-            longitude : pos.coords.longitude+0.1,
-            address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
+        longitude : pos.coords.longitude+0.1,
+        address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
       },
         {
           jobyerName : 'Alain',
@@ -233,9 +242,9 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           },
           matching : 20,
           contacted : true,
-              //latitude : pos.coords.latitude+0.2,
-              //longitude : pos.coords.longitude+0.2,
-              address:"18 pl Honoré Combe, 45320 COURTENAY"
+          //latitude : pos.coords.latitude+0.2,
+          //longitude : pos.coords.longitude+0.2,
+          address:"18 pl Honoré Combe, 45320 COURTENAY"
         },
         {
           jobyerName : 'Philippe',
@@ -245,9 +254,9 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           },
           matching : 10,
           contacted : false,
-              //latitude : pos.coords.latitude+0.3,
-              //longitude : pos.coords.longitude+0.3,
-              address:"31 rue Croix des Petits-Champs 75001 PARIS"
+          //latitude : pos.coords.latitude+0.3,
+          //longitude : pos.coords.longitude+0.3,
+          address:"31 rue Croix des Petits-Champs 75001 PARIS"
         }];
       var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
       loopThroughJobyers(jobyersOffers, pinImage2, 0);

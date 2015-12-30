@@ -54,18 +54,17 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $scope.map = map;
   }
-  var loopThroughJobyers=function(jobyers, img, i,myLatLng,markers){
-    if(!markers) markers=new Array();
+  var markers=[];
+  function loopThroughJobyers(jobyers, img, i,myLatLng){
     var marker2;
-    console.log(markers.length);
     if (jobyers[i].latitude && jobyers[i].longitude) {
       var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
       var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
-      markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
       if (i != jobyers.length-1) {
         i+=1;
-        return loopThroughJobyers(jobyers, img, i,myLatLng,markers);
-      }else return markers;
+        markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+        loopThroughJobyers(jobyers, img, i,myLatLng);
+      }else markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
     } else {
       $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyers[i].address).
         success(function (data) {
@@ -75,14 +74,16 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
           if (i!=jobyers.length-1) {
             i+=1;
-            return loopThroughJobyers(jobyers, img, i,myLatLng,markers);
-          }else return markers;
+            markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+            loopThroughJobyers(jobyers, img, i,myLatLng);
+          }else markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
         })
         .error(function () {
           Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
         });
     }
   }
+
   function initialize() {
 
     var myLatlng,address;
@@ -175,7 +176,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               //longitude : pos.coords.longitude+0.3,
               address:"31 rue Croix des Petits-Champs 75001 PARIS"
             }];
-          var colors=[], markers=[];
+          var colors=[];
           var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
          /*
           for( var i=0;i<jobyersOffers.length;i++) {
@@ -209,9 +210,10 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
           }
           */
-          markers=new Array();
-          loopThroughJobyers(jobyersOffers, pinImage2, 0,myLatLng,markers);
+
+          loopThroughJobyers(jobyersOffers, pinImage2, 0,myLatLng);
           console.log(markers.length);
+          console.log(jobyersOffers.length);
           var sortedMarkers=markers.sort(function(a, b) {
             return parseFloat(a.distance) - parseFloat(b.distance);
           });

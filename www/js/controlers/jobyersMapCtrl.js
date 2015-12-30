@@ -64,14 +64,22 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       return parseFloat(a.distance) - parseFloat(b.distance);
     });
     console.log("sortedMarkers.length :"+sortedMarkers.length);
+    var r = 0%256;
+    var g = 0%256;
+    var b =255%256;
     for(var j=0; j<sortedMarkers.length;j++){
-      var code1=100+((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))*100)/ (parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance));
-      var hexaCode1=parseInt(code1).toString(16);
+      r=(r+33);
+      g=(g+33);
+      b=(b+33);
+      //var code1=255+((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))*10)/ (parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance));
+      var hexaCode1=parseInt(r).toString(16);
+      var hexaCode2=parseInt(g).toString(16);
+      var hexaCode3=parseInt(b).toString(16);
       console.log("hexaCode1 :"+hexaCode1);
-      var hexaCode=hexaCode1+""+hexaCode1+""+hexaCode1;
+      var hexaCode="0000"+hexaCode1;
       var marker2 = new google.maps.Marker({
         position: sortedMarkers[j].position,
-        icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+hexaCode),
+        icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+hexaCode1+""+hexaCode2+""+hexaCode3),
         map: $scope.map,
         info: sortedMarkers[j].info
         //label: labels[labelIndex++ % labels.length]

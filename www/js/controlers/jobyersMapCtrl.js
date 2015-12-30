@@ -54,40 +54,75 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $scope.map = map;
   }
-  var markers=[];
-  function loopThroughJobyers(jobyers, img, i,myLatLng){
+
+  $scope.markers = [];
+
+  function displayMarkers(jobyers){
+    if($scope.markers.length!=jobyers.length)
+      return;
+    var sortedMarkers=$scope.markers.sort(function(a, b) {
+      return parseFloat(a.distance) - parseFloat(b.distance);
+    });
+    console.log("sortedMarkers.length :"+sortedMarkers.length);
+    for(var j=0; j<sortedMarkers.length;j++){
+      var code1=100+((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))*50)/ (parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance));
+      var hexaCode1=parseInt(code1).toString(16);
+      console.log("hexaCode1 :"+hexaCode1);
+      var hexaCode=hexaCode1+""+hexaCode1+""+hexaCode1;
+      var marker2 = new google.maps.Marker({
+        position: sortedMarkers[j].position,
+        icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+hexaCode),
+        map: $scope.map,
+        info: sortedMarkers[j].info
+        //label: labels[labelIndex++ % labels.length]
+      });
+      var infowindowj = new google.maps.InfoWindow();
+      google.maps.event.addListener(marker2, 'click', function() {
+        infowindowj.setContent(this.info);
+        infowindowj.open(this.map, this);
+      });
+    }
+  }
+
+  function loopThroughJobyers(jobyers, i,myLatLng){
     var marker2;
+
     if (jobyers[i].latitude && jobyers[i].longitude) {
       var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
-      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
+      //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+      var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p>";
+      $scope.markers.push({key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
+      displayMarkers(jobyers);
       if (i != jobyers.length-1) {
         i+=1;
-        markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
-        loopThroughJobyers(jobyers, img, i,myLatLng);
-      }else markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+        loopThroughJobyers(jobyers, i,myLatLng);
+      }
     } else {
       $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyers[i].address).
         success(function (data) {
           var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
+          console.log(location.lat);
+          console.log(location.lng);
           var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
+          //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
+
           var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
-          markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+          $scope.markers.push({key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
+          displayMarkers(jobyers);
           if (i!=jobyers.length-1) {
             i+=1;
-            markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
-            loopThroughJobyers(jobyers, img, i,myLatLng);
-          }else markers.push({key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2),info:content});
+            loopThroughJobyers(jobyers, i,myLatLng);
+          }
+
         })
         .error(function () {
           Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
         });
     }
   }
-
   function initialize() {
 
     var myLatlng,address;
-    $scope.markers=[];
     var employeur=localStorageService.get('employeur');
     console.log(employeur);
     if(employeur!=null && employeur!=undefined)
@@ -176,63 +211,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
               //longitude : pos.coords.longitude+0.3,
               address:"31 rue Croix des Petits-Champs 75001 PARIS"
             }];
-          var colors=[];
-          var pinImage2 = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|757575");
-         /*
-          for( var i=0;i<jobyersOffers.length;i++) {
-            if (jobyersOffers[i].latitude && jobyersOffers[i].longitude) {
-              var myLatLng2 = new google.maps.LatLng(jobyersOffers[i].latitude, jobyersOffers[i].longitude);
-              //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-              var marker2 = new google.maps.Marker({
-                position: myLatLng2,
-                icon: pinImage2,
-                map: $scope.map
-                //label: labels[labelIndex++ % labels.length]
-              });
-              markers[i]={key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)};
-              console.log("i = "+i+" markers[i] = "+markers[i]);
-            } else {
-              $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyersOffers[i].address).
-                success(function (data) {
-                  var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
-                  var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
-                  //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
-                  markers[i]={key:i,position:myLatLng2, distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)};
-                  console.log("i = "+i+" markers[i] = "+markers[i]);
-              })
-                .error(function () {
-                  Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
-                });
-            }
-            if(markers.length==jobyersOffers.length){
-                console.log("if");
-            }
 
-          }
-          */
-
-          loopThroughJobyers(jobyersOffers, pinImage2, 0,myLatLng);
-          console.log(markers.length);
-          console.log(jobyersOffers.length);
-          var sortedMarkers=markers.sort(function(a, b) {
-            return parseFloat(a.distance) - parseFloat(b.distance);
-          });
-          for(var j=0;j<sortedMarkers.length;j++){
-            var marker2 = new google.maps.Marker({
-              position: sortedMarkers[j].position,
-              icon: pinImage2,
-              map: $scope.map,
-              info: sortedMarkers[j].info
-              //label: labels[labelIndex++ % labels.length]
-            });
-            var infowindowj = new google.maps.InfoWindow();
-
-            google.maps.event.addListener(marker2, 'click', function() {
-              infowindowj.setContent(this.info);
-              infowindowj.open(this.map, this);
-            });
-
-          }
+          loopThroughJobyers(jobyersOffers, 0 ,myLatLng);
           success=true;
           $ionicLoading.hide();
         }, function(error) {

@@ -186,6 +186,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         myLatlng=new google.maps.LatLng(location.lat,location.lng);
         console.log(myLatlng);
         displayMap(myLatlng);
+		adressTravailMarker.setMap(null);
       })
       .error(function(){
         Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");

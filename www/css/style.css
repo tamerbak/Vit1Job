@@ -603,3 +603,8 @@ ion-tabs ion-nav-view{
 #floating-panel input{
   border: none;
 }
+.button.button-green{
+  border-color: #14BAA6;
+  background-color: #14BAA6;
+  color: #fff;
+}

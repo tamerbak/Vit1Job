@@ -1,4 +1,4 @@
-<ion-view title="{{AppLogo}}">
+<ion-view id="conxionMailView" title="{{AppLogo}}">
    <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection"> </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -14,23 +14,30 @@
     <div class="list" style="margin-bottom: 5px;" >
       <label class="item item-input">
         <i class="icon ion-email placeholder-icon calm" style="font-size: large"></i>
-        <input animation="fade" type="email" id="email" ng-click="displayEmailToolTip = ! displayEmailToolTip" placeholder="Email" data-ng-model="formData.email" data-ng-blur="validatEmail('email')">
+        <input animation="fade" type="email" id="email" ng-click="displayEmailTooltip()" placeholder="Email" data-ng-model="formData.email" data-ng-blur="validatEmail('email')">
         <!--<span class="error" >Required!</span>
         <span class="error" >Not valid email!</span>-->
       </label>
     </div>
-    <div id="mailPopup" ng-if="!emailIsValid();" ng-class="{'hidden' : ! displayEmailToolTip}">
-      Veuillez saisir un email valide.
+    <div id="popupCntMail" ng-class="{'hidden' : !showEmailTooltip}" ng-if="!emailIsValid()">
+      <div class="arrow-up"></div>
+      <div id="mailPopup">
+        {{emailToolTip}}
+      </div>
     </div>
 
     <!-- PASSWORD -->
     <div class="list" style="margin-bottom: 0px;padding-top: 7px;">
       <label class="item item-input">
-        <input type="password" ng-click="displayPwdTooltip = ! displayPwdTooltip" placeholder="Mot de passe" data-ng-model="formData.password" >
+        <input type="password" ng-focus="displayPwdTooltip()" ng-click="displayPwdTooltip()"
+               placeholder="Mot de passe" data-ng-model="formData.password" >
       </label>
     </div>
-    <div id="pwdPopup" ng-if="!passwordIsValid()" ng-class="{'hidden' : ! displayPwdTooltip}">
-      Taille minimale: 6 caractères
+    <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!passwordIsValid()">
+      <div class="arrow-up"></div>
+      <div id="pwdPopup">
+        Taille minimale: 6 caractères
+      </div>
     </div>
 
     <!-- ACTIONS -->

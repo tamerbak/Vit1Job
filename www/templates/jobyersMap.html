@@ -1,20 +1,35 @@
 <ion-view view-title="{{AppLogo}}">
 
-<ion-header-bar class="bar-calm">
+  <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app"></a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"/></div>
   </ion-header-bar>
 
-<!-- <ion-nav-buttons side="primary">
-<button class="button button-clear button-small" ui-sref="app">
-  <i class="icon ion-ios-arrow-back"></i>
-</button>
-</ion-nav-buttons> -->
+  <!-- <ion-nav-buttons side="primary">
+  <button class="button button-clear button-small" ui-sref="app">
+    <i class="icon ion-ios-arrow-back"></i>
+  </button>
+  </ion-nav-buttons> -->
 
   <ion-content>
-      <div id="map" data-tap-disabled="true"></div>
-    </ion-content>
-    <ion-footer-bar class="bar-dark">
+    <div style="height: 12%;background-color: #444444;" class="row">
+      <div class="col">
+        <div angucomplete-alt id="exAdress"
+             placeholder="Adresse"
+             maxlength="50"
+             selected-object="addressSelected"
+             local-data="addresses"
+             search-fields="libelle"
+             title-field="libelle"
+             minlength="1"
+             input-class="form-control form-control-small"
+             match-class="highlight" class="autoCompl">
+        </div>
+      </div>
+    </div>
+    <div id="map" data-tap-disabled="true" style="height: 88%;"></div>
+  </ion-content>
+	  <ion-footer-bar class="bar-dark">
       <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Me localiser</a>
       <div class="button-bar padding" style="padding: 0px; margin: 0px;">
         <a ng-click="markerFilter='duration';displayMarkers()" grouped-radio="'duration'" ng-model="markerFilter">Durée</a>
@@ -24,12 +39,12 @@
 </ion-view>
 
 <style>
-	#map {
-  width: 100%;
-  height: 100%;
-}
+  #map {
+    width: 100%;
+    height: 100%;
+  }
 
-.scroll {
-  height: 100%;
-}
+  .scroll {
+    height: 100%;
+  }
 </style>

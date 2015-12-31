@@ -7,7 +7,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     if(!$scope.loaded) initialize();
     $scope.loaded = true;
   });
-
+  $scope.markerFilter="distance";
   var getAddress = function(empl){
     var address;
     /*
@@ -60,9 +60,16 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   function displayMarkers(jobyers){
     if($scope.markers.length!=jobyers.length)
       return;
-    var sortedMarkers=$scope.markers.sort(function(a, b) {
-      return parseFloat(a.distance) - parseFloat(b.distance);
-    });
+    var sortedMarkers;
+    if($scope.markerFilter=="distance"){
+      sortedMarkers = $scope.markers.sort(function (a, b) {
+        return parseFloat(a.distance) - parseFloat(b.distance);
+      });
+    }else if($scope.markerFilter=="duration"){
+      sortedMarkers = $scope.markers.sort(function (a, b) {
+        return parseFloat(a.availability.value) - parseFloat(b.availability.value);
+      });
+    }
     console.log("sortedMarkers.length :"+sortedMarkers.length);
     var prevCode1=0;
     var prevCode2=0;
@@ -103,7 +110,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       var myLatLng2 = new google.maps.LatLng(jobyers[i].latitude, jobyers[i].longitude);
       //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
       var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p>";
-      $scope.markers.push({key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
+      $scope.markers.push({availability:jobyers[i].availability, key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
       displayMarkers(jobyers);
       if (i != jobyers.length-1) {
         i+=1;
@@ -119,7 +126,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
 
           var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Distance : "+jobyers[i].availability.text+"</p>";
-          $scope.markers.push({key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
+          $scope.markers.push({availability:jobyers[i].availability,key:i, position: myLatLng2,info: content,distance:google.maps.geometry.spherical.computeDistanceBetween(myLatLng, myLatLng2)});
           displayMarkers(jobyers);
           if (i!=jobyers.length-1) {
             i+=1;
@@ -132,6 +139,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         });
     }
   }
+
   function initialize() {
 
     var myLatlng,address;

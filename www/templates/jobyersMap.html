@@ -16,7 +16,10 @@
     </ion-content>
     <ion-footer-bar class="bar-dark">
       <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Me localiser</a>
-      
+      <div class="button-bar padding">
+        <a grouped-radio="'duration'" ng-model="markerFilter">Durée</a>
+        <a grouped-radio="'distance'" ng-model="markerFilter">Distance</a>
+      </div>
     </ion-footer-bar>
 </ion-view>
 

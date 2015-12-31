@@ -4,7 +4,7 @@
 'use strict';
 starter
 	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, localStorageService, $state,$stateParams, UpdateInServer, UploadFile, $base64,
-				LoadList, formatString, DataProvider, Validator,$ionicPopup){
+				LoadList, formatString, DataProvider, Validator, $ionicPopup, $cordovaCamera){
 
 		// FORMULAIRE
 		$scope.formData = {};
@@ -163,19 +163,19 @@ starter
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
       $state.go('adressePersonel');
 		};
+		function onSuccess (imageURI) {
+	        $scope.imgURI = imageURI;
+	        $state.go($state.current, {}, {reload: true});
+	      }
+	    function onFail (message) {
+	      console.log('An error occured: ' + message);
+	  }
 
     $scope.selectImage = function() {
-      navigator.camera.getPicture(function(imageURI){
-        console.log("success");
-        document.getElementById("uploadPreview").src = imageURI;
-      }, function(){
-        console.log("erroe");
-      }, {
+      navigator.camera.getPicture(onSuccess, onFail,{
         quality : 50,
-        sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
-        mediaType : navigator.camera.MediaType.ALLMEDIA,
+        sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: Camera.DestinationType.FILE_URI
-//        saveToPhotoAlbum: true
       });
     };
   /*
@@ -254,10 +254,10 @@ starter
 
 			console.log("Je suis ds takePicture() ");
 			var options = {
-				quality: 50,
+				quality: 75,
 				destinationType: Camera.DestinationType.DATA_URL,
 				sourceType: Camera.PictureSourceType.CAMERA,
-				allowEdit: true,
+				allowEdit: false,
 				encodingType: Camera.EncodingType.JPEG,
 				targetWidth: 100,
 				targetHeight: 100,
@@ -269,8 +269,8 @@ starter
 			$cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;
 				console.log("imageData : "+imageData);
+			}, function(err) {
+				alert(err);
 			});
-
-			console.log("imgURI : "+$scope.imgURI);
 		}
 	});

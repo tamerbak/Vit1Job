@@ -58,7 +58,12 @@
       <button class="button button-full button-positive green" data-ng-click="selectImage()">
         Charger un scan de votre extrait k-bis
       </button>
-      <img id="uploadPreview" style="max-width: 100px; max-height: 100px;" />
+      <button class="button button-full button-positive green" data-ng-click="takePicture()">
+        Prendre une photo de votre extrait k-bis
+      </button>
+      <div ng-controller="saisieCiviliteEmployeurCtrl">
+      <img id="uploadPreview" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="max-width: 100px; max-height: 100px;" />
+      </div>
     </div>
 
     <!--&lt;!&ndash; Image uploader &ndash;&gt;

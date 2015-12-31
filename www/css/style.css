@@ -558,3 +558,9 @@ border-color: #14BAA6;
     display:none !important;
   }
 }
+
+.button.button-green{
+  border-color: #14BAA6;
+  background-color: #14BAA6;
+  color: #fff;
+}

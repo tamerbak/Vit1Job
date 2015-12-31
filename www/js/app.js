@@ -170,9 +170,9 @@ starter.directive('groupedRadio', function() {
       });
 
       scope.$watch('model', function(newVal) {
-        element.removeClass('button-positive');
+        element.removeClass('button-green');
         if (newVal === scope.value) {
-          element.addClass('button-positive');
+          element.addClass('button-green');
         }
       });
     }

@@ -100,7 +100,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     autoComplete.bindTo('bounds', map);
     google.maps.event.addListener(autoComplete, 'place_changed', function() {
-      marker.setVisible(false);
+      //marker.setVisible(false);
       var place = autoComplete.getPlace();
       if (!place.geometry) {
         console.log("Autocomplete's returned place contains no geometry");
@@ -112,8 +112,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         map.setCenter(place.geometry.location);
         map.setZoom(17);
       }
-      marker.setPosition(place.geometry.location);
-      marker.setVisible(true);
+      //marker.setPosition(place.geometry.location);
+      //marker.setVisible(true);
 
       var a = '';
       if (place.address_components) {
@@ -123,6 +123,10 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           (place.address_components[2] && place.address_components[2].short_name || '')
         ].join(' ');
 		var searchedLatLng=new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
+		var marker = new google.maps.Marker({
+            position: searchedLatLng,
+            map: $scope.map,
+          });
 		loopThroughJobyers(0 ,searchedLatLng);
       }
       console.log(a);
@@ -254,7 +258,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         myLatlng=new google.maps.LatLng(location.lat,location.lng);
         console.log(myLatlng);
         displayMap(myLatlng);
-		//adressTravailMarker.setMap(null);
+		adressTravailMarker.setMap(null);
       })
       .error(function(){
         Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");

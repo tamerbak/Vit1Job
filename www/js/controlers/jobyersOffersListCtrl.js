@@ -1,8 +1,8 @@
 'use strict';
 
 starter.controller('jobyersOffersListCtrl',
-	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global',
-	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global) {
+	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms',
+	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global,$cordovaSms) {
     localStorageService.remove("steps");
 		var init = function(){
 
@@ -113,6 +113,25 @@ starter.controller('jobyersOffersListCtrl',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
         jobber.contacted = true;
+		
+		if(index==0){
+              console.log('called send sms');
+              document.addEventListener("deviceready", function() {
+              var options = {
+                  replaceLineBreaks: false, // true to replace \n by a new line, false by default
+                  android: {
+                    intent: 'INTENT' 
+                 }
+             };
+            $cordovaSms.send(jobber.tel, 'Je voudrais que vous travaillez pour moi', options)
+                .then(function() {
+                      console.log('Message sent successfully');
+                }, function(error) {
+                      alert('Message Failed:' + error);
+          
+                    });
+                   });
+            }
 		if(index==1){
 			var isAuth = UserService.isAuthenticated();
               if (isAuth) {

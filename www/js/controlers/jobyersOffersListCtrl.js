@@ -131,6 +131,17 @@ starter.controller('jobyersOffersListCtrl',
 				);				  
 			  }
 		}		
+		if(index==2){
+			var isAuth = UserService.isAuthenticated();
+              if (isAuth) {
+			window.plugins.CallNumber.callNumber(function(){
+				console.log("success call");
+			}, function(){
+				console.log("error call");
+				Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
+			} ,jobber.tel, false);	  
+			  }
+		}
         //branchement de la page de contrat ou infos clients
           if(index==3){
             /*

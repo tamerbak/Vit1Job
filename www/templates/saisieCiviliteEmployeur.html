@@ -29,11 +29,11 @@
         <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise">
       </label>
       <label class="item item-input">
-        <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret">
+        <input type="text" id="siret" placeholder="SIRET" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')">
       </label>
 
       <label class="item item-input">
-        <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape">
+        <input type="text" id="ape" placeholder="Code APE ou code NAF" data-ng-model="formData.ape" data-ng-change="validateApe('ape')">
       </label>
       <label class="item item-input">
         <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
@@ -58,7 +58,12 @@
       <button class="button button-full button-positive green" data-ng-click="selectImage()">
         Charger un scan de votre extrait k-bis
       </button>
-      <img id="uploadPreview" style="max-width: 100px; max-height: 100px;" />
+      <button class="button button-full button-positive green" data-ng-click="takePicture()">
+        Prendre une photo de votre extrait k-bis
+      </button>
+      <div ng-controller="saisieCiviliteEmployeurCtrl">
+      <img id="uploadPreview" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="max-width: 100px; max-height: 100px;" />
+      </div>
     </div>
 
     <!--&lt;!&ndash; Image uploader &ndash;&gt;

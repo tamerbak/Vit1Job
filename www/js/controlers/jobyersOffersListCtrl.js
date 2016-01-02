@@ -113,53 +113,47 @@ starter.controller('jobyersOffersListCtrl',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
         jobber.contacted = true;
-		
+
 		if(index==0){
               console.log('called send sms');
               document.addEventListener("deviceready", function() {
               var options = {
                   replaceLineBreaks: false, // true to replace \n by a new line, false by default
                   android: {
-                    intent: 'INTENT' 
+                    intent: 'INTENT'
                  }
              };
-            $cordovaSms.send(jobber.tel, 'Je voudrais que vous travaillez pour moi', options)
+            $cordovaSms.send(jobber.tel, 'Vitojob :Inivitation de mise en relation', options)
                 .then(function() {
                       console.log('Message sent successfully');
                 }, function(error) {
-                      alert('Message Failed:' + error);
-          
+                      console.log('Message Failed:' + error);
+
                     });
                    });
             }
 		if(index==1){
-			var isAuth = UserService.isAuthenticated();
-              if (isAuth) {
 				cordova.plugins.email.isAvailable(
 					function (isAvailable) {
 					cordova.plugins.email.open({
-					to:          [jobber.email], // email addresses for TO field
-					app: 'com.android.email',
-					subject:    "Vitojob :Mise en relation", // subject of the email
+					to:  [jobber.email], // email addresses for TO field
+					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
 					}, function(){
 						    console.log('email view dismissed');
-							//Global.showAlertValidation("Votre email a été bien envoyé.");						
+							//Global.showAlertValidation("Votre email a été bien envoyé.");
 					}, this);
 					}
-				);				  
-			  }
-		}		
+				);
+		}
 		if(index==2){
-			var isAuth = UserService.isAuthenticated();
-              if (isAuth) {
+
 			window.plugins.CallNumber.callNumber(function(){
 				console.log("success call");
 			}, function(){
 				console.log("error call");
 				Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
-			} ,jobber.tel, false);	  
-			  }
+			} ,jobber.tel, false);
 		}
         //branchement de la page de contrat ou infos clients
           if(index==3){

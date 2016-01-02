@@ -1,8 +1,8 @@
 'use strict';
 
 starter.controller('jobyersOffersListCtrl',
-	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state',
-	function($scope, localStorageService, $ionicActionSheet, UserService, $state) {
+	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms',
+	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global,$cordovaSms) {
     localStorageService.remove("steps");
 		var init = function(){
 
@@ -28,6 +28,8 @@ starter.controller('jobyersOffersListCtrl',
 					value : 210,
 					text : '8h 30min'
 				},
+				tel: "+212676109994",
+				email:"ettebaa.marouane@gmail.com",
 				matching : 60,
 				contacted : false,
 				latitude : 0,
@@ -39,6 +41,8 @@ starter.controller('jobyersOffersListCtrl',
 					value : 20,
 					text : '3h 30min'
 				},
+				tel: "+212623628174",
+				email:"hanane.aitamhira@gmail.com",
 				matching : 20,
 				contacted : true,
 				latitude : 0,
@@ -50,6 +54,8 @@ starter.controller('jobyersOffersListCtrl',
 					value : 1000,
 					text : '17h 30min'
 				},
+				tel: "+212623628174",
+				email:"hanane.aitamhira@gmail.com",
 				matching : 10,
 				contacted : false,
 				latitude : 0,
@@ -107,6 +113,54 @@ starter.controller('jobyersOffersListCtrl',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
         jobber.contacted = true;
+		
+		if(index==0){
+              console.log('called send sms');
+              document.addEventListener("deviceready", function() {
+              var options = {
+                  replaceLineBreaks: false, // true to replace \n by a new line, false by default
+                  android: {
+                    intent: 'INTENT' 
+                 }
+             };
+            $cordovaSms.send(jobber.tel, 'Je voudrais que vous travaillez pour moi', options)
+                .then(function() {
+                      console.log('Message sent successfully');
+                }, function(error) {
+                      alert('Message Failed:' + error);
+          
+                    });
+                   });
+            }
+		if(index==1){
+			var isAuth = UserService.isAuthenticated();
+              if (isAuth) {
+				cordova.plugins.email.isAvailable(
+					function (isAvailable) {
+					cordova.plugins.email.open({
+					to:          [jobber.email], // email addresses for TO field
+					app: 'com.android.email',
+					subject:    "Vitojob :Mise en relation", // subject of the email
+					//app: 'gmail'
+					}, function(){
+						    console.log('email view dismissed');
+							//Global.showAlertValidation("Votre email a été bien envoyé.");						
+					}, this);
+					}
+				);				  
+			  }
+		}		
+		if(index==2){
+			var isAuth = UserService.isAuthenticated();
+              if (isAuth) {
+			window.plugins.CallNumber.callNumber(function(){
+				console.log("success call");
+			}, function(){
+				console.log("error call");
+				Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
+			} ,jobber.tel, false);	  
+			  }
+		}
         //branchement de la page de contrat ou infos clients
           if(index==3){
             /*

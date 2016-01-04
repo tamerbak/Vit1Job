@@ -5,8 +5,6 @@ starter.controller('jobyersOffersOptionsCtrl',
 	['$scope', 'localStorageService', 
 	function($scope, localStorageService) {
 
-		//localStorageService.remove('jobyerListSetting');
-
 		var getOffersByEntrepriseId = function(entrepriseId){
 			var offers = [];
 			var entreprises = localStorageService.get('currentEmployerEntreprises');
@@ -23,10 +21,11 @@ starter.controller('jobyersOffersOptionsCtrl',
 		};
 
 		var init = function(){
+
 			$scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
 			if(!$scope.jobyerListSetting){
 				$scope.jobyerListSetting = {
-					orderByAvialability : false,
+					orderByAvialability : true,
 					orderByCorrespondence : false,
 					job : 50,
 					qi : 25,
@@ -62,39 +61,20 @@ starter.controller('jobyersOffersOptionsCtrl',
 		$scope.$watch('jobyerListSetting.job', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('job', parseInt(newValue));
-			//validateMatchingValues('job');
 		});
 
 		$scope.$watch('jobyerListSetting.qi', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('qi', parseInt(newValue));
-			//validateMatchingValues('qi');
 		});
 
 		$scope.$watch('jobyerListSetting.language', function (newValue, oldValue) {
 			if(parseInt(newValue) == parseInt(oldValue)) return;
 			setJobyerListSetting('language', parseInt(newValue));
-			//validateMatchingValues('language');
 		});
 
 		$scope.$watch('jobyerListSetting.transportationmode', function (newValue, oldValue) {
 			setJobyerListSetting('transportationmode', newValue);
 		});
-
-		/*var validateMatchingValues = function(property){
-			var value = 0;
-			if(!(property == 'job')){
-				value = 100 - parseInt($scope.jobyerListSetting.qi) - parseInt($scope.jobyerListSetting.language);
-				$scope.jobyerListSetting.job = value >= 0 ? value : 0;
-			}
-			if(!(property == 'qi')){
-				value = 100 - parseInt($scope.jobyerListSetting.language) - parseInt($scope.jobyerListSetting.job);
-				$scope.jobyerListSetting.qi = value >= 0 ? value : 0;
-			}
-			if(!(property == 'language')){
-				value = 100 - parseInt($scope.jobyerListSetting.qi) - parseInt($scope.jobyerListSetting.job);
-				$scope.jobyerListSetting.language = value >= 0 ? value : 0;
-			}
-		}*/
 
 	}]);

@@ -9,7 +9,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
           text : '8h 30min'
         },
         matching : 60,
-        contacted : false,
+        on : false,
         //latitude : pos.coords.latitude+0.1,
         //longitude : pos.coords.longitude+0.1,
         address:"190 Rue de Copenhague, 93290 Tremblay-en-France"
@@ -21,7 +21,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
             text : '3h 30min'
           },
           matching : 20,
-          contacted : true,
+          no : true,
           //latitude : pos.coords.latitude+0.2,
           //longitude : pos.coords.longitude+0.2,
           address:"18 pl Honoré Combe, 45320 COURTENAY"
@@ -33,7 +33,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
             text : '17h 30min'
           },
           matching : 10,
-          contacted : false,
+          on : false,
           //latitude : pos.coords.latitude+0.3,
           //longitude : pos.coords.longitude+0.3,
           address:"31 rue Croix des Petits-Champs 75001 PARIS"

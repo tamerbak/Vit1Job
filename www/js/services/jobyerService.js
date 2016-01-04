@@ -45,7 +45,7 @@ services.factory('jobyerService', ['$http', function($http) {
 
 			var url = 'http://ns389914.ovh.net:8080/VitOnJob/rest/common/jobyerOffer/getByLibelleJobAndAvailability?libelleJob=Acheteur dans l\'agroalimentaire&idEntreprise=1&idModeTransport=4';
 
-			$http.get(url, {headers : {'Authorization' : 'QmFzaWMgcmFjaGlkQHRlc3QuY29tOjEyMzQ1Ng=='}});
+			return $http.get(url, {headers : {'Authorization' : 'QmFzaWMgcmFjaGlkQHRlc3QuY29tOjEyMzQ1Ng=='}});
 		}/*,
 
 		getByLibelleJobAndMatching : function(libelleJob){

@@ -3,82 +3,36 @@
 starter.controller('jobyersOffersListCtrl',
 	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms',
 	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global,$cordovaSms) {
+    
     localStorageService.remove("steps");
-		var init = function(){
 
-			$scope.OfferLabel = capitalize(localStorageService.get('lastSearchedJob'));
-			$scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
-			if(!$scope.jobyerListSetting){
-				$scope.jobyerListSetting = {
-					orderByAvialability : false,
-					orderByCorrespondence : false,
-					job : 50,
-					qi : 25,
-					language : 25,
-					transportationmode : 'driving'
-				};
-				localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
-			};
 
-			//*/
+    var init = function(){
 
-			$scope.jobyersOffers = [{
-				jobyerName : 'Jérôme',
-				availability : {
-					value : 210,
-					text : '8h 30min'
-				},
-				tel: "+212676109994",
-				email:"ettebaa.marouane@gmail.com",
-				matching : 60,
-				contacted : false,
-				latitude : 0,
-				longitude : 0
-			},
-			{
-				jobyerName : 'Alain',
-				availability : {
-					value : 20,
-					text : '3h 30min'
-				},
-				tel: "+212623628174",
-				email:"hanane.aitamhira@gmail.com",
-				matching : 20,
-				contacted : true,
-				latitude : 0,
-				longitude : 0
-			},
-			{
-				jobyerName : 'Philippe',
-				availability : {
-					value : 1000,
-					text : '17h 30min'
-				},
-				tel: "+212623628174",
-				email:"hanane.aitamhira@gmail.com",
-				matching : 10,
-				contacted : false,
-				latitude : 0,
-				longitude : 0
-			}];
-		//*/
-		/*
+    	$scope.OfferLabel = capitalize(localStorageService.get('lastSearchedJob'));
+
+    	$scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
+    	if(!$scope.jobyerListSetting){
+    		$scope.jobyerListSetting = {
+    			orderByAvialability : true,
+    			orderByCorrespondence : false,
+    			job : 50,
+    			qi : 25,
+    			language : 25,
+    			transportationmode : 'driving'
+    		};
+    		localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
+    	};
+
 		$scope.jobyersOffers = localStorageService.get('jobyersOffers');
-		//*/
 
 		$scope.transportationmode = $scope.jobyerListSetting.transportationmode;
 
-		$scope.sort();
 	};
 
 	$scope.$on('$ionicView.beforeEnter', function(){
 		init();
 	});
-
-	$scope.sort = function(){
-		if($scope.jobyerListSetting.orderByCorrespondence) $scope.SortOrder = '+matching';
-		if($scope.jobyerListSetting.orderByAvialability) $scope.SortOrder = '+availability.value';
-	};
 
 	var capitalize = function(st) {
 		return st.charAt(0).toUpperCase() + st.slice(1);
@@ -98,6 +52,92 @@ starter.controller('jobyersOffersListCtrl',
 		setJobyerListSetting('orderByCorrespondence', newValue);
 	});
 
+	var onError = function(data){
+  console.log(data);
+};
+
+	var onGetJobyersOffersByJobSuccess = function(data){
+  var jobyersOffers = data;
+  localStorageService.set('jobyersOffers',jobyersOffers);
+  $scope.jobyersOffers = localStorageService.get('jobyersOffers');
+ };
+
+	var getByLibelleJobAndAvailability = function(libelleJob, idEntreprise, idModeTransport){
+    jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport).success(onGetJobyersOffersByJobSuccess).error(onError);
+  };
+
+	var getIdModeTransport = function(){
+    var jobyerListSetting = localStorageService.get('jobyerListSetting');
+    var idModeTransport = 1;
+    if(jobyerListSetting){
+      var transportationmode = jobyerListSetting.transportationmode;
+      switch(transportationmode) {
+        case 'driving': idModeTransport = 1; break;
+        case 'walking': idModeTransport = 2; break;
+        case 'bicycling': idModeTransport = 3; break;
+        case 'transit': idModeTransport = 4; break;
+        default: idModeTransport = 1;
+      }
+    }
+    return idModeTransport;
+  };
+
+
+	var getJobyersOffersByJob = function(libelleJob){
+
+    var idModeTransport = getIdModeTransport();
+
+    var currentEmployer = localStorageService.get('currentEmployer');
+    if(currentEmployer){
+      var currentEntreprise = localStorageService.get('currentEntreprise');
+      var idEntreprise;
+      if(currentEntreprise){
+        idEntreprise = currentEntreprise.entrepriseId;
+        getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
+      }
+      else
+      {
+        var firstEntrepriseOfCurrentEmployer = getFirstEntrepriseOfCurrentEmployer();
+        if(firstEntrepriseOfCurrentEmployer){
+          idEntreprise = firstEntrepriseOfCurrentEmployer.entrepriseId;
+          getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
+        }
+        else
+        {
+          // L'employeur connecté n'a aucune entreprise
+          // Autre traitement
+        }
+      }
+    }
+    else
+    {
+      // L'employeur n'est pas connecté
+      // Autre traitement
+    }
+
+  };
+
+  $scope.getJobyersOffersOrdred = function(){
+
+  	var jobLabel = localStorageService.get('lastSearchedJob');
+  	var orderByAvialability = $scope.jobyerListSetting.orderByAvialability;
+  	var orderByCorrespondence = $scope.jobyerListSetting.orderByCorrespondence;
+
+  	if(orderByAvialability && !orderByCorrespondence){
+  		getJobyersOffersByJob(jobLabel);
+  	}
+  	else if(!orderByAvialability && orderByCorrespondence){
+
+  	}
+  	else if(orderByAvialability && orderByCorrespondence){
+  		
+  	}
+  	else if(!orderByAvialability && !orderByCorrespondence){
+  		
+  	}
+
+  };
+
 	$scope.showMenuForContract = function(jobber){
 
     localStorageService.remove('Selectedjobyer');
@@ -112,7 +152,7 @@ starter.controller('jobyersOffersListCtrl',
 			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
 			buttonClicked: function(index) {
-        jobber.contacted = true;
+        jobber.on = true;
 
 		if(index==0){
               console.log('called send sms');

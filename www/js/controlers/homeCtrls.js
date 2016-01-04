@@ -308,6 +308,10 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
  var onGetJobyersOffersByJobSuccess = function(data){
   var jobyersOffers = data;
   localStorageService.set('jobyersOffers',jobyersOffers);
+  var jobyerListSetting = localStorageService.get('jobyerListSetting');
+  jobyerListSetting.orderByAvialability = true;
+  jobyerListSetting.orderByCorrespondence = false;
+  localStorageService.set('jobyerListSetting', jobyerListSetting);
   $state.go("jobyersOffersTab.list");
  };
 
@@ -327,9 +331,7 @@ var getFirstEntrepriseOfCurrentEmployer = function(){
   };
 
   var getByLibelleJobAndAvailability = function(libelleJob, idEntreprise, idModeTransport){
-    jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport)
-    .success(onGetJobyersOffersByJobSuccess)
-    .error(onError);
+    jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport).success(onGetJobyersOffersByJobSuccess).error(onError);
   };
 
   var getIdModeTransport = function(){

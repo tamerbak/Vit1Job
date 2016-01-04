@@ -5,7 +5,8 @@
 
  starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies,jobyerService) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, 
+    $timeout, $cookies, jobyerService, employerService) {
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -269,7 +270,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
           }]
   };
 
-  localStorageService.set('currentEmployer', currentEmployer)
+  localStorageService.set('currentEmployer', currentEmployer);
 
   //*************************************************//
 
@@ -310,15 +311,78 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
   $state.go("jobyersOffersTab.list");
  };
 
-   var onError = function(data){
-    console.log(data);
+ var onError = function(data){
+  console.log(data);
+};
+
+var getFirstEntrepriseOfCurrentEmployer = function(){
+    var currentEmployer = localStorageService.get('currentEmployer');
+    if(currentEmployer){
+      var entreprises = currentEmployer.entreprises;
+      if(entreprises && entreprises.length > 0){
+        return entreprises[0];
+      }
+    }
+    return null;
   };
 
-  var getJobyersOffersByJob = function(job){
-    jobyerService.getJobyersOffersByJob(job).success(onGetJobyersOffersByJobSuccess).error(onError);
+  var getByLibelleJobAndAvailability = function(libelleJob, idEntreprise, idModeTransport){
+    jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport)
+    .success(onGetJobyersOffersByJobSuccess)
+    .error(onError);
   };
 
-  var isEntrepriseOfferByJobExists = function(job){
+  var getIdModeTransport = function(){
+    var jobyerListSetting = localStorageService.get('jobyerListSetting');
+    var idModeTransport = 1;
+    if(jobyerListSetting){
+      var transportationmode = jobyerListSetting.transportationmode;
+      switch(transportationmode) {
+        case 'driving': idModeTransport = 1; break;
+        case 'walking': idModeTransport = 2; break;
+        case 'bicycling': idModeTransport = 3; break;
+        case 'transit': idModeTransport = 4; break;
+        default: idModeTransport = 1;
+      }
+    }
+    return idModeTransport;
+  };
+
+  var getJobyersOffersByJob = function(libelleJob){
+
+    var idModeTransport = getIdModeTransport();
+
+    var isLogged = checkIsLogged();
+    if(isLogged){
+      var currentEntreprise = localStorageService.get('currentEntreprise');
+      var idEntreprise;
+      if(currentEntreprise){
+        idEntreprise = currentEntreprise.entrepriseId;
+        getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
+      }
+      else
+      {
+        var firstEntrepriseOfCurrentEmployer = getFirstEntrepriseOfCurrentEmployer();
+        if(firstEntrepriseOfCurrentEmployer){
+          idEntreprise = firstEntrepriseOfCurrentEmployer.entrepriseId;
+          getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
+        }
+        else
+        {
+          // L'employeur connecté n'a aucune entreprise
+          // Autre traitement
+        }
+      }
+    }
+    else
+    {
+      // L'employeur n'est pas connecté
+      // Autre traitement
+    }
+
+  };
+
+  /*var isEntrepriseOfferByJobExists = function(job){
     if(!job) return;
     var currentEmployer = localStorageService.get('currentEmployer');
     if(!currentEmployer) return;
@@ -365,7 +429,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
       }
     }
     return found;
-  };
+  };*/
 
   var loadCurrentEmployerEntreprises = function(){
     var currentEmployer = localStorageService.get('currentEmployer');
@@ -396,23 +460,81 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
       }
       localStorageService.set('currentEmployerEntreprises',entreprises);
     }
-  }
+  };
 
-  $scope.launchSearchForJobyersOffers = function(job){
-    localStorageService.set('lastSearchedJob',job);
+  var setCurrentOffer = function(offerId){
+
+    var currentEmployer = localStorageService.get('currentEmployer');
+    if(!currentEmployer) return;
+    var entreprises = currentEmployer.entreprises;
+    var found = false;
+    if(entreprises && entreprises.length > 0){
+      var i = 0;
+      var offers = [];
+      var j;
+      while(!found && i < entreprises.length){
+        offers = entreprises[i].offers;
+        if(offers && offers.length > 0){
+          j = 0;
+          while(!found && j < offers.length){
+            if(offers[j].offerId == offerId){
+              found = true;
+              var currentOffer = {
+                'id' : offers[j].offerId.toString(),
+                'label' : offers[j].title
+              };
+              localStorageService.set('currentOffer',currentOffer);
+              var currentEntreprise = {
+                'id' : entreprises[i].entrepriseId.toString(),
+                'label' : entreprises[i].name
+              };
+              localStorageService.set('currentEntreprise',currentEntreprise);
+              loadCurrentEmployerEntreprises();
+            }
+            else
+            {
+              j++;
+            }
+          }
+        }
+        if(!found) i++;
+      }
+
+    };
+  };
+
+  var onIsEntrepriseOfferByJobExistsSuccess = function(jobLabel){
+    return function(data){
+      if(data != -1){
+      var offerId = data;
+      setCurrentOffer(offerId);
+      getJobyersOffersByJob(jobLabel);
+    }
+    else
+    {
+      showAddOfferConfirmPopup(jobLabel);
+    }
+  };
+  };
+
+  $scope.launchSearchForJobyersOffers = function(jobLabel){
+    localStorageService.set('lastSearchedJob',jobLabel);
     localStorageService.remove('currentOffer');
     localStorageService.remove('currentEntreprise');
     localStorageService.remove('currentEmployerEntreprises');
     var isLogged = checkIsLogged();
     if(isLogged){
-      if(isEntrepriseOfferByJobExists(job)){
-        getJobyersOffersByJob(job);
+      /*if(isEntrepriseOfferByJobExists(jobLabel)){
+        getJobyersOffersByJob(jobLabel);
       }else{
-        showAddOfferConfirmPopup(job);
-      }
+        showAddOfferConfirmPopup(jobLabel);
+      }*/
+      var currentEmployer = localStorageService.get('currentEmployer');
+      var employerId = currentEmployer.employerId;
+      employerService.isEntrepriseOfferByJobExists(employerId, jobLabel).success(onIsEntrepriseOfferByJobExistsSuccess(jobLabel)).error(onError);;
     }
     else{
-      getJobyersOffersByJob(job);
+      getJobyersOffersByJob(jobLabel);
     }
   };
 

@@ -19,10 +19,16 @@
     <br>
         <div class="list">
           <label class="item item-input">
-            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off"><!-- googleplace -->
+            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ><!-- googleplace -->
       </label>
     </div>
-    <br>
+    <div id="popupAdrTravail" ng-class="{'hidden' : !showAdresseTooltip}" ng-if="fieldIsEmpty()">
+      <div class="arrow-up"></div>
+      <div id="adressePopup">
+        {{adresseToolTip}}
+      </div>
+    </div>
+    
     <!-- ACTIONS -->
     <div class="buttonConnect">
         <button class="button button-full button-positive green" data-ng-click="updateAdressePersEmployeur()">Valider</button>

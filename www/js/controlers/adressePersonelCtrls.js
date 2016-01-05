@@ -337,6 +337,20 @@ starter
 
        */
     };
+    $scope.displayAdresseTooltip = function () {
+      $scope.adresseToolTip = "Astuce : Commencez par le code postal";
+      $scope.showAdresseTooltip = true;
+      console.log($scope.formData.address);
+    };
+
+    $scope.fieldIsEmpty = function() {
+      if($scope.formData.address == "" || $scope.formData.address == null){
+        return true;
+      } else {
+        return false;
+      }
+    };
+    
     $scope.updateAutoCompleteVille= function(){
       console.log("ville : "+$scope.formData.villeSelected.pk);
       var villes=$scope.formData.villes;

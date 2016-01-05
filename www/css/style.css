@@ -551,7 +551,7 @@ ion-tabs ion-nav-view{
   margin-bottom: 10px !important;
 }
 
-#mailPopup, #pwdPopup {
+#mailPopup, #pwdPopup, #adressePopup{
   transition: .5s;
   overflow: hidden;
   color: white;
@@ -582,9 +582,14 @@ ion-tabs ion-nav-view{
   margin-top: -8px;
 }
 
-#popupCntPwd.hidden, #popupCntMail.hidden{
+#popupAdrTravail{
+  margin-top: -17px; 
+}
+
+#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden{
   display: none;
 }
+
 #floating-panel{
   position: absolute;
   top: 10px;

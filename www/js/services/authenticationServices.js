@@ -27,7 +27,26 @@ angular.module('wsConnectors', ['ionic'])
                 {"pricticeJobId":2,"job":"job 1","level":"Excellent"}],
               "pricticesLanguage":[{"pricticeLanguageId":2,"language":"Anglais","level":"Bien"}]}]}]};
       return wsRs;
-    }
+    };
+
+    this.Authenticate = function(email, phone, password, role){
+
+      var login = '{"email":"' + btoa(email) + 
+      '","telephone":"' + btoa(phone) + '","password":"' + 
+      btoa(password) + '","role":"' + btoa(role) + '"}';
+
+      var request = {
+        method : 'POST',
+        url : 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/account/login',
+        headers : {
+        'Content-Type' : 'application/json',
+        'login' : login
+      }
+    };
+
+    return $http(request);
+
+    };
 
     /*************************OLD***************************/
     this.getSessionId=function(){

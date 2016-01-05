@@ -12,6 +12,23 @@ starter
     $rootScope.employeur = {};
     localStorageService.remove("steps");
     /*********************New code*********************/
+
+    var OnAuthenticateSuccesss = function(data){
+      if(!data){
+        OnAuthenticateError(data);
+        return;
+      }
+      console.log(data);
+      localStorageService.set('currentEmployer', data);
+      Global.showAlertValidation("Bienvenue ! vous êtes rentré dans votre espace VitOnJob sécurisé.");
+      $state.go("app");
+    };
+
+    var OnAuthenticateError = function(data){
+      console.log(data);
+      Global.showAlertPassword("Nom d'utilisateur ou mot de passe incorrect");
+    };
+
     $scope.Authenticate = function () {
       var email = $scope.formData.email;
       var password = $scope.formData.password;
@@ -32,7 +49,12 @@ starter
         Global.missedFieldsAlert(msg);
         return;
       }
-      var jsonObj = {"email": btoa(JSON.stringify(email)),
+
+      AuthentificatInServer.Authenticate(email, '', password, 'employeur')
+      .success(OnAuthenticateSuccesss)
+      .error(OnAuthenticateError);
+
+      /*var jsonObj = {"email": btoa(JSON.stringify(email)),
                     "telephone": "", "password": btoa(JSON.stringify(password)),
                     "role": btoa(JSON.stringify("employeur"))};
       var user = jsonObj;
@@ -58,7 +80,7 @@ starter
         } else {
           $state.go("app");
         }
-      }
+      }*/
     };
 
     $scope.displayEmailTooltip = function() {

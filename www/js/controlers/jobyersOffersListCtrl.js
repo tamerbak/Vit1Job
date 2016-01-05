@@ -1,11 +1,10 @@
 'use strict';
 
 starter.controller('jobyersOffersListCtrl',
-	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms',
-	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global,$cordovaSms) {
+	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms', 'jobyerService', 'employerService',
+	function($scope, localStorageService, $ionicActionSheet, UserService, $state, Global, $cordovaSms, jobyerService, employerService) {
     
     localStorageService.remove("steps");
-
 
     var init = function(){
 
@@ -24,86 +23,69 @@ starter.controller('jobyersOffersListCtrl',
     		localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
     	};
 
-		$scope.jobyersOffers = localStorageService.get('jobyersOffers');
+      $scope.jobyersOffers = localStorageService.get('jobyersOffers');
 
-		$scope.transportationmode = $scope.jobyerListSetting.transportationmode;
+      $scope.transportationmode = $scope.jobyerListSetting.transportationmode;
 
-	};
+    };
 
-	$scope.$on('$ionicView.beforeEnter', function(){
-		init();
-	});
+    $scope.$on('$ionicView.beforeEnter', function(){
+      init();
+    });
 
-	var capitalize = function(st) {
-		return st.charAt(0).toUpperCase() + st.slice(1);
-	};
+    var capitalize = function(st) {
+      return st.charAt(0).toUpperCase() + st.slice(1);
+    };
 
-	var setJobyerListSetting = function(property, newValue){
-		var jobyerListSetting = localStorageService.get('jobyerListSetting');
-		jobyerListSetting[property] = newValue;
-		localStorageService.set('jobyerListSetting', jobyerListSetting);
-	};
+    var setJobyerListSetting = function(property, newValue){
+      var jobyerListSetting = localStorageService.get('jobyerListSetting');
+      jobyerListSetting[property] = newValue;
+      localStorageService.set('jobyerListSetting', jobyerListSetting);
+    };
 
-	$scope.$watch('jobyerListSetting.orderByAvialability', function (newValue, oldValue) {
-		setJobyerListSetting('orderByAvialability', newValue);
-	});
+    $scope.$watch('jobyerListSetting.orderByAvialability', function (newValue, oldValue) {
+      setJobyerListSetting('orderByAvialability', newValue);
+    });
 
-	$scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
-		setJobyerListSetting('orderByCorrespondence', newValue);
-	});
+    $scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
+      setJobyerListSetting('orderByCorrespondence', newValue);
+    });
 
-	var onError = function(data){
-  console.log(data);
-};
+    var onError = function(data){
+      console.log(data);
+    };
 
-	var onGetJobyersOffersByJobSuccess = function(data){
-  var jobyersOffers = data;
-  localStorageService.set('jobyersOffers',jobyersOffers);
-  $scope.jobyersOffers = localStorageService.get('jobyersOffers');
- };
+    var onGetJobyersOffersByJobSuccess = function(data){
+      var jobyersOffers = data;
+      localStorageService.set('jobyersOffers',jobyersOffers);
+      $scope.jobyersOffers = localStorageService.get('jobyersOffers');
+    };
 
-	var getByLibelleJobAndAvailability = function(libelleJob, idEntreprise, idModeTransport){
-    jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport).success(onGetJobyersOffersByJobSuccess).error(onError);
-  };
+    var getByLibelleJobAndAvailability = function(libelleJob, idEntreprise, idModeTransport){
+      jobyerService.getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport).success(onGetJobyersOffersByJobSuccess).error(onError);
+    };
 
-	var getIdModeTransport = function(){
-    var jobyerListSetting = localStorageService.get('jobyerListSetting');
-    var idModeTransport = 1;
-    if(jobyerListSetting){
-      var transportationmode = jobyerListSetting.transportationmode;
-      switch(transportationmode) {
-        case 'driving': idModeTransport = 1; break;
-        case 'walking': idModeTransport = 2; break;
-        case 'bicycling': idModeTransport = 3; break;
-        case 'transit': idModeTransport = 4; break;
-        default: idModeTransport = 1;
-      }
-    }
-    return idModeTransport;
-  };
+    var getJobyersOffersByJob = function(libelleJob){
 
+      var idModeTransport = jobyerService.getIdModeTransport();
 
-	var getJobyersOffersByJob = function(libelleJob){
-
-    var idModeTransport = getIdModeTransport();
-
-    var currentEmployer = localStorageService.get('currentEmployer');
-    if(currentEmployer){
-      var currentEntreprise = localStorageService.get('currentEntreprise');
-      var idEntreprise;
-      if(currentEntreprise){
-        idEntreprise = currentEntreprise.entrepriseId;
-        getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
-      }
-      else
-      {
-        var firstEntrepriseOfCurrentEmployer = getFirstEntrepriseOfCurrentEmployer();
-        if(firstEntrepriseOfCurrentEmployer){
-          idEntreprise = firstEntrepriseOfCurrentEmployer.entrepriseId;
+      var currentEmployer = localStorageService.get('currentEmployer');
+      if(currentEmployer){
+        var currentEntreprise = localStorageService.get('currentEntreprise');
+        var idEntreprise;
+        if(currentEntreprise){
+          idEntreprise = currentEntreprise.entrepriseId;
           getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
         }
         else
         {
+          var firstEntrepriseOfCurrentEmployer = employerService.getFirstEntrepriseOfCurrentEmployer();
+          if(firstEntrepriseOfCurrentEmployer){
+            idEntreprise = firstEntrepriseOfCurrentEmployer.entrepriseId;
+            getByLibelleJobAndAvailability(libelleJob, idEntreprise, idModeTransport);
+          }
+          else
+          {
           // L'employeur connecté n'a aucune entreprise
           // Autre traitement
         }
@@ -138,12 +120,12 @@ starter.controller('jobyersOffersListCtrl',
 
   };
 
-	$scope.showMenuForContract = function(jobber){
+  $scope.showMenuForContract = function(jobber){
 
     localStorageService.remove('Selectedjobyer');
     localStorageService.set('Selectedjobyer',jobber);
-		var hideSheet = $ionicActionSheet.show({
-			buttons: [
+    var hideSheet = $ionicActionSheet.show({
+     buttons: [
 			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0
 			{ text: '<i class="ion-android-mail"> Contacter par Mail</i>' }, //Index = 1
 			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
@@ -154,49 +136,49 @@ starter.controller('jobyersOffersListCtrl',
 			buttonClicked: function(index) {
         jobber.on = true;
 
-		if(index==0){
-              console.log('called send sms');
-              document.addEventListener("deviceready", function() {
-              var options = {
+        if(index==0){
+          console.log('called send sms');
+          document.addEventListener("deviceready", function() {
+            var options = {
                   replaceLineBreaks: false, // true to replace \n by a new line, false by default
                   android: {
                     intent: 'INTENT'
-                 }
-             };
-            $cordovaSms.send(jobber.tel, 'Vitojob :Inivitation de mise en relation', options)
+                  }
+                };
+                $cordovaSms.send(jobber.tel, 'Vitojob :Inivitation de mise en relation', options)
                 .then(function() {
-                      console.log('Message sent successfully');
+                  console.log('Message sent successfully');
                 }, function(error) {
-                      console.log('Message Failed:' + error);
+                  console.log('Message Failed:' + error);
 
-                    });
-                   });
-            }
-		if(index==1){
-				cordova.plugins.email.isAvailable(
-					function (isAvailable) {
-					cordova.plugins.email.open({
+                });
+              });
+        }
+        if(index==1){
+          cordova.plugins.email.isAvailable(
+           function (isAvailable) {
+             cordova.plugins.email.open({
 					to:  [jobber.email], // email addresses for TO field
 					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
-					}, function(){
-						    console.log('email view dismissed');
+       }, function(){
+        console.log('email view dismissed');
 							//Global.showAlertValidation("Votre email a été bien envoyé.");
-					}, this);
-					}
-				);
-		}
-		if(index==2){
+           }, this);
+           }
+           );
+        }
+        if(index==2){
 
-			window.plugins.CallNumber.callNumber(function(){
-				console.log("success call");
-			}, function(){
-				console.log("error call");
-				Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
-			} ,jobber.tel, false);
-		}
+         window.plugins.CallNumber.callNumber(function(){
+          console.log("success call");
+        }, function(){
+          console.log("error call");
+          Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
+        } ,jobber.tel, false);
+       }
         //branchement de la page de contrat ou infos clients
-          if(index==3){
+        if(index==3){
             /*
               recuperation des données de l'emplyeur et calcule dans une variable boolean
               si toutes les informations sont présentes
@@ -250,6 +232,6 @@ starter.controller('jobyersOffersListCtrl',
             return true;
           }
         });
-      }
+}
 
-    }]);
+}]);

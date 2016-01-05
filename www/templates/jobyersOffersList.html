@@ -19,7 +19,7 @@
 	<button class="button button-small button-light ion-edit" style="float:right;" ui-sref="offres"></button>
 </div>
 
-<ion-checkbox ng-model="jobyerListSetting.orderByAvialability" class="checkbox-calm" style="padding:8px;" onchange="getJobyersOffersOrdred()">
+<ion-checkbox ng-model="jobyerListSetting.orderByAvialability" class="checkbox-calm" style="padding:8px;" ng-change="getJobyersOffersOrdred()">
 <label class="calm" style="padding-left:40px;">Disponible via &nbsp;&nbsp;&nbsp;
 	<i class="icon ion-android-car calm" ng-if="transportationmode == 'driving'"></i>
 	<i class="icon ion-android-walk calm" ng-if="transportationmode == 'walking'"></i>
@@ -27,7 +27,7 @@
 	<i class="icon ion-android-bus calm" ng-if="transportationmode == 'transit'"></i>
 </label>
 </ion-checkbox>
-<ion-checkbox ng-model="jobyerListSetting.orderByCorrespondence" class="checkbox-stable" style="padding:8px;"  onchange="getJobyersOffersOrdred()">
+<ion-checkbox ng-model="jobyerListSetting.orderByCorrespondence" class="checkbox-stable" style="padding:8px;"  ng-change="getJobyersOffersOrdred()">
 <label style="color:gray;padding-left:40px;">% de correspondance à la demande</label>
 </ion-checkbox>
 

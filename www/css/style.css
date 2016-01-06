@@ -493,7 +493,7 @@ ion-tabs ion-nav-view{
   left:0px;
 }
 #offresTabContent .item-input{
-  border-radius: 27px;
+  //border-radius: 27px;
   border-color: #14BAA6;
 }
 
@@ -579,7 +579,7 @@ ion-tabs ion-nav-view{
 }
 
 #popupCntPwd, #popupCntMail{
-  margin-top: -8px;
+  margin-top: 0px;
 }
 
 #popupAdrTravail{
@@ -615,3 +615,32 @@ ion-tabs ion-nav-view{
   background-color: #14BAA6;
   color: #fff;
 }
+.card .item:first-child, .list-inset .item:first-child, .padding > .list .item:first-child {
+    border-radius: 0px;
+    border-color: #14BAA6;
+}
+.card .item:last-child, .list-inset .item:last-child, .padding > .list .item:last-child , .autoCompl, .padding > .list.xtel .item.it2:last-child{
+    border-radius: 0px !important;
+}
+.list .item{
+      border-color: #14BAA6;
+}
+#jobTabView .input-container {
+  position: relative;
+  display: block;
+}
+
+#jobTabView .input-container select {
+  position: absolute;
+  top: 30%;
+  right: 0;
+}
+
+#jobTabView .input-container .autoCompl input {
+  width: 90%;
+}
+
+#jobTabView .input-container #metiers  {
+    border-bottom: none;
+}
+

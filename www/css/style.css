@@ -643,4 +643,21 @@ ion-tabs ion-nav-view{
 #jobTabView .input-container #metiers  {
     border-bottom: none;
 }
-
+#agendaTabView .button.button-block, #agendaTabView .button.button-full {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-color: #14BAA6;
+}
+#agendaTabView .item.item-select{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-color: #14BAA6;
+}
+#agendaTabView ion-item{
+  padding: 0px 10px;
+  border-color: #14BAA6;
+}
+#agendaTabView .range input{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}

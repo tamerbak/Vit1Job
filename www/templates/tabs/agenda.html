@@ -1,5 +1,5 @@
 
-<ion-view view-title="{{AppLogo}}">
+<ion-view id="agendaTabView" view-title="{{AppLogo}}">
   <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offreTabs.langues">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -15,13 +15,8 @@
 
     <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
 
-     <ion-item class="item-icon-right itemHoraire">
-              <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
-    </ion-item>
-    </br>
-
-    <div class="item item-divider">Répétitions</div>
-    <div class="item item-body">
+   <!-- <div class="item item-divider">Répétitions</div> -->
+    <div>
       <label class="item item-select">
           <span class="input-label" >Jour de la semaine</span>
           <select ng-model="formData.jourSelect">
@@ -37,7 +32,7 @@
           <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
       </ion-item>
     </div>
-
+    <br/>
     <ion-list style="text-align: left;">
         <ion-radio ng-change ="changeEditState()" ng-repeat="horaire in formData.horaires" ng-model = "formData.horaireSelect" ng-value = "{{ $index }}" value = "{{ $index }}">{{ horaire.jour }} de {{horaire.heureDebut}} à {{horaire.heureFin}} </ion-radio>
     </ion-list>

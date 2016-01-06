@@ -22,9 +22,6 @@
     </div>
     <!-- TITRE -->
     <div class="list">
-      <label class="item item-input">
-        <input type="text" id="titreOffre" placeholder="Titre de l'offre" data-ng-model="formData.titre">
-      </label>
     <!-- METIERS -->
     <div class="input-container">
       <div angucomplete-alt id="metiers"
@@ -65,6 +62,9 @@
         <option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
       </select>
       </div>
+    <ion-item class="item-icon-right itemHoraire">
+      <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">
+    </ion-item>
     </div>
     <!-- MAITRISE -->
     <img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>

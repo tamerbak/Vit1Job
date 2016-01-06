@@ -5,7 +5,18 @@
 
  starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies,jobyerService) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies, jobyerService, $ionicHistory) {
+    $scope.$on('$ionicView.beforeEnter', function (e,config) {
+  config.enableBack = false;
+});
+    /*$scope.displayBack = function() {
+      return $ionicHistory.viewHistory().backView != null;
+    };
+
+    $scope.myGoBack = function() {
+      window.history.back();
+    };*/
+    
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};

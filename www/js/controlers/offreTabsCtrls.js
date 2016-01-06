@@ -11,7 +11,10 @@ starter
     if($stateParams.offre) {
       $scope.offre = JSON.parse($stateParams.offre);
     }
-
+    //go back
+    $scope.goBackToPrevious = function() {
+      window.history.back();
+    };
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);

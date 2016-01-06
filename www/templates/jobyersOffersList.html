@@ -6,10 +6,16 @@
 </button>
 </ion-nav-buttons> -->
 
-<ion-header-bar class="bar-calm">
+<!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app"></a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"/></div>
-  </ion-header-bar>
+  </ion-header-bar> -->
+  <ion-nav-buttons side="secondary">
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app"></a>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+  </ion-nav-title>
 
 <ion-content>
 
@@ -18,7 +24,6 @@
 	<button class="button button-small button-light ion-ios-settings-strong" style="float:right;" ui-sref="jobyersOffersTab.options"></button>
 	<button class="button button-small button-light ion-edit" style="float:right;" ui-sref="offres"></button>
 </div>
-
 <ion-checkbox ng-model="jobyerListSetting.orderByAvialability" class="checkbox-calm" style="padding:8px;" ng-change="sort()">
 <label class="calm" style="padding-left:40px;">Disponible via &nbsp;&nbsp;&nbsp;
 	<i class="icon ion-android-car calm" ng-if="transportationmode == 'driving'"></i>

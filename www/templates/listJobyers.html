@@ -1,11 +1,17 @@
 <ion-view title="list">
-  <ion-header-bar class="bar-calm">
+  <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="search">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
-  </ion-header-bar>
+  </ion-header-bar> -->
+  <ion-nav-buttons side="secondary">
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app"></a>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+  </ion-nav-title>
+  
   <ion-content padding="true" ng-init="init()">
-
     <!--ion-list>
       <ion-item class ="alternatedList" ng-repeat="jobber in jobyersForMe" ng-class-odd="'odd'" ng-class-even="'even'">
         {{jobber.firstName}} {{jobber.lastName}} | {{jobber.city}}

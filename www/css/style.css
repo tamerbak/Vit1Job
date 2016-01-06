@@ -444,8 +444,8 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 }
 
 .rangeDiv {
-  margin-left: 10px;
-  margin-right: 10px;
+  //margin-left: 10px;
+  //margin-right: 10px;
   margin-bottom: 10px !important;
 }
 #competenceContent .list label{
@@ -660,4 +660,8 @@ ion-tabs ion-nav-view{
 #agendaTabView .range input{
   margin-top: 0px;
   margin-bottom: 0px;
+}
+#jobTabView .item.range.range-calm , #jobTabView #maitrise , #languesTabView .item.range.range-calm , #languesTabView #maitriseLangue{
+  margin: 0px;
+  padding: 0px;
 }

@@ -23,11 +23,11 @@
               <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
           </select>
       </label>
-      <ion-item class="range range-positive">
+      <ion-item class="range green">
           <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
           <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut" data-ng-change="heureChange('debut')">
       </ion-item>
-      <ion-item class="range range-positive">
+      <ion-item class="range green">
       <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
           <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
       </ion-item>

@@ -28,12 +28,22 @@ angular.module('wsConnectors', ['ionic'])
               "pricticesLanguage":[{"pricticeLanguageId":2,"language":"Anglais","level":"Bien"}]}]}]};
       return wsRs;
     };
-
+//669938121
     this.Authenticate = function(email, phone, password, role){
 
-      var login = '{"email":"' + btoa(email) + 
+      /*var login = '{"email":"' + btoa(email) + 
       '","telephone":"' + btoa(phone) + '","password":"' + 
-      btoa(password) + '","role":"' + btoa(role) + '"}';
+      btoa(password) + '","role":"' + btoa(role) + '"}';*/
+
+      var login = 
+      {
+        'email' : btoa(email),
+        'telephone' : btoa(phone),
+        'password' : btoa(password),
+        'role' : btoa(role)
+      }
+
+      login = JSON.stringify(login);
 
       var request = {
         method : 'POST',

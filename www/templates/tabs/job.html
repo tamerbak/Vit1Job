@@ -1,4 +1,4 @@
-<ion-view view-title="{{AppLogo}}">
+<ion-view  id='jobTabView' view-title="{{AppLogo}}">
   <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="offres">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -25,9 +25,8 @@
       <label class="item item-input">
         <input type="text" id="titreOffre" placeholder="Titre de l'offre" data-ng-model="formData.titre">
       </label>
-    </div>
     <!-- METIERS -->
-    <div class ="xcontainer">
+    <div class="input-container">
       <div angucomplete-alt id="metiers"
            placeholder="Domaine"
            initial-value="formData.metier"
@@ -45,10 +44,9 @@
         <option selected disabled style="display: none;">Metiers</option>
         <option id="metiers_value" data-ng-repeat="x in formData.metiers" value="{{x}}">{{x.libelle}}</option>
       </select>
-    </div>
-    <!--  <div id="maitriseDiv"> -->
+      </div>
     <!-- JOBS -->
-    <div class ="xcontainer">
+    <div class="input-container">
       <div angucomplete-alt id="jobs"
            placeholder="Job"
            initial-value="formData.job"
@@ -66,6 +64,7 @@
         <option selected disabled style="display: none;">Job</option>
         <option data-ng-repeat="x in formData.jobs" value="{{x}}">{{x.libelle}}</option>
       </select>
+      </div>
     </div>
     <!-- MAITRISE -->
     <img ng-src="img/{{formData.maitriseIcon}}" alt="" style="display: inline;max-width: 60px;max-height: 80px;vertical-align: middle;"/>

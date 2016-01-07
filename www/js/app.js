@@ -193,3 +193,16 @@ starter.directive('groupedRadio', function() {
     }
   };
 })
+
+/*starter.directive('uploadfile', function () {
+    return {
+      restrict: 'A',
+      link: function(scope, element) {
+
+        element.bind('click', function(e) {
+          console.log("uploadfile clicked");
+            angular.element(document.querySelector('#imgFile')).trigger('click');
+        });
+      }
+    };
+});*/

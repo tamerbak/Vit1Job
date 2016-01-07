@@ -548,10 +548,13 @@ ion-tabs ion-nav-view{
   }
 }
 #conxionMailView .list , #connexionPhoneView .list{
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
 }
-
-#mailPopup, #pwdPopup, #adressePopup{
+#connexionPhoneView .row{
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+#mailPopup, #pwdPopup, #adressePopup , #phonePopup{
   transition: .5s;
   overflow: hidden;
   color: white;
@@ -578,15 +581,18 @@ ion-tabs ion-nav-view{
   border-bottom: 10px solid #14baa6;
 }
 
-#popupCntPwd, #popupCntMail{
+#popupCntPwd, #popupCntMail,#popupCntPhone{
   margin-top: 0px;
+}
+#popupCntPhone{
+    margin-bottom: 9px;  
 }
 
 #popupAdrTravail{
   margin-top: -17px; 
 }
 
-#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden{
+#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden, #popupCntPhone.hidden{
   display: none;
 }
 

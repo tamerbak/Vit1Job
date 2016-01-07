@@ -12,9 +12,9 @@ starter
       $scope.offre = JSON.parse($stateParams.offre);
     }
     //go back
-    $scope.goBackToPrevious = function() {
-      window.history.back();
-    };
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);

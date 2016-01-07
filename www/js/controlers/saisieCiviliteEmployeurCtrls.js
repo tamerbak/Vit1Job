@@ -297,7 +297,7 @@ starter
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;
 				console.log("imageData : "+imageData);
 			}, function(err) {
-				alert(err);
+				console.log(err);
 			});
 		}
 	});

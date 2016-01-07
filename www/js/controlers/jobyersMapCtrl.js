@@ -47,7 +47,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     if(!$scope.loaded) initialize();
     $scope.loaded = true;
   });
-  $scope.markerFilter="distance";
+  $scope.markerFilter="duration";
   
   var getAddress = function(empl){
     var address;
@@ -149,16 +149,17 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   $scope.markers= [];
   
   $scope.displayMarkers=function(){
-	  //initialize markers
-	  for(var j=0; j<$scope.markers;j++){
-		  $scope.markers[i].setMap(null);
-	  }
-	$scope.markers=[];
-	//
+    
     var jobyers=$scope.jobyersOffers;
     if($scope.InfoMarkers.length!=jobyers.length){
 		return;		
 	}
+  //initialize markers
+    for(var j=0; j<$scope.markers;j++){
+      $scope.markers[i].setMap(null);
+    }
+  $scope.markers=[];
+  //
     var sortedMarkers;
     console.log("markerFilter: "+$scope.markerFilter);
     var prevCode1=0;

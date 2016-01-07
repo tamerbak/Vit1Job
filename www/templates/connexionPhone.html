@@ -34,25 +34,28 @@
           <input class="input-indicatif" type="text" placeholder=""/>
         </label>
       </div>
-      <div class="col-67 rue">
+      <div class ="col-67 rue">
         <label class="item item-input it2">
-          <input type="tel" id="phone" placeholder="Téléphone" data-ng-model="formData.phone" ng-minlength="9" >
+          <input numbers-only="numbers-only" type="tel" ng-focus="displayPhoneTooltip()" ng-click="displayPhoneTooltip()"  id="phone" placeholder="Téléphone" data-ng-model="formData.phone" ng-minlength="9" >
         </label>
       </div>
     </div>
-  </div>
-
+        <div id="popupCntPhone" ng-class="{'hidden' : ! showPhoneTooltip}" ng-if="!phoneIsValid()">
+      <div class="arrow-up"></div>
+      <div id="phonePopup">
+        Saisissez les 9 chiffres sans le 0
+      </div>
+    </div>
 	<!-- PASSWORD -->
-	<div class="list">
 	  <label class="item item-input">
         <input type="password" ng-focus="displayPwdTooltip()" ng-click="displayPwdTooltip()" placeholder="Mot de passe" ng-model="formData.password" ng-minlength="6">
       </label>
-    </div>
     <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!passwordIsValid()">
       <div class="arrow-up"></div>
       <div id="pwdPopup">
         Taille minimale: 6 caractères
       </div>
+    </div>
     </div>
 	<br>
 	<!-- ACTIONS -->

@@ -295,7 +295,7 @@ starter
           }
         }
       }*/
-      $scope.offre.titre=$scope.formData.titre;
+      $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
       $scope.offre.metier=$scope.formData.metier;
       $scope.offre.job=$scope.formData.job;
       $scope.offre.qiList=$scope.formData.qiList;

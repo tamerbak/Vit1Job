@@ -446,8 +446,8 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 }
 
 .rangeDiv {
-  margin-left: 10px;
-  margin-right: 10px;
+  //margin-left: 10px;
+  //margin-right: 10px;
   margin-bottom: 10px !important;
 }
 #competenceContent .list label{
@@ -550,10 +550,13 @@ ion-tabs ion-nav-view{
   }
 }
 #conxionMailView .list , #connexionPhoneView .list{
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
 }
-
-#mailPopup, #pwdPopup, #adressePopup{
+#connexionPhoneView .row{
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+#mailPopup, #pwdPopup, #adressePopup , #phonePopup{
   transition: .5s;
   overflow: hidden;
   color: white;
@@ -580,15 +583,18 @@ ion-tabs ion-nav-view{
   border-bottom: 10px solid #14baa6;
 }
 
-#popupCntPwd, #popupCntMail{
+#popupCntPwd, #popupCntMail,#popupCntPhone{
   margin-top: 0px;
+}
+#popupCntPhone{
+    margin-bottom: 9px;  
 }
 
 #popupAdrTravail{
   margin-top: -17px; 
 }
 
-#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden{
+#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden, #popupCntPhone.hidden{
   display: none;
 }
 
@@ -645,4 +651,25 @@ ion-tabs ion-nav-view{
 #jobTabView .input-container #metiers  {
     border-bottom: none;
 }
-
+#agendaTabView .button.button-block, #agendaTabView .button.button-full {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-color: #14BAA6;
+}
+#agendaTabView .item.item-select{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-color: #14BAA6;
+}
+#agendaTabView ion-item{
+  padding: 0px 10px;
+  border-color: #14BAA6;
+}
+#agendaTabView .range input{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+#jobTabView .item.range.range-calm , #jobTabView #maitrise , #languesTabView .item.range.range-calm , #languesTabView #maitriseLangue{
+  margin: 0px;
+  padding: 0px;
+}

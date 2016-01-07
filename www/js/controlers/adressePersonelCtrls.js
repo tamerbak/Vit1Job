@@ -13,21 +13,6 @@ starter
     $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
-    if(steps!='')
-    {
-      $ionicPopup.show({
-        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
-        buttons : [
-          {
-            text: '<b>OK</b>',
-            type: 'button-dark',
-            onTap: function(e) {
-            }
-          }
-        ]
-      });
-    }
     $scope.geocodeOptions = {
       componentRestrictions: {
         country : 'FR'
@@ -197,7 +182,79 @@ starter
       //$rootScope.$broadcast('load-new-list', {newList: {codes}});
     });
 
+    function displayPopups(){
+      if(isNaN($scope.formData.codePostal) && isNaN($scope.formData.ville) && !$scope.formData.adresse1 && !$scope.formData.adresse2 && !$scope.formData.num){
+        // INITIALISATION FORMULAIRE
+          GeoService.getUserAddress()
+              .then(function() {
+                var myPopup = $ionicPopup.show({
+                  //Votre géolocalisation pour renseigner votre adresse du siège social?
+                  template: "Localisation: êtes-vous dans votre siège social?<br>",
+                  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                  buttons: [
+                    {
+                      text: '<b>Non</b>',
+                      type: 'button-dark',
+                      onTap: function(e) {
+                        myPopup.close();
+                      }
+                    },{
+                      text: '<b>Oui</b>',
+                      type: 'button-calm',
+                      onTap: function(e){
+                        myPopup.close();
+                        $timeout( function () {
+                          var myPopup2 = $ionicPopup.show({
+                            //Votre géolocalisation pour renseigner votre adresse du siège social?
+                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
+                            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                            buttons: [
+                              {
+                                text: '<b>Non</b>',
+                                type: 'button-dark',
+                                onTap: function (e) {
+                                  myPopup2.close();
+                                }
+                              }, {
+                                text: '<b>Oui</b>',
+                                type: 'button-calm',
+                                onTap: function (e) {
+                                  myPopup2.close();
+                                  geolocated = true;
+                                  var geoAddress = localStorageService.get('user_address');
 
+                                  $scope.formData.adresse1 = geoAddress.street;
+                                  $scope.formData.adresse2 = geoAddress.complement;
+                                  $scope.formData.num = geoAddress.num;
+                                  $scope.formData.initialCity = geoAddress.city;
+                                  $scope.formData.initialPC = geoAddress.postalCode;
+
+                                  $scope.formData.address=geoAddress.fullAddress;
+
+                                }
+                              }
+                            ]
+                          });
+                        });
+                      }
+                    }
+                  ]
+                });
+              }, function(error) {
+                Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
+              });
+
+        /**if(employeur['adressePersonel'].codePostal)
+         *  document.getElementById('ex0_value').value=employeur['adressePersonel']['codePostal'];
+         *  if(employeur.adresseTravail.ville)
+         *  document.getElementById('ex1_value').value=employeur['adressePersonel']['ville'];
+         *  if(employeur['adressePersonel']){
+         *  $scope.formData['adresse1']=employeur['adressePersonel']['adresse1'];
+         *  $scope.formData['adresse2']=employeur['adressePersonel']['adresse2'];
+         *  $scope.formData['num']=employeur['adressePersonel']['num'];
+         *  **/
+      }
+    }
     $scope.$on("$ionicView.beforeEnter", function () {
       $scope.formData.zipCodes=DataProvider.getZipCodes();
       $scope.formData.villes=DataProvider.getVilles();
@@ -215,77 +272,26 @@ starter
 				//$scope.initForm();
 				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
 				//employeur=localStorageService.get('employeur');
-				if(isNaN($scope.formData.codePostal) && isNaN($scope.formData.ville) && !$scope.formData.adresse1 && !$scope.formData.adresse2 && !$scope.formData.num){
-					// INITIALISATION FORMULAIRE
-						GeoService.getUserAddress()
-								.then(function() {
-									var myPopup = $ionicPopup.show({
-										//Votre géolocalisation pour renseigner votre adresse du siège social?
-										template: "Localisation: êtes-vous dans votre siège social?<br>",
-										title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-										buttons: [
-											{
-												text: '<b>Non</b>',
-												type: 'button-dark',
-                        onTap: function(e) {
-                          myPopup.close();
-                        }
-											},{
-												text: '<b>Oui</b>',
-												type: 'button-calm',
-												onTap: function(e){
-                          myPopup.close();
-                          $timeout( function () {
-                            var myPopup2 = $ionicPopup.show({
-                              //Votre géolocalisation pour renseigner votre adresse du siège social?
-                              template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
-                              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                              buttons: [
-                                {
-                                  text: '<b>Non</b>',
-                                  type: 'button-dark',
-                                  onTap: function (e) {
-                                    myPopup2.close();
-                                  }
-                                }, {
-                                  text: '<b>Oui</b>',
-                                  type: 'button-calm',
-                                  onTap: function (e) {
-                                    myPopup2.close();
-                                    geolocated = true;
-                                    var geoAddress = localStorageService.get('user_address');
-
-                                    $scope.formData.adresse1 = geoAddress.street;
-                                    $scope.formData.adresse2 = geoAddress.complement;
-                                    $scope.formData.num = geoAddress.num;
-                                    $scope.formData.initialCity = geoAddress.city;
-                                    $scope.formData.initialPC = geoAddress.postalCode;
-
-                                    $scope.formData.address=geoAddress.fullAddress;
-
-                                  }
-                                }
-                              ]
-                            });
-                          });
-												}
-											}
-										]
-									});
-								}, function(error) {
-                  Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
-                });
-
-					/**if(employeur['adressePersonel'].codePostal)
-					 *  document.getElementById('ex0_value').value=employeur['adressePersonel']['codePostal'];
-					 *  if(employeur.adresseTravail.ville)
-					 *  document.getElementById('ex1_value').value=employeur['adressePersonel']['ville'];
-					 *  if(employeur['adressePersonel']){
-					 *  $scope.formData['adresse1']=employeur['adressePersonel']['adresse1'];
-					 *  $scope.formData['adresse2']=employeur['adressePersonel']['adresse2'];
-					 *  $scope.formData['num']=employeur['adressePersonel']['num'];
-					 *  **/
-				}
+        if(steps!='')
+          {
+            $ionicPopup.show({
+              title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+              template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+              buttons : [
+              {
+                  text: '<b>OK</b>',
+                  type: 'button-dark',
+                  onTap: function(e) {
+                  //$ionicPopup.hide();
+                  displayPopups();
+                  }
+                }
+              ]
+            });
+          }
+          else{
+            displayPopups();
+          }
 			}
 
 

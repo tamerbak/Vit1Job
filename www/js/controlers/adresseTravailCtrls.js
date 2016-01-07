@@ -372,6 +372,8 @@ starter
 				//$scope.initForm();
 		    if(steps!='')
 		    {
+		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
+
 		      $ionicPopup.show({
 		        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 		        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -388,8 +390,11 @@ starter
 		        ]
 		      });
 		    }else{
+		    	$scope.title="Pré-saisie des informations contractuelles : adresse du travail";
 		    	displayPopups();
 		    }
+		              console.log("$scope.tile = "+$scope.tile);
+
 				// AFFICHE POPUP - SI JE VIENS
 				if($ionicHistory.backView() === "adressePersonel"){}
 				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");

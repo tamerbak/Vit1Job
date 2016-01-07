@@ -13,6 +13,12 @@ starter
     $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+    if(steps!='')
+          {
+            $scope.title="Pré-saisie des informations contractuelles : adresse siège social";
+          }else{
+            $scope.title="Siège social";           
+          }
     $scope.geocodeOptions = {
       componentRestrictions: {
         country : 'FR'
@@ -274,7 +280,7 @@ starter
 				//employeur=localStorageService.get('employeur');
         if(steps!='')
           {
-            $scope.tile="Pré-saisie des informations contractuelles : adresse siège social";
+            $scope.title="Pré-saisie des informations contractuelles : adresse siège social";
             $ionicPopup.show({
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
               template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -291,10 +297,10 @@ starter
             });
           }
           else{
-             $scope.tile="Siège social";           
+             $scope.title="Siège social";           
             displayPopups();
           }
-          console.log("$scope.tile = "+$scope.tile);
+          console.log("$scope.title = "+$scope.title);
 			}
 
 

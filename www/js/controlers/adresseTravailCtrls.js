@@ -13,6 +13,12 @@ starter
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
+	if(steps!='')
+		    {
+		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
+		}else{
+		    	$scope.title="Adresse de Travail";
+		}
 		$scope.updateAdresseTravEmployeur = function(){
 
 			for(var obj in $scope.formData){
@@ -370,6 +376,7 @@ starter
       console.log(states.fromCache+"  state : "+states.stateName);
 			if(states.stateName == "adresseTravail" ){
 				//$scope.initForm();
+				console.log("steps ="+steps);
 		    if(steps!='')
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
@@ -390,7 +397,7 @@ starter
 		        ]
 		      });
 		    }else{
-		    	$scope.title="Pré-saisie des informations contractuelles : adresse du travail";
+		    	$scope.title="Adresse de Travail";
 		    	displayPopups();
 		    }
 		              console.log("$scope.tile = "+$scope.tile);

@@ -248,6 +248,8 @@ starter
 		$scope.initForm=function(){
 			// GET LIST
 			$scope.formData={'civilites': DataProvider.getCivilites()};
+			$scope.formData.civ="Titre";
+			console.log('$scope.formData.civ = '+$scope.formData.civ);
 		};
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){

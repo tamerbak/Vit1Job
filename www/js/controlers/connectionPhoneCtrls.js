@@ -79,6 +79,26 @@ starter
 
 
     };
+    $scope.displayPhoneTooltip = function() {
+      $scope.showPhoneTooltip = true;
+    };
+    $scope.phoneIsValid= function(){
+      console.log($scope.formData.phone);
+      if($scope.formData.phone!=undefined) {
+        var phone_REGEXP = /^0/;
+        var isMatchRegex = phone_REGEXP.test($scope.formData.phone);
+        console.log("isMatchRegex = "+isMatchRegex);
+        if (Number($scope.formData.phone.length) >= 9 && !isMatchRegex) {
+          console.log('test phone');
+          return true;
+        }
+        else
+          return false;
+      }else
+        return false;
+
+
+    };
 
 		$scope.validatElement=function(id){
 			Validator.checkField(id);

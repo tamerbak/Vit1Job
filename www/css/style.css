@@ -444,8 +444,8 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 }
 
 .rangeDiv {
-  margin-left: 10px;
-  margin-right: 10px;
+  //margin-left: 10px;
+  //margin-right: 10px;
   margin-bottom: 10px !important;
 }
 #competenceContent .list label{
@@ -493,7 +493,7 @@ ion-tabs ion-nav-view{
   left:0px;
 }
 #offresTabContent .item-input{
-  border-radius: 27px;
+  //border-radius: 27px;
   border-color: #14BAA6;
 }
 
@@ -548,10 +548,13 @@ ion-tabs ion-nav-view{
   }
 }
 #conxionMailView .list , #connexionPhoneView .list{
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
 }
-
-#mailPopup, #pwdPopup {
+#connexionPhoneView .row{
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+#mailPopup, #pwdPopup, #adressePopup , #phonePopup{
   transition: .5s;
   overflow: hidden;
   color: white;
@@ -578,19 +581,27 @@ ion-tabs ion-nav-view{
   border-bottom: 10px solid #14baa6;
 }
 
-#popupCntPwd, #popupCntMail{
-  margin-top: -8px;
+#popupCntPwd, #popupCntMail,#popupCntPhone{
+  margin-top: 0px;
+}
+#popupCntPhone{
+    margin-bottom: 9px;  
 }
 
-#popupCntPwd.hidden, #popupCntMail.hidden{
+#popupAdrTravail{
+  margin-top: -17px; 
+}
+
+#popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden, #popupCntPhone.hidden{
   display: none;
 }
+
 #floating-panel{
   position: absolute;
   top: 10px;
-  left: 10%;
+  left: 2.5%;
   z-index: 5;
-  width: 80%;
+  width: 95%;
   background-color: #fff;
   padding: 5px;
   text-align: center;
@@ -602,9 +613,61 @@ ion-tabs ion-nav-view{
 
 #floating-panel input{
   border: none;
+  width: 95%;
 }
+
 .button.button-green{
   border-color: #14BAA6;
   background-color: #14BAA6;
   color: #fff;
+}
+.card .item:first-child, .list-inset .item:first-child, .padding > .list .item:first-child {
+    border-radius: 0px;
+    border-color: #14BAA6;
+}
+.card .item:last-child, .list-inset .item:last-child, .padding > .list .item:last-child , .autoCompl, .padding > .list.xtel .item.it2:last-child{
+    border-radius: 0px !important;
+}
+.list .item{
+      border-color: #14BAA6;
+}
+#jobTabView .input-container {
+  position: relative;
+  display: block;
+}
+
+#jobTabView .input-container select {
+  position: absolute;
+  top: 30%;
+  right: 0;
+}
+
+#jobTabView .input-container .autoCompl input {
+  width: 90%;
+}
+
+#jobTabView .input-container #metiers  {
+    border-bottom: none;
+}
+#agendaTabView .button.button-block, #agendaTabView .button.button-full {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-color: #14BAA6;
+}
+#agendaTabView .item.item-select{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-color: #14BAA6;
+}
+#agendaTabView ion-item{
+  padding: 0px 10px;
+  border-color: #14BAA6;
+}
+#agendaTabView .range input{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+#jobTabView .item.range.range-calm , #jobTabView #maitrise , #languesTabView .item.range.range-calm , #languesTabView #maitriseLangue{
+  margin: 0px;
+  padding: 0px;
 }

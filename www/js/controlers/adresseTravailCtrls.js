@@ -12,21 +12,6 @@ starter
     $scope.formData.addressTravail="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
-    if(steps!='')
-    {
-      $ionicPopup.show({
-        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
-        buttons : [
-          {
-            text: '<b>OK</b>',
-            type: 'button-dark',
-            onTap: function(e) {
-            }
-          }
-        ]
-      });
-    }
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 
@@ -385,7 +370,134 @@ starter
       console.log(states.fromCache+"  state : "+states.stateName);
 			if(states.stateName == "adresseTravail" ){
 				//$scope.initForm();
-          var popup = $ionicPopup.show({
+		    if(steps!='')
+		    {
+		      $ionicPopup.show({
+		        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+		        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+		        buttons : [
+		          {
+		            text: '<b>OK</b>',
+		            type: 'button-dark',
+		            onTap: function(e) {
+		            	$timeout(function () {
+		            	displayPopups();
+		            });
+		            }
+		          }
+		        ]
+		      });
+		    }else{
+		    	displayPopups();
+		    }
+				// AFFICHE POPUP - SI JE VIENS
+				if($ionicHistory.backView() === "adressePersonel"){}
+				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
+
+				var employeur=localStorageService.get('employeur');
+				if(employeur){
+					// INITIALISATION FORMULAIRE
+					if(employeur['adresseTravail']){
+						// INITIALISATION FORMULAIRE
+						/**if(employeur['adresseTravail'].codePostal)
+							document.getElementById('ex2_value').value=employeur['adresseTravail']['codePostal'];
+						if(employeur.adresseTravail.ville)
+							document.getElementById('ex3_value').value=employeur['adresseTravail']['ville'];**/
+						if(employeur['adresseTravail']){
+							//$scope.formData['adresse1']=employeur['adresseTravail']['adresse1'];
+							//$scope.formData['adresse2']=employeur['adresseTravail']['adresse2'];
+              $scope.formData['addressTravail']=employeur['adresseTravail']['fullAddress'];
+
+            }
+					}
+				}
+			}
+		});
+
+		$scope.updateAutoCompleteZip= function(){
+			console.log("zip : "+$scope.formData.zipCodeSelected.pk);
+			var zipCodes=$scope.formData.zipCodes;
+			// RECHERCHE LIBELLE
+			for(var i=0; i<zipCodes.length; i++){
+				if(zipCodes[i]['pk_user_code_postal'] === $scope.formData.zipCodeSelected.pk){
+					$scope.formData.zipCodeSelected.libelle=zipCodes[i]['libelle'];
+					break;
+				}
+			}
+
+			if(typeof $scope.formData.codePostal === 'undefined')
+				$scope.formData.codePostal={};
+			$scope.formData.codePostal.originalObject={'pk_user_code_postal': $scope.formData.zipCodeSelected.pk, 'libelle': $scope.formData.zipCodeSelected.libelle};
+			console.log("formData.codePostal : "+JSON.stringify($scope.formData.codePostal));
+			document.getElementById('ex2_value').value=$scope.formData.zipCodeSelected['libelle'];
+/*
+			// VIDER LIST - VILLES
+			$scope.formData.villes=[];
+			var villes=DataProvider.getVilles();
+			for(var i=0; i<villes.length; i++){
+				if(villes[i]['fk_user_code_postal'] === $scope.formData.zipCodeSelected.pk)
+					$scope.formData.villes.push(villes[i]);
+			}
+
+			// RE-INITIALISE INPUT VILLE
+			document.getElementById('ex3_value').value='Villes';
+			$scope.formData.ville={};
+
+      */
+		};
+
+		$scope.updateAutoCompleteVille= function(){
+			console.log("ville : "+$scope.formData.villeSelected.pk);
+			var villes=$scope.formData.villes;
+			// RECHERCHE LIBELLE
+			for(var i=0; i<villes.length; i++){
+				if(villes[i]['pk_user_ville'] === $scope.formData.villeSelected.pk){
+					$scope.formData.villeSelected.libelle=villes[i]['libelle'];
+					break;
+				}
+			}
+
+			if(typeof $scope.formData.ville === 'undefined')
+				$scope.formData.ville={};
+			$scope.formData.ville.originalObject={'pk_user_ville': $scope.formData.villeSelected.pk, 'libelle': $scope.formData.villeSelected.libelle};
+			console.log("formData.ville : "+JSON.stringify($scope.formData.ville));
+			document.getElementById('ex3_value').value=$scope.formData.villeSelected['libelle'];
+      $rootScope.$broadcast('update-list-code', {params: {'fk':$scope.formData.villeSelected.pk, 'list':'ville'}});
+
+    };
+
+    /*$scope.disableTap = function(){
+    
+    var container = document.getElementsByClassName('pac-container');
+    if(screen.height <= 480){
+      console.log("height called");
+      angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
+    }
+    angular.element(container).attr('data-tap-disabled', 'true');
+    
+    angular.element(container).on("click", function(){
+        //document.getElementById('address').blur();
+        //google.maps.event.trigger(autoComplete, 'place_changed');
+        
+
+    })
+  };*/
+
+    $scope.displayAdresseTooltip = function () {
+    	$scope.adresseToolTip = "Astuce : Commencez par le code postal";
+    	$scope.showAdresseTooltip = true;
+    	console.log($scope.formData.addressTravail);
+    };
+
+    $scope.fieldIsEmpty = function() {
+    	if($scope.formData.addressTravail == "" || $scope.formData.addressTravail == null){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    };
+  function displayPopups(){
+	          var popup = $ionicPopup.show({
 
             template: "L'adresse de travail est-elle différente de l'adresse du siège social? <br>",
             title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -493,80 +605,6 @@ starter
               }
             ]
           });
-				// AFFICHE POPUP - SI JE VIENS
-				if($ionicHistory.backView() === "adressePersonel"){}
-				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
+}  
+	});
 
-				var employeur=localStorageService.get('employeur');
-				if(employeur){
-					// INITIALISATION FORMULAIRE
-					if(employeur['adresseTravail']){
-						// INITIALISATION FORMULAIRE
-						/**if(employeur['adresseTravail'].codePostal)
-							document.getElementById('ex2_value').value=employeur['adresseTravail']['codePostal'];
-						if(employeur.adresseTravail.ville)
-							document.getElementById('ex3_value').value=employeur['adresseTravail']['ville'];**/
-						if(employeur['adresseTravail']){
-							//$scope.formData['adresse1']=employeur['adresseTravail']['adresse1'];
-							//$scope.formData['adresse2']=employeur['adresseTravail']['adresse2'];
-              $scope.formData['addressTravail']=employeur['adresseTravail']['fullAddress'];
-
-            }
-					}
-				}
-			}
-		});
-
-		$scope.updateAutoCompleteZip= function(){
-			console.log("zip : "+$scope.formData.zipCodeSelected.pk);
-			var zipCodes=$scope.formData.zipCodes;
-			// RECHERCHE LIBELLE
-			for(var i=0; i<zipCodes.length; i++){
-				if(zipCodes[i]['pk_user_code_postal'] === $scope.formData.zipCodeSelected.pk){
-					$scope.formData.zipCodeSelected.libelle=zipCodes[i]['libelle'];
-					break;
-				}
-			}
-
-			if(typeof $scope.formData.codePostal === 'undefined')
-				$scope.formData.codePostal={};
-			$scope.formData.codePostal.originalObject={'pk_user_code_postal': $scope.formData.zipCodeSelected.pk, 'libelle': $scope.formData.zipCodeSelected.libelle};
-			console.log("formData.codePostal : "+JSON.stringify($scope.formData.codePostal));
-			document.getElementById('ex2_value').value=$scope.formData.zipCodeSelected['libelle'];
-/*
-			// VIDER LIST - VILLES
-			$scope.formData.villes=[];
-			var villes=DataProvider.getVilles();
-			for(var i=0; i<villes.length; i++){
-				if(villes[i]['fk_user_code_postal'] === $scope.formData.zipCodeSelected.pk)
-					$scope.formData.villes.push(villes[i]);
-			}
-
-			// RE-INITIALISE INPUT VILLE
-			document.getElementById('ex3_value').value='Villes';
-			$scope.formData.ville={};
-
-      */
-		};
-
-		$scope.updateAutoCompleteVille= function(){
-			console.log("ville : "+$scope.formData.villeSelected.pk);
-			var villes=$scope.formData.villes;
-			// RECHERCHE LIBELLE
-			for(var i=0; i<villes.length; i++){
-				if(villes[i]['pk_user_ville'] === $scope.formData.villeSelected.pk){
-					$scope.formData.villeSelected.libelle=villes[i]['libelle'];
-					break;
-				}
-			}
-
-			if(typeof $scope.formData.ville === 'undefined')
-				$scope.formData.ville={};
-			$scope.formData.ville.originalObject={'pk_user_ville': $scope.formData.villeSelected.pk, 'libelle': $scope.formData.villeSelected.libelle};
-			console.log("formData.ville : "+JSON.stringify($scope.formData.ville));
-			document.getElementById('ex3_value').value=$scope.formData.villeSelected['libelle'];
-      $rootScope.$broadcast('update-list-code', {params: {'fk':$scope.formData.villeSelected.pk, 'list':'ville'}});
-
-    }
-	})
-;

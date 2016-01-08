@@ -11,7 +11,10 @@ starter
     if($stateParams.offre) {
       $scope.offre = JSON.parse($stateParams.offre);
     }
-
+    //go back
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);

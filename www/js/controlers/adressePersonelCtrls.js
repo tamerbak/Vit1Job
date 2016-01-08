@@ -272,8 +272,10 @@ starter
 				//$scope.initForm();
 				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
 				//employeur=localStorageService.get('employeur');
+        var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';        
         if(steps!='')
           {
+             $scope.title="Pré-saisie des informations contractuelles : adresse siège social";           
             $ionicPopup.show({
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
               template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -290,6 +292,7 @@ starter
             });
           }
           else{
+             $scope.title="Siège social";                       
             displayPopups();
           }
 			}

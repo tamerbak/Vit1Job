@@ -6,6 +6,16 @@ starter
 	.controller('saisieCiviliteEmployeurCtrl', function ($scope, $rootScope, localStorageService, $state,$stateParams, UpdateInServer, UploadFile, $base64,
 				LoadList, formatString, DataProvider, Validator, $ionicPopup, $cordovaCamera){
 
+		//change input according to platform
+		
+
+		$scope.isIOS = ionic.Platform.isIOS();
+  		$scope.isAndroid = ionic.Platform.isAndroid();
+  		$scope.showFileDialog = function() {
+  			document.getElementById('image').click();
+
+  		};
+
 		// FORMULAIRE
 		$scope.formData = {};
     $scope.siretValide =true;
@@ -25,6 +35,7 @@ starter
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
     {
+      $scope.title="Pré-saisie des informations contractuelles : civilité";
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
         template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -37,6 +48,8 @@ starter
           }
         ]
       });
+    }else{
+    	$scope.title="Saisie de la civilité";
     }
 		$scope.updateCiviliteEmployeur = function(){
 
@@ -204,6 +217,7 @@ starter
         sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: Camera.DestinationType.FILE_URI
       });
+      $state.go($state.current, {}, {reload: true});
     };
   /*
     $scope.selectImage = function() {
@@ -237,6 +251,8 @@ starter
 
         FR.onload = function (oFREvent) {
           document.getElementById("uploadPreview").src = oFREvent.target.result;
+          $scope.imgURI = oFREvent.target.result;
+          $state.go($state.current, {}, {reload: true});
         };
 			}
 		};
@@ -298,8 +314,9 @@ starter
 			$cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;
 				console.log("imageData : "+imageData);
+				$state.go($state.current, {}, {reload: true});
 			}, function(err) {
-				alert(err);
+				console.log(err);
 			});
 		}
 	});

@@ -3,6 +3,11 @@
 starter.controller('jobyersOffersListCtrl',
 	['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state','Global','$cordovaSms',
 	function($scope, localStorageService, $ionicActionSheet, UserService, $state,Global,$cordovaSms) {
+
+		$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
+
     localStorageService.remove("steps");
 		var init = function(){
 

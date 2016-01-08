@@ -9,6 +9,9 @@ starter
 		// FORMULAIRE
 
     //
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
 		$scope.initAll = function(){
 
 			// GET LIST
@@ -29,6 +32,10 @@ starter
           $scope.formData.offresNonPublies.push(offres[i]);
       }
 
+    };
+
+    $scope.goBackToPrevious = function() {
+      window.history.back();
     };
 
     $scope.offreChange=function(item){

@@ -369,9 +369,11 @@ starter
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
       console.log(states.fromCache+"  state : "+states.stateName);
 			if(states.stateName == "adresseTravail" ){
+			var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
 				//$scope.initForm();
 		    if(steps!='')
 		    {
+		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
 		      $ionicPopup.show({
 		        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 		        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -388,8 +390,12 @@ starter
 		        ]
 		      });
 		    }else{
+		 		$scope.title="Adresse de Travail";
 		    	displayPopups();
 		    }
+		    	console.log("steps : "+steps);
+				console.log("$scope.title : "+$scope.title);
+
 				// AFFICHE POPUP - SI JE VIENS
 				if($ionicHistory.backView() === "adressePersonel"){}
 				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");

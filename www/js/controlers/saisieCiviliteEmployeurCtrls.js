@@ -35,6 +35,7 @@ starter
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
     if(steps!='')
     {
+      $scope.title="Pré-saisie des informations contractuelles : civilité";
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
         template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -47,6 +48,8 @@ starter
           }
         ]
       });
+    }else{
+    	$scope.title="Saisie de la civilité";
     }
 		$scope.updateCiviliteEmployeur = function(){
 

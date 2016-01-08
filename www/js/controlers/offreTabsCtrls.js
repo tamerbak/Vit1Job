@@ -65,7 +65,22 @@ starter
 
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
-    $scope.initAll = function(){
+    function formatDate (d) {
+      if(typeof d === "string"){
+        var day = d.split("-")[2];
+        var monthIndex = d.split("-")[1];
+        var year = d.split("-")[0];
+        return new Date(year, monthIndex, day );
+      } else {
+        var day = d.getDate();
+        var monthIndex = d.getMonth()+1;
+        var year = d.getFullYear();
+        return new Date(year, monthIndex, day );
+      }
+      
+    }
+    $scope.initAll = function()
+    {
 
       if($scope.offre){
 
@@ -111,13 +126,19 @@ starter
           $scope.formData.remuneration=$scope.offre.remuneration;
         if($scope.offre.horaires)
           $scope.formData.horaires = $scope.offre.horaires;
+        console.log('init called');
+
         if($scope.offre.dateDebut)
-          $scope.formData.dateDebut = $scope.offre.dateDebut;
-        if($scope.offre.dateFin)
-          $scope.formData.dateFin = $scope.offre.dateFin;
+          $scope.formData.dateDebut = formatDate($scope.offre.dateDebut);
         else
-          $scope.formData.dateFin = "Jamais";
-      }else
+          $scope.formData.dateDebut = formatDate(new Date());
+
+        if($scope.offre.dateFin)
+          $scope.formData.dateFin = formatDate($scope.offre.dateFin);
+        else
+          $scope.formData.dateFin = formatDate(new Date());          
+        
+      } else
         $scope.formData={
         'maitrise': 'Débutant',
         'maitriseIcon': 'tree1_small.png',
@@ -141,8 +162,12 @@ starter
         languesList:[],
         qi:{},
         degre:10,
-        selectedLangue:{}
+        selectedLangue:{},
+        dateDebut: formatDate(new Date()),
+        dateFin: formatDate(new Date())
       };
+    console.log($scope.formData.dateDebut);
+    console.log($scope.formData.dateFin);
     };
 
     $scope.rangeChange = function(){
@@ -302,8 +327,22 @@ starter
       $scope.offre.languesList=$scope.formData.languesList;
       $scope.offre.remuneration=$scope.formData.remuneration;
       $scope.offre.horaires = $scope.formData.horaires;
-      $scope.offre.dateDebut =$scope.formData.dateDebut;
-      $scope.offre.dateFin = $scope.formData.dateFin;
+      //date debut
+      if(!$scope.formData.dateDebut)
+          $scope.formData.dateDebut = new Date();
+      var dateDebutFormatted = formatDate($scope.formData.dateDebut);
+      console.log('dateDebutFormatted' + dateDebutFormatted + typeof dateDebutFormatted);
+      
+      //date fin
+      if(!$scope.formData.dateFin)
+          $scope.formData.dateFin = new Date();
+      
+      var dateFinFormatted = formatDate($scope.formData.dateFin);
+
+      console.log('dateFinFormatted' + dateFinFormatted + typeof dateFinFormatted);
+      
+      $scope.offre.dateDebut = dateDebutFormatted.getFullYear() + "-" + dateDebutFormatted.getMonth() + "-" + dateDebutFormatted.getDate();
+      $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();;
 
       var offre=$scope.offre;
 
@@ -337,6 +376,7 @@ starter
           $scope.formData.jobs.push(jobs[i]);
       }
     });
+    
 
     $scope.ajouterHoraire = function(){
 
@@ -385,28 +425,47 @@ starter
     mode: 'date', // or 'time'
     minDate: new Date() - 10000,
     allowOldDates: true,
-    allowFutureDates: false,
+    allowFutureDates: true,
     doneButtonLabel: 'DONE',
     doneButtonColor: '#F2F3F4',
     cancelButtonLabel: 'CANCEL',
     cancelButtonColor: '#000000'
   };
 
-  $scope.dateDebut = function () {
+
+  /*$scope.showDatePickerDebut = function() {
+    console.log(document.getElementById('dateDebutInput'));
+    console.log(angular.element('#dateDebutInput'));
+    document.getElementById('dateDebutInput').focus();
+        //angular.element('#dateDebutInput').triggerHandler('click');
+      };
+
+  $scope.showDatePickerFin = function() {
+        document.getElementById('dateFinInput').focus();
+      };*/
+
+  
+  /*function () {
+    
+
+    document.addEventListener("deviceready", function () {
 
     $cordovaDatePicker.show(options).then(function(date){
         $scope.formData.dateDebut = date;
     });
+    
 
-  };
+  }, false);
 
-  $scope.dateFin = function () {
+  };*/
+
+/*  $scope.dateFin = function () {
 
     $cordovaDatePicker.show(options).then(function(date){
         $scope.formData.dateFin = date;
     });
 
-  };
+  };*/
 
   $scope.heureChange = function (params) {
     if (params === 'debut'){

@@ -11,6 +11,7 @@ starter
 
 		$scope.isIOS = ionic.Platform.isIOS();
   		$scope.isAndroid = ionic.Platform.isAndroid();
+
   		$scope.showFileDialog = function() {
   			document.getElementById('image').click();
 
@@ -200,21 +201,34 @@ starter
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
       $state.go('adressePersonel');
 		};
-		function onSuccess (imageURI) {
+		
+
+    $scope.selectImage = function() {
+    	/*onSuccess = function (imageURI) {
 	        $scope.imgURI = imageURI;
 	        $state.go($state.current, {}, {reload: true});
 	      }
-	    function onFail (message) {
+	    onFail = function (message) {
 	      console.log('An error occured: ' + message);
-	  }
+	  }*/
+      var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: false,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 100,
+                    targetHeight: 100
+                };
 
-    $scope.selectImage = function() {
-      navigator.camera.getPicture(onSuccess, onFail,{
-        quality : 50,
-        sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY,
-        destinationType: Camera.DestinationType.FILE_URI
-      });
-      $state.go($state.current, {}, {reload: true});
+      $cordovaCamera.getPicture(options).then(function(imageData){
+				$scope.imgURI = "data:image/jpeg;base64," + imageData;;
+				console.log("imageURI : "+$scope.imgURI);
+				$state.go($state.current, {}, {reload: true});
+
+			}, function(err) {
+				console.log('An error occured: ' + message);
+			});
     };
   /*
     $scope.selectImage = function() {

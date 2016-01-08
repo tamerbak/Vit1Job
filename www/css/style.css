@@ -646,3 +646,21 @@ ion-tabs ion-nav-view{
     border-bottom: none;
 }
 
+#dateDebutInput, #dateFinInput {
+  background-color: transparent;
+  font-size: inherit;
+  padding: 0 0 0 0;
+  height: inherit;
+  line-height: auto;
+  margin-bottom: 4px;
+}
+
+#dateDebutContainer, #dateFinContainer{
+    text-align: left;
+    margin: 0 0 0 0;
+    padding: auto;
+    margin-bottom: 10px;
+}
+
+
+}

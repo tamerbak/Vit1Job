@@ -10,15 +10,31 @@
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-chevron-right button-clear button-light" ui-sref="offres">  </a>
   </ion-header-bar> -->
-  <ion-content class="has-header" id="disponibiliteContent" overflow-scroll="true" padding="true" data-ng-init="initModalAll()">
+  <ion-content class="has-header" id="disponibiliteContent" overflow-scroll="true" padding="true" data-ng-init="initAll()">
     <div>
       <h3 class="titlePhone"><b>Horaires de travail</b></h3>
     </div>
 
 
-    <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateDebut()"> Date de début : {{ formData.dateDebut | date : 'dd/MM/yyyy'}}</button>
+    <!-- <button class="button button-stable button-block button-small icon ion-calendar" ng-click="showDatePickerDebut()"> Date de début : {{ formData.dateDebut | date : 'dd/MM/yyyy'}}</button> -->
 
-    <button class="button button-stable button-block button-small icon ion-calendar" ng-click="dateFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
+<label id="dateDebutContainer" class="button button-block button-small">
+    <i class="ion-calendar icon" style="vertical-align: initial"></i>
+  <span style="display:inline">Date de Début : </span>
+  <input id="dateDebutInput" type="date" style="display:inline" ng-model="formData.dateDebut">
+</label>
+
+
+    <label id="dateFinContainer" class="button button-block button-small">
+    <i class="ion-calendar icon" style="vertical-align: initial"></i>
+  <span style="display:inline">Date de Fin : </span>
+  <input id="dateFinInput" type="date" style="display:inline" ng-model="formData.dateFin">
+</label>
+
+    
+
+   <!--  <button class="button button-stable button-block button-small icon ion-calendar" ng-click="showDatePickerFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
+   <input id="dateFinInput" type="date" style="display:none" ng-model="formData.dateFin"> -->
 
      <ion-item class="item-icon-right itemHoraire">
               <input type="text" placeholder="Taux horaire brut" data-ng-model="formData.remuneration">

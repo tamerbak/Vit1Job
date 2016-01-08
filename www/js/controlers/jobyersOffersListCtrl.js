@@ -81,7 +81,7 @@ starter.controller('jobyersOffersListCtrl',
 	});
 
 	$scope.sort = function(){
-		if($scope.jobyerListSetting.orderByCorrespondence) $scope.SortOrder = '+matching';
+		if($scope.jobyerListSetting.orderByCorrespondence) $scope.SortOrder = '-matching';
 		if($scope.jobyerListSetting.orderByAvialability) $scope.SortOrder = '+availability.value';
 	};
 

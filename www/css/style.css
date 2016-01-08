@@ -538,11 +538,11 @@ ion-tabs ion-nav-view{
 }
 #civiliteView .card .item:last-child, #civiliteView .list-inset .item:last-child, #civiliteView .padding > .list .item:last-child{
   border-radius: 0px;
-  border-color: #14baa6;
+  border-color: lightgray;
 }
 #civiliteView label.item.item-input {
   height: 34px;
-  border: solid 1px #14baa6;
+  border: solid 1px lightgray;
 }
 @media screen and (max-width: 360px) {
   .hidden-text {
@@ -673,3 +673,14 @@ ion-tabs ion-nav-view{
   margin: 0px;
   padding: 0px;
 }
+#civiliteView .requiredStar{
+  color:red;
+  left:90%;
+  position:absolute;
+}
+#adressePersonelView .requiredStar , #adresseTravailView .requiredStar{
+    left: 95%;
+    top: 30%;
+    color:red;
+    position:absolute;
+  }

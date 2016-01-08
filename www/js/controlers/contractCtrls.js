@@ -17,7 +17,7 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
   $scope.contact = civilite + " " + employeur.nom + " " + employeur.prenom;
   var adrTrv = employeur.adresseTravail;
   $scope.lieu = adrTrv.adresse1 + " " + adrTrv.adresse2 + " " + adrTrv.codePostal + " " + adrTrv.ville;
-  var jobyer = $stateParams.jobyer;
+  //var jobyer = $stateParams.jobyer;
   $scope.firstNameJ = jobyer.name;
   $scope.lastNameJ = jobyer.name;
 

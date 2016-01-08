@@ -30,12 +30,16 @@ starter
     $scope.validateApe= function(id){
       $scope.apeValide = Validator.checkApe(id);
     };
-
+$scope.$on("$ionicView.beforeEnter", function(scopes, states){
+  console.log(states.fromCache+"  state : "+states.stateName);
+  if(states.stateName == "saisieCiviliteEmployeur" ){
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+    console.log("steps : "+steps);
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
+      $scope.isContractInfo=true;
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
         template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -49,8 +53,11 @@ starter
         ]
       });
     }else{
+    	$scope.isContractInfo=false;
     	$scope.title="Saisie de la civilité";
     }
+	}
+});
 		$scope.updateCiviliteEmployeur = function(){
 
 			for(var obj in $scope.formData){
@@ -266,6 +273,7 @@ starter
 			$scope.formData={'civilites': DataProvider.getCivilites()};
 			$scope.formData.civ="Titre";
 			console.log('$scope.formData.civ = '+$scope.formData.civ);
+			$scope.formData.nationalite="Nationalité";						
 		};
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){

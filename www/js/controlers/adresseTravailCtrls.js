@@ -374,6 +374,7 @@ starter
 		    if(steps!='')
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
+		    $scope.isContractInfo=true;
 		      $ionicPopup.show({
 		        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 		        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -391,6 +392,7 @@ starter
 		      });
 		    }else{
 		 		$scope.title="Adresse de Travail";
+		    	$scope.isContractInfo=false;		 		
 		    	displayPopups();
 		    }
 		    	console.log("steps : "+steps);

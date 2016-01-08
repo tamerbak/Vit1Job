@@ -81,7 +81,7 @@ starter
     }
     $scope.initAll = function()
     {
-
+      console.log("initAll");
       if($scope.offre){
 
         $scope.formData={
@@ -345,20 +345,25 @@ starter
       $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();;
 
       var offre=$scope.offre;
-
+      console.log(offre);
+      console.log($scope.formData);
       var exist=false;
+      console.log("$rootScope.offres.length = "+$rootScope.offres.length);
         for(var i=0; i<$rootScope.offres.length;i++){
+          console.log("$rootScope.offres[i].pk = "+$rootScope.offres[i].pk);
           if($rootScope.offres[i].pk==offre.pk) {
             $rootScope.offres[i] = offre;
             exist=true;
+            break;
           }
           else
           {
-            offre.pk = $rootScope.offres.length + 1;
+            exist=false;
           }
         }
       if(!exist) {
         offre.etat="publie";
+        offre.pk = $rootScope.offres.length + 1;
         $rootScope.offres.push(offre);
       }
       $state.go('offres');
@@ -388,12 +393,15 @@ starter
     };
 
     $scope.supprimerHoraire = function(){
-
-      if( $scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
+      if($scope.formData.horaires){
+      if($scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
         $scope.formData.horaires.splice($scope.formData.horaireSelect, 1);
         $scope.formData.editShow = false;
         delete $scope.formData.horaireSelect;
       }
+    }else{
+              Global.showAlertValidation("La liste est vide.");
+    }
     };
 
     $scope.editerHoraire = function(){

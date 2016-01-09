@@ -391,7 +391,7 @@ starter
 		        ]
 		      });
 		    }else{
-		 		$scope.title="Adresse de Travail";
+		 		$scope.title="Adresse de travail";
 		    	$scope.isContractInfo=false;		 		
 		    	displayPopups();
 		    }

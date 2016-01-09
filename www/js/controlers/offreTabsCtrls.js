@@ -112,6 +112,7 @@ starter
             }
           }
         }
+        console.log($scope.offre);
         if($scope.offre.titre)
           $scope.formData.titre=$scope.offre.titre;
         if($scope.offre.metier)
@@ -307,7 +308,7 @@ starter
     };
 
     $scope.validerOffre=function(){
-
+        console.log("ex1");
       if(!$scope.offre)
         $scope.offre={};
       $scope.offre.degre=$scope.formData.degre;

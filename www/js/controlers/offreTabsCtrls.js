@@ -150,7 +150,7 @@ starter
         'langues': DataProvider.getLangues(),
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
-        'dateFin': "Jamais",
+        //'dateFin': "Jamais",
         'jourSelect': "Lundi",
         'heureDebut': 0,
         'heureFin': 0,
@@ -320,7 +320,10 @@ starter
           }
         }
       }*/
-      $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
+      if($scope.formData.job)
+        $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
+      else
+        $scope.offre.titre=$scope.formData.maitrise;        
       $scope.offre.metier=$scope.formData.metier;
       $scope.offre.job=$scope.formData.job;
       $scope.offre.qiList=$scope.formData.qiList;

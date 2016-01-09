@@ -24,30 +24,55 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
   // An alert dialog
   $scope.showAlert = function() {
     //printing the pdf
-    
-      console.log('deviceready ', $cordovaPrinter.isAvailable());
+    if(ionic.Platform.isAndroid() && ionic.Platform.version()<=4.2) {
+      var alertPopup1 = $ionicPopup.alert({
+      title: 'Info',
+      template: "Pour imprimer votre contrat, ou le sauvegarder comme PDF, veuillez configurer les paramètres d'impression de votre telephone"
+    });
+    alertPopup1.then(function() {
+      var alertPopup = $ionicPopup.alert({
+      title: 'Succès',
+      template: 'Vous avez bien établi un contrat avec '+jobyer.jobyerName
+    });
+    alertPopup.then(function() {
+      $state.go("app");
+    });
+    });
+    } else {
+      
+      console.log(ionic.Platform.version());
     if($cordovaPrinter.isAvailable()) {
       var contract = document.getElementById('printableContent');
-      console.log(contract);
       $cordovaPrinter.print(contract);
+      var alertPopup = $ionicPopup.alert({
+      title: 'Succès',
+      template: 'Vous avez bien établi un contrat avec '+jobyer.jobyerName
+    });
+    alertPopup.then(function() {
+      $state.go("app");
+    });
     } else {
       /*var alertPopup = $ionicPopup.alert({
       title: 'Succès',
       template: 'Vous avez bien établi un contrat avec '+jobyer.jobyerName
     });*/
-      console.log("Pour imprimer votre contrat, ou le sauvegarder comme PDF, veuillez configurer les paramètres d'impression de votre telephone");
-    }
-
-    
-    var alertPopup = $ionicPopup.alert({
+    var alertPopup1 = $ionicPopup.alert({
+      title: 'Info',
+      template: "Pour imprimer votre contrat, ou le sauvegarder comme PDF, veuillez configurer les paramètres d'impression de votre telephone"
+    });
+    alertPopup1.then(function() {
+      var alertPopup = $ionicPopup.alert({
       title: 'Succès',
       template: 'Vous avez bien établi un contrat avec '+jobyer.jobyerName
     });
     alertPopup.then(function() {
-
-      
       $state.go("app");
     });
+    }); 
+    }
+  }
+      
+    
   };
 
 });

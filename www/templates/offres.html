@@ -68,6 +68,9 @@
       <a class="button button-light button-block icon ion-android-create" ng-click="modifierOffre();"></a>
       <a class="button button-light button-block icon ion-ios-copy" ng-click="dupliquerOffre();"></a>
       <a class="button button-light button-block icon ion-trash-b" ng-click="supprimerOffre();"></a>
+      <a class="button button-light button-block icon ion-eye" ng-if="formData.offre.etat=='noPublie'" ng-click="editStateOffre();"></a>
+      <a class="button button-light button-block icon ion-eye-disabled" ng-if="formData.offre.etat=='publie'" ng-click="editStateOffre();"></a>
+
   </div>
   </br>
   <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer</button>

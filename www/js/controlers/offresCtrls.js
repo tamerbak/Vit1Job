@@ -56,7 +56,14 @@ starter
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
     };
-
+   $scope.editStateOffre =function(){
+      console.log("aaaaaaa"+$scope.formData.offre.etat);
+      if ($scope.formData.offre.etat=="publie"){
+            $scope.formData.offre.etat = "noPublie";
+          }else{
+            $scope.formData.offre.etat = "publie";          
+          }
+    };
     $scope.dupliquerOffre=function(){
       var offre=$scope.formData.offre;
       if(offre.pk){

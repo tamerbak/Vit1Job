@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams, $cordovaDatePicker){
+	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams, $cordovaDatePicker,$ionicPopup){
 
     //$scope.formData={};
     if($stateParams.offre) {
@@ -14,7 +14,7 @@ starter
     //go back
     $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
-});
+  });
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);
@@ -305,6 +305,28 @@ starter
       }else{
         Global.showAlertValidation("La liste est vide.");
       }
+    };
+    $scope.gotToOffres= function(){
+      var myPopup2 = $ionicPopup.show({
+        template: "Voulez-vous enregistrer cette offre ?<br>",
+        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+        buttons: [
+          {
+            text: '<b>Non</b>',
+            type: 'button-dark',
+            onTap: function (e) {
+              myPopup2.close();
+              $state.go('offres');
+            }
+          }, {
+            text: '<b>Oui</b>',
+            type: 'button-calm',
+            onTap: function (e) {
+              $scope.validerOffre();
+            }
+          }
+        ]
+      });
     };
 
     $scope.validerOffre=function(){

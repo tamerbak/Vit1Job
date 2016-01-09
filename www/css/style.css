@@ -587,11 +587,11 @@ ion-tabs ion-nav-view{
   margin-top: 0px;
 }
 #popupCntPhone{
-    margin-bottom: 9px;  
+    margin-bottom: 9px;
 }
 
 #popupAdrTravail{
-  margin-top: -17px; 
+  margin-top: -17px;
 }
 
 #popupCntPwd.hidden, #popupCntMail.hidden, #popupAdrTravail.hidden, #popupCntPhone.hidden{
@@ -689,13 +689,13 @@ ion-tabs ion-nav-view{
   font-size: inherit;
   padding: 0 0 0 0;
   height: inherit;
-  line-height: auto;
+  /*line-height: auto;*/
   margin-bottom: 4px;
 }
 
 #dateDebutContainer, #dateFinContainer{
-    text-align: left;
-    margin: 0 0 0 0;
-    padding: auto;
-    margin-bottom: 10px;
+    text-align: left !important;
+    margin: 0 0 0 0 !important;
+    padding: auto !important;
+    margin-bottom: 10px !important;
 }

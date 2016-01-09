@@ -7,8 +7,9 @@
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
-  <ion-content padding="true">
-    <div>
+  <ion-content padding="true" ng-controller="contractCtrl">
+  <div>
+    <div id="printableContent">
       <div class="row">
         <div class="col-50 text-left">
           <img style="max-width: none;height: initial;width: initial;" src="img/logo_gestion-interim.jpg"/>
@@ -98,8 +99,10 @@
         SIRET 480 167 543 000 10-RCS AMIENS<br/>
         GARANT FINANCIER CREDIT DU NORD<br/>
       </div>
+      </div>
       <ion-checkbox ng-model="checked">J'accepte toutes les clauses du contrat</ion-checkbox>
       <button class="button button-stable" style="margin-top:20px;" ng-model="button" ng-disabled="!checked" ng-click="showAlert()">Valider</button>
+      
     </div>
   </ion-content>
 </ion-view>

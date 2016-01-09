@@ -204,12 +204,12 @@ starter.controller('jobyersOffersListCtrl',
                 else {
                   localStorageService.set("steps",JSON.stringify(objRedirect));
                   console.log(employer);
-                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur");
-                  else if (redirectToStep2) $state.go("adressePersonel");
-                  else if (redirectToStep3) $state.go("adresseTravail");
+                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {jobyer: jobber});
+                  else if (redirectToStep2) $state.go("adressePersonel", {jobyer: jobber});
+                  else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});
                 }
               } else {
-                $state.go("connection");
+                $state.go("connection", {jobyer: jobber});
               }
             }
             return true;

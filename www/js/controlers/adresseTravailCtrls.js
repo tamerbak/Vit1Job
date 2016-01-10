@@ -508,8 +508,6 @@ function displayPopup1(){
 	$timeout(function () {
 
 	if (!$stateParams.geolocated) {
-	  GeoService.getUserAddress()
-	    .then(function () {
 	      var popup1 = $ionicPopup.show({
 	        //Votre géolocalisation pour renseigner votre adresse du siège social?
 	        template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
@@ -551,6 +549,8 @@ function displayPopup1(){
 	                        e4.preventDefault();
 	                        popup2.close();
 	                        console.log('popup2 oui');
+						  GeoService.getUserAddress()
+						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
 	                        console.log(geoAddress);
 	                        $scope.formData.adresse1 = geoAddress.street;
@@ -560,6 +560,9 @@ function displayPopup1(){
 	                        $scope.formData.initialPC = geoAddress.postalCode;
 	                        $scope.formData.addressTravail = geoAddress.fullAddress;
 	                        console.log($scope.formData.addressTravail);
+	                       }, function (error) {
+                            Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+						    });
 	                      }
 	                    }
 	                  ]
@@ -569,9 +572,7 @@ function displayPopup1(){
 	          }
 	        ]
 	      });
-	    }, function (error) {
-	      Global.showAlertValidation("Echec de geolocalisation 0 : " + error.message);
-	    });
+
 	}
 	});	
 }

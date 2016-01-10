@@ -3,7 +3,7 @@
  */
 
 services
-  .factory('GeoService', function(localStorageService, $q) {
+  .factory('GeoService', function(localStorageService, $q,Global) {
 
     /**
      * @use plugin cordova geolocation
@@ -42,7 +42,7 @@ services
            // onError Callback receives a PositionError object
            //
            var onError = function (error) {
-             Global.showAlertValidation("Echec de geolocalisation 2 : "+error.message);
+             //Global.showAlertValidation("Echec de geolocalisation 2 : "+error.message);
 
              console.log('GeoService getUserGeo error : code: ' + error.code + '\n' +
                'message: ' + error.message + '\n');
@@ -50,7 +50,7 @@ services
              deferred.reject(error);
            };
             console.log("befooore geolocation");
-           navigator.geolocation.getCurrentPosition(onSuccess, onError);
+           navigator.geolocation.getCurrentPosition(onSuccess, onError,{timeout: 5000});
 
           return deferred.promise;
         },
@@ -153,7 +153,7 @@ services
 
           },
           function(error) {
-            Global.showAlertValidation("Echec de geolocalisation 1 : "+error.message);
+            //Global.showAlertValidation("Echec de geolocalisation 1 : "+error.message);
             console.log('GeoService getUserAddress error : ', error);
           deferred.reject(error);
         });

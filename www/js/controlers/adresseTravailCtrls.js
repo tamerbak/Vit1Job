@@ -621,5 +621,20 @@ function displayPopups(){
 		displayPopup1();
 	}
 }  
+//mobile tap on autocomplete workaround!
+  $scope.disableTap = function(){
+    
+    var container = document.getElementsByClassName('pac-container');
+    if(screen.height <= 480){
+      console.log("height called");
+      angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
+    }
+    angular.element(container).attr('data-tap-disabled', 'true');
+    
+    angular.element(container).on("click", function(){
+        document.getElementById('addresseTravail').blur();
+        //google.maps.event.trigger(autoComplete, 'place_changed');
+    })
+  };  
 	});
 

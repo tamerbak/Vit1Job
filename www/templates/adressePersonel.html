@@ -22,7 +22,7 @@
     <br>
         <div class="list">
           <label class="item item-input">
-            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ><!-- googleplace -->
+            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="address"><!-- googleplace -->
             <span ng-show="!formData.address  && isContractInfo" class="requiredStar">*</span>            
       </label>
     </div>

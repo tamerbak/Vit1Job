@@ -374,6 +374,7 @@ starter
 		    if(steps!='')
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
+		    $scope.isContractInfo=true;
 		      $ionicPopup.show({
 		        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
 		        template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -390,7 +391,8 @@ starter
 		        ]
 		      });
 		    }else{
-		 		$scope.title="Adresse de Travail";
+		 		$scope.title="Adresse de travail";
+		    	$scope.isContractInfo=false;		 		
 		    	displayPopups();
 		    }
 		    	console.log("steps : "+steps);
@@ -502,115 +504,137 @@ starter
     		return false;
     	}
     };
-  function displayPopups(){
-	          var popup = $ionicPopup.show({
+function displayPopup1(){
+	$timeout(function () {
 
-            template: "L'adresse de travail est-elle différente de l'adresse du siège social? <br>",
-            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-            buttons: [
-              {
-                text: '<b>Oui</b>',
-                type: 'button-calm',
-                onTap: function (e) {
-                  e.preventDefault();
-                  popup.close();
-                  console.log('popup oui');
-                  $timeout(function () {
+	if (!$stateParams.geolocated) {
+	      var popup1 = $ionicPopup.show({
+	        //Votre géolocalisation pour renseigner votre adresse du siège social?
+	        template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
+	        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+	        buttons: [
+	          {
+	            text: '<b>Non</b>',
+	            type: 'button-dark',
+	            onTap: function (e1) {
+	              e1.preventDefault();
+	              popup1.close();
+	              console.log('popup1 non');
+	            }
+	          }, {
+	            text: '<b>Oui</b>',
+	            type: 'button-calm',
+	            onTap: function (e2) {
+	              e2.preventDefault();
+	              popup1.close();
+	              console.log('popup1 oui');
+	              $timeout(function () {
+	                var popup2 = $ionicPopup.show({
+	                  //Votre géolocalisation pour renseigner votre adresse du siège social?
+	                  template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
+	                  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+	                  buttons: [
+	                    {
+	                      text: '<b>Non</b>',
+	                      type: 'button-dark',
+	                      onTap: function (e3) {
+	                        e3.preventDefault();
+	                        popup2.close();
+	                        console.log('popup2 non');
+	                      }
+	                    }, {
+	                      text: '<b>Oui</b>',
+	                      type: 'button-calm',
+	                      onTap: function (e4) {
+	                        e4.preventDefault();
+	                        popup2.close();
+	                        console.log('popup2 oui');
+						  GeoService.getUserAddress()
+						    .then(function () {	                        
+	                        var geoAddress = localStorageService.get('user_address');
+	                        console.log(geoAddress);
+	                        $scope.formData.adresse1 = geoAddress.street;
+	                        $scope.formData.adresse2 = geoAddress.complement;
+	                        $scope.formData.num = geoAddress.num;
+	                        $scope.formData.initialCity = geoAddress.city;
+	                        $scope.formData.initialPC = geoAddress.postalCode;
+	                        $scope.formData.addressTravail = geoAddress.fullAddress;
+	                        console.log($scope.formData.addressTravail);
+	                       }, function (error) {
+                            Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+						    });
+	                      }
+	                    }
+	                  ]
+	                });
+	              });
+	            }
+	          }
+	        ]
+	      });
 
-                    if (!$stateParams.geolocated) {
-                      GeoService.getUserAddress()
-                        .then(function () {
-                          var popup1 = $ionicPopup.show({
-                            //Votre géolocalisation pour renseigner votre adresse du siège social?
-                            template: "Localisation: êtes-vous dans votre lieu de travail?<br>",
-                            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                            buttons: [
-                              {
-                                text: '<b>Non</b>',
-                                type: 'button-dark',
-                                onTap: function (e1) {
-                                  e1.preventDefault();
-                                  popup1.close();
-                                  console.log('popup1 non');
-                                }
-                              }, {
-                                text: '<b>Oui</b>',
-                                type: 'button-calm',
-                                onTap: function (e2) {
-                                  e2.preventDefault();
-                                  popup1.close();
-                                  console.log('popup1 oui');
-                                  $timeout(function () {
-                                    var popup2 = $ionicPopup.show({
-                                      //Votre géolocalisation pour renseigner votre adresse du siège social?
-                                      template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider votre adresse de travail.<br>",
-                                      title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                                      buttons: [
-                                        {
-                                          text: '<b>Non</b>',
-                                          type: 'button-dark',
-                                          onTap: function (e3) {
-                                            e3.preventDefault();
-                                            popup2.close();
-                                            console.log('popup2 non');
-                                          }
-                                        }, {
-                                          text: '<b>Oui</b>',
-                                          type: 'button-calm',
-                                          onTap: function (e4) {
-                                            e4.preventDefault();
-                                            popup2.close();
-                                            console.log('popup2 oui');
-                                            var geoAddress = localStorageService.get('user_address');
-                                            console.log(geoAddress);
-                                            $scope.formData.adresse1 = geoAddress.street;
-                                            $scope.formData.adresse2 = geoAddress.complement;
-                                            $scope.formData.num = geoAddress.num;
-                                            $scope.formData.initialCity = geoAddress.city;
-                                            $scope.formData.initialPC = geoAddress.postalCode;
-                                            $scope.formData.addressTravail = geoAddress.fullAddress;
-                                            console.log($scope.formData.addressTravail);
-                                          }
-                                        }
-                                      ]
-                                    });
-                                  });
-                                }
-                              }
-                            ]
-                          });
-                        }, function (error) {
-                          Global.showAlertValidation("Echec de geolocalisation 0 : " + error.message);
-                        });
-                    }
-                  });
+	}
+	});	
+}
+function displayPopups(){
+	if($stateParams.addressPers){
+	  var popup = $ionicPopup.show({
 
-                }
-              }, {
-                text: '<b>Non</b>',
-                type: 'button-dark',
-                onTap: function (e) {
-                  e.preventDefault();
-                  popup.close();
-                  console.log('popup non');
-                  /*$scope.formData.adresse1 = params.adresse1;
-                  $scope.formData.adresse2 = params.adresse2;
-                  $scope.formData.num = params.num;
-                  if (params.code)
-                    document.getElementById('ex2_value').value = params.code;
-                  if (params.vi)
-                    document.getElementById('ex3_value').value = params.vi;
-                  $scope.formData.initialCity = geoAddress.city;
-                  $scope.formData.initialPC = geoAddress.postalCode;
-                  */
-                  $scope.formData.addressTravail = $stateParams.addressPers;
-                  $scope.updateAdresseTravEmployeur();
-                  // REDIRECTION VERS PAGE - COMPETENCES
-                  //$state.go('competence');
-                }
-              }
-            ]
-          });
+		template: "L'adresse de travail est-elle différente de l'adresse du siège social? <br>",
+		title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+		buttons: [
+	  {
+	    text: '<b>Oui</b>',
+	    type: 'button-calm',
+	    onTap: function (e) {
+	      e.preventDefault();
+	      popup.close();
+	      console.log('popup oui');
+	      displayPopup1();
+	    }
+	  }, {
+	    text: '<b>Non</b>',
+	    type: 'button-dark',
+	    onTap: function (e) {
+	      e.preventDefault();
+	      popup.close();
+	      console.log('popup non');
+	      /*$scope.formData.adresse1 = params.adresse1;
+	      $scope.formData.adresse2 = params.adresse2;
+	      $scope.formData.num = params.num;
+	      if (params.code)
+	        document.getElementById('ex2_value').value = params.code;
+	      if (params.vi)
+	        document.getElementById('ex3_value').value = params.vi;
+	      $scope.formData.initialCity = geoAddress.city;
+	      $scope.formData.initialPC = geoAddress.postalCode;
+	      */
+	      $scope.formData.addressTravail = $stateParams.addressPers;
+	      $scope.updateAdresseTravEmployeur();
+	      // REDIRECTION VERS PAGE - COMPETENCES
+	      //$state.go('competence');
+	    }
+	  }
+	]
+	});
+	}else{
+		displayPopup1();
+	}
 }  
+//mobile tap on autocomplete workaround!
+  $scope.disableTap = function(){
+    
+    var container = document.getElementsByClassName('pac-container');
+    if(screen.height <= 480){
+      console.log("height called");
+      angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
+    }
+    angular.element(container).attr('data-tap-disabled', 'true');
+    
+    angular.element(container).on("click", function(){
+        document.getElementById('addresseTravail').blur();
+        //google.maps.event.trigger(autoComplete, 'place_changed');
+    })
+  };  
 	});
 

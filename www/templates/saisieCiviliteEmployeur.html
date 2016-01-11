@@ -23,25 +23,26 @@
           <option selected disabled style="display: none;">Titre</option>
           <option data-ng-repeat="x in formData.civilites" value="{{x.pk_user_civilite}}">{{x.libelle}}</option>
         </select>
+        <span ng-show="formData.civ=='Titre' && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom">
+        <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom"><span ng-show="!formData.nom  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="prenom" placeholder="Prenom" data-ng-model="formData.prenom">
+        <input type="text" id="prenom" placeholder="Prénom" data-ng-model="formData.prenom"><span ng-show="!formData.prenom  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise">
+        <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise"><span ng-show="!formData.entreprise  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="siret" placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')">
+        <input type="text" id="siret" placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')"><span ng-show="!formData.siret && isContractInfo" class="requiredStar">*</span>
       </label>
 
       <label class="item item-input">
-        <input type="text" id="ape" placeholder="NAF:99.99A" data-ng-model="formData.ape" data-ng-change="validateApe('ape')">
+        <input type="text" id="ape" placeholder="NAF: 99.99A" data-ng-model="formData.ape" data-ng-change="validateApe('ape')"><span ng-show="!formData.ape && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf"><span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
       </label>
 
     </div>

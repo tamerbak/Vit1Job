@@ -1,6 +1,6 @@
 <ion-view view-title="{{AppLogo}}">
   <ion-nav-buttons side="secondary">
-    <button class="button ion-navicon button-clear" style="font-size:x-large" ui-sref="offres"></button>
+    <button class="button ion-navicon button-clear" style="font-size:x-large" data-ng-click="gotToOffres();"></button>
   </ion-nav-buttons>
 <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -43,4 +43,5 @@
         {{data.libelle}}
       </ion-radio>
     </div>
+    <button class="button button-full button-positive green" ui-sref="offreTabs.langues">Suivant</button>    
 </ion-view>

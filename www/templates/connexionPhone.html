@@ -16,7 +16,7 @@
 
     <!-- TELEPHONE -->
   <div class="list xtel" align="left">
-    <div class="row" >
+    <div  class="row" >
       <div class="col-25 num">
         <label class="item item-input it1">
           <i class="icon ion-ios-telephone placeholder-icon calm"></i>
@@ -24,14 +24,14 @@
         </label>
       </div>
       <div class="col-10 num">
-        <label class="item item-input it3">
+        <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
           <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
           <select class="select-indicatif" ng-model="formData.index">
             <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
               {{item.libelle}}
             </option>
           </select>
-          <input class="input-indicatif" type="text" placeholder=""/>
+         <!--  <input class="input-indicatif" type="text" placeholder=""/> -->
         </label>
       </div>
       <div class ="col-67 rue">

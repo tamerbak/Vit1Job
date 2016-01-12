@@ -74,5 +74,7 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
       
     
   };
-
+$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+  viewData.enableBack = true;
+});
 });

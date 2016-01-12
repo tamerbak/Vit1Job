@@ -243,7 +243,9 @@ starter
 		$scope.validatElement=function(id){
 			Validator.checkField(id);
 		};
-
+	$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+		viewData.enableBack = true;
+	});
     $scope.$on("$ionicView.beforeEnter", function () {
       $scope.formData.zipCodes=DataProvider.getZipCodes();
       $scope.formData.villes=DataProvider.getVilles();

@@ -11,7 +11,7 @@
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
-  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-place'])
+  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-place','ui.mask'])
 
 .run(function($ionicPlatform, $rootScope, $http, x2js, ngFB) {
   ngFB.init({appId: '426767167530378'});

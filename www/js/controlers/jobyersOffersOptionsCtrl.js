@@ -4,6 +4,9 @@
 starter.controller('jobyersOffersOptionsCtrl', 
 	['$scope', 'localStorageService', 
 	function($scope, localStorageService) {
+		$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
 
 		//localStorageService.remove('jobyerListSetting');
 

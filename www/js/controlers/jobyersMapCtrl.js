@@ -1,6 +1,10 @@
 'use strict';
 
 starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Global','GeoService','$http','localStorageService', function($scope, $ionicLoading, $compile,Global,GeoService,$http,localStorageService) {
+
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+});
   var adressTravailMarker, myMarker;
 	$scope.jobyersOffers= [{
 	jobyerName : 'Jérôme',

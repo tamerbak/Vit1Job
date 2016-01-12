@@ -75,6 +75,11 @@ $rootScope.previousView = '';
 
 });
 })
+//Remove text from back button and add icon
+.config(function($ionicConfigProvider) {
+  $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
+})
+
 //Add ionic loading
     .config(function($httpProvider) {
       $httpProvider.interceptors.push(function($rootScope) {
@@ -133,6 +138,7 @@ $rootScope.previousView = '';
 function isEmpty(str) {
 	return (!str || 0 === str.length || typeof str === 'undefined' || str === null);
 }
+
 starter.directive('googleplace', function() {
   return {
     require: 'ngModel',
@@ -146,6 +152,14 @@ starter.directive('googleplace', function() {
       scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
 
       google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+        var container = document.getElementsByClassName('pac-container');
+    
+          angular.element(container).attr('data-tap-disabled', 'true');
+          
+          angular.element(container).on("click", function(){
+            console.log('called place_changed')
+            model.$setViewValue(element.val());
+          });
         scope.$apply(function() {
           model.$setViewValue(element.val());
         });
@@ -153,6 +167,7 @@ starter.directive('googleplace', function() {
     }
   };
 });
+
 starter.directive('groupedRadio', function() {
   return {
     restrict: 'A',
@@ -178,3 +193,16 @@ starter.directive('groupedRadio', function() {
     }
   };
 })
+
+/*starter.directive('uploadfile', function () {
+    return {
+      restrict: 'A',
+      link: function(scope, element) {
+
+        element.bind('click', function(e) {
+          console.log("uploadfile clicked");
+            angular.element(document.querySelector('#imgFile')).trigger('click');
+        });
+      }
+    };
+});*/

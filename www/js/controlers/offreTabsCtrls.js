@@ -5,13 +5,16 @@
 'use strict';
 starter
 
-	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams, $cordovaDatePicker){
+	.controller('offreTabsCtrl', function ($scope,$rootScope,DataProvider,Global,$state,$stateParams, $cordovaDatePicker,$ionicPopup){
 
     //$scope.formData={};
     if($stateParams.offre) {
       $scope.offre = JSON.parse($stateParams.offre);
     }
-
+    //go back
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
 
     $scope.updateAutoCompleteMetier= function(){
       $scope.formData.metier=JSON.parse($scope.formData.metier);
@@ -62,8 +65,23 @@ starter
 
       document.getElementById('jobs_value').value=$scope.formData.job['libelle'];
     };
-    $scope.initAll = function(){
-
+    function formatDate (d) {
+      if(typeof d === "string"){
+        var day = d.split("-")[2];
+        var monthIndex = d.split("-")[1];
+        var year = d.split("-")[0];
+        return new Date(year, monthIndex, day );
+      } else {
+        var day = d.getDate();
+        var monthIndex = d.getMonth()+1;
+        var year = d.getFullYear();
+        return new Date(year, monthIndex, day );
+      }
+      
+    }
+    $scope.initAll = function()
+    {
+      console.log("initAll");
       if($scope.offre){
 
         $scope.formData={
@@ -94,6 +112,7 @@ starter
             }
           }
         }
+        console.log($scope.offre);
         if($scope.offre.titre)
           $scope.formData.titre=$scope.offre.titre;
         if($scope.offre.metier)
@@ -108,13 +127,19 @@ starter
           $scope.formData.remuneration=$scope.offre.remuneration;
         if($scope.offre.horaires)
           $scope.formData.horaires = $scope.offre.horaires;
+        console.log('init called');
+
         if($scope.offre.dateDebut)
-          $scope.formData.dateDebut = $scope.offre.dateDebut;
-        if($scope.offre.dateFin)
-          $scope.formData.dateFin = $scope.offre.dateFin;
+          $scope.formData.dateDebut = formatDate($scope.offre.dateDebut);
         else
-          $scope.formData.dateFin = "Jamais";
-      }else
+          $scope.formData.dateDebut = formatDate(new Date());
+
+        if($scope.offre.dateFin)
+          $scope.formData.dateFin = formatDate($scope.offre.dateFin);
+        else
+          $scope.formData.dateFin = formatDate(new Date());          
+        
+      } else
         $scope.formData={
         'maitrise': 'Débutant',
         'maitriseIcon': 'tree1_small.png',
@@ -126,7 +151,7 @@ starter
         'langues': DataProvider.getLangues(),
         'jobs': DataProvider.getJobs(),
         'transvers': DataProvider.getTransvers(),
-        'dateFin': "Jamais",
+        //'dateFin': "Jamais",
         'jourSelect': "Lundi",
         'heureDebut': 0,
         'heureFin': 0,
@@ -138,8 +163,12 @@ starter
         languesList:[],
         qi:{},
         degre:10,
-        selectedLangue:{}
+        selectedLangue:{},
+        dateDebut: formatDate(new Date()),
+        dateFin: formatDate(new Date())
       };
+    console.log($scope.formData.dateDebut);
+    console.log($scope.formData.dateFin);
     };
 
     $scope.rangeChange = function(){
@@ -277,9 +306,31 @@ starter
         Global.showAlertValidation("La liste est vide.");
       }
     };
+    $scope.gotToOffres= function(){
+      var myPopup2 = $ionicPopup.show({
+        template: "Voulez-vous enregistrer cette offre ?<br>",
+        title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+        buttons: [
+          {
+            text: '<b>Non</b>',
+            type: 'button-dark',
+            onTap: function (e) {
+              myPopup2.close();
+              $state.go('offres');
+            }
+          }, {
+            text: '<b>Oui</b>',
+            type: 'button-calm',
+            onTap: function (e) {
+              $scope.validerOffre();
+            }
+          }
+        ]
+      });
+    };
 
     $scope.validerOffre=function(){
-
+        console.log("ex1");
       if(!$scope.offre)
         $scope.offre={};
       $scope.offre.degre=$scope.formData.degre;
@@ -292,31 +343,53 @@ starter
           }
         }
       }*/
-      $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
+      if($scope.formData.job)
+        $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
+      else
+        $scope.offre.titre=$scope.formData.maitrise;        
       $scope.offre.metier=$scope.formData.metier;
       $scope.offre.job=$scope.formData.job;
       $scope.offre.qiList=$scope.formData.qiList;
       $scope.offre.languesList=$scope.formData.languesList;
       $scope.offre.remuneration=$scope.formData.remuneration;
       $scope.offre.horaires = $scope.formData.horaires;
-      $scope.offre.dateDebut =$scope.formData.dateDebut;
-      $scope.offre.dateFin = $scope.formData.dateFin;
+      //date debut
+      if(!$scope.formData.dateDebut)
+          $scope.formData.dateDebut = new Date();
+      var dateDebutFormatted = formatDate($scope.formData.dateDebut);
+      console.log('dateDebutFormatted' + dateDebutFormatted + typeof dateDebutFormatted);
+      
+      //date fin
+      if(!$scope.formData.dateFin)
+          $scope.formData.dateFin = new Date();
+      
+      var dateFinFormatted = formatDate($scope.formData.dateFin);
+
+      console.log('dateFinFormatted' + dateFinFormatted + typeof dateFinFormatted);
+      
+      $scope.offre.dateDebut = dateDebutFormatted.getFullYear() + "-" + dateDebutFormatted.getMonth() + "-" + dateDebutFormatted.getDate();
+      $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();;
 
       var offre=$scope.offre;
-
+      console.log(offre);
+      console.log($scope.formData);
       var exist=false;
+      console.log("$rootScope.offres.length = "+$rootScope.offres.length);
         for(var i=0; i<$rootScope.offres.length;i++){
+          console.log("$rootScope.offres[i].pk = "+$rootScope.offres[i].pk);
           if($rootScope.offres[i].pk==offre.pk) {
             $rootScope.offres[i] = offre;
             exist=true;
+            break;
           }
           else
           {
-            offre.pk = $rootScope.offres.length + 1;
+            exist=false;
           }
         }
       if(!exist) {
         offre.etat="publie";
+        offre.pk = $rootScope.offres.length + 1;
         $rootScope.offres.push(offre);
       }
       $state.go('offres');
@@ -334,6 +407,7 @@ starter
           $scope.formData.jobs.push(jobs[i]);
       }
     });
+    
 
     $scope.ajouterHoraire = function(){
 
@@ -345,12 +419,15 @@ starter
     };
 
     $scope.supprimerHoraire = function(){
-
-      if( $scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
+      if($scope.formData.horaires){
+      if($scope.formData.horaires.length > 0 && typeof($scope.formData.horaireSelect) !== "undefined"){
         $scope.formData.horaires.splice($scope.formData.horaireSelect, 1);
         $scope.formData.editShow = false;
         delete $scope.formData.horaireSelect;
       }
+    }else{
+              Global.showAlertValidation("La liste est vide.");
+    }
     };
 
     $scope.editerHoraire = function(){
@@ -382,28 +459,47 @@ starter
     mode: 'date', // or 'time'
     minDate: new Date() - 10000,
     allowOldDates: true,
-    allowFutureDates: false,
+    allowFutureDates: true,
     doneButtonLabel: 'DONE',
     doneButtonColor: '#F2F3F4',
     cancelButtonLabel: 'CANCEL',
     cancelButtonColor: '#000000'
   };
 
-  $scope.dateDebut = function () {
+
+  /*$scope.showDatePickerDebut = function() {
+    console.log(document.getElementById('dateDebutInput'));
+    console.log(angular.element('#dateDebutInput'));
+    document.getElementById('dateDebutInput').focus();
+        //angular.element('#dateDebutInput').triggerHandler('click');
+      };
+
+  $scope.showDatePickerFin = function() {
+        document.getElementById('dateFinInput').focus();
+      };*/
+
+  
+  /*function () {
+    
+
+    document.addEventListener("deviceready", function () {
 
     $cordovaDatePicker.show(options).then(function(date){
         $scope.formData.dateDebut = date;
     });
+    
 
-  };
+  }, false);
 
-  $scope.dateFin = function () {
+  };*/
+
+/*  $scope.dateFin = function () {
 
     $cordovaDatePicker.show(options).then(function(date){
         $scope.formData.dateFin = date;
     });
 
-  };
+  };*/
 
   $scope.heureChange = function (params) {
     if (params === 'debut'){

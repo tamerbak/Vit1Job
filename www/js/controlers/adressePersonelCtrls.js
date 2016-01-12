@@ -5,7 +5,7 @@
 starter
 
 	.controller('adressePersonelCtrl', function ($scope, $rootScope, $state,$stateParams, UpdateInServer,
-			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ,$ionicPopup,$timeout){
+			DataProvider, Validator, UserService, GeoService, $ionicPopup,localStorageService ,$ionicPopup,$timeout,Global){
 
 		// FORMULAIRE
     var geolocated=false;
@@ -13,12 +13,6 @@ starter
     $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
-    if(steps!='')
-          {
-            $scope.title="Pré-saisie des informations contractuelles : adresse siège social";
-          }else{
-            $scope.title="Siège social";           
-          }
     $scope.geocodeOptions = {
       componentRestrictions: {
         country : 'FR'
@@ -191,64 +185,62 @@ starter
     function displayPopups(){
       if(isNaN($scope.formData.codePostal) && isNaN($scope.formData.ville) && !$scope.formData.adresse1 && !$scope.formData.adresse2 && !$scope.formData.num){
         // INITIALISATION FORMULAIRE
-          GeoService.getUserAddress()
-              .then(function() {
-                var myPopup = $ionicPopup.show({
-                  //Votre géolocalisation pour renseigner votre adresse du siège social?
-                  template: "Localisation: êtes-vous dans votre siège social?<br>",
-                  title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                  buttons: [
-                    {
-                      text: '<b>Non</b>',
-                      type: 'button-dark',
-                      onTap: function(e) {
-                        myPopup.close();
-                      }
-                    },{
-                      text: '<b>Oui</b>',
-                      type: 'button-calm',
-                      onTap: function(e){
-                        myPopup.close();
-                        $timeout( function () {
-                          var myPopup2 = $ionicPopup.show({
-                            //Votre géolocalisation pour renseigner votre adresse du siège social?
-                            template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
-                            title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-                            buttons: [
-                              {
-                                text: '<b>Non</b>',
-                                type: 'button-dark',
-                                onTap: function (e) {
-                                  myPopup2.close();
-                                }
-                              }, {
-                                text: '<b>Oui</b>',
-                                type: 'button-calm',
-                                onTap: function (e) {
-                                  myPopup2.close();
-                                  geolocated = true;
-                                  var geoAddress = localStorageService.get('user_address');
+        var myPopup = $ionicPopup.show({
+          //Votre géolocalisation pour renseigner votre adresse du siège social?
+          template: "Localisation: êtes-vous dans votre siège social?<br>",
+          title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+          buttons: [
+            {
+              text: '<b>Non</b>',
+              type: 'button-dark',
+              onTap: function(e) {
+                myPopup.close();
+              }
+            },{
+              text: '<b>Oui</b>',
+              type: 'button-calm',
+              onTap: function(e){
+                myPopup.close();
+                $timeout( function () {
+                  var myPopup2 = $ionicPopup.show({
+                    //Votre géolocalisation pour renseigner votre adresse du siège social?
+                    template: "Si vous acceptez d'être localisé, vous n'aurez qu'à valider l'adresse de votre siège social.<br>",
+                    title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+                    buttons: [
+                      {
+                        text: '<b>Non</b>',
+                        type: 'button-dark',
+                        onTap: function (e) {
+                          myPopup2.close();
+                        }
+                      }, {
+                        text: '<b>Oui</b>',
+                        type: 'button-calm',
+                        onTap: function (e) {
+                          myPopup2.close();
+                          GeoService.getUserAddress().then(function() {
+                          geolocated = true;
+                          var geoAddress = localStorageService.get('user_address');
 
-                                  $scope.formData.adresse1 = geoAddress.street;
-                                  $scope.formData.adresse2 = geoAddress.complement;
-                                  $scope.formData.num = geoAddress.num;
-                                  $scope.formData.initialCity = geoAddress.city;
-                                  $scope.formData.initialPC = geoAddress.postalCode;
+                          $scope.formData.adresse1 = geoAddress.street;
+                          $scope.formData.adresse2 = geoAddress.complement;
+                          $scope.formData.num = geoAddress.num;
+                          $scope.formData.initialCity = geoAddress.city;
+                          $scope.formData.initialPC = geoAddress.postalCode;
 
-                                  $scope.formData.address=geoAddress.fullAddress;
-
-                                }
-                              }
-                            ]
-                          });
+                          $scope.formData.address=geoAddress.fullAddress;
+                        }, function(error) {
+                            Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
                         });
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  });
                 });
-              }, function(error) {
-                Global.showAlertValidation("Echec de geolocalisation 0 : "+error.message);
-              });
+              }
+            }
+          ]
+        });
 
         /**if(employeur['adressePersonel'].codePostal)
          *  document.getElementById('ex0_value').value=employeur['adressePersonel']['codePostal'];
@@ -278,9 +270,11 @@ starter
 				//$scope.initForm();
 				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
 				//employeur=localStorageService.get('employeur');
+        var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';        
         if(steps!='')
           {
-            $scope.title="Pré-saisie des informations contractuelles : adresse siège social";
+             $scope.title="Pré-saisie des informations contractuelles : adresse siège social";    
+             $scope.isContractInfo=true;                    
             $ionicPopup.show({
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
               template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -297,7 +291,8 @@ starter
             });
           }
           else{
-             $scope.title="Siège social";           
+             $scope.title="Siège social"; 
+             $scope.isContractInfo=false;                                                       
             displayPopups();
           }
           console.log("$scope.title = "+$scope.title);
@@ -417,4 +412,19 @@ starter
         ]
       });
     });
-	});
+//mobile tap on autocomplete workaround!
+  $scope.disableTap = function(){
+    
+    var container = document.getElementsByClassName('pac-container');
+    if(screen.height <= 480){
+      console.log("height called");
+      angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
+    }
+    angular.element(container).attr('data-tap-disabled', 'true');
+    
+    angular.element(container).on("click", function(){
+        document.getElementById('address').blur();
+        //google.maps.event.trigger(autoComplete, 'place_changed');
+    })
+  };    
+});

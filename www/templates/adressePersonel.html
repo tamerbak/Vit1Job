@@ -1,9 +1,12 @@
-<ion-view title="{{AppLogo}}"> 
-  <ion-header-bar class="bar-calm">
+<ion-view id="adressePersonelView" title="{{AppLogo}}"> 
+  <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="saisieCiviliteEmployeur">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
-  </ion-header-bar>
+  </ion-header-bar> -->
+    <ion-nav-buttons side="secondary">
+    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adresseTravail">  </a>
+    </ion-nav-buttons>    
   <ion-content padding="true">
 	<!-- Title -->
     <div>
@@ -19,7 +22,8 @@
     <br>
         <div class="list">
           <label class="item item-input">
-            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ><!-- googleplace -->
+            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="address"><!-- googleplace -->
+            <span ng-show="!formData.address  && isContractInfo" class="requiredStar">*</span>            
       </label>
     </div>
     <div id="popupAdrTravail" ng-class="{'hidden' : !showAdresseTooltip}" ng-if="fieldIsEmpty()">
@@ -32,7 +36,6 @@
     <!-- ACTIONS -->
     <div class="buttonConnect">
         <button class="button button-full button-positive green" data-ng-click="updateAdressePersEmployeur()">Valider</button>
-      <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ui-sref="adresseTravail">Passer</button>
       </div>
   </ion-content>
 </ion-view>

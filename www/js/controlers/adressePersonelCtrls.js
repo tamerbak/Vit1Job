@@ -284,7 +284,9 @@ starter
                   type: 'button-dark',
                   onTap: function(e) {
                   //$ionicPopup.hide();
-                  displayPopups();
+                    $timeout( function () {                  
+                      displayPopups();
+                    });
                   }
                 }
               ]

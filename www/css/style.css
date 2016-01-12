@@ -352,10 +352,10 @@ input[type="text"], input[type="email"], input[type="password"]{
 }
 **/
 .has-warning{
-  background:url(../img/icons/error.png)right no-repeat; border-color:red !important;
+  background:url(../img/icons/error.png)right no-repeat; border-color:red !important;z-index: 3;
 }
 .has-success{
-  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #14BAA6 !important;
+  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #14BAA6 !important;z-index: 3;
 }
 
 ion-content.scroll-content.ionic-scroll.has-header .scroll.padding img {

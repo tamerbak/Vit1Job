@@ -699,3 +699,20 @@ ion-tabs ion-nav-view{
     padding: auto !important;
     margin-bottom: 10px !important;
 }
+
+.platform-android .android-sheet-vitonjob .action-sheet .button{
+  text-align: center;
+  border-color: #d1d3d6;
+  font-size: 21px;
+  color: gray;
+}
+.platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{
+  padding: 16px;
+  color: #000;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+.platform-android .android-sheet-vitonjob .action-sheet-cancel{
+  display: block;
+}

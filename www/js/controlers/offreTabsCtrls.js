@@ -127,6 +127,8 @@ starter
           $scope.formData.remuneration=$scope.offre.remuneration;
         if($scope.offre.horaires)
           $scope.formData.horaires = $scope.offre.horaires;
+        else
+          $scope.formData.horaires = [];
         console.log('init called');
 
         if($scope.offre.dateDebut)
@@ -343,8 +345,11 @@ starter
           }
         }
       }*/
-      if($scope.formData.job)
+      console.log($scope.formData.job);
+      if($scope.formData.job && $scope.formData.job.originalObject)
         $scope.offre.titre=$scope.formData.job.originalObject.libelle+" "+$scope.formData.maitrise;
+      else if($scope.formData.job)
+        $scope.offre.titre=$scope.formData.job.libelle+" "+$scope.formData.maitrise;        
       else
         $scope.offre.titre=$scope.formData.maitrise;        
       $scope.offre.metier=$scope.formData.metier;

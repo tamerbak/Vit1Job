@@ -16,6 +16,9 @@
 					// PROPRE AU GMAIL
 					$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+	viewData.enableBack = true;
+});
 					$scope.fbLogin = function(){
 
 						Global.showAlertValidation("En cours de construction.");

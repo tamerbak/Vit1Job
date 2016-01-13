@@ -58,7 +58,7 @@
                 inputclass="form-control form-control-small inputAutoCompl" class="autoCompl">
     </div>-->
 
-    <div align="list">
+    <div class="list">
       <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
       <button class="button button-full button-positive green" data-ng-click="selectImage()" ng-show="{{isAndroid}}">Charger un scan de votre extrait k-bis</button>
 
@@ -68,9 +68,9 @@
       <button class="button button-full button-positive green" data-ng-click="takePicture()">
         Prendre une photo de votre extrait k-bis
       </button>
-      <div ng-controller="saisieCiviliteEmployeurCtrl">
-      <img id="uploadPreview" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="max-width: 100px; max-height: 100px;" />
-      </div>
+      <!-- <div ng-controller="saisieCiviliteEmployeurCtrl"> -->
+      <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px; max-height: 100px;padding-top:5px;" />
+      <!-- </div> -->
     </div>
 
     <!--&lt;!&ndash; Image uploader &ndash;&gt;

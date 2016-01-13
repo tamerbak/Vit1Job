@@ -25,11 +25,11 @@ starter
 		$scope.formData.image={};
 
     $scope.validateSiret= function(id){
-      $scope.siretValide =Validator.checkSiret(id);
+      $scope.siretValide =Validator.checkSiret(id,$scope.formData.siret);
 
     };
     $scope.validateApe= function(id){
-      $scope.apeValide = Validator.checkApe(id);
+      $scope.apeValide = Validator.checkApe(id,$scope.formData.ape);
     };
 $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
 	viewData.enableBack = true;

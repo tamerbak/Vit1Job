@@ -421,6 +421,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   border-top-left-radius: 0;
   border-color: #14BAA6;
   border-left: none;
+  margin-right: 1px; 
 }
 
 .card .item.it3.xtel:last-child, .list.xtel-inset .item.it3:last-child, .padding > .list.xtel .item.it3:last-child{

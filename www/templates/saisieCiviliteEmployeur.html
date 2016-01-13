@@ -35,11 +35,17 @@
         <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise"><span ng-show="!formData.entreprise  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="siret" model-view-value="true" ui-mask="999 999 999 99999"  ui-mask-placeholder placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')"><span ng-show="!formData.siret && isContractInfo" class="requiredStar">*</span>
+        <input type="tel" id="siret" ng-focus="displayPhoneTooltip()" ng-click="displayPhoneTooltip()"  model-view-value="true" ui-mask="999 999 999 99999"  ui-mask-placeholder placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')" ng-minlength="9" ><span ng-show="!formData.siret && isContractInfo" class="requiredStar">*</span>
       </label>
        <label class="item item-input">
-        <input style="text-transform: uppercase" type="text" id="ape" model-view-value="true" ui-mask="9999A"  ui-mask-placeholder placeholder="NAF: 9999A" data-ng-model="formData.ape" data-ng-change="validateApe('ape')"><span ng-show="!formData.ape && isContractInfo" class="requiredStar">*</span>
+        <input ng-blur="apehidepopup()"  style="text-transform: uppercase" type="text" id="ape" model-view-value="true" ui-mask="9999A"  ui-mask-placeholder placeholder="NAF: 9999A" data-ng-model="formData.ape" ng-focus="displayApNTooltip()" ng-click="displayApNTooltip()" data-ng-change="validateApe('ape')"><span ng-show="!formData.ape && isContractInfo" class="requiredStar">*</span>
       </label>
+       <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!apnIsValid()">
+      <div class="arrow-up"></div>
+      <div id="pwdPopup">
+        Form valide: 9999A
+      </div>
+    </div>
       <label class="item item-input">
         <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf"><span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
       </label>

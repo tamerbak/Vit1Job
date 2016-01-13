@@ -28,6 +28,29 @@ starter
       $scope.siretValide =Validator.checkSiret(id,$scope.formData.siret);
 
     };
+    // alert msg APN
+    $scope.displayApNTooltip = function() {
+      $scope.showPwdTooltip = true;
+    };
+    $scope.apnIsValid= function(){
+      if($scope.formData.ape!=undefined) {
+        if (Number($scope.formData.ape.length) >= 5) {
+         
+          return true;
+        }
+        else
+        	return false;
+      }
+      else
+        return false;
+
+
+    };
+    $scope.apehidepopup= function(){
+		$scope.showPwdTooltip = false;
+    };
+
+
     $scope.validateApe= function(id){
       $scope.apeValide = Validator.checkApe(id,$scope.formData.ape);
     };

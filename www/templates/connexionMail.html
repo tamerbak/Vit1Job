@@ -17,7 +17,7 @@
     <div class="list">
       <label class="item item-input">
         <i class="icon ion-email placeholder-icon calm" style="font-size: large"></i>
-        <input animation="fade" type="email" id="email" ng-click="displayEmailTooltip()" placeholder="Email" data-ng-model="formData.email" data-ng-blur="validatEmail('email')">
+        <input animation="fade" type="email" id="email" ng-click="displayEmailTooltip()" placeholder="Email" data-ng-model="formData.email" data-ng-change="validatEmail('email')">
         <!--<span class="error" >Required!</span>
         <span class="error" >Not valid email!</span>-->
       </label>

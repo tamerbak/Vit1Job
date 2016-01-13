@@ -25,12 +25,15 @@ starter
 		$scope.formData.image={};
 
     $scope.validateSiret= function(id){
-      $scope.siretValide =Validator.checkSiret(id);
+      $scope.siretValide =Validator.checkSiret(id,$scope.formData.siret);
 
     };
     $scope.validateApe= function(id){
-      $scope.apeValide = Validator.checkApe(id);
+      $scope.apeValide = Validator.checkApe(id,$scope.formData.ape);
     };
+$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+	viewData.enableBack = true;
+});    
 $scope.$on("$ionicView.beforeEnter", function(scopes, states){
   console.log(states.fromCache+"  state : "+states.stateName);
   if(states.stateName == "saisieCiviliteEmployeur" ){

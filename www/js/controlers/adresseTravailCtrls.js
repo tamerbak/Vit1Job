@@ -243,7 +243,9 @@ starter
 		$scope.validatElement=function(id){
 			Validator.checkField(id);
 		};
-
+	$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+		viewData.enableBack = true;
+	});
     $scope.$on("$ionicView.beforeEnter", function () {
       $scope.formData.zipCodes=DataProvider.getZipCodes();
       $scope.formData.villes=DataProvider.getVilles();
@@ -371,6 +373,7 @@ starter
 			if(states.stateName == "adresseTravail" ){
 			var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
 				//$scope.initForm();
+				console.log("steps ="+steps);
 		    if(steps!='')
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";

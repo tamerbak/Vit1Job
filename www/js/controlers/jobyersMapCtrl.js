@@ -151,9 +151,12 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   $scope.displayMarkers=function(){
     
     var jobyers=$scope.jobyersOffers;
+    console.log(jobyers);
     if($scope.InfoMarkers.length!=jobyers.length){
+      console.log("$scope.InfoMarkers.length!=jobyers.length");
 		return;		
 	}
+      console.log("$scope.InfoMarkers.length==jobyers.length");  
   //initialize markers
     for(var j=0; j<$scope.markers;j++){
       $scope.markers[i].setMap(null);
@@ -193,7 +196,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       var hexaCode1=parseInt(code1).toString(16);
       var hexaCode2=parseInt(code2).toString(16);
       var hexaCode3=parseInt(code3).toString(16);
-      console.log("hexaCode1 :"+hexaCode1);
+      console.log("hexaCode :"+hexaCode1+""+hexaCode2+""+hexaCode3);
       var marker2 = new google.maps.Marker({
         position: sortedMarkers[j].position,
         icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+hexaCode1+""+hexaCode2+""+hexaCode3),
@@ -331,7 +334,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       $ionicLoading.hide();
 
     },{
-      timeout : 15000
+      timeout : 5000
     });
     console.log(success);
     //if(success==false)

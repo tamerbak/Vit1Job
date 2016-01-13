@@ -153,4 +153,7 @@ starter
       replace("#","").replace("*","").replace(";","").replace("N","");
 
     };
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });    
   });

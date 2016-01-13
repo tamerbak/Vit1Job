@@ -264,7 +264,9 @@ starter
 			//$scope.formData.zipCodes=DataProvider.getZipCodes();
 			//$scope.formData.villes=DataProvider.getVilles();
 		//};
-
+    $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+    });
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
 				//$scope.initForm();
@@ -284,7 +286,9 @@ starter
                   type: 'button-dark',
                   onTap: function(e) {
                   //$ionicPopup.hide();
-                  displayPopups();
+                    $timeout( function () {                  
+                      displayPopups();
+                    });
                   }
                 }
               ]
@@ -295,6 +299,7 @@ starter
              $scope.isContractInfo=false;                                                       
             displayPopups();
           }
+          console.log("$scope.title = "+$scope.title);
 			}
 
 

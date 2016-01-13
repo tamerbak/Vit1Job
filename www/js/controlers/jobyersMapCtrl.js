@@ -158,7 +158,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 	}
       console.log("$scope.InfoMarkers.length==jobyers.length");  
   //initialize markers
-    for(var j=0; j<$scope.markers;j++){
+    for(var i=0; i<$scope.markers.length;i++){
       $scope.markers[i].setMap(null);
     }
   $scope.markers=[];

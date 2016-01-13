@@ -109,13 +109,14 @@ starter.controller('jobyersOffersListCtrl',
     localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
 			buttons: [
-			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>' }, //Index = 0
-			{ text: '<i class="ion-android-mail"> Contacter par Mail</i>' }, //Index = 1
-			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
+			{ text: '<i class="ion-android-textsms">Contacter par SMS</i>'}, //Index = 0
+			{ text: '<i class="ion-android-mail">Contacter Mail</i>'}, //Index = 1
+			{ text: '<i class="ion-ios-telephone">Contacter par Téléphone</i>' }, //Index = 2
 			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
 			],
 			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
+			cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':''),
 			buttonClicked: function(index) {
         jobber.contacted = true;
 

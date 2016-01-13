@@ -352,10 +352,10 @@ input[type="text"], input[type="email"], input[type="password"]{
 }
 **/
 .has-warning{
-  background:url(../img/icons/error.png)right no-repeat; border-color:red !important;
+  background:url(../img/icons/error.png)right no-repeat; border-color:red !important;z-index: 3;
 }
 .has-success{
-  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #14BAA6 !important;
+  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #14BAA6 !important;z-index: 3;
 }
 
 ion-content.scroll-content.ionic-scroll.has-header .scroll.padding img {
@@ -698,4 +698,21 @@ ion-tabs ion-nav-view{
     margin: 0 0 0 0 !important;
     padding: auto !important;
     margin-bottom: 10px !important;
+}
+
+.platform-android .android-sheet-vitonjob .action-sheet .button{
+  text-align: center;
+  border-color: #d1d3d6;
+  font-size: 21px;
+  color: gray;
+}
+.platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{
+  padding: 16px;
+  color: #000;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+.platform-android .android-sheet-vitonjob .action-sheet-cancel{
+  display: block;
 }

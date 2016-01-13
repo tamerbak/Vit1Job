@@ -37,12 +37,12 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
 				elm.val("");
 			}
 		};
-    this.checkSiret=function(id){
+    this.checkSiret=function(id,valsiret){
       var Siret_REGEXP = /^[0-9]{3}\s[0-9]{3}\s[0-9]{3}\s[0-9]{5}$/;
 
       elm=angular.element(document.querySelector('#'+id));
-      var isMatchRegex = Siret_REGEXP.test(elm.val());
-      console.log("Siret : "+elm.val());
+
+      var isMatchRegex = Siret_REGEXP.test(valsiret);    
 
       if(isMatchRegex && elm.val() != ''){
         elm.parent().removeClass('has-warning').addClass('has-success');
@@ -56,13 +56,17 @@ angular.module('validationDataServices', ['ionic', 'cb.x2js', 'providerServices'
       }
       return isMatchRegex;
     };
-    this.checkApe=function(id){
-      var Ape_REGEXP = /^[0-9]{2}.[0-9]{2}[A-Z]$/;
+    this.checkApe=function(id,valape){
+      var Ape_REGEXP = /^[0-9]{2}[0-9]{2}[A-Z]$/;
+     
+      if (valape)
+      {
+      	valape=valape.toUpperCase();
+      }
       var res;
       elm=angular.element(document.querySelector('#'+id));
-      var isMatchRegex = Ape_REGEXP.test(elm.val());
-      console.log("Ape : "+elm.val());
-
+      var isMatchRegex = Ape_REGEXP.test(valape);
+     
       if(isMatchRegex && elm.val() != ''){
         elm.parent().removeClass('has-warning').addClass('has-success');
         res=true;

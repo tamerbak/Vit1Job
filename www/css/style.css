@@ -570,6 +570,8 @@ ion-tabs ion-nav-view{
   padding-bottom: 10px;
   text-align: left;
   display: block;
+  margin-bottom: 5px;
+
 }
 
 #mailPopup{

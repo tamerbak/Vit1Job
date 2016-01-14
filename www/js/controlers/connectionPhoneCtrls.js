@@ -9,6 +9,8 @@ starter
 				formatString, PersistInServer, LoadList, Global, DataProvider, Validator){
 
     $scope.formData = {};
+    $scope.isIOS = ionic.Platform.isIOS();
+    $scope.isAndroid = ionic.Platform.isAndroid();  
     $rootScope.employeur = {};
     localStorageService.remove("steps");
     /*********************New code*********************/

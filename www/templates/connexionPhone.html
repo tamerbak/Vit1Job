@@ -20,19 +20,25 @@
       <div class="col-25 num">
         <label class="item item-input it1">
           <i class="icon ion-ios-telephone placeholder-icon calm"></i>
-          <input class="input-indicatif" type="tel" ng-model="formData.index" placeholder="" data-ng-init="formData.index='0033'" numbers-only="numbers-only"/>
+          <input class="input-indicatif" type="tel" ng-model="formData.index" placeholder="" data-ng-init="formData.index='33'" numbers-only="numbers-only"/>
         </label>
       </div>
       <div class="col-10 num">
-        <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
+       <!--
+       <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
           <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
           <select class="select-indicatif" ng-model="formData.index">
             <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
               {{item.libelle}}
             </option>
           </select>
-         <!--  <input class="input-indicatif" type="text" placeholder=""/> -->
+         <!--  <input class="input-indicatif" type="text" placeholder=""/> ->
         </label>
+      --> 
+      <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
+          <i class="icon ion-arrow-down-b placeholder-icon calm" style="border: solid 1px transparent;"></i>
+          <select style="width:0px;" ng-options="item.indicatif as item.nom for item in formData.pays" ng-model="formData.index"></select>
+      </label>
       </div>
       <div class ="col-67 rue">
         <label class="item item-input it2">
@@ -48,6 +54,7 @@
     </div>
 	<!-- PASSWORD -->
 	  <label class="item item-input">
+        <i class="icon ion-locked placeholder-icon calm" style="font-size: large"></i>
         <input type="password" ng-focus="displayPwdTooltip()" ng-click="displayPwdTooltip()" placeholder="Mot de passe" ng-model="formData.password" ng-minlength="6">
       </label>
     <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!passwordIsValid()">

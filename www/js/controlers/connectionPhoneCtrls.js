@@ -5,7 +5,7 @@
 'use strict';
 
 starter
-  .controller('cPhoneCtrl', function ($scope, $rootScope, localStorageService, $state, x2js, AuthentificatInServer, PullDataFromServer,
+  .controller('cPhoneCtrl', function ($scope, $rootScope, localStorageService, $state,$http, x2js, AuthentificatInServer, PullDataFromServer,
 				formatString, PersistInServer, LoadList, Global, DataProvider, Validator){
 
     $scope.formData = {};
@@ -106,8 +106,16 @@ starter
 
 		$scope.initForm=function(){
 			// GET LIST
-      $scope.formData={'pays': DataProvider.getPays(),'index':"0033"};
+      $scope.formData={'index':"33"};
 			//$scope.formData={ 'villes': $cookieStore.get('villes')};
+      $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
+        .success(function(data) {
+          console.log(data);
+          $scope.formData.pays=data;
+
+        }).error(function(error) {
+          console.log(error);
+        });
 		};
 
 		$scope.loadCodeInter=function(){
@@ -123,7 +131,7 @@ starter
 		};
 
 		$scope.$on( "$ionicView.beforeEnter", function( scopes, states ){
-			if(states.fromCache && states.stateName == "cPhone" ){
+			if(states.stateName == "cPhone" ){
 				$scope.initForm();
 			}
 		});

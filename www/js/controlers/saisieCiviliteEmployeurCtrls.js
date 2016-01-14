@@ -260,7 +260,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
       $cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;;
 				console.log("imageURI : "+$scope.imgURI);
-				$state.go($state.current, {}, {reload: true});
+				//$state.go($state.current, {}, {reload: true});
 
 			}, function(err) {
 				console.log('An error occured: ' + message);
@@ -299,7 +299,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
         FR.onload = function (oFREvent) {
           document.getElementById("uploadPreview").src = oFREvent.target.result;
           $scope.imgURI = oFREvent.target.result;
-          $state.go($state.current, {}, {reload: true});
+          //$state.go($state.current, {}, {reload: true});
         };
 			}
 		};
@@ -362,7 +362,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			$cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;
 				console.log("imageData : "+imageData);
-				$state.go($state.current, {}, {reload: true});
+				//$state.go($state.current, {}, {reload: true});
 			}, function(err) {
 				console.log(err);
 			});

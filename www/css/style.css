@@ -68,7 +68,7 @@ ion-footer-bar.hide-on-keyboard-open.bar.bar-footer {
 }
 
 .buttonConnect {
-  padding: 5px;
+  padding: 0px;
 }
 
 /*##############################   styles of Search.html ################################"*/
@@ -716,4 +716,7 @@ ion-tabs ion-nav-view{
 }
 .platform-android .android-sheet-vitonjob .action-sheet-cancel{
   display: block;
+}
+#civiliteView .list , #civiliteView .button.button-block, #civiliteView .button.button-full{
+  margin-bottom: 0px;
 }

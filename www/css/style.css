@@ -721,3 +721,6 @@ ion-tabs ion-nav-view{
 #civiliteView .list , #civiliteView .button.button-block, #civiliteView .button.button-full{
   margin-bottom: 0px;
 }
+.ios-sheet-vitonjob .action-sheet-title{
+  font-size: 22px;
+}

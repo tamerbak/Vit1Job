@@ -24,18 +24,17 @@
         </label>
       </div>
       <div class="col-10 num">
-       <!--
-       <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
+       
+       <label ng-show={{isAndroid}} style ="position: absolute;width: 70%;height: 47px !important;border-left:none;" class="item item-input it3">
           <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
           <select class="select-indicatif" ng-model="formData.index">
-            <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
-              {{item.libelle}}
+            <option ng-repeat="item in formData.pays" ng-value="item.indicatif">
+              {{item.nom}}
             </option>
           </select>
-         <!--  <input class="input-indicatif" type="text" placeholder=""/> ->
+         <!--  <input class="input-indicatif" type="text" placeholder=""/> -->
         </label>
-      --> 
-      <label style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
+      <label ng-show={{isIOS}} style ="position: absolute;width: 70%;height: 47px !important;" class="item item-input it3">
           <i class="icon ion-arrow-down-b placeholder-icon calm" style="border: solid 1px transparent;"></i>
           <select style="width:0px;" ng-options="item.indicatif as item.nom for item in formData.pays" ng-model="formData.index"></select>
       </label>

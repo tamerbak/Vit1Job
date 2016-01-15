@@ -417,7 +417,7 @@ starter
 						if(employeur['adresseTravail']){
 							//$scope.formData['adresse1']=employeur['adresseTravail']['adresse1'];
 							//$scope.formData['adresse2']=employeur['adresseTravail']['adresse2'];
-              $scope.formData['addressTravail']=employeur['adresseTravail']['fullAddress'];
+              // $scope.formData['addressTravail']=employeur['adresseTravail']['fullAddress'];
 
             }
 					}
@@ -561,7 +561,7 @@ function displayPopup1(){
 	                        $scope.formData.num = geoAddress.num;
 	                        $scope.formData.initialCity = geoAddress.city;
 	                        $scope.formData.initialPC = geoAddress.postalCode;
-	                        $scope.formData.addressTravail = geoAddress.fullAddress;
+	                        // $scope.formData.addressTravail = geoAddress.fullAddress;
 	                        console.log($scope.formData.addressTravail);
 	                       }, function (error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
@@ -593,6 +593,7 @@ function displayPopups(){
 	      e.preventDefault();
 	      popup.close();
 	      console.log('popup oui');
+	      $scope.formData.addressTravail = "";
 	      displayPopup1();
 	    }
 	  }, {

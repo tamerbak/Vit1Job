@@ -570,6 +570,8 @@ ion-tabs ion-nav-view{
   padding-bottom: 10px;
   text-align: left;
   display: block;
+  margin-bottom: 5px;
+
 }
 
 #mailPopup{
@@ -721,3 +723,30 @@ ion-tabs ion-nav-view{
 #civiliteView .list , #civiliteView .button.button-block, #civiliteView .button.button-full{
   margin-bottom: 0px;
 }
+.ios-sheet-vitonjob .action-sheet-title{
+  font-size: 22px;
+}
+#connexionPhoneView .col-67 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 65%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 65%;
+    -ms-flex: 0 0 65%;
+    flex: 0 0 65%;
+    max-width: 65%;
+}
+
+#connexionPhoneView .row{
+  border:solid 1px #14BAA6 !important;
+}
+#connexionPhoneView .col-67 label, #connexionPhoneView  .col-10 label, #connexionPhoneView  .col-25 label{
+  border: none;
+}
+/*
+#connexionPhoneView .col-67 , #connexionPhoneView  .col-10 , #connexionPhoneView  .col-25 {
+  padding-bottom: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  margin-bottom: 0px;
+}
+*/

@@ -17,6 +17,10 @@
   text-align: center;
 }
 
+#metiers > div.angucomplete-holder{
+ z-index: 5 !important;
+}
+
 .bar.bar-calm.bar-footer{
   bottom: 90px !important;
   border-color: transparent !important;

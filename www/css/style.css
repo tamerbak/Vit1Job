@@ -554,7 +554,7 @@ ion-tabs ion-nav-view{
   margin-bottom: 0px !important;
 }
 #connexionPhoneView .row{
-  padding-bottom: 0px;
+  /*padding-bottom: 0px;*/
   padding-left: 0px;
 }
 #mailPopup, #pwdPopup, #adressePopup , #phonePopup{
@@ -708,7 +708,7 @@ ion-tabs ion-nav-view{
   border-color: #d1d3d6;
   font-size: 21px;
   color: gray;
-  border-width: 1px; 
+  border-width: 1px;
 }
 .platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{
   padding: 16px;

@@ -193,7 +193,7 @@ function displayPopup1(){
 	                        $scope.formData.num = geoAddress.num;
 	                        $scope.formData.initialCity = geoAddress.city;
 	                        $scope.formData.initialPC = geoAddress.postalCode;
-	                        // $scope.formData.addressTravail = geoAddress.fullAddress;
+	                        $scope.formData.addressTravail = geoAddress.fullAddress;
 	                        console.log($scope.formData.addressTravail);
 	                       }, function (error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");

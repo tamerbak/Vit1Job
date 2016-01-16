@@ -11,7 +11,7 @@
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
-  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-place','ui.mask'])
+  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-autocomplete','ui.mask'])
 
 .run(function($ionicPlatform, $rootScope, $http, x2js, ngFB) {
   ngFB.init({appId: '426767167530378'});
@@ -98,12 +98,10 @@ $rootScope.previousView = '';
 
   .run(function($rootScope, $ionicLoading) {
       $rootScope.$on('loading:show', function() {
-          console.log("$ionicLoading.show");
           $ionicLoading.show({template: 'Chargement'});
         });
 
         $rootScope.$on('loading:hide', function() {
-            console.log("$ionicLoading.hide");
             $ionicLoading.hide();
           });
     });
@@ -157,7 +155,6 @@ starter.directive('googleplace', function() {
           angular.element(container).attr('data-tap-disabled', 'true');
           
           angular.element(container).on("click", function(){
-            console.log('called place_changed')
             model.$setViewValue(element.val());
           });
         scope.$apply(function() {

@@ -735,16 +735,13 @@ ion-tabs ion-nav-view{
     -ms-flex: 0 0 65%;
     flex: 0 0 65%;
     max-width: 65%;
+    margin-left: 6px;
 }
 
 
 #connexionPhoneView .row{
-  border:solid 1px #14BAA6 !important;
   padding-bottom: 0px;
   padding-left: 0px;
 }
 
-#connexionPhoneView .col-67 label, #connexionPhoneView  .col-10 label, #connexionPhoneView  .col-25 label{
-  border: none;
-}
 

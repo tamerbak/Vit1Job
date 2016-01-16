@@ -557,10 +557,7 @@ ion-tabs ion-nav-view{
 #conxionMailView .list , #connexionPhoneView .list{
   margin-bottom: 0px !important;
 }
-#connexionPhoneView .row{
-  padding-bottom: 0px;
-  padding-left: 0px;
-}
+
 #mailPopup, #pwdPopup, #adressePopup , #phonePopup{
   transition: .5s;
   overflow: hidden;
@@ -712,7 +709,7 @@ ion-tabs ion-nav-view{
   border-color: #d1d3d6;
   font-size: 21px;
   color: gray;
-  border-width: 1px; 
+  border-width: 1px;
 }
 .platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{
   padding: 16px;
@@ -739,21 +736,15 @@ ion-tabs ion-nav-view{
     flex: 0 0 65%;
     max-width: 65%;
 }
-#connexionPhoneView .row{
-  padding-right: 0px;
-  }
-/*
+
+
 #connexionPhoneView .row{
   border:solid 1px #14BAA6 !important;
+  padding-bottom: 0px;
+  padding-left: 0px;
 }
+
 #connexionPhoneView .col-67 label, #connexionPhoneView  .col-10 label, #connexionPhoneView  .col-25 label{
   border: none;
 }
 
-#connexionPhoneView .col-67 , #connexionPhoneView  .col-10 , #connexionPhoneView  .col-25 {
-  padding-bottom: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  margin-bottom: 0px;
-}
-*/

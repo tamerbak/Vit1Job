@@ -35,7 +35,7 @@
     
     <!-- ACTIONS -->
     <div class="buttonConnect">
-        <button class="button button-full button-positive green" data-ng-click="updateAdressePersEmployeur()">Valider</button>
+        <button class="button button-full button-positive green" data-ng-click="updateAdressePersEmployeur()" ng-disabled="!formData.address  && isContractInfo">Valider</button>
       </div>
   </ion-content>
 </ion-view>

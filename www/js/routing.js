@@ -11,14 +11,6 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/home.html',
       controller: 'homeCtrl'
     })
-
-    .state('search', {
-      url: '/search',
-      templateUrl: 'templates/search.html',
-      controller: 'searchCtrl'
-
-    })
-
     .state('connection', {
       url: '/connection',
       templateUrl: 'templates/connections.html',
@@ -121,11 +113,6 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'adressePersonelCtrl'
     })
 
-    .state('competence', {
-      url: '/competence',
-      templateUrl: 'templates/competences.html',
-      controller: 'competenceCtrl'
-    })
     .state('offres', {
       url: '/offres',
       templateUrl: 'templates/offres.html',

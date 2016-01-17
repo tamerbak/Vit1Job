@@ -47,7 +47,8 @@
       </div>
     </div>
       <label class="item item-input">
-        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf"><span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
+        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+        <span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
       </label>
 
     </div>
@@ -90,7 +91,7 @@
 
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()" ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise)">Valider</button>
     </div>
 
   </ion-content>

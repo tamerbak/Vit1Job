@@ -554,6 +554,11 @@ ion-tabs ion-nav-view{
     display:none !important;
   }
 }
+@media screen and (max-height:320px){
+  .vimg{
+    display: none;
+  }
+}
 #conxionMailView .list , #connexionPhoneView .list{
   margin-bottom: 0px !important;
 }
@@ -749,4 +754,3 @@ ion-tabs ion-nav-view{
   position: relative !important;
   top: 0px !important;
 }
-

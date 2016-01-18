@@ -9,9 +9,13 @@ starter
 
 		// FORMULAIRE
 		$scope.formData = {};
-    $scope.formData.addressTravail="";
-    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+		$scope.placesOptions = {
+	      types: [],
+	      componentRestrictions: {country:'FR'}
+	    };
+	    $scope.formData.addressTravail="";
+	    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
+	    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 	
@@ -29,7 +33,7 @@ starter
 						if(!employeur)
                         var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adresseTravail={};
-						 adresseTravail={fullAddress:$scope.formData.addressTravail};
+						 adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
 						employeur.adresseTravail=adresseTravail;
 
 						// PUT IN SESSION
@@ -120,7 +124,7 @@ starter
     	$scope.showAdresseTooltip = true;
     	console.log($scope.formData.addressTravail);
     };
-
+$scope.displayAdresseTooltip();
     $scope.fieldIsEmpty = function() {
     	if($scope.formData.addressTravail == "" || $scope.formData.addressTravail == null){
     		return true;
@@ -176,7 +180,18 @@ function displayPopup1(){
 						  GeoService.getUserAddress()
 						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
-	                        $scope.formData.addressTravail = geoAddress.fullAddress;
+	                        // $scope.formData.addressTravail = geoAddress.fullAddress;
+	                        var result = { 
+	                            address_components: [], 
+	                            adr_address: "", 
+	                            formatted_address: geoAddress.fullAddress,
+	                            geometry: "",
+	                            icon: "",
+                          	};
+                          	var ngModel = angular.element(document.getElementById('ion-google-autocomplate-ngmodel')).controller('ngModel');
+                          	ngModel.$setViewValue(result);
+                          	ngModel.$render();
+	                        
 	                       }, function (error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
 						    });

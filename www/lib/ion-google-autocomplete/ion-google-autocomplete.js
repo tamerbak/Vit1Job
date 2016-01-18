@@ -27,11 +27,20 @@ angular.module('ion-google-autocomplete', [])
                     var placesService = new google.maps.places.PlacesService(obj.get(0));
                     var searchEventTimeout = undefined;
                     $rootScope.location = $location;
+                    console.log($rootScope.location.$$path);
                     var googleAutocompleteOk='<button ng-click="selectLocationString(searchQuery)" class="button button-clear">Ok';
                     if ($rootScope.location.$$path == '/jobyersOffersTab/map') 
                     {
                         googleAutocompleteOk = '';
-                    };
+                    }
+                     else if($rootScope.location.$$path == '/adressePersonel/')
+                    {
+                        $('#google-autocomplete-personel input:first').addClass('autocomplete-personel');
+                    }
+                    else if($rootScope.location.$$path == '/adresseTravail/')
+                    {
+                        $('#google-autocomplete-travail input:first').addClass('autocomplete-travail');
+                    }
                     var POPUP_TPL = [
                         '<div class="ion-google-autocomplete-container">',
                             '<div class="bar bar-header item-input-inset">',

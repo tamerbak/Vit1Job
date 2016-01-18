@@ -25,7 +25,7 @@
        <input type="text" placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="addresseTravail">
         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>            
       </label> -->
-      <label class="item item-input">
+      <label id="google-autocomplete-travail" class="item item-input">
          <ion-google-autocomplete placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" places-options="placesOptions" />
          <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>           
       </label>

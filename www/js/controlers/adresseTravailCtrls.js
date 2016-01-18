@@ -206,7 +206,7 @@ function displayPopup1(){
 	                            geometry: "",
 	                            icon: "",
                           	};
-                          	var ngModel = angular.element(document.getElementById('ion-google-autocomplate-ngmodel')).controller('ngModel');
+                          	var ngModel = angular.element($('.autocomplete-travail')).controller('ngModel');
                           	ngModel.$setViewValue(result);
                           	ngModel.$render();
 	                        

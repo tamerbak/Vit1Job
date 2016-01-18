@@ -554,7 +554,7 @@ ion-tabs ion-nav-view{
     display:none !important;
   }
 }
-@media screen and (max-height:480px){
+@media screen and (max-height:320px){
   .vimg{
     display: none;
   }

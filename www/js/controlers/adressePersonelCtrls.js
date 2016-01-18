@@ -112,7 +112,7 @@ starter
                             geometry: "",
                             icon: "",
                           };
-                          var ngModel = angular.element(document.getElementById('ion-google-autocomplate-ngmodel')).controller('ngModel');
+                          var ngModel = angular.element($('.autocomplete-personel')).controller('ngModel');
                           ngModel.$setViewValue(result);
                           ngModel.$render();
                         }, function(error) {

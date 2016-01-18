@@ -6,8 +6,9 @@ angular.module('ion-google-autocomplete', [])
         '$q',
         '$timeout',
         '$rootScope',
+        '$location',
         '$document',
-        function($ionicTemplateLoader, $ionicBackdrop, $ionicPlatform, $q, $timeout, $rootScope, $document) {
+        function($ionicTemplateLoader, $ionicBackdrop, $ionicPlatform, $q, $timeout, $rootScope, $location, $document) {
             return {
                 require: '?ngModel',
                 restrict: 'E',
@@ -25,7 +26,12 @@ angular.module('ion-google-autocomplete', [])
                     var obj = angular.element('<div>').appendTo('body');
                     var placesService = new google.maps.places.PlacesService(obj.get(0));
                     var searchEventTimeout = undefined;
-
+                    $rootScope.location = $location;
+                    var googleAutocompleteOk='<button ng-click="selectLocationString(searchQuery)" class="button button-clear">Ok';
+                    if ($rootScope.location.$$path == '/jobyersOffersTab/map') 
+                    {
+                        googleAutocompleteOk = '';
+                    };
                     var POPUP_TPL = [
                         '<div class="ion-google-autocomplete-container">',
                             '<div class="bar bar-header item-input-inset">',
@@ -33,8 +39,7 @@ angular.module('ion-google-autocomplete', [])
                                     '<i class="icon ion-ios7-search placeholder-icon"></i>',
                                     '<input class="google-autocomplete-search" type="search" ng-model="searchQuery" placeholder="' + (attrs.searchPlaceholder || 'Veuillez saisir votre adresse...') + '">',
                                 '</label>',
-                                '<button ng-click="selectLocationString(searchQuery)" class="button button-clear">',
-                                'Ok',
+                                googleAutocompleteOk,
                                 '</button>',
                                 '<button class="button button-clear google-autocomplete-cancele">',
                                     attrs.labelCancel || 'Cancel',
@@ -74,7 +79,6 @@ angular.module('ion-google-autocomplete', [])
                                         lat:result.geometry.location.lat(location.reference),
                                         lng:result.geometry.location.lng(location.reference),
                                     };
-                                   
                                     ngModel.$setViewValue(resultF);
                                     ngModel.$render();
                                     el.element.css('display', 'none');
@@ -106,7 +110,6 @@ angular.module('ion-google-autocomplete', [])
 
                         };
                         
-                       
 
                         scope.$watch('searchQuery', function(query){
                             if (searchEventTimeout) $timeout.cancel(searchEventTimeout);

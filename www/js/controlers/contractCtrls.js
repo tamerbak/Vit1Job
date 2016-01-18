@@ -5,6 +5,7 @@
 
 starter.controller('contractCtrl',function($scope,localStorageService,$stateParams,DataProvider,$ionicPopup,$state, $cordovaPrinter){
   var employeur = localStorageService.get('employeur');
+  console.log(employeur);
   var jobyer = localStorageService.get('Selectedjobyer');
   var civilites = DataProvider.getCivilites();
   var civilite = "";

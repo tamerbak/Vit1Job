@@ -317,12 +317,9 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 		};
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
-			if(states.fromCache && states.stateName == "saisieCiviliteEmployeur"){
+			if(states.stateName == "saisieCiviliteEmployeur"){
 				$scope.initForm();
-
-				console.log("Je suis ds $ionicView.beforeEnter(saisieCivilite)");
 			  var employeur=localStorageService.get('employeur');
-				console.log("employeur : "+JSON.stringify(employeur));
 				if(employeur){
 					// INITIALISATION FORMULAIRE
 					if(employeur.civilite)
@@ -366,5 +363,9 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			}, function(err) {
 				console.log(err);
 			});
-		}
+		};
+		$scope.skipDisabled= function(){
+			var employeur=localStorageService.get('employeur');
+			return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
+		};	
 	});

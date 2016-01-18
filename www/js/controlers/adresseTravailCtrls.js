@@ -14,45 +14,34 @@ starter
     var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
-
-			for(var obj in $scope.formData){
-				//console.log("formData["+obj+"] : "+$scope.formData[obj]);
-			}
-
+	
 			var codePost="",num="", ville="",adresse1="",adresse2="";
 
 			// RECUPERATION CONNEXION
 			var connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
-			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
 			var sessionId=localStorageService.get('sessionID');
 				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
-
-						// DONNEES ONT ETE SAUVEGARDES
-						console.log("les donnes ont été sauvegarde");
-						console.log("response"+response);
-
 						employeur=localStorageService.get('employeur');
 						if(!employeur)
-              var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+                        var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adresseTravail={};
-						 adresseTravail={'codePostal': codePost, 'ville': ville, 'adresse1': adresse1, 'adresse2': adresse2, fullAddress:$scope.formData.addressTravail};
+						 adresseTravail={fullAddress:$scope.formData.addressTravail};
 						employeur.adresseTravail=adresseTravail;
 
 						// PUT IN SESSION
 						localStorageService.set('employeur', employeur);
 						console.log("employeur : "+JSON.stringify(employeur));
+						// REDIRECTION VERS PAGE - offres
+						if(steps == '')$state.go('offres');
+      					else $state.go('contract');						
 					}).error(function (err){
 						console.log("error : insertion DATA");
 						console.log("error In updateAdresseTravEmployeur: "+err);
 					});
-
-			// REDIRECTION VERS PAGE - offres
-			if(steps == '')$state.go('offres');
-      else $state.go('contract');
 		};
 
 		// VALIDATION
@@ -187,14 +176,7 @@ function displayPopup1(){
 						  GeoService.getUserAddress()
 						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
-	                        console.log(geoAddress);
-	                        $scope.formData.adresse1 = geoAddress.street;
-	                        $scope.formData.adresse2 = geoAddress.complement;
-	                        $scope.formData.num = geoAddress.num;
-	                        $scope.formData.initialCity = geoAddress.city;
-	                        $scope.formData.initialPC = geoAddress.postalCode;
 	                        $scope.formData.addressTravail = geoAddress.fullAddress;
-	                        console.log($scope.formData.addressTravail);
 	                       }, function (error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
 						    });
@@ -234,21 +216,8 @@ function displayPopups(){
 	    onTap: function (e) {
 	      e.preventDefault();
 	      popup.close();
-	      console.log('popup non');
-	      /*$scope.formData.adresse1 = params.adresse1;
-	      $scope.formData.adresse2 = params.adresse2;
-	      $scope.formData.num = params.num;
-	      if (params.code)
-	        document.getElementById('ex2_value').value = params.code;
-	      if (params.vi)
-	        document.getElementById('ex3_value').value = params.vi;
-	      $scope.formData.initialCity = geoAddress.city;
-	      $scope.formData.initialPC = geoAddress.postalCode;
-	      */
 	      $scope.formData.addressTravail = $stateParams.addressPers;
 	      $scope.updateAdresseTravEmployeur();
-	      // REDIRECTION VERS PAGE - COMPETENCES
-	      //$state.go('competence');
 	    }
 	  }
 	]
@@ -272,5 +241,16 @@ function displayPopups(){
         //google.maps.event.trigger(autoComplete, 'place_changed');
     })
   };  
-	});
+	
+	$scope.skipDisabled= function(){
+		var employeur=localStorageService.get('employeur');
+		return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+	};
+	$scope.skipGoto=function(){
+		if($scope.isContractInfo)
+			$state.go('contract');	
+		else	
+			$state.go('offres');				
+	}
+});
 

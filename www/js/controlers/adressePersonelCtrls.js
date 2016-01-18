@@ -36,26 +36,11 @@ starter
 						if(!employeur)
 							var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adressePersonel={};
-						adressePersonel={'codePostal': codePostal, 'ville': ville, 'num':num, 'adresse1': adresse1, 'adresse2': adresse2};
+						adressePersonel={'fullAddress':$scope.formData.address};
 						employeur.adressePersonel=adressePersonel;
 
 						// PUT IN SESSION
 						localStorageService.set('employeur', employeur);
-						console.log("employeur : "+JSON.stringify(employeur));
-
-						var code="", vi="";
-						// AFFICHE POPUP
-						$rootScope.$broadcast('show-pop-up', {params:
-							{
-                'num': num,
-								'adresse1': adresse1,
-								'adresse2': adresse2,
-                'address':$scope.formData.address,
-								'vi': vi,
-								'code': code,
-                'geolocated':geolocated
-							}
-								});
 					}).error(function (err){
 						console.log("error : insertion DATA");
 						console.log("error In updateAdressePersEmployeur: "+err);
@@ -114,13 +99,6 @@ starter
                           GeoService.getUserAddress().then(function() {
                           geolocated = true;
                           var geoAddress = localStorageService.get('user_address');
-
-                          $scope.formData.adresse1 = geoAddress.street;
-                          $scope.formData.adresse2 = geoAddress.complement;
-                          $scope.formData.num = geoAddress.num;
-                          $scope.formData.initialCity = geoAddress.city;
-                          $scope.formData.initialPC = geoAddress.postalCode;
-
                           $scope.formData.address=geoAddress.fullAddress;
                         }, function(error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
@@ -211,5 +189,11 @@ starter
         document.getElementById('address').blur();
         //google.maps.event.trigger(autoComplete, 'place_changed');
     })
-  };    
+  };
+
+  $scope.skipDisabled= function(){
+    var employeur=localStorageService.get('employeur');
+    console.log(employeur);
+    return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+  };      
 });

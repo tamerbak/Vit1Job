@@ -22,7 +22,7 @@ angular.module('ion-google-autocomplete', [])
 
                     scope.locations = [];
                     var autocompleteService = new google.maps.places.AutocompleteService();
-                    var obj = $('<div>').appendTo('body');
+                    var obj = angular.element('<div>').appendTo('body');
                     var placesService = new google.maps.places.PlacesService(obj.get(0));
                     var searchEventTimeout = undefined;
 
@@ -33,7 +33,10 @@ angular.module('ion-google-autocomplete', [])
                                     '<i class="icon ion-ios7-search placeholder-icon"></i>',
                                     '<input class="google-autocomplete-search" type="search" ng-model="searchQuery" placeholder="' + (attrs.searchPlaceholder || 'Veuillez saisir votre adresse...') + '">',
                                 '</label>',
-                                '<button class="button button-clear">',
+                                '<button ng-click="selectLocationString(searchQuery)" class="button button-clear">',
+                                'Ok',
+                                '</button>',
+                                '<button class="button button-clear google-autocomplete-cancele">',
                                     attrs.labelCancel || 'Cancel',
                                 '</button>',
                             '</div>',
@@ -58,21 +61,52 @@ angular.module('ion-google-autocomplete', [])
 
                         // when item in list is selected
                         scope.selectLocation = function(location){
+                            var resultF={};
                             var details = placesService.getDetails({reference:location.reference}, function(result, status){
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                            ngModel.$setViewValue(result);
-                            ngModel.$render();
-                            el.element.css('display', 'none');
-                            $ionicBackdrop.release();
 
-                            if (unbindBackButtonAction) {
-                                unbindBackButtonAction();
-                                unbindBackButtonAction = null;
-                            }
+                                    resultF = { 
+                                        address_components: result.address_components, 
+                                        adr_address: result.adr_address, 
+                                        formatted_address: result.formatted_address,
+                                        geometry: "",
+                                        icon: "",
+                                        lat:result.geometry.location.lat(location.reference),
+                                        lng:result.geometry.location.lng(location.reference),
+                                    };
+                                   
+                                    ngModel.$setViewValue(resultF);
+                                    ngModel.$render();
+                                    el.element.css('display', 'none');
+                                    $ionicBackdrop.release();
+
+                                    if (unbindBackButtonAction) {
+                                        unbindBackButtonAction();
+                                        unbindBackButtonAction = null;
+                                    }
                                 }
                             });
-                            return;
+
+                            return resultF;
                         };
+                        scope.selectLocationString = function(searchQuery)
+                        {
+
+                            
+                            var result = { 
+                                address_components: [], 
+                                adr_address: "", 
+                                formatted_address: searchQuery,
+                                geometry: "",
+                                icon: "",
+                            };
+                            ngModel.$setViewValue(result);
+                            ngModel.$render();
+
+
+                        };
+                        
+                       
 
                         scope.$watch('searchQuery', function(query){
                             if (searchEventTimeout) $timeout.cancel(searchEventTimeout);

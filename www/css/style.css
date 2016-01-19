@@ -765,3 +765,9 @@ ion-tabs ion-nav-view{
   padding-left: 0px;
   margin-bottom: 16px;
 }
+
+.google-autocomplete-cancele
+{
+  position: relative !important;
+  top: 0px !important;
+}

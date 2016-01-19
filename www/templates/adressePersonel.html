@@ -20,10 +20,14 @@
         </div>
         -->
     <br>
-        <div class="list">
-          <label class="item item-input">
-            <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="address"><!-- googleplace -->
-            <span ng-show="!formData.address  && isContractInfo" class="requiredStar">*</span>            
+    <div class="list">
+      <!-- <label class="item item-input">
+        <input type="text" placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="address">
+        <span ng-show="!formData.address  && isContractInfo" class="requiredStar">*</span>            
+      </label> -->
+      <label id="google-autocomplete-personel" class="item item-input">
+         <ion-google-autocomplete placeholder="Veuillez saisir votre adresse..." ng-model="formData.address" places-options="placesOptions" />
+         <span ng-show="!formData.address  && isContractInfo" class="requiredStar">*</span>           
       </label>
     </div>
     <div id="popupAdrTravail" ng-class="{'hidden' : !showAdresseTooltip}" ng-if="fieldIsEmpty()">

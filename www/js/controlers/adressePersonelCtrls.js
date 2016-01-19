@@ -10,9 +10,13 @@ starter
 		// FORMULAIRE
     var geolocated=false;
 		$scope.formData = {};
+    $scope.placesOptions = {
+      types: [],
+      componentRestrictions: {country:'FR'}
+    };
     $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+    var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
     $scope.geocodeOptions = {
       componentRestrictions: {
         country : 'FR'
@@ -20,7 +24,7 @@ starter
     };
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdressePersEmployeur = function(){
-
+      var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 			var codePostal="", ville="" , num = "", adresse1="",adresse2="";
 
 			// RECUPERATION CONNEXION
@@ -36,7 +40,7 @@ starter
 						if(!employeur)
 							var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						var adressePersonel={};
-						adressePersonel={'fullAddress':$scope.formData.address};
+						adressePersonel={'fullAddress':$scope.formData.address.formatted_address};
 						employeur.adressePersonel=adressePersonel;
 
 						// PUT IN SESSION
@@ -47,7 +51,25 @@ starter
 					});
         // }
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
-			$state.go('adresseTravail',{"geolocated":geolocated,addressPers:$scope.formData.address});
+      if(steps)
+      {
+       
+        if(steps.step3)
+        {
+          $state.go('adresseTravail');
+        }
+        else
+        {
+          $state.go('contract');
+        }
+
+      }
+      else
+      {
+       
+        $state.go('adresseTravail',{"geolocated":geolocated,addressPers:$scope.formData.address});
+      }
+			
 		};
 
 		// VALIDATION - FIELD
@@ -56,7 +78,7 @@ starter
 		};
 
 		$scope.$watch('formData.zipCodes', function(){
-			console.log('hey, formData.zipCodes has changed!');
+			// console.log('hey, formData.zipCodes has changed!');
 			//console.log('zipCodes.length : '+$scope.formData.zipCodes.length);
 		});
  
@@ -99,7 +121,18 @@ starter
                           GeoService.getUserAddress().then(function() {
                           geolocated = true;
                           var geoAddress = localStorageService.get('user_address');
-                          $scope.formData.address=geoAddress.fullAddress;
+                          // $scope.formData.address=geoAddress.fullAddress;
+                         
+                          var result = { 
+                            address_components: [], 
+                            adr_address: "", 
+                            formatted_address: geoAddress.fullAddress,
+                            geometry: "",
+                            icon: "",
+                          };
+                          var ngModel = angular.element($('.autocomplete-personel')).controller('ngModel');
+                          ngModel.$setViewValue(result);
+                          ngModel.$render();
                         }, function(error) {
                             Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
                         });
@@ -125,9 +158,8 @@ starter
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
 				//$scope.initForm();
-				console.log("Je suis ds $ionicView.beforeEnter(adressePersonel)");
 				//employeur=localStorageService.get('employeur');
-        var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';        
+        var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';        
         if(steps!='')
           {
              $scope.title="Pré-saisie des informations contractuelles : adresse siège social";    
@@ -154,7 +186,6 @@ starter
              $scope.isContractInfo=false;                                                       
             displayPopups();
           }
-          console.log("$scope.title = "+$scope.title);
 			}
 
 
@@ -164,8 +195,8 @@ starter
     $scope.displayAdresseTooltip = function () {
       $scope.adresseToolTip = "Astuce : Commencez par le code postal";
       $scope.showAdresseTooltip = true;
-      console.log($scope.formData.address);
     };
+    $scope.displayAdresseTooltip();
 
     $scope.fieldIsEmpty = function() {
       if($scope.formData.address == "" || $scope.formData.address == null){
@@ -180,7 +211,6 @@ starter
     
     var container = document.getElementsByClassName('pac-container');
     if(screen.height <= 480){
-      console.log("height called");
       angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
     }
     angular.element(container).attr('data-tap-disabled', 'true');
@@ -193,7 +223,6 @@ starter
 
   $scope.skipDisabled= function(){
     var employeur=localStorageService.get('employeur');
-    console.log(employeur);
     return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
   };      
 });

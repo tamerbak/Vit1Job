@@ -21,9 +21,13 @@
        </div> -->
     <br>
    <div class="list">
-     <label class="item item-input">
-       <input type="text" placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="addresseTravail"><!-- googleplace -->
+     <!-- <label class="item item-input">
+       <input type="text" placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="addresseTravail">
         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>            
+      </label> -->
+      <label id="google-autocomplete-travail" class="item item-input">
+         <ion-google-autocomplete placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" places-options="placesOptions" />
+         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>           
       </label>
     </div>
     <div id="popupAdrTravail" ng-class="{'hidden' : !showAdresseTooltip}" ng-if="fieldIsEmpty()">

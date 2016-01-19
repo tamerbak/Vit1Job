@@ -107,7 +107,7 @@ starter.controller('jobyersOffersListCtrl',
    	}
 
 	$scope.showMenuForContract = function(jobber){
-
+console.log(jobber);
     localStorageService.remove('Selectedjobyer');
     localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({

@@ -3,7 +3,7 @@
  */
 'use strict';
 
-starter.controller('contractCtrl',function($scope,localStorageService,$stateParams,DataProvider,$ionicPopup,$state, $cordovaPrinter){
+starter.controller('contractCtrl',function($scope,localStorageService,$stateParams,DataProvider,$ionicActionSheet,$ionicPopup,$state, $cordovaPrinter){
   var employeur = localStorageService.get('employeur');
   console.log(employeur);
   var jobyer = localStorageService.get('Selectedjobyer');
@@ -115,6 +115,37 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
 
 
   };
+  $scope.showMenuForEditContract = function(){
+
+     
+    var hideSheet = $ionicActionSheet.show({
+      buttons: [
+      { text: 'civilité'}, //Index = 0
+      { text: 'adresse personnel'}, //Index = 1
+      { text: 'adresse de travail' }, //Index = 2
+      ],
+      titleText: 'éditer le contrat',
+      cancelText: 'Annuler',
+      cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
+      buttonClicked: function(index) {
+        
+var employeur = localStorageService.get('employeur');
+    if(index==0){
+              $state.go("saisieCiviliteEmployeur", {employeur: employeur});
+            }
+    if(index==1){
+        $state.go("adressePersonel", {employeur: employeur});
+    }
+    if(index==2){
+
+      $state.go("adresseTravail", {employeur: employeur});
+    }
+        //branchement de la page de contrat ou infos clients
+          
+            return true;
+          }
+        });
+      };
 $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
   viewData.enableBack = true;
 });

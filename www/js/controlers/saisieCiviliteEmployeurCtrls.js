@@ -238,7 +238,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
       		if(steps)
 			{
-				
+				console.log(steps);
 				if (steps.step2) 
 				{
 					$state.go('adressePersonel');
@@ -255,6 +255,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			}
 			else
 			{
+				console.log("else" + steps);
 				$state.go('adressePersonel');
 			}
 		};

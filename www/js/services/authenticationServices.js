@@ -823,96 +823,14 @@ angular.module('wsConnectors', ['ionic'])
   .service('UpdateInServer', function ($http){
 	this.updateCiviliteInEmployeur = function(id, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID){
 
-       soapMessage=
-		'<fr.protogen.connector.model.DataModel>'+
-			'<entity>user_employeur</entity>'+
-			'<dataMap/>'+
-			'<rows>'+
-    			'<fr.protogen.connector.model.DataRow>'+
-					'<dataRow>'+
-						'<fr.protogen.connector.model.DataEntry>'+	// ID EMPLOYEUR
-							'<label>&lt;![CDATA[ID Employeur]]&gt;</label>'+
-							'<attributeReference>pk_user_employeur</attributeReference>'+
-							'<type>PK</type>'+
-							'<value>'+id+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Titre CIVILITE
-          					'<label>&lt;![CDATA[Titre]]&gt;</label>'+
-          					'<attributeReference>fk_user_civilite</attributeReference>'+
-          					'<type>fk_user_civilite</type>'+
-          					'<list/>'+
-          					'<value>'+civilite+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Nom du dirigeant
-          					'<label>&lt;![CDATA[Nom du dirigeant]]&gt;</label>'+
-          					'<attributeReference>nom_du_dirigeant</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+nom+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Prénom du dirigeant
-          					'<label>&lt;![CDATA[Prénom du dirigeant]]&gt;</label>'+
-          					'<attributeReference>prenom_du_dirigeant</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+prenom+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Nom ou raison sociale
-          					'<label>&lt;![CDATA[Nom ou raison sociale]]&gt;</label>'+
-          					'<attributeReference>nom_ou_raison_sociale</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+raisonSocial+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// SIRET
-          					'<label>&lt;![CDATA[SIRET]]&gt;</label>'+
-          					'<attributeReference>siret</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+siret+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Code APE
-          					'<label>&lt;![CDATA[Code APE]]&gt;</label>'+
-          					'<attributeReference>code_ape</attributeReference>'+
-          					'<type>TEXT</type>'+
-         					'<value>&lt;![CDATA['+codeAPE+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Numéro URSSAF
-          					'<label>&lt;![CDATA[Numéro URSSAF]]&gt;</label>'+
-          					'<attributeReference>numero_urssaf</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+numUrssaf+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-					'</dataRow>'+
-    			'</fr.protogen.connector.model.DataRow>'+
-  			'</rows>'+
-			"<token>" +
-                "<username></username>" +
-				"<password></password>" +
-				"<nom>Jakjoud Abdeslam</nom>" +
-				"<appId>FRZ48GAR4561FGD456T4E</appId>" +
-				"<sessionId>"+sessionID+"</sessionId>" +
-				"<status>SUCCES</status>" +
-				"<id>206</id>" +
-				"<beanId>0</beanId>" +
-			"</token>" +
-			"<expired></expired>" +
-			"<unrecognized></unrecognized>" +
-			"<status></status>" +
-			"<operation>UPDATE</operation>" +
-			"<clauses/>" +
-			"<page>1</page>" +
-			"<pages>5</pages>" +
-			"<nbpages>0</nbpages>" +
-			"<iddriver>0</iddriver>" +
-			"<ignoreList></ignoreList>" +
-		'</fr.protogen.connector.model.DataModel>';
-
-
       return $http({
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vit1job/api/das',
+        url: 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/validation/civilite',
         headers: {
-          "Content-Type": "text/xml"
+          "Content-Type": "application/json"
 		  //'Access-Control-Allow-Methods' : 'GET, POST, PUT, UPDATE, OPTIONS'
         },
-        data: soapMessage
+        data: {"titre":"M.", "nom":"LECLERC", "prenom":"Emanuel", "raisonSocial":"Manaona", "siret":"999 999 999 99999", "codeNaf":"99.99A", "urssaf":"9999AA99"}
       });
     };
 

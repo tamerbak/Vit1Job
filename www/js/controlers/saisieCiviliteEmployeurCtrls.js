@@ -87,10 +87,6 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 });
 		$scope.updateCiviliteEmployeur = function(){
 
-			for(var obj in $scope.formData){
-				console.log("formData["+obj+"] : "+$scope.formData[obj]);
-			}
-
 			var titre=$scope.formData.civ;
 			var nom=$scope.formData.nom;
 			var prenom=$scope.formData.prenom;

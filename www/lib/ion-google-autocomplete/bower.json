@@ -1,0 +1,29 @@
+{
+  "name": "ion-google-autocomplete",
+  "version": "1.0",
+  "homepage": "https://github.com/guillahume/ion-google-autocomplete",
+  "authors": [
+    "Danny Povolotski <dannypovolotski@gmail.com>",
+    "Guillaume Pastorino <guillahume@gmail.com>"
+  ],
+  "description": "Ionic directive for a location field (using google maps autocomplete)",
+  "main": [
+    "ion-google-autocomplete.js",
+    "ion-google-autocomplete.css"
+  ],
+  "keywords": [
+    "ionic",
+    "maps",
+    "locations",
+    "dropdown",
+    "autocomplete"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

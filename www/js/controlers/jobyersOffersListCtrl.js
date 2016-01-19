@@ -25,8 +25,8 @@ starter.controller('jobyersOffersListCtrl',
 				localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
 			};
 
-			//*/
 
+			//**
 			$scope.jobyersOffers = [{
 				jobyerName : 'Jérôme',
 				availability : {
@@ -38,7 +38,11 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 60,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
+
+				//Date_Invit : $scope.ge
+
 			},
 			{
 				jobyerName : 'Alain',
@@ -51,7 +55,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 20,
 				contacted : true,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit:'19-01-2016  11:20'
 			},
 			{
 				jobyerName : 'Philippe',
@@ -64,7 +69,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 10,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
 			}];
 		//*/
 		/*
@@ -109,16 +115,18 @@ starter.controller('jobyersOffersListCtrl',
     localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
 			buttons: [
-			{ text: '<i class="ion-android-textsms">Contacter par SMS</i>'}, //Index = 0
-			{ text: '<i class="ion-android-mail">Contacter Mail</i>'}, //Index = 1
-			{ text: '<i class="ion-ios-telephone">Contacter par Téléphone</i>' }, //Index = 2
+			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>'}, //Index = 0
+			{ text: '<i class="ion-android-mail"> Contacter Mail</i>'}, //Index = 1
+			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
 			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
 			],
 			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
 			cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
 			buttonClicked: function(index) {
-        jobber.contacted = true;
+
+
+
 
 		if(index==0){
               console.log('called send sms');
@@ -131,7 +139,11 @@ starter.controller('jobyersOffersListCtrl',
              };
             $cordovaSms.send(jobber.tel, 'Vitojob :Inivitation de mise en relation', options)
                 .then(function() {
+											//Get Date & Time
+											jobber.date_invit= new Date();
+											jobber.contacted = true;
                       console.log('Message sent successfully');
+
                 }, function(error) {
                       console.log('Message Failed:' + error);
 
@@ -146,6 +158,8 @@ starter.controller('jobyersOffersListCtrl',
 					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
 					}, function(){
+								jobber.date_invit= new Date();
+								jobber.contacted = true;
 						    console.log('email view dismissed');
 							//Global.showAlertValidation("Votre email a été bien envoyé.");
 					}, this);
@@ -155,6 +169,8 @@ starter.controller('jobyersOffersListCtrl',
 		if(index==2){
 
 			window.plugins.CallNumber.callNumber(function(){
+				jobber.date_invit= new Date();
+				jobber.contacted = true;
 				console.log("success call");
 			}, function(){
 				console.log("error call");
@@ -170,6 +186,8 @@ starter.controller('jobyersOffersListCtrl',
 
               var isAuth = UserService.isAuthenticated();
               if (isAuth) {
+								jobber.date_invit= new Date();
+								jobber.contacted = true;
                 console.log("check and then redirect to contract page");
                 var employer = localStorageService.get('employeur');
                 var redirectToStep1 = (typeof (employer) == "undefined");

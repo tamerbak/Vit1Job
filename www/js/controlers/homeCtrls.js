@@ -16,7 +16,7 @@
     $scope.myGoBack = function() {
       window.history.back();
     };*/
-    
+
 		// FORMULAIRE
 		$scope.formData = {};
 		//$scope.formData.connexion= {};
@@ -301,18 +301,27 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 
   var showAddOfferConfirmPopup = function(job) {
    var confirmPopup = $ionicPopup.confirm({
-     cancelText: 'Continuer',
-     title: 'VitOnJob',
-     template: 'Pour que la recherche soit plus précise, voulez vous créer une offre pour ' + job + '?'
-   });
-   confirmPopup.then(function(res) {
-     if(res) {
-         // redirection vers la page d'ajout des offres employeur
-         $state.go("offres");
-       } else {
+     title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+     template: 'Pour que la recherche soit plus précise, voulez vous créer une offre pour ' + job + '?',
+     buttons : [
+       {
+       text: '<b>Continuer</b>',
+       type: 'button-dark',
+       onTap: function(e) {
+         confirmPopup.close();
          getJobyersOffersByJob(job);
        }
-     });
+     },{
+       text: '<b>Ok</b>',
+       type: 'button-calm',
+       onTap: function(e){
+         confirmPopup.close();
+         $state.go("offres");
+       }
+       }
+
+     ]
+   });
  };
 
  var onGetJobyersOffersByJobSuccess = function(data){

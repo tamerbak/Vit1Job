@@ -50,6 +50,7 @@
 				<i class="icon ion-android-bus calm" ng-if="transportationmode == 'transit'"></i>
 				<label class="calm">&nbsp;&nbsp;{{jobyerOffer.availability.text}}</label></p>
 				<p><i class="icon ion-arrow-shrink"></i><label style="color:gray;">&nbsp;&nbsp;{{jobyerOffer.matching}} %</label></p>
+        <p><i class="ion-ios-calendar-outline" ng-if="jobyerOffer.date_invit || jobyerOffer.contacted "></i><label>&nbsp; {{jobyerOffer.date_invit | date:'dd-MM-yyyy   HH:mm'}}</label></p>
 			</p>
 			<div class="item-button-right">
 				<button class="button button-clear" style="padding-top:11px;"  ng-click="showMenuForContract(jobyerOffer)">

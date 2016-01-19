@@ -27,7 +27,6 @@ angular.module('ion-google-autocomplete', [])
                     var placesService = new google.maps.places.PlacesService(obj.get(0));
                     var searchEventTimeout = undefined;
                     $rootScope.location = $location;
-                    console.log($rootScope.location.$$path);
                     var googleAutocompleteOk='<button ng-click="selectLocationString(searchQuery)" class="button button-clear">Ok';
                     if ($rootScope.location.$$path == '/jobyersOffersTab/map') 
                     {

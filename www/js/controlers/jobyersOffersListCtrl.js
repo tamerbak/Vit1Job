@@ -25,8 +25,8 @@ starter.controller('jobyersOffersListCtrl',
 				localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
 			};
 
-			//*/
 
+			//**
 			$scope.jobyersOffers = [{
 				jobyerName : 'Jérôme',
 				availability : {
@@ -38,7 +38,11 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 60,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
+
+				//Date_Invit : $scope.ge
+
 			},
 			{
 				jobyerName : 'Alain',
@@ -51,7 +55,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 20,
 				contacted : true,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit:'19-01-2016  11:20'
 			},
 			{
 				jobyerName : 'Philippe',
@@ -64,7 +69,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 10,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
 			}];
 		//*/
 		/*
@@ -119,6 +125,9 @@ starter.controller('jobyersOffersListCtrl',
 			cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
 			buttonClicked: function(index) {
         jobber.contacted = true;
+				//Get Date & Time 
+				jobber.date_invit= new Date();
+
 
 		if(index==0){
               console.log('called send sms');

@@ -16,7 +16,7 @@ starter
     };
     $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+    var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
     $scope.geocodeOptions = {
       componentRestrictions: {
         country : 'FR'
@@ -24,7 +24,7 @@ starter
     };
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdressePersEmployeur = function(){
-
+      var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 			var codePostal="", ville="" , num = "", adresse1="",adresse2="";
 
 			// RECUPERATION CONNEXION
@@ -51,7 +51,25 @@ starter
 					});
         // }
 			// REDIRECTION VERS PAGE - ADRESSE TRAVAIL
-			$state.go('adresseTravail',{"geolocated":geolocated,addressPers:$scope.formData.address});
+      if(steps)
+      {
+       
+        if(steps.step3)
+        {
+          $state.go('adresseTravail');
+        }
+        else
+        {
+          $state.go('contract');
+        }
+
+      }
+      else
+      {
+       
+        $state.go('adresseTravail',{"geolocated":geolocated,addressPers:$scope.formData.address});
+      }
+			
 		};
 
 		// VALIDATION - FIELD
@@ -60,7 +78,7 @@ starter
 		};
 
 		$scope.$watch('formData.zipCodes', function(){
-			console.log('hey, formData.zipCodes has changed!');
+			// console.log('hey, formData.zipCodes has changed!');
 			//console.log('zipCodes.length : '+$scope.formData.zipCodes.length);
 		});
  
@@ -141,7 +159,7 @@ starter
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
 				//$scope.initForm();
 				//employeur=localStorageService.get('employeur');
-        var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';        
+        var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';        
         if(steps!='')
           {
              $scope.title="Pré-saisie des informations contractuelles : adresse siège social";    
@@ -205,7 +223,6 @@ starter
 
   $scope.skipDisabled= function(){
     var employeur=localStorageService.get('employeur');
-    console.log(employeur);
     return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
   };      
 });

@@ -15,7 +15,7 @@ starter
 	    };
 	    $scope.formData.addressTravail="";
 	    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-	    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+	    var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
 		$scope.updateAdresseTravEmployeur = function(){
 	
@@ -38,7 +38,7 @@ starter
 
 						// PUT IN SESSION
 						localStorageService.set('employeur', employeur);
-						console.log("employeur : "+JSON.stringify(employeur));
+						// console.log("employeur : "+JSON.stringify(employeur));
 						// REDIRECTION VERS PAGE - offres
 						if(steps == '')$state.go('offres');
       					else $state.go('contract');						
@@ -62,11 +62,11 @@ starter
 
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
-      console.log(states.fromCache+"  state : "+states.stateName);
+      // console.log(states.fromCache+"  state : "+states.stateName);
 			if(states.stateName == "adresseTravail" ){
-			var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
+			var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 				//$scope.initForm();
-				console.log("steps ="+steps);
+				// console.log("steps ="+steps);
 		    if(steps!='')
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
@@ -91,12 +91,12 @@ starter
 		    	$scope.isContractInfo=false;		 		
 		    	displayPopups();
 		    }
-		    	console.log("steps : "+steps);
-				console.log("$scope.title : "+$scope.title);
+		    	// console.log("steps : "+steps);
+				// console.log("$scope.title : "+$scope.title);
 
 				// AFFICHE POPUP - SI JE VIENS
 				if($ionicHistory.backView() === "adressePersonel"){}
-				console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
+				// console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
 
 				var employeur=localStorageService.get('employeur');
 				if(employeur){
@@ -122,7 +122,7 @@ starter
     $scope.displayAdresseTooltip = function () {
     	$scope.adresseToolTip = "Astuce : Commencez par le code postal";
     	$scope.showAdresseTooltip = true;
-    	console.log($scope.formData.addressTravail);
+    	// console.log($scope.formData.addressTravail);
     };
 $scope.displayAdresseTooltip();
     $scope.fieldIsEmpty = function() {
@@ -147,7 +147,7 @@ function displayPopup1(){
 	            onTap: function (e1) {
 	              e1.preventDefault();
 	              popup1.close();
-	              console.log('popup1 non');
+	              // console.log('popup1 non');
 	            }
 	          }, {
 	            text: '<b>Oui</b>',
@@ -155,7 +155,7 @@ function displayPopup1(){
 	            onTap: function (e2) {
 	              e2.preventDefault();
 	              popup1.close();
-	              console.log('popup1 oui');
+	              // console.log('popup1 oui');
 	              $timeout(function () {
 	                var popup2 = $ionicPopup.show({
 	                  //Votre géolocalisation pour renseigner votre adresse du siège social?
@@ -168,7 +168,7 @@ function displayPopup1(){
 	                      onTap: function (e3) {
 	                        e3.preventDefault();
 	                        popup2.close();
-	                        console.log('popup2 non');
+	                        // console.log('popup2 non');
 	                      }
 	                    }, {
 	                      text: '<b>Oui</b>',
@@ -176,7 +176,7 @@ function displayPopup1(){
 	                      onTap: function (e4) {
 	                        e4.preventDefault();
 	                        popup2.close();
-	                        console.log('popup2 oui');
+	                        // console.log('popup2 oui');
 						  GeoService.getUserAddress()
 						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
@@ -221,7 +221,7 @@ function displayPopups(){
 	    onTap: function (e) {
 	      e.preventDefault();
 	      popup.close();
-	      console.log('popup oui');
+	      // console.log('popup oui');
 	      $scope.formData.addressTravail = "";
 	      displayPopup1();
 	    }
@@ -246,7 +246,7 @@ function displayPopups(){
     
     var container = document.getElementsByClassName('pac-container');
     if(screen.height <= 480){
-      console.log("height called");
+      // console.log("height called");
       angular.element(container).attr('style', 'height: 60px;overflow-y: scroll');  
     }
     angular.element(container).attr('data-tap-disabled', 'true');

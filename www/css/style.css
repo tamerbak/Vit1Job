@@ -708,19 +708,35 @@ ion-tabs ion-nav-view{
     padding: auto !important;
     margin-bottom: 10px !important;
 }
+/* platform-ios*/
+.platform-ios .ios-sheet-vitonjob .action-sheet .button{
+  text-align: center;
+  border-color: #d1d3d6;
+  font-size: 21px;
+  color: gray ;
+  border-width: 1px;
+}
+.platform-ios .ios-sheet-vitonjob .action-sheet .action-sheet-title{
+  padding: 16px;
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
 
+/* Platfrom-android*/
 .platform-android .android-sheet-vitonjob .action-sheet .button{
   text-align: center;
   border-color: #d1d3d6;
   font-size: 21px;
-  color: gray;
+  color: #14BAA6;
   border-width: 1px;
 }
 .platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{
   padding: 16px;
   color: #000;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
 }
 .platform-android .android-sheet-vitonjob .action-sheet-cancel{
@@ -747,6 +763,7 @@ ion-tabs ion-nav-view{
 #connexionPhoneView .row{
   padding-bottom: 0px;
   padding-left: 0px;
+  /*margin-bottom: 16px;*/
 }
 
 .google-autocomplete-cancele

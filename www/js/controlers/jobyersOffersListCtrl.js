@@ -25,8 +25,8 @@ starter.controller('jobyersOffersListCtrl',
 				localStorageService.set('jobyerListSetting', $scope.jobyerListSetting);
 			};
 
-			//*/
 
+			//**
 			$scope.jobyersOffers = [{
 				jobyerName : 'Jérôme',
 				availability : {
@@ -38,7 +38,11 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 60,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
+
+				//Date_Invit : $scope.ge
+
 			},
 			{
 				jobyerName : 'Alain',
@@ -51,7 +55,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 20,
 				contacted : true,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit:'19-01-2016  11:20'
 			},
 			{
 				jobyerName : 'Philippe',
@@ -64,7 +69,8 @@ starter.controller('jobyersOffersListCtrl',
 				matching : 10,
 				contacted : false,
 				latitude : 0,
-				longitude : 0
+				longitude : 0,
+				date_invit: ''
 			}];
 		//*/
 		/*
@@ -102,6 +108,9 @@ starter.controller('jobyersOffersListCtrl',
 	$scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
 		setJobyerListSetting('orderByCorrespondence', newValue);
 	});
+	function has(object, key) {
+      return object ? hasOwnProperty.call(object, key) : false;
+   	}
 
 	$scope.showMenuForContract = function(jobber){
 
@@ -109,19 +118,21 @@ starter.controller('jobyersOffersListCtrl',
     localStorageService.set('Selectedjobyer',jobber);
 		var hideSheet = $ionicActionSheet.show({
 			buttons: [
-			{ text: '<i class="ion-android-textsms">Contacter par SMS</i>'}, //Index = 0
-			{ text: '<i class="ion-android-mail">Contacter Mail</i>'}, //Index = 1
-			{ text: '<i class="ion-ios-telephone">Contacter par Téléphone</i>' }, //Index = 2
+			{ text: '<i class="ion-android-textsms"> Contacter par SMS</i>'}, //Index = 0
+			{ text: '<i class="ion-android-mail"> Contacter Mail</i>'}, //Index = 1
+			{ text: '<i class="ion-ios-telephone"> Contacter par Téléphone</i>' }, //Index = 2
 			{ text: '<i class="ion-ios-paper-outline"> Créer un contrat</i>' } //Index = 3
 			],
 			titleText: 'Mise en relation',
 			cancelText: 'Annuler',
 			cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
 			buttonClicked: function(index) {
-        jobber.contacted = true;
+
+
+
 
 		if(index==0){
-              console.log('called send sms');
+              // console.log('called send sms');
               document.addEventListener("deviceready", function() {
               var options = {
                   replaceLineBreaks: false, // true to replace \n by a new line, false by default
@@ -131,7 +142,11 @@ starter.controller('jobyersOffersListCtrl',
              };
             $cordovaSms.send(jobber.tel, 'Vitojob :Inivitation de mise en relation', options)
                 .then(function() {
+											//Get Date & Time
+											jobber.date_invit= new Date();
+											jobber.contacted = true;
                       console.log('Message sent successfully');
+
                 }, function(error) {
                       console.log('Message Failed:' + error);
 
@@ -146,7 +161,8 @@ starter.controller('jobyersOffersListCtrl',
 					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
 					}, function(){
-						    console.log('email view dismissed');
+								jobber.date_invit= new Date();
+								jobber.contacted = true;
 							//Global.showAlertValidation("Votre email a été bien envoyé.");
 					}, this);
 					}
@@ -155,9 +171,10 @@ starter.controller('jobyersOffersListCtrl',
 		if(index==2){
 
 			window.plugins.CallNumber.callNumber(function(){
-				console.log("success call");
+				jobber.date_invit= new Date();
+				jobber.contacted = true;
 			}, function(){
-				console.log("error call");
+				// console.log("error call");
 				Global.showAlertValidation("Une erreur est survenue.Veuillez réssayer plus tard");
 			} ,jobber.tel, false);
 		}
@@ -170,41 +187,45 @@ starter.controller('jobyersOffersListCtrl',
 
               var isAuth = UserService.isAuthenticated();
               if (isAuth) {
-                console.log("check and then redirect to contract page");
+								jobber.date_invit= new Date();
+								jobber.contacted = true;
                 var employer = localStorageService.get('employeur');
                 var redirectToStep1 = (typeof (employer) == "undefined");
                 var redirectToStep1 = (employer) ? (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined") : true;
                 var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
                 var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
-                if (employer && !redirectToStep1) {
+                if (has(employer.adressePersonel,'fullAddress')) { var redirectToStep2 = false }else {var redirectToStep2 = true};
+                if (has(employer.adresseTravail,'fullAddress')) { var redirectToStep3 = false }else {var redirectToStep3 = true};
+               
+                if (employer) {
                   for (var key in employer) {
                     redirectToStep1 = (employer[key]) == "";
                     if (redirectToStep1) break;
                   }
-                  if (!redirectToStep1) {
-                    for (var key in employer.adressePersonel) {
-                      redirectToStep2 = (employer.adressePersonel[key]) == "";
-                      if (redirectToStep2) break;
-                    }
-                  }
-                  if (!redirectToStep2) {
-                    for (var key in employer.adresseTravail) {
-                      redirectToStep3 = (employer.adresseTravail[key]) == "";
-                      if (redirectToStep3) break;
-                    }
-                  }
+                  // if (!redirectToStep1) {
+                  //   for (var key in employer.adressePersonel) {
+                  //     redirectToStep2 = (employer.adressePersonel[key]) == "";
+                  //     if (redirectToStep2) break;
+                  //   }
+                  // }
+                  // if (!redirectToStep2) {
+                  //   for (var key in employer.adresseTravail) {
+                  //     redirectToStep3 = (employer.adresseTravail[key]) == "";
+                  //     if (redirectToStep3) break;
+                  //   }
+                  // }
                 }
                 var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
                 var objRedirect = {"step1": redirectToStep1, "step2": redirectToStep2, "step3": redirectToStep3};
                 if (dataInformed) {
                   //show contract page //TODO
                   $state.go("contract", {jobyer: jobber});
-                  console.log(jobber);
-                  console.log("redirect to contract pages");
+                  // console.log(jobber);
+                  // console.log("redirect to contract pages");
                 }
                 else {
-                  localStorageService.set("steps",JSON.stringify(objRedirect));
-                  console.log(employer);
+                  localStorageService.set("steps",objRedirect);
+                  // console.log(employer);
                   if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {jobyer: jobber});
                   else if (redirectToStep2) $state.go("adressePersonel", {jobyer: jobber});
                   else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});

@@ -17,6 +17,10 @@
   text-align: center;
 }
 
+#metiers > div.angucomplete-holder{
+ z-index: 5 !important;
+}
+
 .bar.bar-calm.bar-footer{
   bottom: 90px !important;
   border-color: transparent !important;
@@ -550,13 +554,15 @@ ion-tabs ion-nav-view{
     display:none !important;
   }
 }
+@media screen and (max-height:320px){
+  .vimg{
+    display: none;
+  }
+}
 #conxionMailView .list , #connexionPhoneView .list{
   margin-bottom: 0px !important;
 }
-#connexionPhoneView .row{
-  /*padding-bottom: 0px;*/
-  padding-left: 0px;
-}
+
 #mailPopup, #pwdPopup, #adressePopup , #phonePopup{
   transition: .5s;
   overflow: hidden;
@@ -734,19 +740,17 @@ ion-tabs ion-nav-view{
     -ms-flex: 0 0 65%;
     flex: 0 0 65%;
     max-width: 65%;
+    margin-left: 6px;
 }
 
+
 #connexionPhoneView .row{
-  border:solid 1px #14BAA6 !important;
-}
-#connexionPhoneView .col-67 label, #connexionPhoneView  .col-10 label, #connexionPhoneView  .col-25 label{
-  border: none;
-}
-/*
-#connexionPhoneView .col-67 , #connexionPhoneView  .col-10 , #connexionPhoneView  .col-25 {
   padding-bottom: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  margin-bottom: 0px;
+  padding-left: 0px;
 }
-*/
+
+.google-autocomplete-cancele
+{
+  position: relative !important;
+  top: 0px !important;
+}

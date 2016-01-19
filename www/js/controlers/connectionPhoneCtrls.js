@@ -108,7 +108,9 @@ starter
 
 		$scope.initForm=function(){
 			// GET LIST
-      $scope.formData={'index':"33"};
+      if(!$scope.formData)
+        $scope.formData={};
+      $scope.formData.index="33";
 			//$scope.formData={ 'villes': $cookieStore.get('villes')};
       $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
         .success(function(data) {

@@ -6,8 +6,8 @@
   </ion-header-bar> -->
  <ion-nav-buttons side="secondary">
     <a class="button icon-right ion-edit button-clear" ng-click="showMenuForEditContract()">  </a>
-    </ion-nav-buttons>    
-  <ion-content padding="true" ng-controller="contractCtrl">
+    </ion-nav-buttons>
+  <ion-content padding="true" ng-controller="contractCtrl" has-footer="true" padding="true" has-tabs="true">
   <div>
     <div id="printableContent">
       <div class="row">
@@ -102,7 +102,7 @@
     </div>
   </div>
   </ion-content>
-  <div class="bar bar-footer" style="height:initial;">
-    <button class="button button-full button-positive grey" style="margin-left: 30px; margin-right: 30px;" ng-model="button" ng-click="showAlert()">J'accepte toutes les clauses du contrat</button>
-  </div>
+  <ion-footer-bar class=" bar-footer sub-footer" style="height:60px;">
+     <button class="button button-full button-positive grey" style="margin-left: 30px; margin-right: 30px;" ng-model="button" ng-click="showAlert()">J'accepte toutes les clauses du contrat</button>
+  </ion-footer-bar>
 </ion-view>

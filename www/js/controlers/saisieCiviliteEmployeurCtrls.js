@@ -67,6 +67,13 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
+      
+      
+      if (steps.state) 
+      {
+      	steps.step1=false;
+      	localStorageService.set("steps",steps);
+      };
       $scope.isContractInfo=true;
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -87,10 +94,6 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 	}
 });
 		$scope.updateCiviliteEmployeur = function(){
-
-			// for(var obj in $scope.formData){
-			// 	console.log("formData["+obj+"] : "+$scope.formData[obj]);
-			// }
 
 			var titre=$scope.formData.civ;
 			var nom=$scope.formData.nom;

@@ -200,7 +200,7 @@ button.button.button-positive.rel {
 }
 
 .modal {
-  display: block;
+   /*display: block;
   position: absolute;
   top: 24%;
   bottom: 20%;
@@ -209,7 +209,7 @@ button.button.button-positive.rel {
   z-index: 10;
   overflow: hidden;
   min-height: 50%;
-  /*width: 79%;*/
+ width: 79%;
   background-color: #14BAA6;
   border-color: black;
   /*color: white;*/

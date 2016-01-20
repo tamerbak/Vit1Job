@@ -50,7 +50,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   $scope.inputMapchange= function(addressMap)
   {
 
-    
+
     var myLatlng = new google.maps.LatLng(addressMap.lat,addressMap.lng);
     displayMap(myLatlng);
 
@@ -61,10 +61,10 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     $scope.loaded = true;
   });
   $scope.markerFilter="duration";
-  
+
   var getAddress = function(empl){
     var address;
-           
+
     /*
      var number = (empl.adresseTravail.num && empl.adresseTravail.num.toUpperCase() != "NULL") ? empl.adresseTravail.num : '';
      var street = (empl.adresseTravail.adresse1 && empl.adresseTravail.adresse1.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.adresse1 : '';
@@ -73,7 +73,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
      var city = (empl.adresseTravail.ville && empl.adresseTravail.ville.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.ville : '';
      var country = (empl.adresseTravail.country && empl.adresseTravail.country.toUpperCase() != "NULL") ? '+' + empl.adresseTravail.country : '';
      */
-    
+
     var address = empl.adresseTravail.fullAddress;
     if(address){
       address=address.replace(/\+/g, ' ');
@@ -83,7 +83,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
        }
        */
     }
-    
+
     return address;
   };
 
@@ -92,7 +92,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 	myMarker.setVisible(false);
 	myMarker.setPosition(myLatlng);
 	myMarker.setVisible(true);
-   
+
     loopThroughJobyers(0 ,myLatlng);
 
     //autoComplete search end
@@ -111,16 +111,16 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   $scope.InfoMarkers = [];
   $scope.markers= [];
-  
+
   $scope.displayMarkers=function(){
-    
+
     var jobyers=$scope.jobyersOffers;
-   
+
     if($scope.InfoMarkers.length!=jobyers.length){
-     
-		return;		
+
+		return;
 	}
-      console.log("$scope.InfoMarkers.length==jobyers.length");  
+      console.log("$scope.InfoMarkers.length==jobyers.length");
   //initialize markers
     for(var i=0; i<$scope.markers.length;i++){
       $scope.markers[i].setMap(null);
@@ -128,7 +128,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   $scope.markers=[];
   //
     var sortedMarkers;
-    
+
     var prevCode1=0;
     var prevCode2=0;
     var prevCode3=255;
@@ -141,13 +141,13 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         return parseFloat(a.availability.value) - parseFloat(b.availability.value);
       });
     }
-    
+
     var prevCode1=0;
     var prevCode2=0;
     var prevCode3=255;
 
     for(var j=0; j<sortedMarkers.length;j++){
-      
+
       //var code1=255+(((parseFloat(sortedMarkers[j].distance) - parseFloat(sortedMarkers[0].distance))/(4 *(parseFloat(sortedMarkers[sortedMarkers.length-1].distance)-parseFloat(sortedMarkers[0].distance))));
       var code1=((255-prevCode1)*0.25)+prevCode1;
       var code2=((255-prevCode2)*0.25)+prevCode2;
@@ -160,7 +160,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       var hexaCode1=parseInt(code1).toString(16);
       var hexaCode2=parseInt(code2).toString(16);
       var hexaCode3=parseInt(code3).toString(16);
-      
+
       var marker2 = new google.maps.Marker({
         position: sortedMarkers[j].position,
         icon: new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+hexaCode1+""+hexaCode2+""+hexaCode3),
@@ -196,8 +196,8 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + jobyers[i].address).
         success(function (data) {
           var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
-          
-          
+
+
           var myLatLng2 = new google.maps.LatLng(location.lat, location.lng);
           //var myLatLng2 = {lat: jobyersOffers[i].latitude, lng: jobyersOffers[i].longitude};
 		  var content = "<h3>"+jobyers[i].jobyerName+"</h3>"+"<p>Disponibilité : "+jobyers[i].availability.text+"</p><p>Correspondance : "+jobyers[i].matching+"%</p>";
@@ -222,7 +222,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     var myLatlng,address;
     var employeur=localStorageService.get('employeur');
-    
+
     if(employeur!=null && employeur!=undefined)
       address = getAddress(employeur);
     if(!address)
@@ -230,12 +230,12 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).
       success(function(data) {
-        
+
         var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : NULL;
-        
-        
+
+
         myLatlng=new google.maps.LatLng(location.lat,location.lng);
-        
+
 		var mapOptions = {
 			center: myLatlng,
 			zoom: 16,
@@ -260,7 +260,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
         Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
       });
     //Marker + infowindow + angularjs compiled ng-click
-    var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+    var contentString = "<div><a ng-click='clickTest()'>Vous êtes ici</a></div>";
     var compiled = $compile(contentString)($scope);
 
     var infowindow = new google.maps.InfoWindow({
@@ -283,12 +283,12 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     });
     var success=false;
     navigator.geolocation.getCurrentPosition(function(pos) {
-      
+
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
           var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
 		  myMarker.setVisible(false);
 		  myMarker.setPosition(myLatLng);
-		  myMarker.setVisible(true);		  
+		  myMarker.setVisible(true);
           loopThroughJobyers(0 ,myLatLng);
       success=true;
       $ionicLoading.hide();
@@ -300,7 +300,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     },{
       timeout : 5000
     });
-    
+
     //if(success==false)
     //Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
   };
@@ -310,14 +310,14 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
   };
 
   $scope.addressSelected=function(selected){
-    
+
     $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+selected.originalObject.libelle).
       success(function(data) {
-        
+
         var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : null;
         if(location) {
           var myLatlng = new google.maps.LatLng(location.lat, location.lng);
-          
+
           displayMap(myLatlng);
         }else{
           Global.showAlertValidation("Cette adresse n'existe pas.");
@@ -329,4 +329,3 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
   };
 }]);
-

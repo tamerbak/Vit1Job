@@ -156,13 +156,13 @@ starter.controller('jobyersOffersListCtrl',
 		if(index==1){
 				cordova.plugins.email.isAvailable(
 					function (isAvailable) {
+					jobber.date_invit= new Date();
+					jobber.contacted = true;
 					cordova.plugins.email.open({
 					to:  [jobber.email], // email addresses for TO field
 					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
-					}, function(){
-								jobber.date_invit= new Date();
-								jobber.contacted = true;
+				}, function(){
 							//Global.showAlertValidation("Votre email a été bien envoyé.");
 					}, this);
 					}
@@ -196,7 +196,7 @@ starter.controller('jobyersOffersListCtrl',
                 var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
                 if (has(employer.adressePersonel,'fullAddress')) { var redirectToStep2 = false }else {var redirectToStep2 = true};
                 if (has(employer.adresseTravail,'fullAddress')) { var redirectToStep3 = false }else {var redirectToStep3 = true};
-               
+
                 if (employer) {
                   for (var key in employer) {
                     redirectToStep1 = (employer[key]) == "";

@@ -26,7 +26,7 @@
         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>            
       </label> -->
       <label id="google-autocomplete-travail" class="item item-input">
-         <ion-google-autocomplete placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" places-options="placesOptions" />
+         <ion-google-autocomplete placeholder="Veuillez saisir votre adresse de travail..." id="autocomplete_travail" ng-model="formData.addressTravail" places-options="placesOptions" />
          <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>           
       </label>
     </div>

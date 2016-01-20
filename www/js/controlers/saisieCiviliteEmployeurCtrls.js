@@ -67,7 +67,13 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
-      $scope.isContractInfo=true;
+      
+      
+      if (steps.state) 
+      {
+      	steps.step1=false;
+      	localStorageService.set("steps",steps);
+      };
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
         template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',

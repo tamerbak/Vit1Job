@@ -163,7 +163,13 @@ starter
         if(steps!='')
           {
              $scope.title="Pré-saisie des informations contractuelles : adresse siège social";    
-             $scope.isContractInfo=true;                    
+             $scope.isContractInfo=true;
+             
+              if (steps.state) 
+              {
+                steps.step2=false;
+                localStorageService.set("steps",steps);
+              };                    
             $ionicPopup.show({
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
               template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',

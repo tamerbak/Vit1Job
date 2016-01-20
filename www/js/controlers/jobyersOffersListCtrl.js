@@ -156,13 +156,13 @@ starter.controller('jobyersOffersListCtrl',
 		if(index==1){
 				cordova.plugins.email.isAvailable(
 					function (isAvailable) {
+					jobber.date_invit= new Date();
+					jobber.contacted = true;
 					cordova.plugins.email.open({
 					to:  [jobber.email], // email addresses for TO field
 					subject:    "Vitojob :Inivitation de mise en relation", // subject of the email
 					//app: 'gmail'
-					}, function(){
-								jobber.date_invit= new Date();
-								jobber.contacted = true;
+				}, function(){
 							//Global.showAlertValidation("Votre email a été bien envoyé.");
 					}, this);
 					}
@@ -196,7 +196,7 @@ starter.controller('jobyersOffersListCtrl',
                 var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
                 if (has(employer.adressePersonel,'fullAddress')) { var redirectToStep2 = false }else {var redirectToStep2 = true};
                 if (has(employer.adresseTravail,'fullAddress')) { var redirectToStep3 = false }else {var redirectToStep3 = true};
-               
+
                 if (employer) {
                   for (var key in employer) {
                     redirectToStep1 = (employer[key]) == "";
@@ -216,19 +216,22 @@ starter.controller('jobyersOffersListCtrl',
                   // }
                 }
                 var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
-                var objRedirect = {"step1": redirectToStep1, "step2": redirectToStep2, "step3": redirectToStep3};
+                var objRedirect = {"state":false,"step1": redirectToStep1, "step2": redirectToStep2, "step3": redirectToStep3};
                 if (dataInformed) {
+                  objRedirect.state=false;
+                  localStorageService.set("steps",objRedirect);
                   //show contract page //TODO
                   $state.go("contract", {jobyer: jobber});
                   // console.log(jobber);
                   // console.log("redirect to contract pages");
                 }
                 else {
-                  localStorageService.set("steps",objRedirect);
-                  // console.log(employer);
-                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {jobyer: jobber});
-                  else if (redirectToStep2) $state.go("adressePersonel", {jobyer: jobber});
-                  else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});
+                	objRedirect.state=true;
+		            localStorageService.set("steps",objRedirect);
+		              // console.log(employer);
+		            if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {jobyer: jobber});
+		            else if (redirectToStep2) $state.go("adressePersonel", {jobyer: jobber});
+	                else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});
                 }
               } else {
                 $state.go("connection", {jobyer: jobber});

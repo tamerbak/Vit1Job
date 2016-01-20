@@ -200,7 +200,7 @@ button.button.button-positive.rel {
 }
 
 .modal {
-  display: block;
+   /*display: block;
   position: absolute;
   top: 24%;
   bottom: 20%;
@@ -209,10 +209,10 @@ button.button.button-positive.rel {
   z-index: 10;
   overflow: hidden;
   min-height: 50%;
-  width: 79%;
+ width: 79%;
   background-color: #14BAA6;
   border-color: black;
-//color: white;
+  /*color: white;*/
 }
 
 ion-content.modalContent.scroll-content.ionic-scroll.has-header {
@@ -592,6 +592,26 @@ ion-tabs ion-nav-view{
   border-bottom: 10px solid #14baa6;
 }
 
+.chiffre{
+  width: 0;
+  height: 0;
+  margin-left: 37%;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #14baa6;
+  margin-top: -15px;
+}
+
+.mail{
+  width: 0;
+  height: 0;
+  margin-left: 15px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #14baa6;
+  margin-top: -15px;
+}
+
 #popupCntPwd, #popupCntMail,#popupCntPhone{
   margin-top: 0px;
 }
@@ -763,7 +783,7 @@ ion-tabs ion-nav-view{
 #connexionPhoneView .row{
   padding-bottom: 0px;
   padding-left: 0px;
-  /*margin-bottom: 16px;*/
+  margin-bottom: 16px;
 }
 
 .google-autocomplete-cancele

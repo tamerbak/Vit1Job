@@ -116,15 +116,16 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
 
   };
   $scope.showMenuForEditContract = function(){
-
+     var steps = localStorageService.get('steps');
+    console.log(steps);
      
     var hideSheet = $ionicActionSheet.show({
       buttons: [
-      { text: 'civilité'}, //Index = 0
-      { text: 'adresse personnel'}, //Index = 1
-      { text: 'adresse de travail' }, //Index = 2
+      { text: 'Civilité'}, //Index = 0
+      { text: 'Siège social'}, //Index = 1
+      { text: 'Adresse de travail' }, //Index = 2
       ],
-      titleText: 'éditer le contrat',
+      titleText: 'Editer le contrat',
       cancelText: 'Annuler',
       cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
       buttonClicked: function(index) {

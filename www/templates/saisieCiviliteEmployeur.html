@@ -46,8 +46,9 @@
           Saisissez le NAF sous forme de 4 chiffres et une lettre
       </div>
     </div>
-      <label class="item item-input">
-        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+      <label class="item item-input it2">
+        <input numbers-only="numbers-only" type="tel"  placeholder="N°URSSAF" data-ng-model="formData.numUssaf" >
+      <!--  <input numbers-only="number-only" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">-->
         <span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
       </label>
 

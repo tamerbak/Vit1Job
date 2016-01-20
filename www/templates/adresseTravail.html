@@ -6,7 +6,7 @@
   </ion-header-bar> -->
 
     <ion-nav-buttons side="secondary">
-    <a class="button icon-right ion-chevron-right button-clear" ui-sref="offres">  </a>
+    <a class="button icon-right ion-chevron-right button-clear" ng-click="skipGoto();" ng-disabled="skipDisabled();">  </a>
     </ion-nav-buttons>
   <ion-content padding="true">
     <!-- Title -->
@@ -21,9 +21,13 @@
        </div> -->
     <br>
    <div class="list">
-     <label class="item item-input">
-       <input type="text" placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="addresseTravail"><!-- googleplace -->
+     <!-- <label class="item item-input">
+       <input type="text" placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" googleplace="" class="ng-pristine ng-valid" autocomplete="off" ng-click="displayAdresseTooltip()" ng-focus="disableTap()" id="addresseTravail">
         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>            
+      </label> -->
+      <label id="google-autocomplete-travail" class="item item-input">
+         <ion-google-autocomplete placeholder="Veuillez saisir votre adresse de travail..." ng-model="formData.addressTravail" places-options="placesOptions" />
+         <span ng-show="!formData.addressTravail  && isContractInfo" class="requiredStar">*</span>           
       </label>
     </div>
     <div id="popupAdrTravail" ng-class="{'hidden' : !showAdresseTooltip}" ng-if="fieldIsEmpty()">
@@ -34,7 +38,7 @@
     </div>
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="updateAdresseTravEmployeur()">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="updateAdresseTravEmployeur()" ng-disabled="!formData.addressTravail  && isContractInfo">Valider</button>
     </div>
   </ion-content>
 </ion-view>

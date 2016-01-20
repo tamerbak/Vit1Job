@@ -19,8 +19,8 @@
 
   <ion-content>
     <div id="floating-panel">
-      <i class="icon ion-search placeholder-icon" style="margin-left:-10px; margin-right:-5px"></i>
-      <input id="address" type="textbox" placeholder="Recherche adresse" ng-focus="disableTap()">
+      <!-- <i class="icon ion-search placeholder-icon" style="margin-left:-10px; margin-right:-5px"></i> -->
+      <ion-google-autocomplete placeholder="Recherche adresse" ng-model="formData.addressMap" places-options="placesOptions" ng-change="inputMapchange(formData.addressMap)" />
     </div>
     <div id="map" data-tap-disabled="true"></div>
   </ion-content>

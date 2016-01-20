@@ -3,7 +3,7 @@
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
     </ion-nav-buttons> -->
     <ion-nav-buttons side="secondary">
-    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adressePersonel">  </a>
+    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adressePersonel" ng-disabled="skipDisabled();">  </a>
     </ion-nav-buttons>
     <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -43,26 +43,15 @@
        <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!apnIsValid()">
       <div class="arrow-up"></div>
       <div id="pwdPopup">
-        Saisissez le NAF sous format 9999A
+          Saisissez le NAF sous forme de 4 chiffres et une lettre
       </div>
     </div>
       <label class="item item-input">
-        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf"><span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
+        <input type="text" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+        <span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
       </label>
 
     </div>
-
-    <!-- NATIONALITE
-    <div angucomplete id="ex0"
-                placeholder="Nationalité"
-                pause="100"
-                selectedobject="formData.nationalite"
-                localdata="formData.nationalites"
-                searchfields="libelle"
-                titlefield="libelle"
-                minlength="1"
-                inputclass="form-control form-control-small inputAutoCompl" class="autoCompl">
-    </div>-->
 
     <div class="list">
       <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
@@ -74,23 +63,12 @@
       <button class="button button-full button-positive green" data-ng-click="takePicture()">
         Prendre une photo de votre extrait k-bis
       </button>
-      <!-- <div ng-controller="saisieCiviliteEmployeurCtrl"> -->
       <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px; max-height: 100px;padding-top:5px;" />
-      <!-- </div> -->
     </div>
-
-    <!--&lt;!&ndash; Image uploader &ndash;&gt;
-    <div class="list">
-        <label class="item item-input">
-          &lt;!&ndash;<input id="image" type="file" class="upload" data-ng-model="formData.image" multiple onchange="angular.element(this).scope().loadImage()">
-          <input id="image" type="file" class="upload" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().takePicture()">&ndash;&gt;
-          <input id="image" type="file" class="upload" capture="camera" accept="image/*" data-ng-model="formData.image" onchange="angular.element(this).scope().loadImage(this)">
-        </label>
-    </div>-->
 
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()" ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">Valider</button>
     </div>
 
   </ion-content>

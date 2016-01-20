@@ -1,0 +1,25 @@
+{
+  "name": "ion-google-autocomplete",
+  "version": "1.0.2",
+  "description": "ion-google-autocomplete ================",
+  "main": "ion-google-autocomplete.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.3.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guillahume/ion-google-autocomplete.git\t"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guillahume/ion-google-autocomplete.git\t/issues"
+  },
+  "homepage": "https://github.com/guillahume/ion-google-autocomplete.git\t"
+}

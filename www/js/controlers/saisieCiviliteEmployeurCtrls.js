@@ -11,6 +11,7 @@ starter
 
 		$scope.isIOS = ionic.Platform.isIOS();
   		$scope.isAndroid = ionic.Platform.isAndroid();
+  		var steps=localStorageService.get('steps');
 
   		$scope.showFileDialog = function() {
   			document.getElementById('image').click();
@@ -58,11 +59,11 @@ $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
 	viewData.enableBack = true;
 });    
 $scope.$on("$ionicView.beforeEnter", function(scopes, states){
-  console.log(states.fromCache+"  state : "+states.stateName);
+  // console.log(states.fromCache+"  state : "+states.stateName);
   if(states.stateName == "saisieCiviliteEmployeur" ){
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
-    var steps =  (localStorageService.get('steps')!=null) ? JSON.parse(localStorageService.get('steps')) : '';
-    console.log("steps : "+steps);
+    steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
+    
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
@@ -87,10 +88,6 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 });
 		$scope.updateCiviliteEmployeur = function(){
 
-			for(var obj in $scope.formData){
-				console.log("formData["+obj+"] : "+$scope.formData[obj]);
-			}
-
 			var titre=$scope.formData.civ;
 			var nom=$scope.formData.nom;
 			var prenom=$scope.formData.prenom;
@@ -103,7 +100,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			var connexion=localStorageService.get('connexion');
 			// RECUPERATION EMPLOYEUR ID
 			var employeId=connexion.employeID;
-			console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
+			// console.log("localStorageService.get(connexion) : "+JSON.stringify(connexion));
 			// RECUPERATION SESSION ID
 			var sessionId=localStorageService.get('sessionID');
 
@@ -143,8 +140,8 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 						.success(function (response){
 
 							// DONNEES ONT ETE SAUVEGARDES
-							console.log("les donnes ont été sauvegarde");
-							console.log("response"+response);
+							// console.log("les donnes ont été sauvegarde");
+							// console.log("response"+response);
 
 							var employeur=localStorageService.get('employeur');
 							if(!employeur)
@@ -158,7 +155,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 							employeur.ape=ape;
 							employeur.numUssaf=numUssaf;
 
-							console.log("employeur : "+JSON.stringify(employeur));
+							// console.log("employeur : "+JSON.stringify(employeur));
 							// PUT IN SESSION
 							localStorageService.set('employeur', employeur);
 
@@ -171,9 +168,9 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// UPLOAD IMAGE
 			if($scope.formData.imageEncode){
 
-				console.log("image name : "+$scope.formData.imageName);
+				// console.log("image name : "+$scope.formData.imageName);
 				//console.log("image en base64 : "+$scope.formData.imageEncode);
-				console.log("image en base64 : "+$scope.formData.imageEncode);
+				// console.log("image en base64 : "+$scope.formData.imageEncode);
 				// ENVOI AU SERVEUR
 				//UploadFile.uploadFile($scope.formData.imageName, $scope.formData.imageEncode.split(',')[1], employeId)
 				UploadFile.uploadFile("user_employeur", $scope.formData.imageName, $scope.formData.imageEncode, employeId)
@@ -235,7 +232,28 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			}***/
 
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
-      $state.go('adressePersonel');
+      		if(steps)
+			{
+				console.log(steps);
+				if (steps.step2) 
+				{
+					$state.go('adressePersonel');
+				}
+				else if(steps.step3)
+				{
+					$state.go('adresseTravail');
+				}
+				else
+				{
+					$state.go('contract');
+				}
+
+			}
+			else
+			{
+				console.log("else" + steps);
+				$state.go('adressePersonel');
+			}
 		};
 		
 
@@ -259,7 +277,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 
       $cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;;
-				console.log("imageURI : "+$scope.imgURI);
+				// console.log("imageURI : "+$scope.imgURI);
 				//$state.go($state.current, {}, {reload: true});
 
 			}, function(err) {
@@ -274,8 +292,8 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 */
 		$scope.loadImage=function(img){
 
-			console.log("files.length : "+img.files.length);
-			console.log("files[0] : "+img.files[0]);
+			// console.log("files.length : "+img.files.length);
+			// console.log("files[0] : "+img.files[0]);
 
 			function el(id){
 				var elem = document.getElementById(id);
@@ -312,17 +330,14 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// GET LIST
 			$scope.formData={'civilites': DataProvider.getCivilites()};
 			$scope.formData.civ="Titre";
-			console.log('$scope.formData.civ = '+$scope.formData.civ);
+			// console.log('$scope.formData.civ = '+$scope.formData.civ);
 			$scope.formData.nationalite="Nationalité";						
 		};
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
-			if(states.fromCache && states.stateName == "saisieCiviliteEmployeur"){
+			if(states.stateName == "saisieCiviliteEmployeur"){
 				$scope.initForm();
-
-				console.log("Je suis ds $ionicView.beforeEnter(saisieCivilite)");
 			  var employeur=localStorageService.get('employeur');
-				console.log("employeur : "+JSON.stringify(employeur));
 				if(employeur){
 					// INITIALISATION FORMULAIRE
 					if(employeur.civilite)
@@ -345,7 +360,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 
 		$scope.takePicture = function(){
 
-			console.log("Je suis ds takePicture() ");
+			// console.log("Je suis ds takePicture() ");
 			var options = {
 				quality: 75,
 				destinationType: Camera.DestinationType.DATA_URL,
@@ -361,10 +376,14 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 
 			$cordovaCamera.getPicture(options).then(function(imageData){
 				$scope.imgURI = "data:image/jpeg;base64," + imageData;
-				console.log("imageData : "+imageData);
+				// console.log("imageData : "+imageData);
 				//$state.go($state.current, {}, {reload: true});
 			}, function(err) {
 				console.log(err);
 			});
-		}
+		};
+		$scope.skipDisabled= function(){
+			var employeur=localStorageService.get('employeur');
+			return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
+		};	
 	});

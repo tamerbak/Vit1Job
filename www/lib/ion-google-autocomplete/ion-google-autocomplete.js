@@ -12,7 +12,7 @@ angular.module('ion-google-autocomplete', [])
             return {
                 require: '?ngModel',
                 restrict: 'E',
-                template: '<input type="text" id="ion-google-autocomplate-ngmodel" readonly="readonly" class="ion-google-autocomplete" autocomplete="off">',
+                template: '<input type="text" readonly="readonly" class="ion-google-autocomplete" autocomplete="off">',
                 replace: true,
                 scope: {
                     ngModel: '=?',
@@ -28,20 +28,31 @@ angular.module('ion-google-autocomplete', [])
                     var searchEventTimeout = undefined;
                     $rootScope.location = $location;
                     var googleAutocompleteOk='<button ng-click="selectLocationString(searchQuery)" class="button button-clear">Ok';
+                    
                     if ($rootScope.location.$$path == '/jobyersOffersTab/map') 
                     {
                         googleAutocompleteOk = '';
                     }
-                     else if($rootScope.location.$$path == '/adressePersonel/')
-                    {
-                        $('#google-autocomplete-personel input:first').addClass('autocomplete-personel');
-                    }
-                    else if($rootScope.location.$$path == '/adresseTravail/')
-                    {
-                        $('#google-autocomplete-travail input:first').addClass('autocomplete-travail');
-                    }
+                    //  else if($rootScope.location.$$path === '/adressePersonel/')
+                    // {
+                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-travail')) 
+                    //     {
+                    //         $('#google-autocomplete-personel input:first').removeClass('autocomplete-travail');
+                    //     };
+                        
+                    //     $('#google-autocomplete-personel input:first').addClass('autocomplete-personel');
+                    // }
+                    // else if($rootScope.location.$$path === '/adresseTravail/')
+                    // {
+                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-personel')) 
+                    //     {
+                    //         $('#google-autocomplete-personel input:first').removeClass('autocomplete-personel');
+                    //     };
+                        
+                    //     $('#google-autocomplete-travail input:first').addClass('autocomplete-travail');
+                    // }
                     var POPUP_TPL = [
-                        '<div class="ion-google-autocomplete-container">',
+                        '<div class="ion-google-autocomplete-container modal">',
                             '<div class="bar bar-header item-input-inset">',
                                 '<label class="item-input-wrapper">',
                                     '<i class="icon ion-ios7-search placeholder-icon"></i>',

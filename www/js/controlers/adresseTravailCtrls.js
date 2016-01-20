@@ -40,8 +40,18 @@ starter
 						localStorageService.set('employeur', employeur);
 						// console.log("employeur : "+JSON.stringify(employeur));
 						// REDIRECTION VERS PAGE - offres
-						if(steps == '')$state.go('offres');
-      					else $state.go('contract');						
+						var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
+						if(!steps)
+							{
+								
+								$state.go('offres');
+							}
+      					else 
+      						{
+      							
+      							$state.go('contract');
+      						}
+
 					}).error(function (err){
 						console.log("error : insertion DATA");
 						console.log("error In updateAdresseTravEmployeur: "+err);
@@ -55,19 +65,32 @@ starter
 	$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
 		viewData.enableBack = true;
 	});
-    $scope.$on("$ionicView.beforeEnter", function () {
-      $scope.formData.zipCodes=DataProvider.getZipCodes();
-      $scope.formData.villes=DataProvider.getVilles();
-    });
-
-
+   
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
+			var employeur=localStorageService.get('employeur');
+			if (employeur) 
+			{	console.log("azoul");
+				console.log(employeur.adresseTravail.fullAddress);
+				var result = { 
+                address_components: [], 
+                adr_address: "", 
+                formatted_address: employeur.adresseTravail.fullAddress,
+                geometry: "",
+                icon: "",
+	          	};
+	          	console.log(result);
+	          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
+	          	ngModel.$setViewValue(result);
+	          	ngModel.$render();
+			};
+			
+			
       // console.log(states.fromCache+"  state : "+states.stateName);
 			if(states.stateName == "adresseTravail" ){
 			var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 				//$scope.initForm();
 				// console.log("steps ="+steps);
-		    if(steps!='')
+		    if(steps)
 		    {
 		    $scope.title="Pré-saisie des informations contractuelles : adresse du travail";
 		    $scope.isContractInfo=true;
@@ -100,10 +123,7 @@ starter
 		    	// console.log("steps : "+steps);
 				// console.log("$scope.title : "+$scope.title);
 
-				// AFFICHE POPUP - SI JE VIENS
-				if($ionicHistory.backView() === "adressePersonel"){}
-				// console.log("Je suis ds $ionicView.beforeEnter(adresseTravail)");
-
+				
 				var employeur=localStorageService.get('employeur');
 				if(employeur){
 					// INITIALISATION FORMULAIRE
@@ -194,7 +214,7 @@ function displayPopup1(){
 	                            geometry: "",
 	                            icon: "",
                           	};
-                          	var ngModel = angular.element($('.autocomplete-travail')).controller('ngModel');
+                          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
                           	ngModel.$setViewValue(result);
                           	ngModel.$render();
 	                        

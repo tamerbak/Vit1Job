@@ -14,7 +14,7 @@ starter
       types: [],
       componentRestrictions: {country:'FR'}
     };
-    $scope.formData.address="";
+    // $scope.formData.address="";
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
     $scope.geocodeOptions = {
@@ -130,7 +130,7 @@ starter
                             geometry: "",
                             icon: "",
                           };
-                          var ngModel = angular.element($('.autocomplete-personel')).controller('ngModel');
+                          var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
                           ngModel.$setViewValue(result);
                           ngModel.$render();
                         }, function(error) {
@@ -156,11 +156,26 @@ starter
     viewData.enableBack = true;
     });
 		$scope.$on("$ionicView.beforeEnter", function( scopes, states ){
+      var employeur=localStorageService.get('employeur');
+      if (employeur) 
+      {
+        var result = { 
+          address_components: [], 
+          adr_address: "", 
+          formatted_address: employeur.adressePersonel.fullAddress,
+          geometry: "",
+          icon: "",
+        };
+        var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
+        ngModel.$setViewValue(result);
+        ngModel.$render();
+      };
+     
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
 				//$scope.initForm();
 				//employeur=localStorageService.get('employeur');
         var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';        
-        if(steps!='')
+        if(steps)
           {
              $scope.title="Pré-saisie des informations contractuelles : adresse siège social";    
              $scope.isContractInfo=true;

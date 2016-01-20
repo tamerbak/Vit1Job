@@ -280,8 +280,6 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
           }]
   };
 
-  localStorageService.set('currentEmployer', currentEmployer)
-
   //*************************************************//
 
   var checkIsLogged = function(){

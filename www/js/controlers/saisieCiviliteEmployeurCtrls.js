@@ -55,10 +55,15 @@ starter
     $scope.validateApe= function(id){
       $scope.apeValide = Validator.checkApe(id,$scope.formData.ape);
     };
-$scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+// $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+// 	viewData.enableBack = true;
+// });    
+$scope.$on("$ionicView.beforeEnter", function (viewData, states){
+
 	viewData.enableBack = true;
-});    
-$scope.$on("$ionicView.beforeEnter", function(scopes, states){
+
+	$scope.initForm();
+
   // console.log(states.fromCache+"  state : "+states.stateName);
   if(states.stateName == "saisieCiviliteEmployeur" ){
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
@@ -73,7 +78,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
       {
       	steps.step1=false;
       	localStorageService.set("steps",steps);
-      };
+      }
       $scope.isContractInfo=true;
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -93,7 +98,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
     }
 	}
 });
-		$scope.updateCiviliteEmployeur = function(){
+	$scope.updateCiviliteEmployeur = function(){
 
 			var titre=$scope.formData.civ;
 			var nom=$scope.formData.nom;
@@ -111,7 +116,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// RECUPERATION SESSION ID
 			var sessionId=localStorageService.get('sessionID');
 
-			if(!isNaN(titre) || nom || prenom || entreprise || siret || ape || numUssaf){
+			if(titre || nom || prenom || entreprise || siret || ape || numUssaf){
 				if(!nom)
 					nom="";
 				if(!prenom)
@@ -150,6 +155,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 							 console.log("response"+response);
 
 							var employeur=localStorageService.get('employeur');
+
 							if(!employeur)
 								employeur={};
 
@@ -163,6 +169,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 
 							// PUT IN SESSION
 							localStorageService.set('employeur', employeur);
+							
 
 						}).error(function (err){
 							console.log("error : insertion DATA");
@@ -239,7 +246,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// REDIRECTION VERS PAGE - ADRESSE PERSONEL
       		if(steps)
 			{
-				console.log(steps);
+				
 				if (steps.step2) 
 				{
 					$state.go('adressePersonel');
@@ -256,7 +263,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			}
 			else
 			{
-				console.log("else" + steps);
+				
 				$state.go('adressePersonel');
 			}
 		};
@@ -332,36 +339,59 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 		};
 
 		$scope.initForm=function(){
+
+			var employeur=localStorageService.get('employeur');
 			// GET LIST
 			$scope.formData={'civilites': DataProvider.getCivilites()};
 			$scope.formData.civ="Titre";
 			// console.log('$scope.formData.civ = '+$scope.formData.civ);
-			$scope.formData.nationalite="Nationalité";						
+			$scope.formData.nationalite="Nationalité";	
+
+				
+			
+			if(employeur){
+				// INITIALISATION FORMULAIRE
+				if(employeur.civilite)
+				
+					$scope.formData.civ=employeur.civilite;
+				if(employeur.nom)
+					$scope.formData.nom=employeur.nom;
+				if(employeur.prenom)
+					$scope.formData.prenom=employeur.prenom;
+				if(employeur.entreprise)
+					$scope.formData.entreprise=employeur.entreprise;
+				if(employeur.siret)
+					$scope.formData.siret=employeur.siret;
+				if(employeur.ape)
+					$scope.formData.ape=employeur.ape;
+				if(employeur.numUssaf)
+					$scope.formData.numUssaf=employeur.numUssaf;
+			}				
 		};
 
-		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
-			if(states.stateName == "saisieCiviliteEmployeur"){
-				$scope.initForm();
-			  var employeur=localStorageService.get('employeur');
-				if(employeur){
-					// INITIALISATION FORMULAIRE
-					if(employeur.civilite)
-						$scope.formData.civ=employeur.civilite;
-					if(employeur.nom)
-						$scope.formData.nom=employeur.nom;
-					if(employeur.prenom)
-						$scope.formData.prenom=employeur.prenom;
-					if(employeur.entreprise)
-						$scope.formData.entreprise=employeur.entreprise;
-					if(employeur.siret)
-						$scope.formData.siret=employeur.siret;
-					if(employeur.ape)
-						$scope.formData.ape=employeur.ape;
-					if(employeur.numUssaf)
-						$scope.formData.numUssaf=employeur.numUssaf;
-				}
-			}
-		});
+		// $scope.$on("$ionicView.beforeEnter", function(scopes, states){
+		// 	if(states.stateName == "saisieCiviliteEmployeur"){
+		// 		$scope.initForm();
+		// 	  var employeur=localStorageService.get('employeur');
+		// 		if(employeur){
+		// 			// INITIALISATION FORMULAIRE
+		// 			if(employeur.civilite)
+		// 				$scope.formData.civ=employeur.civilite;
+		// 			if(employeur.nom)
+		// 				$scope.formData.nom=employeur.nom;
+		// 			if(employeur.prenom)
+		// 				$scope.formData.prenom=employeur.prenom;
+		// 			if(employeur.entreprise)
+		// 				$scope.formData.entreprise=employeur.entreprise;
+		// 			if(employeur.siret)
+		// 				$scope.formData.siret=employeur.siret;
+		// 			if(employeur.ape)
+		// 				$scope.formData.ape=employeur.ape;
+		// 			if(employeur.numUssaf)
+		// 				$scope.formData.numUssaf=employeur.numUssaf;
+		// 		}
+		// 	}
+		// });
 
 		$scope.takePicture = function(){
 
@@ -389,6 +419,16 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 		};
 		$scope.skipDisabled= function(){
 			var employeur=localStorageService.get('employeur');
-			return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
-		};	
+			var steps = localStorageService.get('steps');
+			if (steps) 
+			{
+				return steps.state || ($scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite));
+		
+			}
+			else
+			{
+				return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
+		
+			}
+    	};	
 	});

@@ -14,12 +14,12 @@ services
         getUserGeo : function() {
            var deferred = $q.defer();
 
-           var userGeo = localStorageService.get('user_geo');
+           // var userGeo = localStorageService.get('user_geo');
 
-           if (userGeo) {
-             deferred.resolve(userGeo);
-             return deferred.promise;
-           }
+           // if (userGeo) {
+           //   deferred.resolve(userGeo);
+           //   return deferred.promise;
+           // }
 
            // onSuccess Callback
            // This method accepts a Position object, which contains the
@@ -28,7 +28,7 @@ services
            var onSuccess = function (position) {
              console.log("onSuccess");
 
-             userGeo = {
+             var userGeo = {
                'latitude': position.coords.latitude,
                'longitude': position.coords.longitude,
                'altitude': position.coords.altitude

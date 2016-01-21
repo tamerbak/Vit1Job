@@ -36,15 +36,21 @@ starter
 
 				UpdateInServer.updateAdressePersEmployeur(employeId, codePostal, ville, num, adresse1, adresse2, sessionId)
 					.success(function (response){
-						employeur=localStorageService.get('employeur');
-						if(!employeur)
-							var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
-						var adressePersonel={};
-						adressePersonel={'fullAddress':$scope.formData.address.formatted_address};
-						employeur.adressePersonel=adressePersonel;
+  						var employeur=localStorageService.get('employeur');
+              var adressObject = $scope.formData.address;
+              var adressePersonel={};
+  						if(!employeur)
+              {
+  							employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+              }
 
-						// PUT IN SESSION
-						localStorageService.set('employeur', employeur);
+              if(has(adressObject,"formatted_address"))
+              {
+                adressePersonel={fullAddress:$scope.formData.address.formatted_address};
+              }
+              employeur.adressePersonel=adressePersonel;
+              // PUT IN SESSION
+              localStorageService.set('employeur', employeur);
 					}).error(function (err){
 						console.log("error : insertion DATA");
 						console.log("error In updateAdressePersEmployeur: "+err);
@@ -76,6 +82,7 @@ starter
 		$scope.validatElement=function(id){
 			Validator.checkField(id);
 		};
+  
 
 		$scope.$watch('formData.zipCodes', function(){
 			// console.log('hey, formData.zipCodes has changed!');
@@ -159,16 +166,20 @@ starter
       var employeur=localStorageService.get('employeur');
       if (employeur) 
       {
-        var result = { 
-          address_components: [], 
-          adr_address: "", 
-          formatted_address: employeur.adressePersonel.fullAddress,
-          geometry: "",
-          icon: "",
-        };
-        var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
-        ngModel.$setViewValue(result);
-        ngModel.$render();
+        if (has(employeur.adressePersonel,'fullAddress')) 
+        {
+          var result = { 
+            address_components: [], 
+            adr_address: "", 
+            formatted_address: employeur.adressePersonel.fullAddress,
+            geometry: "",
+            icon: "",
+          };
+          var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
+          ngModel.$setViewValue(result);
+          ngModel.$render();
+        }
+        
       };
      
 			if(states.stateName == "adressePersonel" ){ //states.fromCache &&
@@ -244,6 +255,15 @@ starter
 
   $scope.skipDisabled= function(){
     var employeur=localStorageService.get('employeur');
-    return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+    var steps = localStorageService.get('steps');
+    if(steps)
+    {
+      return steps.state || ($scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress));
+    }
+    else
+    {
+      return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+
+    }
   };      
 });

@@ -137,6 +137,10 @@ function isEmpty(str) {
 	return (!str || 0 === str.length || typeof str === 'undefined' || str === null);
 }
 
+function has(object, key) {
+  return object ? hasOwnProperty.call(object, key) : false;
+}
+
 starter.directive('googleplace', function() {
   return {
     require: 'ngModel',

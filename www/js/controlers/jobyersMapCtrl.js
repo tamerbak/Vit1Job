@@ -53,6 +53,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 
     var myLatlng = new google.maps.LatLng(addressMap.lat,addressMap.lng);
     displayMap(myLatlng);
+    loopThroughJobyers(0 ,myLatlng);
 
   };
 
@@ -93,7 +94,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 	myMarker.setPosition(myLatlng);
 	myMarker.setVisible(true);
 
-    loopThroughJobyers(0 ,myLatlng);
+    // loopThroughJobyers(0 ,myLatlng);
 
     //autoComplete search end
 
@@ -254,7 +255,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
 		});
 		$scope.map = map;
         displayMap(myLatlng);
-		myMarker.setVisible(false);
+		    myMarker.setVisible(false);
       })
       .error(function(){
         Global.showAlertValidation("IUne erreur est survenue. Veuillez réssayer plus tard.");
@@ -284,14 +285,15 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     var success=false;
     navigator.geolocation.getCurrentPosition(function(pos) {
 
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      var myLatLng=new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
 		  myMarker.setVisible(false);
 		  myMarker.setPosition(myLatLng);
 		  myMarker.setVisible(true);
-          loopThroughJobyers(0 ,myLatLng);
+      loopThroughJobyers(0 ,myLatLng);
       success=true;
       $ionicLoading.hide();
+
     }, function(error) {
       success=false;
       Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
@@ -309,23 +311,23 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
     alert('Example of infowindow with ng-click')
   };
 
-  $scope.addressSelected=function(selected){
+  // $scope.addressSelected=function(selected){
 
-    $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+selected.originalObject.libelle).
-      success(function(data) {
+  //   $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+selected.originalObject.libelle).
+  //     success(function(data) {
 
-        var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : null;
-        if(location) {
-          var myLatlng = new google.maps.LatLng(location.lat, location.lng);
+  //       var location = (data.results && data.results.length > 0) ? data.results[0].geometry.location : null;
+  //       if(location) {
+  //         var myLatlng = new google.maps.LatLng(location.lat, location.lng);
 
-          displayMap(myLatlng);
-        }else{
-          Global.showAlertValidation("Cette adresse n'existe pas.");
-        }
-      })
-      .error(function(){
-        Global.showAlertValidation("Une erreur est survenue. Veuillez réssayer plus tard.");
-      });
+  //         displayMap(myLatlng);
+  //       }else{
+  //         Global.showAlertValidation("Cette adresse n'existe pas.");
+  //       }
+  //     })
+  //     .error(function(){
+  //       Global.showAlertValidation("Une erreur est survenue. Veuillez réssayer plus tard.");
+  //     });
 
-  };
+  // };
 }]);

@@ -13,7 +13,7 @@ starter
 	      types: [],
 	      componentRestrictions: {country:'FR'}
 	    };
-	    $scope.formData.addressTravail="";
+	    // $scope.formData.addressTravail="";
 	    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
 	    var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID
@@ -29,13 +29,21 @@ starter
 			var sessionId=localStorageService.get('sessionID');
 				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
-						employeur=localStorageService.get('employeur');
-						if(!employeur)
-                        var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+						var employeur=localStorageService.get('employeur');
+						var adressObject = $scope.formData.addressTravail;
 						var adresseTravail={};
-						 adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
-						employeur.adresseTravail=adresseTravail;
+						if(!employeur)
+						{
+                          employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+						}
+						if(has(adressObject,'formatted_address'))
+						{
+							
+							adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
 
+						}
+						
+						employeur.adresseTravail=adresseTravail;
 						// PUT IN SESSION
 						localStorageService.set('employeur', employeur);
 						// console.log("employeur : "+JSON.stringify(employeur));
@@ -69,19 +77,21 @@ starter
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			var employeur=localStorageService.get('employeur');
 			if (employeur) 
-			{	console.log("azoul");
-				console.log(employeur.adresseTravail.fullAddress);
-				var result = { 
-                address_components: [], 
-                adr_address: "", 
-                formatted_address: employeur.adresseTravail.fullAddress,
-                geometry: "",
-                icon: "",
-	          	};
-	          	console.log(result);
-	          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
-	          	ngModel.$setViewValue(result);
-	          	ngModel.$render();
+			{	if(has(employeur.adresseTravail,"fullAddress"))
+				{
+					var result = { 
+	                address_components: [], 
+	                adr_address: "", 
+	                formatted_address: employeur.adresseTravail.fullAddress,
+	                geometry: "",
+	                icon: "",
+		          	};
+		          	
+		          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
+		          	ngModel.$setViewValue(result);
+		          	ngModel.$render();
+				}
+				
 			};
 			
 			
@@ -203,7 +213,7 @@ function displayPopup1(){
 	                        e4.preventDefault();
 	                        popup2.close();
 	                        // console.log('popup2 oui');
-						  GeoService.getUserAddress()
+						  	GeoService.getUserAddress()
 						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
 	                        // $scope.formData.addressTravail = geoAddress.fullAddress;
@@ -285,7 +295,18 @@ function displayPopups(){
 	
 	$scope.skipDisabled= function(){
 		var employeur=localStorageService.get('employeur');
-		return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+		var steps = localStorageService.get('steps');
+		if(steps)
+		{
+			    return steps.state || ($scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress));
+
+		}
+		else
+		{
+			    return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+
+		}
+
 	};
 	$scope.skipGoto=function(){
 		if($scope.isContractInfo)

@@ -29,11 +29,18 @@ starter
 			var sessionId=localStorageService.get('sessionID');
 				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
-						employeur=localStorageService.get('employeur');
-						if(!employeur)
-                        var employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+						var employeur=localStorageService.get('employeur');
 						var adresseTravail={};
-						 adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
+						if(!employeur)
+						{
+                          employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
+						}
+						if(has($scope.formData.adresseTravail,"formatted_address"))
+						{
+							adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
+
+						}
+						
 						employeur.adresseTravail=adresseTravail;
 
 						// PUT IN SESSION
@@ -69,7 +76,7 @@ starter
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			var employeur=localStorageService.get('employeur');
 			if (employeur) 
-			{	if(typeof adresseTravail !== 'undefined')
+			{	if(has(employeur.adresseTravail,"fullAddress"))
 				{
 					var result = { 
 	                address_components: [], 

@@ -30,19 +30,20 @@ starter
 				UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville,num, adresse1, adresse2, sessionId)
 					.success(function (response){
 						var employeur=localStorageService.get('employeur');
+						var adressObject = $scope.formData.addressTravail;
 						var adresseTravail={};
 						if(!employeur)
 						{
                           employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
 						}
-						if(has($scope.formData.adresseTravail,"formatted_address"))
+						if(has(adressObject,'formatted_address'))
 						{
+							
 							adresseTravail={fullAddress:$scope.formData.addressTravail.formatted_address};
 
 						}
 						
 						employeur.adresseTravail=adresseTravail;
-
 						// PUT IN SESSION
 						localStorageService.set('employeur', employeur);
 						// console.log("employeur : "+JSON.stringify(employeur));
@@ -85,7 +86,7 @@ starter
 	                geometry: "",
 	                icon: "",
 		          	};
-		          	console.log(result);
+		          	
 		          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
 		          	ngModel.$setViewValue(result);
 		          	ngModel.$render();
@@ -212,7 +213,7 @@ function displayPopup1(){
 	                        e4.preventDefault();
 	                        popup2.close();
 	                        // console.log('popup2 oui');
-						  GeoService.getUserAddress()
+						  	GeoService.getUserAddress()
 						    .then(function () {	                        
 	                        var geoAddress = localStorageService.get('user_address');
 	                        // $scope.formData.addressTravail = geoAddress.fullAddress;

@@ -108,9 +108,7 @@ starter.controller('jobyersOffersListCtrl',
 	$scope.$watch('jobyerListSetting.orderByCorrespondence', function (newValue, oldValue) {
 		setJobyerListSetting('orderByCorrespondence', newValue);
 	});
-	function has(object, key) {
-      return object ? hasOwnProperty.call(object, key) : false;
-   	}
+
 
 	$scope.showMenuForContract = function(jobber){
 
@@ -190,6 +188,7 @@ starter.controller('jobyersOffersListCtrl',
 								jobber.date_invit= new Date();
 								jobber.contacted = true;
                 var employer = localStorageService.get('employeur');
+                console.log(employer);
                 var redirectToStep1 = (typeof (employer) == "undefined");
                 var redirectToStep1 = (employer) ? (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined") : true;
                 var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;

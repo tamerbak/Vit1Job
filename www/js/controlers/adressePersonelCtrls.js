@@ -37,13 +37,14 @@ starter
 				UpdateInServer.updateAdressePersEmployeur(employeId, codePostal, ville, num, adresse1, adresse2, sessionId)
 					.success(function (response){
   						var employeur=localStorageService.get('employeur');
+              var adressObject = $scope.formData.address;
               var adressePersonel={};
   						if(!employeur)
               {
   							employeur={"civilite":"","nom":"","prenom":"",entreprise:"",siret:"",ape:"",numUssaf:""};
               }
 
-              if(has($scope.formData.address,"formatted_address"))
+              if(has(adressObject,"formatted_address"))
               {
                 adressePersonel={fullAddress:$scope.formData.address.formatted_address};
               }

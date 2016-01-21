@@ -19,11 +19,12 @@
     <!-- TITRE -->
     <div class="list">
       <label class="item item-input">
-        <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
-          <option selected disabled style="display: none;">Titre</option>
-          <option data-ng-repeat="x in formData.civilites" value="{{x.pk_user_civilite}}">{{x.libelle}}</option>
-        </select>
-        <span ng-show="formData.civ=='Titre' && isContractInfo" class="requiredStar">*</span>
+       
+            <select class="flat textbox-n" data-ng-model="formData.civ" ng-options="x.libelle for x in formData.civilites track by x.pk_user_civilite" >
+             <option value="" disabled style="display: none;"> Titre </option>
+            </select>
+            <span ng-show="formData.civ=='Titre'  && isContractInfo" class="requiredStar">*</span>
+       
       </label>
       <label class="item item-input">
         <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom"><span ng-show="!formData.nom  && isContractInfo" class="requiredStar">*</span>

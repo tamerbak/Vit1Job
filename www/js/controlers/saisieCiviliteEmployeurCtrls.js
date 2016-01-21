@@ -67,6 +67,13 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
+      
+      
+      if (steps.state) 
+      {
+      	steps.step1=false;
+      	localStorageService.set("steps",steps);
+      };
       $scope.isContractInfo=true;
       $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -133,15 +140,14 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 					ape="";
 				if(!numUssaf)
 					numUssaf="";
-
+			var user = {"email":"cmFjaGlkQHRlc3QuY29t","password":"MTIzNDU2","role":"ZW1wbG95ZXVy"};
 				// UPDATE EMPLOYEUR
 				UpdateInServer.updateCiviliteInEmployeur(
-					Number(employeId), Number(titre), nom, prenom, entreprise, siret, ape, numUssaf, sessionId)
+					user, titre, nom, prenom, entreprise, siret, ape, numUssaf, sessionId)
 						.success(function (response){
 
 							// DONNEES ONT ETE SAUVEGARDES
-							// console.log("les donnes ont été sauvegarde");
-							// console.log("response"+response);
+							 console.log("response"+response);
 
 							var employeur=localStorageService.get('employeur');
 							if(!employeur)
@@ -155,7 +161,6 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 							employeur.ape=ape;
 							employeur.numUssaf=numUssaf;
 
-							// console.log("employeur : "+JSON.stringify(employeur));
 							// PUT IN SESSION
 							localStorageService.set('employeur', employeur);
 

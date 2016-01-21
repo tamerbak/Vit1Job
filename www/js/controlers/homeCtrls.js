@@ -6,9 +6,8 @@
  starter
 
   .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies, jobyerService, $ionicHistory) {
-    $scope.$on('$ionicView.beforeEnter', function (e,config) {
-  config.enableBack = false;
-});
+
+
     /*$scope.displayBack = function() {
       return $ionicHistory.viewHistory().backView != null;
     };
@@ -295,6 +294,9 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
   $scope.logOut = function(){
     localStorageService.remove('currentEmployer');
     $scope.isLogged = false;
+    //
+    var flesh = angular.element(document.querySelector('.bar .button.back-button'));
+    flesh.css('display','none');
   };
 
   var showAddOfferConfirmPopup = function(job) {

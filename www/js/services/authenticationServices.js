@@ -28,7 +28,34 @@ angular.module('wsConnectors', ['ionic'])
               "pricticesLanguage":[{"pricticeLanguageId":2,"language":"Anglais","level":"Bien"}]}]}]};
       return wsRs;
     }
+    this.Authenticate = function(email, phone, password, role){
 
+      /*var login = '{"email":"' + btoa(email) + 
+      '","telephone":"' + btoa(phone) + '","password":"' + 
+      btoa(password) + '","role":"' + btoa(role) + '"}';*/
+
+      var login = 
+      {
+        'email' : btoa(email),
+        'telephone' : btoa(phone),
+        'password' : btoa(password),
+        'role' : btoa(role)
+      }
+
+      login = JSON.stringify(login);
+
+      var request = {
+        method : 'POST',
+        url : 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/account/login',
+        headers : {
+        'Content-Type' : 'application/json',
+        'login' : login
+      }
+    };
+
+    return $http(request);
+
+    };
     /*************************OLD***************************/
     this.getSessionId=function(){
 
@@ -821,16 +848,17 @@ angular.module('wsConnectors', ['ionic'])
   })
 
   .service('UpdateInServer', function ($http){
-	this.updateCiviliteInEmployeur = function(id, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID){
+	this.updateCiviliteInEmployeur = function(user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID){
 
       return $http({
         method: 'POST',
         url: 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/validation/civilite',
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "login": JSON.stringify(user)          
 		  //'Access-Control-Allow-Methods' : 'GET, POST, PUT, UPDATE, OPTIONS'
         },
-        data: {"titre":"M.", "nom":"LECLERC", "prenom":"Emanuel", "raisonSocial":"Manaona", "siret":"999 999 999 99999", "codeNaf":"99.99A", "urssaf":"9999AA99"}
+        data: {"titre":civilite, "nom":nom, "prenom":prenom, "raisonSocial":raisonSocial, "siret":siret, "codeNaf":codeAPE, "urssaf":numUrssaf}
       });
     };
 

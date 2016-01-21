@@ -13,7 +13,7 @@ starter
 	      types: [],
 	      componentRestrictions: {country:'FR'}
 	    };
-	    $scope.formData.addressTravail="";
+	    // $scope.formData.addressTravail="";
 	    $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
 	    var steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
 		// RECUPERATION SESSION-ID & EMPLOYEUR-ID

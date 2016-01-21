@@ -559,6 +559,11 @@ ion-tabs ion-nav-view{
     display: none;
   }
 }
+@media (max-width: 330px){
+  #connectionsView .hide-text{
+    display: none;
+  }
+}
 #conxionMailView .list , #connexionPhoneView .list{
   margin-bottom: 0px !important;
 }

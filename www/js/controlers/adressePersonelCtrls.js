@@ -244,6 +244,15 @@ starter
 
   $scope.skipDisabled= function(){
     var employeur=localStorageService.get('employeur');
-    return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+    var steps = localStorageService.get('steps');
+    if(steps)
+    {
+      return steps.state || ($scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress));
+    }
+    else
+    {
+      return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+
+    }
   };      
 });

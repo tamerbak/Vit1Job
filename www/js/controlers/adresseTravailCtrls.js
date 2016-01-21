@@ -69,19 +69,21 @@ starter
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			var employeur=localStorageService.get('employeur');
 			if (employeur) 
-			{	console.log("azoul");
-				console.log(employeur.adresseTravail.fullAddress);
-				var result = { 
-                address_components: [], 
-                adr_address: "", 
-                formatted_address: employeur.adresseTravail.fullAddress,
-                geometry: "",
-                icon: "",
-	          	};
-	          	console.log(result);
-	          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
-	          	ngModel.$setViewValue(result);
-	          	ngModel.$render();
+			{	if(typeof adresseTravail !== 'undefined')
+				{
+					var result = { 
+	                address_components: [], 
+	                adr_address: "", 
+	                formatted_address: employeur.adresseTravail.fullAddress,
+	                geometry: "",
+	                icon: "",
+		          	};
+		          	console.log(result);
+		          	var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
+		          	ngModel.$setViewValue(result);
+		          	ngModel.$render();
+				}
+				
 			};
 			
 			
@@ -285,7 +287,18 @@ function displayPopups(){
 	
 	$scope.skipDisabled= function(){
 		var employeur=localStorageService.get('employeur');
-		return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+		var steps = localStorageService.get('steps');
+		if(steps)
+		{
+			    return steps.state || ($scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress));
+
+		}
+		else
+		{
+			    return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+
+		}
+
 	};
 	$scope.skipGoto=function(){
 		if($scope.isContractInfo)

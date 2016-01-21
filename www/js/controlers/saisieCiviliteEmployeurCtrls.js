@@ -389,6 +389,16 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 		};
 		$scope.skipDisabled= function(){
 			var employeur=localStorageService.get('employeur');
-			return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
-		};	
+			var steps = localStorageService.get('steps');
+			if (steps) 
+			{
+				return steps.state || ($scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite));
+		
+			}
+			else
+			{
+				return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
+		
+			}
+    	};	
 	});

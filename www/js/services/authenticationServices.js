@@ -36,24 +36,39 @@ angular.module('wsConnectors', ['ionic'])
 
       var login = 
       {
-        'email' : btoa(email),
-        'telephone' : btoa(phone),
-        'password' : btoa(password),
-        'role' : btoa(role)
-      }
+        'class' : 'com.vitonjob.callouts.auth.AuthToken',
+        'email' : email,
+        'telephone' : phone,
+        'password' : password,
+        'role' : role
+      };
 
       login = JSON.stringify(login);
 
+      var encodedLogin = btoa(login);
+
+      var data = {
+        'class' : 'fr.protogen.masterdata.model.CCallout',
+        'id' : 5,
+        'args' : [{
+            'class' : 'fr.protogen.masterdata.model.CCalloutArguments',
+            label : 'requete authentification',
+            value : encodedLogin
+          }]
+      };
+
+      var stringData = JSON.stringify(data);
+
       var request = {
         method : 'POST',
-        url : 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/account/login',
+        url : 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
         headers : {
-        'Content-Type' : 'application/json',
-        'login' : login
-      }
-    };
+        'Content-Type' : 'application/json'
+        },
+        data : stringData
+      };
 
-    return $http(request);
+      return $http(request);
 
     };
     /*************************OLD***************************/

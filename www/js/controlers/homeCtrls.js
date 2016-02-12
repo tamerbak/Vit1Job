@@ -236,7 +236,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 }
 			else{ // IL S'AGIT D'UNE CONNEXION
 				console.log("IL S'AGIT D'UNE CONNEXION");
-      $state.go("connection");
+        $state.go("connection");
     }
   }
   else
@@ -297,6 +297,30 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     $scope.isLogged = false;
   };
 
+  var showNonConnectedPopup = function(){
+    var confirmPopup = $ionicPopup.confirm({
+     title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+     template: 'Pour que la recherche soit plus précise, vous devez être connectés ?',
+     buttons : [
+       {
+       text: '<b>Connection</b>',
+       type: 'button-dark',
+       onTap: function(e) {
+         confirmPopup.close();
+         $state.go("connection");
+       }
+     },{
+       text: '<b>Retour</b>',
+       type: 'button-calm',
+       onTap: function(e){
+         confirmPopup.close();
+       }
+       }
+
+     ]
+   });
+  }
+
   var showAddOfferConfirmPopup = function(job) {
    var confirmPopup = $ionicPopup.confirm({
      title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
@@ -323,7 +347,10 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
  };
 
  var onGetJobyersOffersByJobSuccess = function(data){
-  var jobyersOffers = data;
+  if(data == null || data.length == 0)
+    return;
+  var sdata = data[0]['value'];
+  var jobyersOffers = JSON.parse(data);
   localStorageService.set('jobyersOffers',jobyersOffers);
   $state.go("jobyersOffersTab.list");
  };
@@ -418,19 +445,26 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 
   $scope.launchSearchForJobyersOffers = function(job){
     localStorageService.set('lastSearchedJob',job);
-    localStorageService.remove('currentOffer');
+    
+    var offerId = 0;
+
     localStorageService.remove('currentEntreprise');
+    localStorageService.remove('currentOffer');
     localStorageService.remove('currentEmployerEntreprises');
+    
     var isLogged = checkIsLogged();
     if(isLogged){
       if(isEntrepriseOfferByJobExists(job)){
-        getJobyersOffersByJob(job);
+        //getJobyersOffersByJob(job);
+        offerId = localStorageService['currentOffer'].id;
+        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
       }else{
         showAddOfferConfirmPopup(job);
       }
     }
     else{
-      getJobyersOffersByJob(job);
+      //getJobyersOffersByJob(job);
+      showNonConnectedPopup();
     }
   };
 

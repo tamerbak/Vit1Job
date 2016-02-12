@@ -17,7 +17,15 @@ starter
         OnAuthenticateError(data);
         return;
       }
+      data = data[0]['value'];
       console.log(data);
+
+      data = JSON.parse(data);
+      if(data.length ==0){
+        OnAuthenticateError(data);
+        return; 
+      }
+      
       localStorageService.remove('connexion');
       var connexion = {
         'etat': true,

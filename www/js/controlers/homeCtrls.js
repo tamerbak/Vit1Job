@@ -384,7 +384,9 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
             if(pricticesJob && pricticesJob.length > 0){
               k = 0;
               while(!found && k < pricticesJob.length){
-                found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
+                //TEL does search sentence contains job label ? ICIM
+                found = (pricticesJob[k].job &&  job.toLowerCase().indexOf(pricticesJob[k].job.toLowerCase()) > -1);
+                //found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
                 if(found){
                   var currentOffer = {
                     'id' : offers[j].offerId.toString(),
@@ -436,27 +438,27 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
           'id' : currentEmployerEntreprises[i].entrepriseId.toString(),
           'label' : currentEmployerEntreprises[i].name,
           'offers' : offers
-        }
+        };
         entreprises.push(entreprise);
       }
       localStorageService.set('currentEmployerEntreprises',entreprises);
     }
-  }
+  };
 
   $scope.launchSearchForJobyersOffers = function(job){
     localStorageService.set('lastSearchedJob',job);
-    
+
     var offerId = 0;
 
     localStorageService.remove('currentEntreprise');
     localStorageService.remove('currentOffer');
     localStorageService.remove('currentEmployerEntreprises');
-    
+
     var isLogged = checkIsLogged();
     if(isLogged){
       if(isEntrepriseOfferByJobExists(job)){
         //getJobyersOffersByJob(job);
-        offerId = localStorageService['currentOffer'].id;
+        offerId = localStorageService.get('currentOffer').id;
         jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
       }else{
         showAddOfferConfirmPopup(job);

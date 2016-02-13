@@ -95,6 +95,10 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 });
 		$scope.updateCiviliteEmployeur = function(){
 
+			var currentEmployer = localStorageService.get('currentEmployer');
+			var employerId = currentEmployer.employerId;
+			var enterpriseId = currentEmployer.entreprises[0].entrepriseId;
+
 			var titre=$scope.formData.civ;
 			var nom=$scope.formData.nom;
 			var prenom=$scope.formData.prenom;
@@ -111,7 +115,9 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			// RECUPERATION SESSION ID
 			var sessionId=localStorageService.get('sessionID');
 
-			if(!isNaN(titre) || nom || prenom || entreprise || siret || ape || numUssaf){
+			if(titre || nom || prenom || entreprise || siret || ape || numUssaf){
+				if(!titre)
+					titre="";
 				if(!nom)
 					nom="";
 				if(!prenom)
@@ -143,7 +149,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			var user = {"email":"cmFjaGlkQHRlc3QuY29t","password":"MTIzNDU2","role":"ZW1wbG95ZXVy"};
 				// UPDATE EMPLOYEUR
 				UpdateInServer.updateCiviliteInEmployeur(
-					user, titre, nom, prenom, entreprise, siret, ape, numUssaf, sessionId)
+					user, titre, nom, prenom, entreprise, siret, ape, numUssaf, sessionId, employerId, enterpriseId)
 						.success(function (response){
 
 							// DONNEES ONT ETE SAUVEGARDES

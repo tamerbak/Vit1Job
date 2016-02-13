@@ -863,17 +863,24 @@ angular.module('wsConnectors', ['ionic'])
   })
 
   .service('UpdateInServer', function ($http){
-	this.updateCiviliteInEmployeur = function(user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID){
+	this.updateCiviliteInEmployeur = function(user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID, employerId, enterpriseId){
+      var sql = "update user_employeur set ";
+      sql = sql+" titre='"+civilite+"', ";
+      sql = sql + " nom='"+nom+"', prenom='"+prenom+"' where pk_user_employeur="+employerId+";";
+      sql = sql + " update user_entreprise set nom_ou_raison_sociale='"+raisonSocial+"', ";
+      sql = sql + "siret='"+siret+"', ";
+      sql = sql + "urssaf='"+numUrssaf+"', ";
+      sql = sql + "ape_ou_naf='"+codeAPE+"' where  pk_user_entreprise="+enterpriseId;
+
 
       return $http({
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/VitOnJob/rest/public/validation/civilite',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
         headers: {
-          "Content-Type": "application/json",
-          "login": JSON.stringify(user)          
+          "Content-Type": "text/plain"
 		  //'Access-Control-Allow-Methods' : 'GET, POST, PUT, UPDATE, OPTIONS'
         },
-        data: {"titre":civilite, "nom":nom, "prenom":prenom, "raisonSocial":raisonSocial, "siret":siret, "codeNaf":codeAPE, "urssaf":numUrssaf}
+        data: sql
       });
     };
 

@@ -21,7 +21,7 @@
       <label class="item item-input">
         <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
           <option selected disabled style="display: none;">Titre</option>
-          <option data-ng-repeat="x in formData.civilites" value="{{x.pk_user_civilite}}">{{x.libelle}}</option>
+          <option data-ng-repeat="x in formData.civilites" value="{{x.libelle}}">{{x.libelle}}</option>
         </select>
         <span ng-show="formData.civ=='Titre' && isContractInfo" class="requiredStar">*</span>
       </label>

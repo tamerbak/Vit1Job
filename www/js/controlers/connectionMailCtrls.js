@@ -23,15 +23,17 @@ starter
       data = JSON.parse(data);
       if(data.length ==0){
         OnAuthenticateError(data);
-        return; 
+        return;
       }
-      
+
       localStorageService.remove('connexion');
+      localStorageService.remove('currentEmployer');
       var connexion = {
         'etat': true,
         'libelle': 'Se déconnecter',
-        'employeID': data.employerId
+        'employeID': data.id
       };
+
 
       localStorageService.set('connexion', connexion);
       localStorageService.set('currentEmployer', data);
@@ -95,5 +97,5 @@ starter
     }
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
-  });    
+  });
   });

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.manaona.vitonjob.employeur" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Employeur</name>
-  <description>&#xD;&#xD;&#xD;&#xD;
-        Application de micro-jobbing.&#xD;&#xD;&#xD;&#xD;
+  <description>
+        Application de micro-jobbing.
     </description>
-  <author email="contact@vitonjob.com" href="http://www.vitonjob.com/">&#xD;&#xD;&#xD;&#xD;
-      VitOnJob Team&#xD;&#xD;&#xD;&#xD;
+  <author email="contact@vitonjob.com" href="http://www.vitonjob.com/">
+      VitOnJob Team
     </author>
   <content src="index.html"/>
   <access origin="*"/>

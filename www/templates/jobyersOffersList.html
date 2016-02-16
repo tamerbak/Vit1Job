@@ -37,7 +37,7 @@
 </ion-checkbox>
 
 <div class="list">
-	<a class="item item-avatar card" style="margin:6px;" ng-repeat="jobyerOffer in jobyersOffers | orderBy : SortOrder">
+	<a class="item item-avatar card" style="margin:6px;" ng-repeat="jobyerOffer in jobyersOffersPart track by jobyerOffer.id | orderBy : SortOrder">
 		<div class="item-icon-left">
 			<div><i class="icon ion-person"></i></div>
 		</div>
@@ -50,16 +50,19 @@
 				<i class="icon ion-android-bus calm" ng-if="transportationmode == 'transit'"></i>
 				<label class="calm">&nbsp;&nbsp;{{jobyerOffer.availability.text}}</label></p>
 				<p><i class="icon ion-arrow-shrink"></i><label style="color:gray;">&nbsp;&nbsp;{{jobyerOffer.matching}} %</label></p>
-        <p><i class="ion-ios-calendar-outline" ng-if="jobyerOffer.date_invit || jobyerOffer.contacted "></i><label>&nbsp; {{jobyerOffer.date_invit | date:'dd-MM-yyyy   HH:mm'}}</label></p>
+        <p><i class="ion-ios-calendar-outline" ng-if="jobyerOffer.date_invit || (jobyerOffer.contacted=='true') "></i><label>&nbsp; {{jobyerOffer.date_invit | date:'dd-MM-yyyy   HH:mm'}}</label></p>
 			</p>
 			<div class="item-button-right">
 				<button class="button button-clear" style="padding-top:11px;"  ng-click="showMenuForContract(jobyerOffer)">
-					<i class="icon ion-power calm" ng-if="jobyerOffer.contacted"></i>
-					<i class="icon ion-power" style="color:gainsboro;" ng-if="!jobyerOffer.contacted"></i>
+					<i class="icon ion-power calm" ng-if="(jobyerOffer.contacted=='true')"></i>
+					<i class="icon ion-power" style="color:gainsboro;" ng-if="(jobyerOffer.contacted!=='true')"></i>
 				</button>
 			</div>
 		</a>
 	</div>
+
+  <ion-infinite-scroll on-infinite="loadMoreOffers()"></ion-infinite-scroll>
+
 
 </ion-content>
 </ion-view>

@@ -350,7 +350,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
   if(data == null || data.length == 0)
     return;
   var sdata = data[0]['value'];
-  var jobyersOffers = JSON.parse(data);
+  var jobyersOffers = JSON.parse(sdata);
   localStorageService.set('jobyersOffers',jobyersOffers);
   $state.go("jobyersOffersTab.list");
  };

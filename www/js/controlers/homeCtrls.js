@@ -331,7 +331,9 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
        type: 'button-dark',
        onTap: function(e) {
          confirmPopup.close();
-         getJobyersOffersByJob(job);
+         //getJobyersOffersByJob(job);
+         var offerId = "";
+        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
        }
      },{
        text: '<b>Ok</b>',

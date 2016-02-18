@@ -10,8 +10,8 @@ starter.controller('jobyersOffersListCtrl',
 
       localStorageService.remove("steps");
       var init = function () {
-
-        $scope.OfferLabel = capitalize(localStorageService.get('currentOffer').label);
+        if(localStorageService.get('currentOffer') != null)
+          $scope.OfferLabel = capitalize(localStorageService.get('currentOffer').label);
         $scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
         if (!$scope.jobyerListSetting) {
           $scope.jobyerListSetting = {

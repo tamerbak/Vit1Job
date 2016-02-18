@@ -122,6 +122,9 @@ starter.controller('jobyersOffersListCtrl',
         }
 
         currentStart += 3;
+
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {

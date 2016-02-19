@@ -83,7 +83,7 @@ starter.controller('jobyersOffersListCtrl',
 
         for (var i = 0; i < 3; i++) {
           //TEL: for Track by use..
-          $scope.jobyersOffers[i].id = i;
+          //$scope.jobyersOffers[i].push({"id":"i"});
           if ($scope.jobyersOffers[i].matching.split(".")[0])
             $scope.jobyersOffers[i].matching = $scope.jobyersOffers[i].matching.split(".")[0];
           if ($scope.jobyersOffers[i].availability.text == '0 minutes')
@@ -92,7 +92,22 @@ starter.controller('jobyersOffersListCtrl',
             $scope.jobyersOffers[i].jobyerName =
               $scope.jobyersOffers[i].jobyerName.split(" ")[0] + " " + //"M. "
               $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
-          $scope.jobyersOffersPart.push($scope.jobyersOffers[i]);
+          $scope.jobyersOffersPart.push({
+            "id" : i,
+            "availability" : {
+              value : $scope.jobyersOffers[i].availability.value,
+              text : $scope.jobyersOffers[i].availability.text
+            },
+            "contacted" : $scope.jobyersOffers[i].contacted,
+            "date_invit" : $scope.jobyersOffers[i].date_invit,
+            "email" : $scope.jobyersOffers[i].email,
+            "jobyerName" : $scope.jobyersOffers[i].jobyerName,
+            "latitude" : $scope.jobyersOffers[i].latitude,
+            "logitude" : $scope.jobyersOffers[i].logitude,
+            "matching" : $scope.jobyersOffers[i].matching,
+            "tel" : $scope.jobyersOffers[i].tel
+
+          });
         }
 
 
@@ -109,7 +124,7 @@ starter.controller('jobyersOffersListCtrl',
       $scope.loadMoreOffers = function () {
         for (var i = currentStart; (i < currentStart + 3 && i < $scope.jobyersOffers.length); i++) {
           //TEL: for Track by use..
-          $scope.jobyersOffers[i].id = i;
+          //$scope.jobyersOffers[i].push({"id":"i"});
           if ($scope.jobyersOffers[i].matching.split(".")[0])
             $scope.jobyersOffers[i].matching = $scope.jobyersOffers[i].matching.split(".")[0];
           if ($scope.jobyersOffers[i].availability.text == '0 minutes')
@@ -118,7 +133,23 @@ starter.controller('jobyersOffersListCtrl',
             $scope.jobyersOffers[i].jobyerName =
               $scope.jobyersOffers[i].jobyerName.split(" ")[0] + " " + //"M. "
               $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
-          $scope.jobyersOffersPart.push($scope.jobyersOffers[i]);
+
+          $scope.jobyersOffersPart.push({
+            "id" : i,
+            "availability" : {
+              value : $scope.jobyersOffers[i].availability.value,
+              text : $scope.jobyersOffers[i].availability.text
+            },
+            "contacted" : $scope.jobyersOffers[i].contacted,
+            "date_invit" : $scope.jobyersOffers[i].date_invit,
+            "email" : $scope.jobyersOffers[i].email,
+            "jobyerName" : $scope.jobyersOffers[i].jobyerName,
+            "latitude" : $scope.jobyersOffers[i].latitude,
+            "logitude" : $scope.jobyersOffers[i].logitude,
+            "matching" : $scope.jobyersOffers[i].matching,
+            "tel" : $scope.jobyersOffers[i].tel
+
+          });
         }
 
         currentStart += 3;

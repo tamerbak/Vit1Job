@@ -468,7 +468,8 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     }
     else{
       //getJobyersOffersByJob(job);
-      showNonConnectedPopup();
+      //showNonConnectedPopup();
+      jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
     }
   };
 

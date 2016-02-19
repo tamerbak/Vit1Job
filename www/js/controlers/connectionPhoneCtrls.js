@@ -19,18 +19,33 @@ starter
         OnAuthenticateError(data);
         return;
       }
+      data = data[0]['value'];
       console.log(data);
+      if(data.length ==0){
+        OnAuthenticateError(data);
+        return;
+      }
+
+      data = JSON.parse(data);
+      
+      if(data.id ==0){
+        OnAuthenticateError(data);
+        return;
+      }
+
       localStorageService.remove('connexion');
+      localStorageService.remove('currentEmployer');
       var connexion = {
         'etat': true,
         'libelle': 'Se déconnecter',
-        'employeID': data.employerId
+        'employeID': data.id
       };
+
 
       localStorageService.set('connexion', connexion);
       localStorageService.set('currentEmployer', data);
       var isNewUser = data.new;
-      if (isNewUser) {
+      if (isNewUser == 'true') {
         Global.showAlertValidation("Bienvenue ! vous êtes rentré dans votre espace VitOnJob sécurisé.");
         $state.go("saisieCiviliteEmployeur");
       } else {

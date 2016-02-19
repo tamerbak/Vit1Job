@@ -19,12 +19,18 @@ starter
       }
       data = data[0]['value'];
       console.log(data);
-
-      data = JSON.parse(data);
       if(data.length ==0){
         OnAuthenticateError(data);
         return;
       }
+
+      data = JSON.parse(data);
+      
+      if(data.id ==0){
+        OnAuthenticateError(data);
+        return;
+      }
+
 
       localStorageService.remove('connexion');
       localStorageService.remove('currentEmployer');

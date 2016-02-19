@@ -1,8 +1,8 @@
 'use strict';
 
 starter.controller('jobyersOffersListCtrl',
-  ['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 'Global', '$cordovaSms',
-    function ($scope, localStorageService, $ionicActionSheet, UserService, $state, Global, $cordovaSms) {
+  ['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 'Global', '$cordovaSms','$ionicPopup',
+    function ($scope, localStorageService, $ionicActionSheet, UserService, $state, Global, $cordovaSms, $ionicPopup) {
 
       $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
         viewData.enableBack = true;
@@ -80,8 +80,10 @@ starter.controller('jobyersOffersListCtrl',
         $scope.jobyersOffers = localStorageService.get('jobyersOffers');
         $scope.jobyersOffersPart = [];
 
+        var nbrJobyerOffers = 3;
+        if ($scope.jobyersOffers.length < 3 ) nbrJobyerOffers = $scope.jobyersOffers.length;
 
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < nbrJobyerOffers; i++) {
           //TEL: for Track by use..
           //$scope.jobyersOffers[i].push({"id":"i"});
           if ($scope.jobyersOffers[i].matching.split(".")[0])
@@ -122,6 +124,7 @@ starter.controller('jobyersOffersListCtrl',
 
 
       $scope.loadMoreOffers = function () {
+
         for (var i = currentStart; (i < currentStart + 3 && i < $scope.jobyersOffers.length); i++) {
           //TEL: for Track by use..
           //$scope.jobyersOffers[i].push({"id":"i"});
@@ -323,12 +326,37 @@ starter.controller('jobyersOffersListCtrl',
                   else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});
                 }
               } else {
-                $state.go("connection", {jobyer: jobber});
+                showNonConnectedPopup(jobber);
+                //$state.go("connection", {jobyer: jobber});
               }
             }
             return true;
           }
         });
-      }
+      };
+
+      var showNonConnectedPopup = function(jobber){
+        var confirmPopup = $ionicPopup.confirm({
+          title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
+          template: 'Pour contacter ce jobyer, vous devez être connectés.',
+          buttons : [
+            {
+              text: '<b>Connection</b>',
+              type: 'button-dark',
+              onTap: function(e) {
+                confirmPopup.close();
+                $state.go("connection", {jobyer: jobber});
+              }
+            },{
+              text: '<b>Retour</b>',
+              type: 'button-calm',
+              onTap: function(e){
+                confirmPopup.close();
+              }
+            }
+
+          ]
+        });
+      };
 
     }]);

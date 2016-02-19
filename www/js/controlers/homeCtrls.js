@@ -295,6 +295,17 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
   $scope.logOut = function(){
     localStorageService.remove('currentEmployer');
     $scope.isLogged = false;
+
+    localStorageService.remove('connexion');
+    var connexion = {
+      'etat': false,
+      'libelle': 'Se connecter',
+      'employeID': ""
+    };
+
+    localStorageService.set('connexion', connexion);
+
+
   };
 
   var showNonConnectedPopup = function(){
@@ -319,7 +330,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 
      ]
    });
-  }
+  };
 
   var showAddOfferConfirmPopup = function(job) {
    var confirmPopup = $ionicPopup.confirm({

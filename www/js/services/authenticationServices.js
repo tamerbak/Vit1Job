@@ -884,167 +884,168 @@ angular.module('wsConnectors', ['ionic'])
       });
     };
 
-	this.updateAdressePersEmployeur=function(id, codePostal, ville, num, adresse1, adresse2, sessionID){
-		soapMessage=
-		'<fr.protogen.connector.model.DataModel>'+
-			'<entity>user_employeur</entity>'+
-			'<dataMap/>'+
-			'<rows>'+
-    			'<fr.protogen.connector.model.DataRow>'+
-					'<dataRow>'+
-						'<fr.protogen.connector.model.DataEntry>'+	// ID EMPLOYEUR
-							'<label>&lt;![CDATA[ID Employeur]]&gt;</label>'+
-							'<attributeReference>pk_user_employeur</attributeReference>'+
-							'<type>PK</type>'+
-							'<value>'+id+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Ville
-          					'<label>&lt;![CDATA[Ville]]&gt;</label>'+
-          					'<attributeReference>fk_user_ville</attributeReference>'+
-          					'<type>fk_user_ville</type>'+
-          					'<list/>'+
-          					'<value>'+ville+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Code postal
-          					'<label>&lt;![CDATA[Code postal]]&gt;</label>'+
-          					'<attributeReference>fk_user_code_postal</attributeReference>'+
-          					'<type>fk_user_code_postal</type>'+
-          					'<list/>'+
-          					'<value>'+codePostal+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-                '<fr.protogen.connector.model.DataEntry>'+
-                  '<label>&lt;![CDATA[Num]]&gt;</label>'+
-                  '<attributeReference>num</attributeReference>'+
-                  '<type>TEXT</type>'+
-                  '<value>&lt;![CDATA['+num+']]&gt;</value>'+
-                '</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Rue
-          					'<label>&lt;![CDATA[Rue]]&gt;</label>'+
-          					'<attributeReference>rue</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+adresse1+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Complément
-          					'<label>&lt;![CDATA[Complément]]&gt;</label>'+
-          					'<attributeReference>complement</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+adresse2+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-					'</dataRow>'+
-    			'</fr.protogen.connector.model.DataRow>'+
-  			'</rows>'+
-			'<token>'+
-				'<username></username>'+
-				'<password></password>'+
-				'<nom>Jakjoud Abdeslam</nom>'+
-				'<appId>FRZ48GAR4561FGD456T4E</appId>'+
-				'<sessionId>'+sessionID+'</sessionId>'+
-				'<status>SUCCES</status>'+
-				'<id>206</id>'+
-				'<beanId>0</beanId>'+
-			'</token>'+
-			'<expired></expired>'+
-			'<unrecognized></unrecognized>'+
-			'<status></status>'+
-			'<operation>UPDATE</operation>'+
-			'<clauses/>'+
-			'<page>1</page>'+
-			'<pages>5</pages>'+
-			'<nbpages>0</nbpages>'+
-			'<iddriver>0</iddriver>'+
-			'<ignoreList></ignoreList>'+
-		'</fr.protogen.connector.model.DataModel>';
+	this.updateAdressePersEmployeur=function(entrepriseId, adresse){
+		//  I will start by formating the adress
+    //  Street adress
+    var streetIndex = adresse.indexOf("street-address");
+    var street = ''; 
+    if(streetIndex >0){
+      streetIndex = streetIndex+16;
+      var sub = adresse.substring(streetIndex, adresse.length-1);
+      var endStreetIndex = sub.indexOf('</');
+      street = sub.substring(0,endStreetIndex);
+    }
 
-      return $http({
-        method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vit1job/api/das',
-        headers: {
-          "Content-Type": "text/xml"
-        },
-        data: soapMessage
-      });
+    //  Code postal
+    var cpIndex = adresse.indexOf("postal-code");
+    var cp = '';
+    if(cpIndex>0){
+      cpIndex = cpIndex+13;
+      var subcp= adresse.substring(cpIndex, adresse.length-1);
+      var endCpIndex = subcp.indexOf('</');
+      cp = subcp.substring(0,endCpIndex);
+    }
+
+    //  Ville
+    var villeIndex = adresse.indexOf("locality");
+    var ville = '';
+    if(villeIndex>0){
+      villeIndex = villeIndex+10;
+      var subville= adresse.substring(villeIndex, adresse.length-1);
+      var endvilleIndex = subville.indexOf('</');
+      ville = subville.substring(0,endvilleIndex);
+    }
+
+    //  Pays
+    var paysIndex = adresse.indexOf("country-name");
+    var pays = '';
+    if(paysIndex>0){
+      paysIndex = paysIndex+14;
+      var subpays= adresse.substring(paysIndex, adresse.length-1);
+      var endpaysIndex = subpays.indexOf('</');
+      pays = subpays.substring(0,endpaysIndex);
+    }
+
+    //  Now we need to save the adresse
+    var adresseData = {
+      'class' :  'com.vitonjob.localisation.AdressToken',
+      'street':  street,
+      'cp': cp,
+      'ville': ville,
+      'pays': pays,
+      'role':'employeur',
+      'id': entrepriseId,
+      'type': 'personnelle'
     };
 
-	this.updateAdresseTravEmployeur=function(id, codePostal, ville, num, adresse1, adresse2, sessionID){
-		soapMessage=
-		'<fr.protogen.connector.model.DataModel>'+
-			'<entity>user_employeur</entity>'+
-			'<dataMap/>'+
-			'<rows>'+
-    			'<fr.protogen.connector.model.DataRow>'+
-					'<dataRow>'+
-						'<fr.protogen.connector.model.DataEntry>'+	// ID EMPLOYEUR
-							'<label>&lt;![CDATA[ID Employeur]]&gt;</label>'+
-							'<attributeReference>pk_user_employeur</attributeReference>'+
-							'<type>PK</type>'+
-							'<value>'+Number(id)+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Ville
-          					'<label>&lt;![CDATA[Ville]]&gt;</label>'+
-          					'<attributeReference>fk_user_ville</attributeReference>'+
-          					'<type>fk_user_ville</type>'+
-          					'<list/>'+
-          					'<value>'+Number(ville)+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Code postal
-          					'<label>&lt;![CDATA[Code postal]]&gt;</label>'+
-          					'<attributeReference>fk_user_code_postal</attributeReference>'+
-          					'<type>fk_user_code_postal</type>'+
-          					'<list/>'+
-          					'<value>'+Number(codePostal)+'</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-						'<fr.protogen.connector.model.DataEntry>'+	// Num
-						'<label>&lt;![CDATA[Num]]&gt;</label>'+
-						'<attributeReference>num</attributeReference>'+
-						'<type>TEXT</type>'+
-						'<value>&lt;![CDATA['+num+']]&gt;</value>'+
-						'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Rue
-          					'<label>&lt;![CDATA[Rue]]&gt;</label>'+
-          					'<attributeReference>rue</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+adresse1+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-        				'<fr.protogen.connector.model.DataEntry>'+	// Complément
-          					'<label>&lt;![CDATA[Complément]]&gt;</label>'+
-          					'<attributeReference>complement</attributeReference>'+
-          					'<type>TEXT</type>'+
-          					'<value>&lt;![CDATA['+adresse2+']]&gt;</value>'+
-        				'</fr.protogen.connector.model.DataEntry>'+
-					'</dataRow>'+
-    			'</fr.protogen.connector.model.DataRow>'+
-  			'</rows>'+
-			'<token>'+
-				'<username></username>'+
-				'<password></password>'+
-				'<nom>Jakjoud Abdeslam</nom>'+
-				'<appId>FRZ48GAR4561FGD456T4E</appId>'+
-				'<sessionId>'+sessionID+'</sessionId>'+
-				'<status>SUCCES</status>'+
-				'<id>206</id>'+
-				'<beanId>0</beanId>'+
-			'</token>'+
-			'<expired></expired>'+
-			'<unrecognized></unrecognized>'+
-			'<status></status>'+
-			'<operation>UPDATE</operation>'+
-			'<clauses/>'+
-			'<page>1</page>'+
-			'<pages>5</pages>'+
-			'<nbpages>0</nbpages>'+
-			'<iddriver>0</iddriver>'+
-			'<ignoreList></ignoreList>'+
-		'</fr.protogen.connector.model.DataModel>';
+    adresseData = JSON.stringify(adresseData);
 
-      return $http({
-        method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vit1job/api/das',
-        headers: {
-          "Content-Type": "text/xml"
-        },
-        data: soapMessage
-      });
+    var encodedAdresse = btoa(adresseData);
+
+    var data = {
+      'class' : 'fr.protogen.masterdata.model.CCallout',
+      'id' : 29,
+      'args' : [{
+          'class' : 'fr.protogen.masterdata.model.CCalloutArguments',
+          label : 'Adresse',
+          value : encodedAdresse
+        }]
     };
+
+    var stringData = JSON.stringify(data);
+
+    var request = {
+      method : 'POST',
+      url : 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+      headers : {
+      'Content-Type' : 'application/json'
+      },
+      data : stringData
+    };
+
+    return $http(request);
+  };
+
+	this.updateAdresseTravEmployeur=function(entrepriseId, adresse){
+		//  I will start by formating the adress
+    //  Street adress
+    var streetIndex = adresse.indexOf("street-address");
+    var street = ''; 
+    if(streetIndex >0){
+      streetIndex = streetIndex+16;
+      var sub = adresse.substring(streetIndex, adresse.length-1);
+      var endStreetIndex = sub.indexOf('</');
+      street = sub.substring(0,endStreetIndex);
+    }
+
+    //  Code postal
+    var cpIndex = adresse.indexOf("postal-code");
+    var cp = '';
+    if(cpIndex>0){
+      cpIndex = cpIndex+13;
+      var subcp= adresse.substring(cpIndex, adresse.length-1);
+      var endCpIndex = subcp.indexOf('</');
+      cp = subcp.substring(0,endCpIndex);
+    }
+
+    //  Ville
+    var villeIndex = adresse.indexOf("locality");
+    var ville = '';
+    if(villeIndex>0){
+      villeIndex = villeIndex+10;
+      var subville= adresse.substring(villeIndex, adresse.length-1);
+      var endvilleIndex = subville.indexOf('</');
+      ville = subville.substring(0,endvilleIndex);
+    }
+
+    //  Pays
+    var paysIndex = adresse.indexOf("country-name");
+    var pays = '';
+    if(paysIndex>0){
+      paysIndex = paysIndex+14;
+      var subpays= adresse.substring(paysIndex, adresse.length-1);
+      var endpaysIndex = subpays.indexOf('</');
+      pays = subpays.substring(0,endpaysIndex);
+    }
+
+    //  Now we need to save the adresse
+    var adresseData = {
+      'class' :  'com.vitonjob.localisation.AdressToken',
+      'street':  street,
+      'cp': cp,
+      'ville': ville,
+      'pays': pays,
+      'role':'employeur',
+      'id': entrepriseId,
+      'type': 'travaille'
+    };
+
+    adresseData = JSON.stringify(adresseData);
+
+    var encodedAdresse = btoa(adresseData);
+
+    var data = {
+      'class' : 'fr.protogen.masterdata.model.CCallout',
+      'id' : 29,
+      'args' : [{
+          'class' : 'fr.protogen.masterdata.model.CCalloutArguments',
+          label : 'Adresse',
+          value : encodedAdresse
+        }]
+    };
+
+    var stringData = JSON.stringify(data);
+
+    var request = {
+      method : 'POST',
+      url : 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+      headers : {
+      'Content-Type' : 'application/json'
+      },
+      data : stringData
+    };
+
+    return $http(request);
 
   })
 

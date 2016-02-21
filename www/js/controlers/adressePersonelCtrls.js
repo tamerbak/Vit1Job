@@ -24,6 +24,7 @@ starter
     };
     // RECUPERATION SESSION-ID & EMPLOYEUR-ID
     $scope.updateAdressePersEmployeur = function () {
+      var adresse = $scope.formData.address.adr_address;
       var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
       var codePostal = "", ville = "", num = "", adresse1 = "", adresse2 = "";
 
@@ -34,7 +35,14 @@ starter
       // RECUPERATION SESSION ID
       sessionId = localStorageService.get('sessionID');
 
-      UpdateInServer.updateAdressePersEmployeur(employeId, codePostal, ville, num, adresse1, adresse2, sessionId)
+
+      var currentEmployer = localStorageService.get('currentEmployer');
+      employeId = currentEmployer.id;
+      var entreprises = currentEmployer.entreprises;  //  I am sure that there is a company associated with the user
+      var eid = currentEmployer.entreprises[0].entrepriseId;
+
+
+      UpdateInServer.updateAdressePersEmployeur(eid, adresse)
         .success(function (response) {
           employeur = localStorageService.get('employeur');
           if (!employeur)
@@ -45,6 +53,7 @@ starter
           else
             adressePersonel = {'fullAddress': ""};
           employeur.adressePersonel = adressePersonel;
+          employeur.formdataAddress = $scope.formData.address;
 
           // PUT IN SESSION
           localStorageService.set('employeur', employeur);

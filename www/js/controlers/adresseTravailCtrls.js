@@ -1,4 +1,4 @@
-/**
+      var adresse = $scope.formData.address.adr_address;/**
  * Created by Omar on 15/10/2015.
  */
 'use strict';
@@ -18,7 +18,7 @@ starter
     var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
     // RECUPERATION SESSION-ID & EMPLOYEUR-ID
     $scope.updateAdresseTravEmployeur = function () {
-
+      var adresse = $scope.formData.address.adr_address;
       var codePost = "", num = "", ville = "", adresse1 = "", adresse2 = "";
 
       // RECUPERATION CONNEXION
@@ -26,8 +26,13 @@ starter
       // RECUPERATION EMPLOYEUR ID
       var employeId = connexion.employeID;
       // RECUPERATION SESSION ID
+      var currentEmployer = localStorageService.get('currentEmployer');
+      employeId = currentEmployer.id;
+      var entreprises = currentEmployer.entreprises;  //  I am sure that there is a company associated with the user
+      var eid = currentEmployer.entreprises[0].entrepriseId;
+
       var sessionId = localStorageService.get('sessionID');
-      UpdateInServer.updateAdresseTravEmployeur(employeId, codePost, ville, num, adresse1, adresse2, sessionId)
+      UpdateInServer.updateAdresseTravEmployeur(eid, adresse)
         .success(function (response) {
           employeur = localStorageService.get('employeur');
           if (!employeur)
@@ -208,7 +213,7 @@ starter
                                 var geoAddress = localStorageService.get('user_address');
                                 // $scope.formData.addressTravail = geoAddress.fullAddress;
                                 var result = {
-                                  address_components: [],
+                               formData.addressTravail   address_components: [],
                                   adr_address: "",
                                   formatted_address: geoAddress.fullAddress,
                                   geometry: "",
@@ -258,6 +263,8 @@ starter
               onTap: function (e) {
                 e.preventDefault();
                 popup.close();
+                var employeur = localStorageService.get('employeur');
+                $scope.formData.address = employeur.formdataAddress;
                 $scope.formData.addressTravail = $stateParams.addressPers;
                 $scope.updateAdresseTravEmployeur();
               }

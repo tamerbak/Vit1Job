@@ -57,10 +57,7 @@
 
             //Check if there are rows!
 
-            //var rowsCount = jsonResp.dataModel.rows.dataRow.length;
-            //if (typeof (jsonResp.dataModel.rows.dataRow.dataRow) == 'undefined') {
-            //if (Array.isArray(jsonResp.dataModel.rows.dataRow)){
-              if (jsonResp.dataModel.rows.dataRow instanceof Array){
+          if (jsonResp.dataModel.rows.dataRow instanceof Array){
               //if (jsonResp.dataModel.rows.dataRow.length > 0){
               //if (rowsCount > 0){
 
@@ -123,42 +120,10 @@
                   'lastName': nom,
                   'city': ville
                 };
-              } else {
-                // An elaborate, custom popup
-                /*var myPopup = $ionicPopup.show({
-                 template: '',
-                 title: 'Résultat',
-                 subTitle: 'Aucun Jobyer ne correspond à votre recherche',
-                 scope: $scope
-                 buttons: [
-                 { text: 'Cancel' },
-                 {
-                 text: '<b>Save</b>',
-                 type: 'button-positive',
-                 onTap: function(e) {
-                 if (!$scope.data.wifi) {
-                 //don't allow the user to close unless he enters wifi password
-                 e.preventDefault();
-                 } else {
-                 return $scope.data.wifi;
-                 }
-                 }
-                 },
-                 ]
-                 });
-                 myPopup.then(function(res) {
-                 console.log('Tapped!', res);
-                 });
-                 $timeout(function() {
-                 myPopup.close(); //close the popup after 3 seconds for some reason
-                 }, 3000);
-return;*/
-}
-}
+              }
+            }
 
-            //sessionId = jsonResp.amanToken.sessionId;*/
-            //console.log($scope.firstName + " " + $scope.secondName);
-
+           
             $rootScope.jobyersForMe = jobyersForMe;
             $rootScope.nbJobyersForMe = jobyersForMe.length;
 
@@ -217,7 +182,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 		var estConnecte=0;
 		var cnx=localStorageService.get('connexion');
 		if(cnx){
-			if(cnx.etat){ // IL S'AGIT D'UNE DECONNEXION
+			if(cnx.etat){ 
 				console.log("IL S'AGIT D'UNE DECONNEXION");
 
 				localStorageService.remove('connexion');
@@ -227,14 +192,10 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 
 				console.log("New Connexion : "+JSON.stringify(localStorageService.get('connexion')));
 				$state.go("connection");
-				/*** REMOVE ALL COOKIES
-				var cookies = $cookies.getAll();
-				angular.forEach(cookies, function (v, k) {
-					localStorageService.remove(k);
-				});**/
+				
 
 }
-			else{ // IL S'AGIT D'UNE CONNEXION
+			else{ 
 				console.log("IL S'AGIT D'UNE CONNEXION");
         $state.go("connection");
     }
@@ -242,45 +203,6 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
   else
    $state.go("connection");
 };
-
-  //****************************************** NEW **********************************//
-
-  //************** Pour les tests********************//
-  var currentEmployer = {
-    "email":"rachid@test.com",
-    "employerId":1,
-    "entreprises":[
-          {"entrepriseId":1,
-          "name":"entreprise1",
-          "offers":[
-                {"offerId":1,
-                "title":"offer1",
-                "pricticesJob":[
-                      {"pricticeJobId":1,
-                      "job":"serveur",
-                      "level":"Bien"}],
-                "pricticesLanguage":[
-                      {"pricticeLanguageId":1,
-                      "language":"Français",
-                      "level":"Bien"}]},
-                {"offerId":2,
-                "title":"offer2",
-                "pricticesJob":[
-                      {"pricticeJobId":3,
-                      "job":"java",
-                      "level":"Excellent"},
-                      {"pricticeJobId":2,
-                      "job":"serveur",
-                      "level":"Excellent"}],
-                "pricticesLanguage":[
-                      {"pricticeLanguageId":2,
-                      "language":"Anglais",
-                      "level":"Bien"}]
-                }]
-          }]
-  };
-
-  //*************************************************//
 
   var checkIsLogged = function(){
     var currentEmployer = localStorageService.get('currentEmployer');
@@ -472,15 +394,13 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
       if(isEntrepriseOfferByJobExists(job)){
         //getJobyersOffersByJob(job);
         offerId = localStorageService.get('currentOffer').id;
-        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
+        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); 
       }else{
         showAddOfferConfirmPopup(job);
       }
     }
     else{
-      //getJobyersOffersByJob(job);
-      //showNonConnectedPopup();
-      jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError); //HERE
+      jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError); 
     }
   };
 

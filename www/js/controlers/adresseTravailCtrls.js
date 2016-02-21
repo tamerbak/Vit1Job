@@ -18,7 +18,7 @@ starter
     var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
     // RECUPERATION SESSION-ID & EMPLOYEUR-ID
     $scope.updateAdresseTravEmployeur = function () {
-      var adresse = $scope.formData.address.adr_address;
+      var adresse = $scope.formData.addressTravail.adr_address;
       var codePost = "", num = "", ville = "", adresse1 = "", adresse2 = "";
 
       // RECUPERATION CONNEXION
@@ -265,7 +265,8 @@ starter
                 popup.close();
                 var employeur = localStorageService.get('employeur');
                 $scope.formData.address = employeur.formdataAddress;
-                $scope.formData.addressTravail = $stateParams.addressPers;
+                $scope.formData.addressTravail = employeur.formdataAddress;
+                //$scope.formData.addressTravail = $stateParams.addressPers;
                 $scope.updateAdresseTravEmployeur();
               }
             }

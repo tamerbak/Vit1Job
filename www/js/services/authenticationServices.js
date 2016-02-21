@@ -1047,8 +1047,8 @@ angular.module('wsConnectors', ['ionic'])
 
     return $http(request);
 
-  })
-
+  };
+})
   .service('LoadList', function ($http){
 	  this.loadList = function(table, sessionID){
 		  soapMessage=

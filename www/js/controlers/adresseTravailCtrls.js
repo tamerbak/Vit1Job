@@ -1,4 +1,4 @@
-      var adresse = $scope.formData.address.adr_address;/**
+/**
  * Created by Omar on 15/10/2015.
  */
 'use strict';
@@ -213,7 +213,7 @@ starter
                                 var geoAddress = localStorageService.get('user_address');
                                 // $scope.formData.addressTravail = geoAddress.fullAddress;
                                 var result = {
-                               formData.addressTravail   address_components: [],
+                                  address_components: [],
                                   adr_address: "",
                                   formatted_address: geoAddress.fullAddress,
                                   geometry: "",

@@ -878,7 +878,6 @@ angular.module('wsConnectors', ['ionic'])
         url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
         headers: {
           "Content-Type": "text/plain"
-		  //'Access-Control-Allow-Methods' : 'GET, POST, PUT, UPDATE, OPTIONS'
         },
         data: sql
       });

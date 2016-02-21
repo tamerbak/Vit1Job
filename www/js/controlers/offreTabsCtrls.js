@@ -6,7 +6,7 @@
 starter
 
   .controller('offreTabsCtrl', function ($scope, $rootScope, DataProvider, Global, $state, $stateParams, $cordovaDatePicker, $ionicPopup, localStorageService) {
-
+    $scope.absoluteJobs = DataProvider.getJobs();
     //$scope.formData={};
     if ($stateParams.offre) {
       $scope.offre = JSON.parse($stateParams.offre);
@@ -36,7 +36,7 @@ starter
 
       // VIDER LIST - JOBS
       $scope.formData.jobs = [];
-      var jobs = DataProvider.getJobs();
+      var jobs = $scope.absoluteJobs;
       for (var i = 0; i < jobs.length; i++) {
         if (jobs[i]['fk_user_metier'] === $scope.formData.metier.pk_user_metier) {
           $scope.formData.jobs.push(jobs[i]);
@@ -103,6 +103,7 @@ starter
         $scope.formData.metiers = DataProvider.getMetiers();
         $scope.formData.langues = DataProvider.getLangues();
         $scope.formData.jobs = DataProvider.getJobs();
+        $scope.absoluteJobs = DataProvider.getJobs();
         $scope.formData.transvers = DataProvider.getTransvers();
         $scope.formData.jours = DataProvider.getDays();
         $scope.formData.degre = $scope.offre.degre;
@@ -155,6 +156,7 @@ starter
           'metiers': DataProvider.getMetiers(),
           'langues': DataProvider.getLangues(),
           'jobs': DataProvider.getJobs(),
+          'absoluteJobs': DataProvider.getJobs(),
           'transvers': DataProvider.getTransvers(),
           //'dateFin': "Jamais",
           'jourSelect': "Lundi",
@@ -442,7 +444,7 @@ starter
 
       // VIDER LIST - JOBS
       $scope.formData.jobs = [];
-      var jobs = DataProvider.getJobs();
+      var jobs = $scope.absoluteJobs;
       for (var i = 0; i < jobs.length; i++) {
         if (jobs[i]['fk_user_metier'] === params.fk)
           $scope.formData.jobs.push(jobs[i]);

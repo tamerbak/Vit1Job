@@ -21,14 +21,16 @@ starter
       if ($rootScope.offres == undefined)
         $rootScope.offres = [];
       if (localStorageService.get('offres') !== undefined){
-        for (var i=0; i<localStorageService.get('offres').length; i++){
-          if (localStorageService.get('offres')[i].id == localStorageService.get('currentEmployer').id){
-            $rootScope.offres = localStorageService.get('offres').values;
+        var tempOffres = localStorageService.get('offres');
+        for (var i=0; i<tempOffres.length; i++){
+          if (tempOffres[i].id == localStorageService.get('currentEmployer').id){
+            $rootScope.offres = tempOffres.values;
             break;
           }
         }
       }
-
+      if ($rootScope.offres == undefined)
+        $rootScope.offres = [];
 
 
       /*

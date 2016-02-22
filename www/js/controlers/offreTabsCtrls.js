@@ -398,6 +398,9 @@ starter
       var offre = $scope.offre;
       console.log(offre);
       console.log($scope.formData);
+      /*
+      * ICI PERSISTENCE
+      */
       var exist = false;
       if ($rootScope.offres  !== undefined) {
         console.log("$rootScope.offres.length = " + $rootScope.offres.length);
@@ -417,6 +420,10 @@ starter
           offre.etat = "publie";
           offre.pk = $rootScope.offres.length + 1;
           $rootScope.offres.push(offre);
+          $scope.jobyersOffers = localStorageService.get('jobyersOffers');
+          if($scope.jobyersOffers == undefined)
+            $scope.jobyersOffers = [];
+          $scope.jobyersOffers.push(offre);
         }
       }
 

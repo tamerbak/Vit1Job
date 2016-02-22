@@ -346,6 +346,69 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
         if(!found) i++;
       }
     }
+
+    if(!found && $rootScope.offres != undefined) {
+      var offers = $rootScope.offres;
+      for(var i=0 ; i < $rootScope.offres.length ;i++){
+        var pricticesJob = $rootScope.offres[i].pricticesJob;  
+        if(pricticesJob && pricticesJob.length > 0){
+              var k = 0;
+              while(!found && k < pricticesJob.length){
+                //TEL does search sentence contains job label ? ICIM
+                found = (pricticesJob[k].job &&  job.toLowerCase().indexOf(pricticesJob[k].job.toLowerCase()) > -1);
+                //found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
+                if(found){
+                  var currentOffer = {
+                    'id' : offers[j].offerId.toString(),
+                    'label' : offers[j].title
+                  };
+                  localStorageService.set('currentOffer',currentOffer);
+                  var currentEntreprise = {
+                    'id' : entreprises[i].entrepriseId.toString(),
+                    'label' : entreprises[i].name
+                  };
+                  localStorageService.set('currentEntreprise',currentEntreprise);
+                  loadCurrentEmployerEntreprises();
+                }
+                else{
+                  k++;
+                }
+              }
+        }
+      }
+    }
+
+    var offers = localStorageService.get('offres');
+    if(!found && offers != undefined) {
+      for(var i=0 ; i < offers.length ;i++){
+        var pricticesJob = offers[i].pricticesJob;  
+        if(pricticesJob && pricticesJob.length > 0){
+              var k = 0;
+              while(!found && k < pricticesJob.length){
+                //TEL does search sentence contains job label ? ICIM
+                found = (pricticesJob[k].job &&  job.toLowerCase().indexOf(pricticesJob[k].job.toLowerCase()) > -1);
+                //found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
+                if(found){
+                  var currentOffer = {
+                    'id' : offers[j].offerId.toString(),
+                    'label' : offers[j].title
+                  };
+                  localStorageService.set('currentOffer',currentOffer);
+                  var currentEntreprise = {
+                    'id' : entreprises[i].entrepriseId.toString(),
+                    'label' : entreprises[i].name
+                  };
+                  localStorageService.set('currentEntreprise',currentEntreprise);
+                  loadCurrentEmployerEntreprises();
+                }
+                else{
+                  k++;
+                }
+              }
+        }
+      }
+    }
+
     return found;
   };
 
@@ -392,7 +455,6 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     var isLogged = checkIsLogged();
     if(isLogged){
       if(isEntrepriseOfferByJobExists(job)){
-        //getJobyersOffersByJob(job);
         offerId = localStorageService.get('currentOffer').id;
         jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); 
       }else{

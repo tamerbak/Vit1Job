@@ -7,7 +7,7 @@ starter
 				LoadList, formatString, DataProvider, Validator, $ionicPopup, $cordovaCamera){
 
 		//change input according to platform
-		
+
 
 		$scope.isIOS = ionic.Platform.isIOS();
   		$scope.isAndroid = ionic.Platform.isAndroid();
@@ -36,7 +36,7 @@ starter
     $scope.apnIsValid= function(){
       if($scope.formData.ape!=undefined) {
         if (Number($scope.formData.ape.length) >= 5) {
-         
+
           return true;
         }
         else
@@ -57,19 +57,19 @@ starter
     };
 $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
 	viewData.enableBack = true;
-});    
+});
 $scope.$on("$ionicView.beforeEnter", function(scopes, states){
   // console.log(states.fromCache+"  state : "+states.stateName);
   if(states.stateName == "saisieCiviliteEmployeur" ){
     $scope.disableTagButton = (localStorageService.get('steps')!=null)?{'visibility': 'hidden'}:{'visibility': 'visible'};
     steps =  (localStorageService.get('steps')!=null) ? localStorageService.get('steps') : '';
-    
+
     if(steps!='')
     {
       $scope.title="Pré-saisie des informations contractuelles : civilité";
-      
-      
-      if (steps.state) 
+
+
+      if (steps.state)
       {
       	steps.step1=false;
       	localStorageService.set("steps",steps);
@@ -155,20 +155,27 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 							// DONNEES ONT ETE SAUVEGARDES
 							 console.log("response"+response);
 
-							var employeur=localStorageService.get('employeur');
+							var employeur=localStorageService.get('currentEmployer');
 							if(!employeur)
 								employeur={};
 
-							employeur.civilite=titre;
+							employeur.titre=titre;
 							employeur.nom=nom;
 							employeur.prenom=prenom;
-							employeur.entreprise=entreprise;
-							employeur.siret=siret;
-							employeur.ape=ape;
-							employeur.numUssaf=numUssaf;
+							employeur.entreprises=[];
+              employeur.entreprises.add(
+                {
+                  "entrepriseId": entrepriseId,
+                  "name" : entreprise,
+                  "siret" : siret,
+                  "naf" : ape,
+                  "urssaf" : numUssaf,
+                  "adresses" : []
+                }
+              );
 
 							// PUT IN SESSION
-							localStorageService.set('employeur', employeur);
+							localStorageService.set('currentEmployer', employeur);
 
 						}).error(function (err){
 							console.log("error : insertion DATA");
@@ -246,7 +253,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
       		if(steps)
 			{
 				console.log(steps);
-				if (steps.step2) 
+				if (steps.step2)
 				{
 					$state.go('adressePersonel');
 				}
@@ -266,7 +273,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 				$state.go('adressePersonel');
 			}
 		};
-		
+
 
     $scope.selectImage = function() {
     	/*onSuccess = function (imageURI) {
@@ -342,29 +349,29 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			$scope.formData={'civilites': DataProvider.getCivilites()};
 			$scope.formData.civ="Titre";
 			// console.log('$scope.formData.civ = '+$scope.formData.civ);
-			$scope.formData.nationalite="Nationalité";						
+			$scope.formData.nationalite="Nationalité";
 		};
 
 		$scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			if(states.stateName == "saisieCiviliteEmployeur"){
 				$scope.initForm();
-			  var employeur=localStorageService.get('employeur');
+			  var employeur=localStorageService.get('currentEmployer');
 				if(employeur){
 					// INITIALISATION FORMULAIRE
 					if(employeur.civilite)
-						$scope.formData.civ=employeur.civilite;
+						$scope.formData.civ=employeur.titre;
 					if(employeur.nom)
 						$scope.formData.nom=employeur.nom;
 					if(employeur.prenom)
 						$scope.formData.prenom=employeur.prenom;
 					if(employeur.entreprise)
-						$scope.formData.entreprise=employeur.entreprise;
+						$scope.formData.entreprise=employeur.entreprise[0].name;
 					if(employeur.siret)
-						$scope.formData.siret=employeur.siret;
+						$scope.formData.siret=employeur.entreprise[0].siret;
 					if(employeur.ape)
-						$scope.formData.ape=employeur.ape;
+						$scope.formData.ape=employeur.entreprise[0].naf;
 					if(employeur.numUssaf)
-						$scope.formData.numUssaf=employeur.numUssaf;
+						$scope.formData.numUssaf=employeur.entreprise[0].urssaf;
 				}
 			}
 		});
@@ -394,7 +401,7 @@ $scope.$on("$ionicView.beforeEnter", function(scopes, states){
 			});
 		};
 		$scope.skipDisabled= function(){
-			var employeur=localStorageService.get('employeur');
-			return $scope.isContractInfo && (!employeur || !employeur.numUssaf || !employeur.ape || !employeur.siret || !employeur.nom || !employeur.prenom || !employeur.entreprise || !employeur.civilite);
-		};	
+			var employeur=localStorageService.get('currentEmployer');
+			return $scope.isContractInfo && (!employeur || !employeur.entreprise[0].urssaf || !employeur.entreprise[0].naf || !employeur.entreprise[0].siret || !employeur.nom || !employeur.prenom || !employeur.entreprise[0].name || !employeur.titre);
+		};
 	});

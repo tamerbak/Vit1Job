@@ -10,7 +10,7 @@ starter
 
     $scope.formData = {};
     $scope.isIOS = ionic.Platform.isIOS();
-    $scope.isAndroid = ionic.Platform.isAndroid();  
+    $scope.isAndroid = ionic.Platform.isAndroid();
     $rootScope.employeur = {};
     localStorageService.remove("steps");
     /*********************New code*********************/
@@ -27,7 +27,7 @@ starter
       }
 
       data = JSON.parse(data);
-      
+
       if(data.id ==0){
         OnAuthenticateError(data);
         return;
@@ -61,6 +61,7 @@ starter
     $scope.Authenticate = function () {
       var phone=$scope.formData.phone;
       var index=$scope.formData.index;
+      var email = $scope.formData.email;
       var password=$scope.formData.password;
       var msg = [];
       var isNew=0;
@@ -107,9 +108,28 @@ starter
 
     };
 
+    //TEL 23022016 Mail control part
 		$scope.validatElement=function(id){
 			Validator.checkField(id);
 		};
+
+
+    $scope.displayEmailTooltip = function() {
+      $scope.emailToolTip = 'Veuillez saisir un email valide.';
+      $scope.showEmailTooltip = true;
+    };
+
+    $scope.validatEmail = function (id) {
+      Validator.checkEmail(id);
+    };
+    $scope.emailIsValid = function() {
+      var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+      if (!re.test($scope.formData.email)) {
+        return false;
+      } else {
+        return true;
+      }
+    };
 
 		$scope.initForm=function(){
 			// GET LIST
@@ -172,5 +192,5 @@ starter
     };
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
-  });    
+  });
   });

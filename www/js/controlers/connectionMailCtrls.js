@@ -10,6 +10,8 @@ starter
     // FORMULAIRE
     $scope.formData = {};
     $rootScope.employeur = {};
+    $scope.isIOS = ionic.Platform.isIOS();
+    $scope.isAndroid = ionic.Platform.isAndroid();
     localStorageService.remove("steps");
     /*********************New code*********************/
     var OnAuthenticateSuccesss = function(data){
@@ -25,7 +27,7 @@ starter
       }
 
       data = JSON.parse(data);
-      
+
       if(data.id ==0){
         OnAuthenticateError(data);
         return;
@@ -58,9 +60,14 @@ starter
     };
 
     $scope.Authenticate = function () {
+      var phone = $scope.formData.phone;
+      var index=$scope.formData.index;
       var email = $scope.formData.email;
       var password = $scope.formData.password;
-      AuthentificatInServer.Authenticate(email, '', password, 'employeur')
+
+      phone = index + phone;
+
+      AuthentificatInServer.Authenticate(email, phone, password, 'employeur')
       .success(OnAuthenticateSuccesss)
       .error(OnAuthenticateError);
     };
@@ -85,9 +92,31 @@ starter
         return true;
       }
     };
-	 $scope.validatEmail= function(id){
-		 Validator.checkEmail(id);
-	 };
+
+    //TEL 23/022016 : Phone control part
+
+    $scope.displayPwdTooltip = function() {
+      $scope.showPwdTooltip = true;
+    };
+    $scope.displayPhoneTooltip = function() {
+      $scope.showPhoneTooltip = true;
+    };
+    $scope.phoneIsValid= function(){
+      console.log($scope.formData.phone);
+      if($scope.formData.phone!=undefined) {
+        var phone_REGEXP = /^0/;
+        var isMatchRegex = phone_REGEXP.test($scope.formData.phone);
+        console.log("isMatchRegex = "+isMatchRegex);
+        if (Number($scope.formData.phone.length) >= 9 && !isMatchRegex) {
+          console.log('test phone');
+          return true;
+        }
+        else
+          return false;
+      }else
+        return false;
+    };
+
     $scope.passwordIsValid= function(){
       if($scope.formData.password!=undefined) {
         if (Number($scope.formData.password.length) >= 6) {
@@ -98,10 +127,11 @@ starter
         return false;
       }else
         return false;
-
-
-    }
+    };
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
+    $scope.formData.phone = "";
+    $scope.formData.email = "";
+    $scope.formData.password = "";
   });
   });

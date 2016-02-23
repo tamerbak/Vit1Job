@@ -237,7 +237,7 @@ starter.controller('jobyersOffersListCtrl',
                   jobber.contacted = true;
                   cordova.plugins.email.open({
                     to: [jobber.email], // email addresses for TO field
-                    subject: "Vitojob :Inivitation de mise en relation", // subject of the email
+                    subject: "Vitojob :Inivitation de mise en relation" // subject of the email
                     //app: 'gmail'
                   }, function () {
                     //Global.showAlertValidation("Votre email a été bien envoyé.");
@@ -267,22 +267,21 @@ starter.controller('jobyersOffersListCtrl',
                 jobber.date_invit = new Date();
                 jobber.contacted = true;
                 var employer = localStorageService.get('employeur');
-                var redirectToStep1 = (typeof (employer) == "undefined");
+                //var redirectToStep1 = (typeof (employer) == "undefined");
                 var redirectToStep1 = (employer) ? (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined") : true;
                 var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
                 var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
                 if (has(employer.adressePersonel, 'fullAddress')) {
-                  var redirectToStep2 = false
+                  redirectToStep2 = false
                 } else {
-                  var redirectToStep2 = true
+                  redirectToStep2 = true
                 }
-                ;
                 if (has(employer.adresseTravail, 'fullAddress')) {
-                  var redirectToStep3 = false
+                  redirectToStep3 = false
                 } else {
-                  var redirectToStep3 = true
+                  redirectToStep3 = true
                 }
-                ;
+
 
                 if (employer) {
                   for (var key in employer) {

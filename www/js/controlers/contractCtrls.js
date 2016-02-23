@@ -118,7 +118,7 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
   $scope.showMenuForEditContract = function(){
      var steps = localStorageService.get('steps');
     console.log(steps);
-     
+
     var hideSheet = $ionicActionSheet.show({
       buttons: [
       { text: 'Civilité'}, //Index = 0
@@ -129,7 +129,7 @@ starter.controller('contractCtrl',function($scope,localStorageService,$statePara
       cancelText: 'Annuler',
       cssClass:(ionic.Platform.isAndroid()?'android-sheet-vitonjob':'ios-sheet-vitonjob'),
       buttonClicked: function(index) {
-        
+
 var employeur = localStorageService.get('employeur');
     if(index==0){
               $state.go("saisieCiviliteEmployeur", {employeur: employeur});
@@ -142,7 +142,7 @@ var employeur = localStorageService.get('employeur');
       $state.go("adresseTravail", {employeur: employeur});
     }
         //branchement de la page de contrat ou infos clients
-          
+
             return true;
           }
         });

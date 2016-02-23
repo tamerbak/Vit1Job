@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-  .controller('offreTabsCtrl', function ($scope, $rootScope, DataProvider, Global, $state, $stateParams, $cordovaDatePicker, $ionicPopup, localStorageService) {
+  .controller('offreTabsCtrl', function ($scope, $rootScope, DataProvider, Global, $state, $stateParams, $cordovaDatePicker, $ionicPopup, localStorageService, jobyerService) {
     $scope.absoluteJobs = DataProvider.getJobs();
     //$scope.formData={};
     if ($stateParams.offre) {
@@ -346,19 +346,20 @@ starter
     }
 
     $scope.validerOffre = function () {
-      console.log("ex1");
+      var titre='';
+      var metier;
+      var job;
+      var langues = [];
+      var indispensables = [];
+      var disponibilites;
+      var plagesHoraires = [];
+      var remuneration;
+
+      
       if (!$scope.offre)
         $scope.offre = {};
       $scope.offre.degre = $scope.formData.degre;
-      /*
-       if($scope.offre.jours){
-       for(var i=0;i<$scope.offre.jours.length;i++) {
-       for (var j = 0; j < $scope.formData.jours.length; j++) {
-       if($scope.formData.jours[j].pk_user_jour_de_la_semaine==$scope.offre.jours[i].pk_user_jour_de_la_semaine)
-       $scope.formData.jours[j].checked = true;
-       }
-       }
-       }*/
+      
       console.log($scope.formData.job);
       if ($scope.formData.job && $scope.formData.job.originalObject)
         $scope.offre.titre = $scope.formData.job.originalObject.libelle + " " + $scope.formData.maitrise;
@@ -366,12 +367,41 @@ starter
         $scope.offre.titre = $scope.formData.job.libelle + " " + $scope.formData.maitrise;
       else
         $scope.offre.titre = $scope.formData.maitrise;
+      titre = $scope.offre.titre;
       $scope.offre.metier = $scope.formData.metier;
+      metier = $scope.offre.metier.pk_user_metier;
       $scope.offre.job = $scope.formData.job;
+      job = $scope.offre.job.originalObject.pk_user_competence;
       $scope.offre.qiList = $scope.formData.qiList;
+      for(var i = 0 ; i < $scope.offre.qiList.length ; i++)
+        indispensables.push({
+          "class" : "com.vitonjob.QIndispensable",
+          "qi":$scope.offre.qiList[i].pk_user_competence_transverse
+        });
       $scope.offre.languesList = $scope.formData.languesList;
+      for(var i = 0 ; i < $scope.offre.languesList.length ; i++){
+        var l = {
+          "class" : "com.vitonjob.Langue",
+          "pk" : $scope.offre.languesList[i].pk_user_langue,
+          "maitrise" : $scope.offre.languesList[i].maitriseLangue
+        };
+        langues.push(l);
+      }
+        
       $scope.offre.remuneration = $scope.formData.remuneration;
+      remuneration=$scope.offre.remuneration
+
       $scope.offre.horaires = $scope.formData.horaires;
+      for(var i = 0; i < $scope.offre.horaires.length ; i++){
+        var ho = $scope.offre.horaires[i];
+        var h = {
+          "class" : "com.vitonjob.PlageHoraire",
+          "jour": ho.jour,
+          "heureDebut": ho.heureDebut,
+          "heureFin": ho.heureFin
+        };
+        plagesHoraires.push(h);
+      }
 
       //validate date
       var accept = validateDate();
@@ -394,13 +424,31 @@ starter
         $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();
 
       }
-
+      disponibilites = {
+        "class" : "com.vitonjob.Disponibilite",
+        "dateDebut" : $scope.offre.dateDebut,
+        "dateFin" : $scope.offre.dateFin,
+        "plagesHoraires" : plagesHoraires
+      };
       var offre = $scope.offre;
       console.log(offre);
       console.log($scope.formData);
+      
       /*
       * ICI PERSISTENCE
       */
+      var currentEmployer = localStorageService.get('currentEmployer');
+      var eid = currentEmployer.entreprises[0].entrepriseId;
+      jobyerService.enregistrerOffre(
+          eid,
+          titre,
+          job,
+          langues,
+          indispensables,
+          disponibilites,
+          remuneration)
+      .success(querySuccess).error(queryError);
+      
       var exist = false;
       if ($rootScope.offres  !== undefined) {
         console.log("$rootScope.offres.length = " + $rootScope.offres.length);
@@ -458,6 +506,12 @@ starter
       }
     });
 
+    var querySuccess = function(data){
+      console.log(data);
+    }
+    var queryError = function(data){
+      console.log(data);
+    }
 
     $scope.ajouterHoraire = function () {
 

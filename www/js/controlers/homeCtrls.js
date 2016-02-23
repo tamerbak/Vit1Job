@@ -350,61 +350,41 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     if(!found && $rootScope.offres != undefined) {
       var offers = $rootScope.offres;
       for(var i=0 ; i < $rootScope.offres.length ;i++){
-        var pricticesJob = $rootScope.offres[i].pricticesJob;  
-        if(pricticesJob && pricticesJob.length > 0){
-              var k = 0;
-              while(!found && k < pricticesJob.length){
-                //TEL does search sentence contains job label ? ICIM
-                found = (pricticesJob[k].job &&  job.toLowerCase().indexOf(pricticesJob[k].job.toLowerCase()) > -1);
-                //found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
-                if(found){
-                  var currentOffer = {
-                    'id' : offers[j].offerId.toString(),
-                    'label' : offers[j].title
-                  };
-                  localStorageService.set('currentOffer',currentOffer);
-                  var currentEntreprise = {
-                    'id' : entreprises[i].entrepriseId.toString(),
-                    'label' : entreprises[i].name
-                  };
-                  localStorageService.set('currentEntreprise',currentEntreprise);
-                  loadCurrentEmployerEntreprises();
-                }
-                else{
-                  k++;
-                }
-              }
+        var practiceJob = offers[i].job.title;
+        found = (practiceJob && job.toLowerCase().indexOf(job.toLowerCase())>-1);
+        if(found){
+          var currentOffer = {
+            'id' : offers[i].pk.toString(),
+            'label' : offers[i].title
+          };
+          localStorageService.set('currentOffer',currentOffer);
+          var currentEntreprise = {
+            'id' : entreprises[0].entrepriseId.toString(),
+            'label' : entreprises[0].name
+          };
+          localStorageService.set('currentEntreprise',currentEntreprise);
+          loadCurrentEmployerEntreprises();
         }
       }
     }
 
     var offers = localStorageService.get('offres');
-    if(!found && offers != undefined) {
+    if(!found && offers != undefined && offers.length>0 && offers[0].length>0) {
       for(var i=0 ; i < offers.length ;i++){
-        var pricticesJob = offers[i].pricticesJob;  
-        if(pricticesJob && pricticesJob.length > 0){
-              var k = 0;
-              while(!found && k < pricticesJob.length){
-                //TEL does search sentence contains job label ? ICIM
-                found = (pricticesJob[k].job &&  job.toLowerCase().indexOf(pricticesJob[k].job.toLowerCase()) > -1);
-                //found = (pricticesJob[k].job && pricticesJob[k].job.toLowerCase() == job.toLowerCase());
-                if(found){
-                  var currentOffer = {
-                    'id' : offers[j].offerId.toString(),
-                    'label' : offers[j].title
-                  };
-                  localStorageService.set('currentOffer',currentOffer);
-                  var currentEntreprise = {
-                    'id' : entreprises[i].entrepriseId.toString(),
-                    'label' : entreprises[i].name
-                  };
-                  localStorageService.set('currentEntreprise',currentEntreprise);
-                  loadCurrentEmployerEntreprises();
-                }
-                else{
-                  k++;
-                }
-              }
+        var practiceJob = offers[i].job.title;
+        found = (practiceJob && job.toLowerCase().indexOf(job.toLowerCase())>-1);
+        if(found){
+          var currentOffer = {
+            'id' : offers[i].pk.toString(),
+            'label' : offers[i].title
+          };
+          localStorageService.set('currentOffer',currentOffer);
+          var currentEntreprise = {
+            'id' : entreprises[0].entrepriseId.toString(),
+            'label' : entreprises[0].name
+          };
+          localStorageService.set('currentEntreprise',currentEntreprise);
+          loadCurrentEmployerEntreprises();
         }
       }
     }

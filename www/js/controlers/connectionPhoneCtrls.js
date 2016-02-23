@@ -68,7 +68,7 @@ starter
 
       phone = index + phone;
 
-      AuthentificatInServer.Authenticate('', phone, password, 'employeur')
+      AuthentificatInServer.Authenticate(email, phone, password, 'employeur')
       .success(OnAuthenticateSuccesss)
       .error(OnAuthenticateError);
     };

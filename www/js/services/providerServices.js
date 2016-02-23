@@ -17,9 +17,9 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_ville":data.data[i]["pk_user_ville"],"libelle":data.data[i]["nom"]});
             });
-			
+
 		    return results;
-			
+
 		}
 
 		this.getZipCodes=function(){
@@ -30,7 +30,7 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_code_postal":data.data[i]["pk_user_code_postal"],"libelle":data.data[i]["code"]});
             });
-			
+
 		    return results;
 		}
 
@@ -48,9 +48,9 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_langue":data.data[i]["pk_user_langue"],"libelle":data.data[i]["libelle"]});
             });
-			
+
 		    return results;
-			
+
 		}
 
 		this.getTransvers=function(){
@@ -61,7 +61,7 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_competence_transverse":data.data[i]["pk_user_indispensable"],"libelle":data.data[i]["libelle"]});
             });
-			
+
 		    return results;
 		}
 
@@ -73,12 +73,12 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_nationalite":data.data[i]["pk_user_pays"],"libelle":data.data[i]["nom"], "code":data.data[i]["code"]});
             });
-			
+
 		    return results;
 		}
 
 		this.getNiveauxMaitrise=function(){
-			
+
 			var sql = "select pk_user_niveau, libelle from user_niveau";
 			var results = [];
 
@@ -86,7 +86,7 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_niveau_de_maitrise":data.data[i]["pk_user_niveau"],"libelle":data.data[i]["libelle"]});
             });
-			
+
 		    return results;
 		}
 
@@ -100,10 +100,25 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_metier":data.data[i]["pk_user_metier"],"libelle":data.data[i]["libelle"]});
             });
-			
+
 		    return results;
-		}
-		
+		};
+
+    this.getMetierByIdJob=function(id){
+      var sql = "select pk_user_metier, user_metier.libelle from user_metier, user_job , user_pratique_job " +
+        "where fk_user_metier = pk_user_metier and pk_user_job = fk_user_job and pk_user_pratique_job = " + id;
+      var results = [];
+
+      return $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql})
+        /*.success(function (data) {
+        for(var i = 0 ; i < data.data.length ; i++)
+          results.push({"pk_user_metier":data.data[i]["pk_user_metier"],"libelle":data.data[i]["libelle"]});
+      });
+
+      return results;*/
+    };
+
+
 		this.getJobs=function(){
 			var sql = "select pk_user_job, fk_user_metier, libelle from user_job";
 			var results = [];
@@ -112,9 +127,9 @@ angular.module('providerServices', [])
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_competence":data.data[i]["pk_user_job"],"libelle":data.data[i]["libelle"],"fk_user_metier":data.data[i]["fk_user_metier"]});
             });
-			
+
 		    return results;
-		}
+		};
 
 		/*************************************** *************************************** ***************************************/
 
@@ -126,7 +141,7 @@ angular.module('providerServices', [])
                 console.log(data.data);
                 results = data.data;
             });
-			
+
 		    return results;
 		}
 

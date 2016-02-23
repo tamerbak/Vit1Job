@@ -40,8 +40,8 @@
 
     <div class="list" style="text-align:left;">
       <ion-radio  ng-repeat="data in formData.qiList" data-ng-model="formData.qi"  ng-value="data" ng-change="onChange(data)" style="border-radius: 0;border-color: lightgray;">
-        {{data.libelle}}
+        {{data.indispensable}}
       </ion-radio>
     </div>
-    <button class="button button-full button-positive green" ui-sref="offreTabs.langues">Suivant</button>    
+    <button class="button button-full button-positive green" ui-sref="offreTabs.langues">Suivant</button>
 </ion-view>

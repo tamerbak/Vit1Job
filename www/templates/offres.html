@@ -43,7 +43,7 @@
       <ion-radio  ng-repeat="y in offres" data-ng-model="formData.offre"  ng-value="y" ng-change="offreChange(y)">
         <i ng-if="y.etat=='publie'" class="ion-eye"></i>
         <i ng-if="y.etat=='noPublie'" class="ion-eye-disabled"></i>
-        <label>{{y.titre}}</label>
+        <label>{{y.title}}</label>
       </ion-radio>
     </ion-list>
     <div class="card" ng-show="!offres.length">

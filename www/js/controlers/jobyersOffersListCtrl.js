@@ -125,6 +125,8 @@ starter.controller('jobyersOffersListCtrl',
 
       $scope.loadMoreOffers = function () {
 
+        if ($scope.jobyersOffers == "undefined")
+          return;
         for (var i = currentStart; (i < currentStart + 3 && i < $scope.jobyersOffers.length); i++) {
           //TEL: for Track by use..
           //$scope.jobyersOffers[i].push({"id":"i"});

@@ -123,7 +123,7 @@
               }
             }
 
-           
+
             $rootScope.jobyersForMe = jobyersForMe;
             $rootScope.nbJobyersForMe = jobyersForMe.length;
 
@@ -182,7 +182,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 		var estConnecte=0;
 		var cnx=localStorageService.get('connexion');
 		if(cnx){
-			if(cnx.etat){ 
+			if(cnx.etat){
 				console.log("IL S'AGIT D'UNE DECONNEXION");
 
 				localStorageService.remove('connexion');
@@ -192,10 +192,10 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
 
 				console.log("New Connexion : "+JSON.stringify(localStorageService.get('connexion')));
 				$state.go("connection");
-				
+
 
 }
-			else{ 
+			else{
 				console.log("IL S'AGIT D'UNE CONNEXION");
         $state.go("connection");
     }
@@ -350,11 +350,11 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     if(!found && $rootScope.offres != undefined) {
       var offers = $rootScope.offres;
       for(var i=0 ; i < $rootScope.offres.length ;i++){
-        var practiceJob = offers[i].job.title;
+        var practiceJob = offers[i].pricticesJob[k].job;
         found = (practiceJob && job.toLowerCase().indexOf(job.toLowerCase())>-1);
         if(found){
           var currentOffer = {
-            'id' : offers[i].pk.toString(),
+            'id' : offers[i].offerId.toString(),
             'label' : offers[i].title
           };
           localStorageService.set('currentOffer',currentOffer);
@@ -375,7 +375,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
         found = (practiceJob && job.toLowerCase().indexOf(job.toLowerCase())>-1);
         if(found){
           var currentOffer = {
-            'id' : offers[i].pk.toString(),
+            'id' : offers[i].offerId.toString(),
             'label' : offers[i].title
           };
           localStorageService.set('currentOffer',currentOffer);
@@ -436,13 +436,13 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
     if(isLogged){
       if(isEntrepriseOfferByJobExists(job)){
         offerId = localStorageService.get('currentOffer').id;
-        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError); 
+        jobyerService.recherche(job, offerId).success(onGetJobyersOffersByJobSuccess).error(onError);
       }else{
         showAddOfferConfirmPopup(job);
       }
     }
     else{
-      jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError); 
+      jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError);
     }
   };
 

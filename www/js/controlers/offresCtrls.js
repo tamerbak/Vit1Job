@@ -17,10 +17,19 @@ starter
       // GET LIST
       $scope.formData = {'offresPublies': [], 'offresNonPublies': []};
       $scope.formData.offre = {};
-      console.log("roooot");
+      console.log("Load offers from localStorage");
+
+      var entreprises = localStorageService.get('currentEmployer').entreprises;
+      var offers = entreprises[0].offers;
+
+      $rootScope.offres = offers;
+
       if ($rootScope.offres == undefined)
         $rootScope.offres = [];
-      if (localStorageService.get('offres') !== undefined){
+
+
+
+      /*if (localStorageService.get('offres') !== undefined){
         var tempOffres = localStorageService.get('offres');
         for (var i=0; i<tempOffres.length; i++){
           if (tempOffres[i].id == localStorageService.get('currentEmployer').id){
@@ -28,9 +37,7 @@ starter
             break;
           }
         }
-      }
-      if ($rootScope.offres == undefined)
-        $rootScope.offres = [];
+      }*/
 
 
       /*
@@ -67,7 +74,7 @@ starter
     $scope.modifierOffre = function () {
       var offre = $scope.formData.offre;
       console.log($scope.formData.offre);
-      if (offre.pk) {
+      if (offre.offerId) {
         $state.go('offreTabs.job', {"offre": JSON.stringify(offre)});
       } else {
         Global.showAlertValidation("Veuillez séléctionner une offre.");

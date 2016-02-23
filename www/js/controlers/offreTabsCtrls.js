@@ -88,7 +88,7 @@ starter
       if ($scope.offre) {
 
         $scope.formData = {
-          'maitrise': 'Débutant',
+          'maitrise': $scope.offre.pricticesJob[0].level, //'Débutant',
           'maitriseIcon': 'tree1_small.png',
           'maitriseStyle': "display: inline;max-width: 33px;max-height: 50px;",
           'maitriseLangueIcon': 'tree1_small.png',
@@ -117,16 +117,19 @@ starter
           }
         }
         console.log($scope.offre);
-        if ($scope.offre.titre)
-          $scope.formData.titre = $scope.offre.titre;
-        if ($scope.offre.metier)
-          $scope.formData.metier = $scope.offre.metier;
-        if ($scope.offre.job)
-          $scope.formData.job = $scope.offre.job;
-        if ($scope.offre.qiList)
-          $scope.formData.qiList = $scope.offre.qiList;
-        if ($scope.offre.languesList)
-          $scope.formData.languesList = $scope.offre.languesList;
+        if ($scope.offre.title)
+          $scope.formData.titre = $scope.offre.title;
+
+        if ($scope.offre.pricticesJob[0])
+          DataProvider.getMetierByIdJob($scope.offre.pricticesJob[0].pricticeJobId).success(function (data) {
+            $scope.formData.metier = data.data[0];
+          });
+        if ($scope.offre.pricticesJob[0])
+          $scope.formData.job = $scope.offre.pricticesJob[0];
+        if ($scope.offre.pricticesIndisponsables)
+          $scope.formData.qiList = $scope.offre.pricticesIndisponsables;
+        if ($scope.offre.pricticesLanguage)
+          $scope.formData.languesList = $scope.offre.pricticesLanguage;
         if ($scope.offre.remuneration)
           $scope.formData.remuneration = $scope.offre.remuneration;
         if ($scope.offre.horaires)
@@ -135,13 +138,13 @@ starter
           $scope.formData.horaires = [];
         console.log('init called');
 
-        if ($scope.offre.dateDebut)
-          $scope.formData.dateDebut = formatDate($scope.offre.dateDebut);
+        if ($scope.offre.disponibilite[0].dateDebut)
+          $scope.formData.dateDebut = formatDate(new Date(parseInt($scope.offre.disponibilite[0].dateDebut)));
         else
           $scope.formData.dateDebut = formatDate(new Date());
 
-        if ($scope.offre.dateFin)
-          $scope.formData.dateFin = formatDate($scope.offre.dateFin);
+        if ($scope.offre.disponibilite[0].dateFin)
+          $scope.formData.dateFin = formatDate(new Date(parseInt($scope.offre.disponibilite[0].dateFin)));
         else
           $scope.formData.dateFin = formatDate(new Date());
 
@@ -355,11 +358,11 @@ starter
       var plagesHoraires = [];
       var remuneration;
 
-      
+
       if (!$scope.offre)
         $scope.offre = {};
       $scope.offre.degre = $scope.formData.degre;
-      
+
       console.log($scope.formData.job);
       if ($scope.formData.job && $scope.formData.job.originalObject)
         $scope.offre.titre = $scope.formData.job.originalObject.libelle + " " + $scope.formData.maitrise;
@@ -387,7 +390,7 @@ starter
         };
         langues.push(l);
       }
-        
+
       $scope.offre.remuneration = $scope.formData.remuneration;
       remuneration=$scope.offre.remuneration
 
@@ -433,7 +436,7 @@ starter
       var offre = $scope.offre;
       console.log(offre);
       console.log($scope.formData);
-      
+
       /*
       * ICI PERSISTENCE
       */
@@ -448,7 +451,7 @@ starter
           disponibilites,
           remuneration)
       .success(querySuccess).error(queryError);
-      
+
       var exist = false;
       if ($rootScope.offres  !== undefined) {
         console.log("$rootScope.offres.length = " + $rootScope.offres.length);

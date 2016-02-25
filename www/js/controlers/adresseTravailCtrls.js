@@ -18,6 +18,8 @@ starter
     var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
     // RECUPERATION SESSION-ID & EMPLOYEUR-ID
     $scope.updateAdresseTravEmployeur = function () {
+      if (!$scope.formData.addressTravail)
+        return;
       var adresse = $scope.formData.addressTravail.adr_address;
       var codePost = "", num = "", ville = "", adresse1 = "", adresse2 = "";
 
@@ -47,6 +49,28 @@ starter
           // PUT IN SESSION
           localStorageService.set('employeur', employeur);
           // console.log("employeur : "+JSON.stringify(employeur));
+
+          //TEL 25022016 : to establish :
+          var addresses = entreprises.adresses;
+          if (!addresses)
+            addresses = [];
+
+          addresses.push(
+            {
+              "addressId": JSON.parse(response[0].value).id,
+              "siegeSocial": "true",
+              "adresseTravail": "false",
+              "fullAdress": ($scope.formData.addressTravail) ?
+                $scope.formData.addressTravail.formatted_address :
+                ""
+            }
+          );
+
+          entreprises.adresses = addresses;
+          currentEmployer.entreprises = entreprises;
+          localStorageService.set('currentEmployer', currentEmployer);
+
+
           // REDIRECTION VERS PAGE - offres
           var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
           if (!steps) {
@@ -217,7 +241,7 @@ starter
                                   adr_address: "",
                                   formatted_address: geoAddress.fullAddress,
                                   geometry: "",
-                                  icon: "",
+                                  icon: ""
                                 };
                                 var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
                                 ngModel.$setViewValue(result);
@@ -293,10 +317,10 @@ starter
       })
     };
 
-    $scope.skipDisabled = function () {
-      var employeur = localStorageService.get('employeur');
-      return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
-    };
+    //$scope.skipDisabled = function () {
+    //var employeur = localStorageService.get('employeur');
+    //return $scope.isContractInfo && (!employeur || !employeur.adresseTravail || !employeur.adresseTravail.fullAddress);
+    //};
     $scope.skipGoto = function () {
       if ($scope.isContractInfo)
         $state.go('contract');

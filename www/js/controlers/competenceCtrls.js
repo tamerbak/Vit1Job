@@ -2,7 +2,7 @@
  * Created by Tamer on 15/10/2015.
  */
 
-'use strict';
+/*'use strict';
 starter
 
 	.controller('competenceCtrl', function ($scope, $rootScope, localStorageService, $state,$ionicHistory, x2js, AuthentificatInServer,
@@ -179,7 +179,7 @@ starter
 				//}
 
 			/**metier=$scope.formData.metier;
-			job=$scope.formData.job;**/
+			job=$scope.formData.job;
 			var degre=$scope.formData.degre;
       var degreLangue=$scope.formData.degreLangue;
 			var indisp=$scope.formData.indisp;
@@ -303,7 +303,7 @@ starter
 			document.getElementById('metiers_value').value=$rootScope.jobyerCurrent["metier"]["libelle"];
 			document.getElementById('jobs_value').value=$rootScope.jobyerCurrent["job"]["libelle"];
 			/**$scope.formData["metier"]= $rootScope.jobyerCurrent["metier"];
-			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];**/
+			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];*
 			$scope.formData["degre"]= $rootScope.jobyerCurrent["degre"];
       $scope.formData["degreLangue"]= $rootScope.jobyerCurrent["degreLangue"];
 			$scope.formData["indisp"]= $rootScope.jobyerCurrent["indisp"];
@@ -335,7 +335,7 @@ starter
 			document.getElementById('metiers_value').value=$rootScope.jobyerCurrent["metier"]["libelle"];
 			document.getElementById('jobs_value').value=$rootScope.jobyerCurrent["job"]["libelle"];
 			/**$scope.formData["metier"]= $rootScope.jobyerCurrent["metier"];
-			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];**/
+			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];*
 			$scope.formData["degre"]= $rootScope.jobyerCurrent["degre"];
       $scope.formData["degreLangue"]= $rootScope.jobyerCurrent["degreLangue"];
 			$scope.formData["indisp"]= $rootScope.jobyerCurrent["indisp"];
@@ -374,7 +374,7 @@ starter
 			document.getElementById('metiers_value').value=$rootScope.jobyerCurrent["metier"]["libelle"];
 			document.getElementById('jobs_value').value=$rootScope.jobyerCurrent["job"]["libelle"];
 			/**$scope.formData["metier"]= $rootScope.jobyerCurrent["metier"];
-			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];**/
+			$scope.formData["job"]= $rootScope.jobyerCurrent["job"];*
 			$scope.formData["degre"]= $rootScope.jobyerCurrent["degre"];
       $scope.formData["degreLangue"]= $rootScope.jobyerCurrent["degreLangue"];
 			$scope.formData["indisp"]= $rootScope.jobyerCurrent["indisp"];
@@ -447,7 +447,7 @@ starter
 			console.log("comp : "+comp);
 
 			/**$rootScope.jobyers[idex].metier=$scope.formData.metier;
-			$rootScope.jobyers[idex].job=$scope.formData.job;**/
+			$rootScope.jobyers[idex].job=$scope.formData.job;*
 			$rootScope.jobyers[idex].degre=$scope.formData.degre;
       $rootScope.jobyers[idex].degreLangue=$scope.formData.degreLangue;
 			$rootScope.jobyers[idex].indisp=$scope.formData.indisp;
@@ -612,7 +612,7 @@ starter
 														}
 													}
 												);
-																					//*/
+																					//
 
 										}
 
@@ -683,7 +683,7 @@ starter
 							}).error(function (err){
 								console.log("error : insertion DATA");
 								console.log("error In PullDataFromServer.pullDATA: "+err);
-							});**/
+							});*
 
 				}
         var myPopup = $ionicPopup.show({
@@ -793,7 +793,7 @@ starter
        }
 
        );
-       */
+
       // GET LIST
       $scope.formData.heures=[];
 
@@ -835,3 +835,4 @@ starter
                 $scope.formData.dateFin=null;
           };
   });
+ */

@@ -117,6 +117,22 @@ starter
         return false;
     };
 
+    $scope.initForm=function(){
+      // GET LIST
+      if(!$scope.formData)
+        $scope.formData={};
+      $scope.formData.index="33";
+      //$scope.formData={ 'villes': $cookieStore.get('villes')};
+      $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
+        .success(function(data) {
+          console.log(data);
+          $scope.formData.pays=data;
+
+        }).error(function(error) {
+          console.log(error);
+        });
+    };
+
     $scope.passwordIsValid= function(){
       if($scope.formData.password!=undefined) {
         if (Number($scope.formData.password.length) >= 6) {

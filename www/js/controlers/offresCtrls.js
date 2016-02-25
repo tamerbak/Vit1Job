@@ -11,6 +11,12 @@ starter
     //
     $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
       viewData.enableBack = true;
+      console.log("Load offers from localStorage");
+
+      var entreprises = localStorageService.get('currentEmployer').entreprises;
+      var offers = entreprises[0].offers;
+
+      $rootScope.offres = offers;
     });
     $scope.initAll = function () {
 
@@ -50,7 +56,7 @@ starter
        * */
         var offres = $rootScope.offres;
       for (var i = 0; i < offres.length; i++) {
-        if (offres[i].etat == "publie")
+        if (offres[i].etat == "true")
           $scope.formData.offresPublies.push(offres[i]);
         else
           $scope.formData.offresNonPublies.push(offres[i]);
@@ -90,22 +96,22 @@ starter
     };
     $scope.dupliquerOffre = function () {
       var offre = $scope.formData.offre;
-      if (offre.pk) {
+      if (offre.offerId) {
         var offre1 = {};
         offre1.degre = offre.degre;
         if (offre.jours)
           offre1.jours = offre.jours;
         offre1.etat = offre.etat;
-        if (offre.titre)
-          offre1.titre = offre.titre;
-        if (offre.metier)
-          offre1.metier = offre.metier;
-        if (offre.job)
-          offre1.job = offre.job;
-        if (offre.qiList)
-          offre1.qiList = offre.qiList;
-        if (offre.languesList)
-          offre1.languesList = offre.languesList;
+        if (offre.title)
+          offre1.title = offre.title;
+        if (offre.pricticesJob[0])
+          offre1.metier = offre.pricticesJob[0].metier;
+        if (offre.pricticesJob[0])
+          offre1.job = offre.pricticesJob[0].job;
+        if (offre.pricticesIndisponsables)
+          offre1.qiList = offre.pricticesIndisponsables;
+        if (offre.pricticesLanguage)
+          offre1.languesList = offre.pricticesLanguage;
         if (offre.remuneration)
           offre1.remuneration = offre.remuneration;
         if (offre.heures)
@@ -114,9 +120,15 @@ starter
           offre1.dateDebut = offre.dateDebut;
         if (offre.dateFin)
           offre1.dateFin = offre.dateFin;
-        offre1.titre = offre.titre + " (copie)";
-        offre1.pk = $rootScope.offres.length + 2;
+        offre1.title = offre.title + " (copie)";
+        offre1.offerId = $rootScope.offres.length + 2;
         $rootScope.offres.push(offre1);
+        console.log("Load offers from localStorage");
+
+        var employeur = localStorageService.get('currentEmployer');
+        employeur.entreprises[0].offers = $rootScope.offres;
+        localStorageService.set ('currentEmployer', employeur);
+
       } else {
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
@@ -127,10 +139,17 @@ starter
     };
     $scope.supprimerOffre = function () {
       var offre = $scope.formData.offre;
-      if (offre.pk) {
+      if (offre.offerId) {
         var offres = $rootScope.offres;
         var indexOffres = offres.indexOf(offre);
         $rootScope.offres.splice(indexOffres, 1);
+
+        console.log("Load offers in localStorage");
+
+        var employeur = localStorageService.get('currentEmployer');
+        employeur.entreprises[0].offers = $rootScope.offres;
+        localStorageService.set ('currentEmployer', employeur);
+
         if (offre.etat == "publie")
           $scope.formData.offresPublies.splice($scope.formData.offresPublies.indexOf(offre), 1);
         else

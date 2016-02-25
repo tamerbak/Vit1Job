@@ -1,7 +1,7 @@
 'use strict';
 
 starter.controller('jobyersOffersListCtrl',
-  ['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 'Global', '$cordovaSms','$ionicPopup',
+  ['$scope', 'localStorageService', '$ionicActionSheet', 'UserService', '$state', 'Global', '$cordovaSms', '$ionicPopup',
     function ($scope, localStorageService, $ionicActionSheet, UserService, $state, Global, $cordovaSms, $ionicPopup) {
 
       $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
@@ -10,7 +10,7 @@ starter.controller('jobyersOffersListCtrl',
 
       localStorageService.remove("steps");
       var init = function () {
-        if(localStorageService.get('currentOffer') != null)
+        if (localStorageService.get('currentOffer') != null)
           $scope.OfferLabel = capitalize(localStorageService.get('currentOffer').label);
         $scope.jobyerListSetting = localStorageService.get('jobyerListSetting');
         if (!$scope.jobyerListSetting) {
@@ -81,7 +81,7 @@ starter.controller('jobyersOffersListCtrl',
         $scope.jobyersOffersPart = [];
 
         var nbrJobyerOffers = 3;
-        if ($scope.jobyersOffers.length < 3 ) nbrJobyerOffers = $scope.jobyersOffers.length;
+        if ($scope.jobyersOffers.length < 3) nbrJobyerOffers = $scope.jobyersOffers.length;
 
         for (var i = 0; i < nbrJobyerOffers; i++) {
           //TEL: for Track by use..
@@ -95,19 +95,19 @@ starter.controller('jobyersOffersListCtrl',
               $scope.jobyersOffers[i].jobyerName.split(" ")[0] + " " + //"M. "
               $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
           $scope.jobyersOffersPart.push({
-            "id" : i,
-            "availability" : {
-              value : $scope.jobyersOffers[i].availability.value,
-              text : $scope.jobyersOffers[i].availability.text
+            "id": i,
+            "availability": {
+              value: $scope.jobyersOffers[i].availability.value,
+              text: $scope.jobyersOffers[i].availability.text
             },
-            "contacted" : $scope.jobyersOffers[i].contacted,
-            "date_invit" : $scope.jobyersOffers[i].date_invit,
-            "email" : $scope.jobyersOffers[i].email,
-            "jobyerName" : $scope.jobyersOffers[i].jobyerName,
-            "latitude" : $scope.jobyersOffers[i].latitude,
-            "logitude" : $scope.jobyersOffers[i].logitude,
-            "matching" : $scope.jobyersOffers[i].matching,
-            "tel" : $scope.jobyersOffers[i].tel
+            "contacted": $scope.jobyersOffers[i].contacted,
+            "date_invit": $scope.jobyersOffers[i].date_invit,
+            "email": $scope.jobyersOffers[i].email,
+            "jobyerName": $scope.jobyersOffers[i].jobyerName,
+            "latitude": $scope.jobyersOffers[i].latitude,
+            "logitude": $scope.jobyersOffers[i].logitude,
+            "matching": $scope.jobyersOffers[i].matching,
+            "tel": $scope.jobyersOffers[i].tel
 
           });
         }
@@ -140,19 +140,19 @@ starter.controller('jobyersOffersListCtrl',
               $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
 
           $scope.jobyersOffersPart.push({
-            "id" : i,
-            "availability" : {
-              value : $scope.jobyersOffers[i].availability.value,
-              text : $scope.jobyersOffers[i].availability.text
+            "id": i,
+            "availability": {
+              value: $scope.jobyersOffers[i].availability.value,
+              text: $scope.jobyersOffers[i].availability.text
             },
-            "contacted" : $scope.jobyersOffers[i].contacted,
-            "date_invit" : $scope.jobyersOffers[i].date_invit,
-            "email" : $scope.jobyersOffers[i].email,
-            "jobyerName" : $scope.jobyersOffers[i].jobyerName,
-            "latitude" : $scope.jobyersOffers[i].latitude,
-            "logitude" : $scope.jobyersOffers[i].logitude,
-            "matching" : $scope.jobyersOffers[i].matching,
-            "tel" : $scope.jobyersOffers[i].tel
+            "contacted": $scope.jobyersOffers[i].contacted,
+            "date_invit": $scope.jobyersOffers[i].date_invit,
+            "email": $scope.jobyersOffers[i].email,
+            "jobyerName": $scope.jobyersOffers[i].jobyerName,
+            "latitude": $scope.jobyersOffers[i].latitude,
+            "logitude": $scope.jobyersOffers[i].logitude,
+            "matching": $scope.jobyersOffers[i].matching,
+            "tel": $scope.jobyersOffers[i].tel
 
           });
         }
@@ -269,40 +269,56 @@ starter.controller('jobyersOffersListCtrl',
                 jobber.date_invit = new Date();
                 jobber.contacted = true;
                 var employer = localStorageService.get('employeur');
+
+                //TEL 25022016 : Use of the currentEmployer localStorage variable
+                var currentEmployer = localStorageService.get('currentEmployer');
+
                 //var redirectToStep1 = (typeof (employer) == "undefined");
-                var redirectToStep1 = (employer) ? (typeof (employer.civilite) == "undefined") || (typeof (employer.entreprise) == "undefined") : true;
-                var redirectToStep2 = (employer) ? (typeof (employer.adressePersonel) == "undefined") : true;
-                var redirectToStep3 = (employer) ? (typeof (employer.adresseTravail) == "undefined") : true;
-                if (has(employer.adressePersonel, 'fullAddress')) {
-                  redirectToStep2 = false
-                } else {
-                  redirectToStep2 = true
-                }
-                if (has(employer.adresseTravail, 'fullAddress')) {
-                  redirectToStep3 = false
-                } else {
-                  redirectToStep3 = true
-                }
+                var redirectToStep1 = (currentEmployer && currentEmployer.entreprises[0]) ?
+                (typeof (currentEmployer.titre) == "undefined") ||
+                (typeof (currentEmployer.prenom) == "undefined") ||
+                (typeof (currentEmployer.nom) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].name) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].siret) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].naf) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].urssaf) == "undefined") : true;
+                var redirectToStep2 = (currentEmployer && currentEmployer.entreprises[0]) ?
+                (typeof (currentEmployer.entreprises[0].adresses) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].adresses[0]) == "undefined") : true;
+                var redirectToStep3 = (currentEmployer && currentEmployer.entreprises[0]) ?
+                (typeof (currentEmployer.entreprises[0].adresses) == "undefined") ||
+                (typeof (currentEmployer.entreprises[0].adresses[1]) == "undefined") : true;
+
+                /*if (has(employer.adressePersonel, 'fullAddress')) {
+                 redirectToStep2 = false
+                 } else {
+                 redirectToStep2 = true
+                 }
+                 if (has(employer.adresseTravail, 'fullAddress')) {
+                 redirectToStep3 = false
+                 } else {
+                 redirectToStep3 = true
+                 }*/
 
 
-                if (employer) {
-                  for (var key in employer) {
-                    redirectToStep1 = (employer[key]) == "";
-                    if (redirectToStep1) break;
-                  }
-                  // if (!redirectToStep1) {
-                  //   for (var key in employer.adressePersonel) {
-                  //     redirectToStep2 = (employer.adressePersonel[key]) == "";
-                  //     if (redirectToStep2) break;
-                  //   }
-                  // }
-                  // if (!redirectToStep2) {
-                  //   for (var key in employer.adresseTravail) {
-                  //     redirectToStep3 = (employer.adresseTravail[key]) == "";
-                  //     if (redirectToStep3) break;
-                  //   }
-                  // }
-                }
+                //if (employer) {
+                //for (var key in employer) {
+                //redirectToStep1 = (employer[key]) == "";
+                //if (redirectToStep1) break;
+                //}
+                // if (!redirectToStep1) {
+                //   for (var key in employer.adressePersonel) {
+                //     redirectToStep2 = (employer.adressePersonel[key]) == "";
+                //     if (redirectToStep2) break;
+                //   }
+                // }
+                // if (!redirectToStep2) {
+                //   for (var key in employer.adresseTravail) {
+                //     redirectToStep3 = (employer.adresseTravail[key]) == "";
+                //     if (redirectToStep3) break;
+                //   }
+                // }
+                //}
                 var dataInformed = ((!redirectToStep1) && (!redirectToStep2) && (!redirectToStep3));
                 var objRedirect = {
                   "state": false,
@@ -334,24 +350,25 @@ starter.controller('jobyersOffersListCtrl',
             return true;
           }
         });
-      };
+      }
+      ;
 
-      var showNonConnectedPopup = function(jobber){
+      var showNonConnectedPopup = function (jobber) {
         var confirmPopup = $ionicPopup.confirm({
           title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
           template: 'Pour contacter ce jobyer, vous devez être connectés.',
-          buttons : [
+          buttons: [
             {
               text: '<b>Connection</b>',
               type: 'button-dark',
-              onTap: function(e) {
+              onTap: function (e) {
                 confirmPopup.close();
                 $state.go("connection", {jobyer: jobber});
               }
-            },{
+            }, {
               text: '<b>Retour</b>',
               type: 'button-calm',
-              onTap: function(e){
+              onTap: function (e) {
                 confirmPopup.close();
               }
             }
@@ -360,4 +377,5 @@ starter.controller('jobyersOffersListCtrl',
         });
       };
 
-    }]);
+    }])
+;

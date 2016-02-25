@@ -50,7 +50,7 @@ services
              deferred.reject(error);
            };
             console.log("befooore geolocation");
-           navigator.geolocation.getCurrentPosition(onSuccess, onError,{timeout: 1000});
+           navigator.geolocation.getCurrentPosition(onSuccess, onError,{timeout: 15000});
 
           return deferred.promise;
         },

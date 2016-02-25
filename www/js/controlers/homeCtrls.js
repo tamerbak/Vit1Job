@@ -347,7 +347,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
       }
     }
 
-    if(!found && $rootScope.offres != undefined) {
+    /*if(!found && $rootScope.offres != undefined) {
       var offers = $rootScope.offres;
       for(var i=0 ; i < $rootScope.offres.length ;i++){
         var practiceJob = offers[i].pricticesJob[k].job;
@@ -387,7 +387,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
           loadCurrentEmployerEntreprises();
         }
       }
-    }
+    }*/
 
     return found;
   };
@@ -406,7 +406,7 @@ $scope.$on( "$ionicView.beforeEnter", function( scopes, states ) {
         if(currentEmployerEntreprises[i] && currentEmployerEntreprises[i].offers && currentEmployerEntreprises[i].offers.length > 0){
           for(var j = 0; j < currentEmployerEntreprises[i].offers.length; j++){
             offer = {
-              'id' : currentEmployerEntreprises[i].offers[j].offerId.toString(),
+              'id' : (currentEmployerEntreprises[i].offers[j].offerId) ? currentEmployerEntreprises[i].offers[j].offerId.toString() : currentEmployerEntreprises[i].offers[j].pk.toString() ,
               'label' : currentEmployerEntreprises[i].offers[j].title
             };
             offers.push(offer);

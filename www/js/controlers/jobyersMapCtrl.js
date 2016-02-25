@@ -298,7 +298,7 @@ starter.controller('jobyersMapCtrl', ['$scope','$ionicLoading', '$compile','Glob
       $ionicLoading.hide();
 
     },{
-      timeout : 5000
+      timeout : 15000
     });
 
     //if(success==false)

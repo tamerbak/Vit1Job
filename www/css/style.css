@@ -791,3 +791,12 @@ ion-tabs ion-nav-view{
   position: relative !important;
   top: 0px !important;
 }
+
+
+label.item.item-input.it3 {
+  position: absolute;
+  width: 70%;
+  height: 47px !important;
+  border-left: 0;
+}
+

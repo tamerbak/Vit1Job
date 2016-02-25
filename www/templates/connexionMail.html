@@ -40,7 +40,7 @@
       <div class="list xtel" align="left">
       <div class="row" style="padding-left: 0;">
         <div class="col-25 num">
-          <label class="item item-input it1">
+          <label class="item item-input it1" style="border-right: 0 !important;">
             <i class="icon ion-ios-telephone placeholder-icon calm"></i>
             <input class="input-indicatif" type="tel" ng-model="formData.index" placeholder=""
                    data-ng-init="formData.index='33'" numbers-only="numbers-only"/>
@@ -48,7 +48,7 @@
         </div>
         <div class="col-10 num">
 
-          <label ng-show={{isAndroid}} style="position: absolute;width: 70%;height: 47px !important;border-left:none;"
+          <label ng-show={{isAndroid}} style="position: absolute;width: 70%;height: 47px !important;border-left: 0 !important;"
                  class="item item-input it3">
             <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
             <select class="select-indicatif" ng-model="formData.index">
@@ -67,7 +67,7 @@
           </label>
         </div>
         <div class="col-67 rue">
-          <label class="item item-input it2">
+          <label class="item item-input it2" style="border-left: 0 !important;">
             <input numbers-only="numbers-only" type="tel" ng-focus="displayPhoneTooltip()"
                    ng-click="displayPhoneTooltip()" id="phone" placeholder="Téléphone" data-ng-model="formData.phone"
                    ng-minlength="9">

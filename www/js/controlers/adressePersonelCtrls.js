@@ -24,26 +24,24 @@ starter
     };
     // RECUPERATION SESSION-ID & EMPLOYEUR-ID
     $scope.updateAdressePersEmployeur = function () {
+
+      if (!$scope.formData.address)
+        return;
       var adresse = $scope.formData.address.adr_address;
       var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
       var codePostal = "", ville = "", num = "", adresse1 = "", adresse2 = "";
 
-      // RECUPERATION CONNEXION
-      connexion = localStorageService.get('connexion');
-      // RECUPERATION EMPLOYEUR ID
-      var employeId = connexion.employeID;
-      // RECUPERATION SESSION ID
-      sessionId = localStorageService.get('sessionID');
-
 
       var currentEmployer = localStorageService.get('currentEmployer');
-      employeId = currentEmployer.id;
+      var employeId = currentEmployer.id;
       var entreprises = currentEmployer.entreprises;  //  I am sure that there is a company associated with the user
       var eid = currentEmployer.entreprises[0].entrepriseId;
 
 
       UpdateInServer.updateAdressePersEmployeur(eid, adresse)
         .success(function (response) {
+
+          //TEL 25022016 : to remove !
           employeur = localStorageService.get('employeur');
           if (!employeur)
             var employeur = {"civilite": "", "nom": "", "prenom": "", entreprise: "", siret: "", ape: "", numUssaf: ""};
@@ -57,6 +55,25 @@ starter
 
           // PUT IN SESSION
           localStorageService.set('employeur', employeur);
+
+          //TEL 25022016 : to establish :
+          var addresses = entreprises.adresses;
+          if (!addresses)
+            addresses = [];
+
+          addresses.push(
+            {
+              "addressId" : JSON.parse(response[0].value).id,
+              "siegeSocial" : "false",
+              "adresseTravail" : "true",
+              "fullAdress" : $scope.formData.address.formatted_address
+            }
+          );
+
+          entreprises.adresses = addresses;
+          currentEmployer.entreprises = entreprises;
+          localStorageService.set('currentEmployer',currentEmployer);
+
         }).error(function (err) {
           console.log("error : insertion DATA");
           console.log("error In updateAdressePersEmployeur: " + err);
@@ -75,7 +92,7 @@ starter
       }
       else {
 
-        $state.go('adresseTravail', {"geolocated": geolocated, addressPers: $scope.formData.address});
+        $state.go('adresseTravail', {"geolocated": geolocated, "addressPers": $scope.formData.address});
       }
 
     };
@@ -250,8 +267,8 @@ starter
       })
     };
 
-    $scope.skipDisabled = function () {
-      var employeur = localStorageService.get('employeur');
-      return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
-    };
+    /*$scope.skipDisabled = function () {
+     var employeur = localStorageService.get('employeur');
+     return $scope.isContractInfo && (!employeur || !employeur.adressePersonel || !employeur.adressePersonel.fullAddress);
+     };*/
   });

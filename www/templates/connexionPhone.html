@@ -30,7 +30,7 @@
                  class="item item-input it3">
             <i class="icon ion-arrow-down-b placeholder-icon calm"></i>
             <select class="select-indicatif" ng-model="formData.index">
-              <option ng-repeat="item in formData.pays" ng-value="item.indicatif">
+              <option ng-repeat="item in formData.pays" ng-value="item.indicatif_telephonique">
                 {{item.nom}}
               </option>
             </select>
@@ -104,7 +104,7 @@
       <!-- ACTIONS -->
       <div class="buttonConnect">
         <button class="button button-full button-positive green" data-ng-click="Authenticate()"
-                ng-disabled="!formData.index || !formData.phone || !formData.password">Se connecter
+                ng-disabled="!formData.index || !formData.phone || !formData.password || !formData.email">Se connecter
         </button>
         <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
       </div>

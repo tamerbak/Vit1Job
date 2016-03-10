@@ -20,6 +20,9 @@ starter.config(function($stateProvider, $urlRouterProvider) {
 
     .state('profile', {
       url: "/profile",
+      params: {
+        'link': ""
+      },
       templateUrl: "templates/profile.html",
       controller: "ProfileCtrl"
     })

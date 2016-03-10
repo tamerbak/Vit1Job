@@ -37,7 +37,7 @@ angular.module('providerServices', [])
 		/*************************************** *************************************** ***************************************/
 
 		this.getCivilites=function(){
-			return [{"pk_user_civilite":"44","libelle":"Madame"},{"pk_user_civilite":"42","libelle":"Mademoiselle"},{"pk_user_civilite":"40","libelle":"Monsieur"}];
+			return [{"pk_user_civilite":"44","libelle":"Mme"},{"pk_user_civilite":"42","libelle":"Mlle"},{"pk_user_civilite":"40","libelle":"M."}];
 		}
 
 		this.getLangues=function(){

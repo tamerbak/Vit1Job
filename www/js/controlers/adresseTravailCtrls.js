@@ -121,7 +121,7 @@ starter
         //$scope.initForm();
         // console.log("steps ="+steps);
         if (steps) {
-          $scope.title = "Pré-saisie des informations contractuelles : adresse du travail";
+          $scope.title = "Pré-saisie des informations contractuelles : adresse de la mission";
           $scope.isContractInfo = true;
 
           if (steps.state) {
@@ -131,7 +131,7 @@ starter
           ;
           $ionicPopup.show({
             title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-            template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+            template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus de la contractualisation.',
             buttons: [
               {
                 text: '<b>OK</b>',
@@ -145,7 +145,7 @@ starter
             ]
           });
         } else {
-          $scope.title = "Adresse de travail";
+          $scope.title = "Adresse de la mission";
           $scope.isContractInfo = false;
           displayPopups();
         }
@@ -238,7 +238,7 @@ starter
                                 // $scope.formData.addressTravail = geoAddress.fullAddress;
                                 var result = {
                                   address_components: [],
-                                  adr_address: "",
+                                  adr_address: geoAddress.adr_address,
                                   formatted_address: geoAddress.fullAddress,
                                   geometry: "",
                                   icon: ""
@@ -248,7 +248,7 @@ starter
                                 ngModel.$render();
 
                               }, function (error) {
-                                Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+                                Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramètres de localisation");
                               });
                           }
                         }
@@ -288,8 +288,8 @@ starter
                 e.preventDefault();
                 popup.close();
                 var employeur = localStorageService.get('employeur');
-                $scope.formData.address = employeur.formdataAddress;
-                $scope.formData.addressTravail = employeur.formdataAddress;
+                $scope.formData.address = localStorageService.get('adr_address');
+                $scope.formData.addressTravail = $scope.formData.address;
                 //$scope.formData.addressTravail = $stateParams.addressPers;
                 $scope.updateAdresseTravEmployeur();
               }

@@ -33,8 +33,14 @@
 </label>
 </ion-checkbox>
 <ion-checkbox ng-model="jobyerListSetting.orderByCorrespondence" class="checkbox-stable" style="padding:8px;" ng-change="sort()">
-<label style="color:gray;padding-left:40px;">% de correspondance à la demande</label>
+<label style="color:gray;padding-left:40px;">% de correspondance à votre demande</label>
 </ion-checkbox>
+
+  <div class="card" ng-show="!jobyersOffersPart.length">
+    <div class="item item-text-wrap">
+      Aucun jobyer ne correspond à votre recherche. Changer vos critères d'offre et réessayer.
+    </div>
+  </div>
 
 <div class="list">
 	<a class="item item-avatar card" style="margin:6px;" ng-repeat="jobyerOffer in jobyersOffersPart track by jobyerOffer.id | orderBy : SortOrder">

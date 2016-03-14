@@ -1,11 +1,12 @@
 <ion-view id="civiliteView" title="{{AppLogo}}">
-<!-- <ion-nav-buttons side="primary">
-    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
-    </ion-nav-buttons> -->
-    <ion-nav-buttons side="secondary">
-    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adressePersonel" ng-disabled="skipDisabled();">  </a>
-    </ion-nav-buttons>
-    <ion-nav-title>
+  <!-- <ion-nav-buttons side="primary">
+      <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
+      </ion-nav-buttons> -->
+  <ion-nav-buttons side="secondary">
+    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adressePersonel"
+       ng-disabled="skipDisabled();"> </a>
+  </ion-nav-buttons>
+  <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
 
@@ -18,7 +19,7 @@
 
     <!-- TITRE -->
     <div class="list">
-      <label class="item item-input">
+      <label class="item item-input" style="padding-left: 8px;">
         <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
           <option selected disabled style="display: none;">Titre</option>
           <option data-ng-repeat="x in formData.civilites" value="{{x.libelle}}">{{x.libelle}}</option>
@@ -26,50 +27,70 @@
         <span ng-show="formData.civ=='Titre' && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom"><span ng-show="!formData.nom  && isContractInfo" class="requiredStar">*</span>
+        <input type="text" id="nom" placeholder="Nom" data-ng-model="formData.nom"><span
+        ng-show="!formData.nom  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="prenom" placeholder="Prénom" data-ng-model="formData.prenom"><span ng-show="!formData.prenom  && isContractInfo" class="requiredStar">*</span>
+        <input type="text" id="prenom" placeholder="Prénom" data-ng-model="formData.prenom"><span
+        ng-show="!formData.prenom  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise"><span ng-show="!formData.entreprise  && isContractInfo" class="requiredStar">*</span>
+        <input type="text" id="entreprise" placeholder="Nom entreprise" data-ng-model="formData.entreprise"><span
+        ng-show="!formData.entreprise  && isContractInfo" class="requiredStar">*</span>
       </label>
       <label class="item item-input">
-        <input type="tel" id="siret" ng-focus="displayPhoneTooltip()" ng-click="displayPhoneTooltip()"  model-view-value="true" ui-mask="999 999 999 99999"  ui-mask-placeholder placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret" data-ng-change="validateSiret('siret')" ng-minlength="9" ><span ng-show="!formData.siret && isContractInfo" class="requiredStar">*</span>
+        <input type="tel" id="siret" ng-focus="displayPhoneTooltip()" ng-click="displayPhoneTooltip()"
+               model-view-value="true" ui-mask="999 999 999 99999" ui-mask-placeholder
+               placeholder="SIRET: 999 999 999 99999" data-ng-model="formData.siret"
+               data-ng-change="validateSiret('siret')" ng-minlength="9"><span
+        ng-show="!formData.siret && isContractInfo" class="requiredStar">*</span>
       </label>
-       <label class="item item-input">
-        <input ng-blur="apehidepopup()"  style="text-transform: uppercase" type="text" id="ape" model-view-value="true" ui-mask="9999A"  ui-mask-placeholder placeholder="NAF: 9999A" data-ng-model="formData.ape" ng-focus="displayApNTooltip()" ng-click="displayApNTooltip()" data-ng-change="validateApe('ape')"><span ng-show="!formData.ape && isContractInfo" class="requiredStar">*</span>
+      <label class="item item-input">
+        <input ng-blur="apehidepopup()" style="text-transform: uppercase" type="text" id="ape" model-view-value="true"
+               ui-mask="9999A" ui-mask-placeholder placeholder="NAF: 9999A" data-ng-model="formData.ape"
+               ng-focus="displayApNTooltip()" ng-click="displayApNTooltip()" data-ng-change="validateApe('ape')"><span
+        ng-show="!formData.ape && isContractInfo" class="requiredStar">*</span>
       </label>
-       <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!apnIsValid()">
-      <div class="arrow-up"></div>
-      <div id="pwdPopup">
+
+      <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!apnIsValid()">
+        <div class="arrow-up"></div>
+        <div id="pwdPopup">
           Saisissez le NAF sous forme de 4 chiffres et une lettre
+        </div>
       </div>
-    </div>
-      <label class="item item-input it2">
-        <input numbers-only="numbers-only" type="tel"  placeholder="N°URSSAF" data-ng-model="formData.numUssaf" >
-      <!--  <input numbers-only="number-only" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">-->
+      <!--label class="item item-input it2">
+        <input numbers-only="numbers-only" type="tel" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">
+        <!--  <input numbers-only="number-only" id="urssaf" placeholder="N°URSSAF" data-ng-model="formData.numUssaf">>
         <span ng-show="!formData.numUssaf && isContractInfo" class="requiredStar">*</span>
-      </label>
+      </label-->
 
     </div>
 
     <div class="list">
       <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
-      <button class="button button-full button-positive green" data-ng-click="selectImage()" ng-show="{{isAndroid}}">Charger un scan de votre extrait k-bis</button>
+      <button class="button button-full button-positive green" data-ng-click="selectImage()" ng-show="{{isAndroid}}">
+        Charger un scan de votre extrait k-bis
+      </button>
 
       <div id="loadImgContainer" ng-show="{{isIOS}}">
-        <input id="image" name="file" type="file" accept="image/*" onchange="angular.element(this).scope().loadImage(this)"><button data-ng-click="showFileDialog()" class="button button-full button-positive green">Charger un scan de votre extrait k-bis</button>
+        <input id="image" name="file" type="file" accept="image/*"
+               onchange="angular.element(this).scope().loadImage(this)">
+        <button data-ng-click="showFileDialog()" class="button button-full button-positive green">Charger un scan de
+          votre extrait k-bis
+        </button>
       </div>
       <button class="button button-full button-positive green" data-ng-click="takePicture()">
         Prendre une photo de votre extrait k-bis
       </button>
-      <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px; max-height: 100px;padding-top:5px;" />
+      <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px; max-height: 100px;padding-top:5px;"/>
     </div>
 
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()" ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()"
+              ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">
+        Valider
+      </button>
     </div>
 
   </ion-content>

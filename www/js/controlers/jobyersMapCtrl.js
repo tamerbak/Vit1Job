@@ -114,8 +114,8 @@ starter.controller('jobyersMapCtrl', ['$scope', '$ionicLoading', '$compile', 'Gl
   $scope.displayMarkers = function () {
 
     var jobyers = localStorageService.get("jobyersOffers"); //$scope.jobyersOffers;
-    if (!jobyers)
-      jobyers = [];
+    if (!jobyers || jobyers.length == 0)
+      return;
 
     if ($scope.InfoMarkers.length != jobyers.length) {
 
@@ -181,8 +181,8 @@ starter.controller('jobyersMapCtrl', ['$scope', '$ionicLoading', '$compile', 'Gl
   function loopThroughJobyers(i, myLatLng) {
     var marker2;
     var jobyers = localStorageService.get("jobyersOffers"); //$scope.jobyersOffers;
-    if (!jobyers)
-      jobyers = [];
+    if (!jobyers || jobyers.length == 0)
+      return;
     if ($scope.InfoMarkers.length == jobyers.length) {
       $scope.InfoMarkers = [];
     }
@@ -309,7 +309,7 @@ starter.controller('jobyersMapCtrl', ['$scope', '$ionicLoading', '$compile', 'Gl
       $ionicLoading.hide();
     }, function (error) {
       success = false;
-      Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+      Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramètres de localisation");
       $ionicLoading.hide();
 
     }, {

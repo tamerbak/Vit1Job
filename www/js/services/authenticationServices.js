@@ -204,7 +204,7 @@ angular.module('wsConnectors', ['ionic'])
       });
     };
 
-    this.updateCiviliteInEmployeur = function (user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID, employerId, enterpriseId) {
+    /*this.updateCiviliteInEmployeur = function (user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID, employerId, enterpriseId) {
       var sql = "update user_employeur set ";
       sql = sql + " titre='" + civilite + "', ";
       sql = sql + " nom='" + nom + "', prenom='" + prenom + "' where pk_user_employeur=" + employerId + ";";
@@ -222,7 +222,7 @@ angular.module('wsConnectors', ['ionic'])
         },
         data: sql
       });
-    };
+    };*/
 
     this.updateAdressePersEmployeur = function (entrepriseId, adresse) {
       //  I will start by formating the adress

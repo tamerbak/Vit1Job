@@ -34,16 +34,15 @@ starter
         $rootScope.offres = [];
 
 
-
       /*if (localStorageService.get('offres') !== undefined){
-        var tempOffres = localStorageService.get('offres');
-        for (var i=0; i<tempOffres.length; i++){
-          if (tempOffres[i].id == localStorageService.get('currentEmployer').id){
-            $rootScope.offres = tempOffres.values;
-            break;
-          }
-        }
-      }*/
+       var tempOffres = localStorageService.get('offres');
+       for (var i=0; i<tempOffres.length; i++){
+       if (tempOffres[i].id == localStorageService.get('currentEmployer').id){
+       $rootScope.offres = tempOffres.values;
+       break;
+       }
+       }
+       }*/
 
 
       /*
@@ -54,7 +53,7 @@ starter
        {pk:5,titre:"Caissier",remuneration:"99$",jours:[{"pk_user_jour_de_la_semaine":"40","nom":"Lundi"}],dateFin:$filter("date")(Date.now(), 'yyyy-MM-dd'),dateDebut:$filter("date")(Date.now(), 'yyyy-MM-dd'),heures:[{"heureDebut": "2h30min", "heureFin": "4h15min"}],etat:"noPublie",degre:89,metier:{"pk_user_metier":"44","libelle":"Transport"},job:{"pk_user_competence":"60","libelle":"Conducteur","fk_user_metier":"44"},qiList:[{"pk_user_competence_transverse":"40","libelle":"Sérieux"},{"pk_user_competence_transverse":"42","libelle":"Dynamique"},{"pk_user_competence_transverse":"44","libelle":"Souriant"}],languesList:[{"pk_user_langue":"40","libelle":"Français"}]}];
 
        * */
-        var offres = $rootScope.offres;
+      var offres = $rootScope.offres;
       for (var i = 0; i < offres.length; i++) {
         if (offres[i].etat == "true")
           $scope.formData.offresPublies.push(offres[i]);
@@ -127,14 +126,16 @@ starter
 
         var employeur = localStorageService.get('currentEmployer');
         employeur.entreprises[0].offers = $rootScope.offres;
-        localStorageService.set ('currentEmployer', employeur);
+        localStorageService.set('currentEmployer', employeur);
 
       } else {
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
     };
     $scope.compteCree = function () {
-      Global.showAlertValidation("Bienvenue dans VitOnJob.<br>Vous venez de créer votre compte.<br>Vous pouvez lancer la recherche de jobyers selon vos critères.");
+      var employeur = localStorageService.get('currentEmployer');
+      if (employeur.new == true)
+        Global.showAlertValidation("Bienvenue dans VitOnJob.<br>Vous venez de créer votre compte.<br>Vous pouvez lancer la recherche de jobyers selon vos critères.");
       $state.go('app');
     };
     $scope.supprimerOffre = function () {
@@ -148,7 +149,7 @@ starter
 
         var employeur = localStorageService.get('currentEmployer');
         employeur.entreprises[0].offers = $rootScope.offres;
-        localStorageService.set ('currentEmployer', employeur);
+        localStorageService.set('currentEmployer', employeur);
 
         if (offre.etat == "publie")
           $scope.formData.offresPublies.splice($scope.formData.offresPublies.indexOf(offre), 1);

@@ -47,7 +47,7 @@ starter
       localStorageService.set('currentEmployer', data);
       var isNewUser = data.new;
       if (isNewUser == 'true') {
-        Global.showAlertValidation("Bienvenue ! vous êtes rentré dans votre espace VitOnJob sécurisé.");
+        Global.showAlertValidation("Bienvenue dans votre espace VitOnJob!");
         $state.go("saisieCiviliteEmployeur");
       } else {
         $state.go("app");

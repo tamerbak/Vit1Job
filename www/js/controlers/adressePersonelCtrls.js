@@ -28,6 +28,7 @@ starter
       if (!$scope.formData.address)
         return;
       var adresse = $scope.formData.address.adr_address;
+      localStorageService.set('adr_address', $scope.formData.address);
       var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
       var codePostal = "", ville = "", num = "", adresse1 = "", adresse2 = "";
 
@@ -150,16 +151,16 @@ starter
 
                             var result = {
                               address_components: [],
-                              adr_address: "",
+                              adr_address: geoAddress.adr_address,
                               formatted_address: geoAddress.fullAddress,
                               geometry: "",
-                              icon: "",
+                              icon: ""
                             };
                             var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
                             ngModel.$setViewValue(result);
                             ngModel.$render();
                           }, function (error) {
-                            Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramétres de localisation");
+                            Global.showAlertValidation("Impossible de vous localiser, veuillez vérifier vos paramètres de localisation");
                           });
                         }
                       }
@@ -212,7 +213,7 @@ starter
             ;
             $ionicPopup.show({
               title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
-              template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
+              template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus de la contractualisation.',
               buttons: [
                 {
                   text: '<b>OK</b>',

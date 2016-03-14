@@ -4,6 +4,8 @@
 'use strict';
 
 starter.config(function($stateProvider, $urlRouterProvider) {
+    
+  
   $stateProvider
 
     .state('app', {
@@ -11,13 +13,41 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/home.html',
       controller: 'homeCtrl'
     })
+    .state('resetPassword', {
+      url: '/resetPassword',
+      templateUrl: 'templates/resetPassword.html',
+      controller: 'ResetPasswordCtrl'
+    })
+    .state('verifyPassword', {
+      url: '/verifyPassword',
+      templateUrl: 'templates/verifyPassword.html',
+      controller: 'VerifyPasswordCtrl'
+    })
+    .state('changePassword', {
+      url: '/changePassword',
+      templateUrl: 'templates/changePassword.html',
+      controller: 'ChangePasswordCtrl'
+    })
+    .state('paiementOptions', {
+      url: '/paiementOptions',
+      templateUrl: 'templates/paiementOptions.html',
+      controller: 'PaiementOptionsCtrl'
+    })
+    .state('payLine', {
+      url: '/payLine',
+      templateUrl: 'templates/payLine.html',
+      controller: 'PayLineCtrl'
+    })
+    .state('slimPay', {
+      url: '/slimPay',
+      templateUrl: 'templates/slimPay.html',
+      controller: 'SlimPayCtrl'
+    })
     .state('connection', {
       url: '/connection',
       templateUrl: 'templates/connections.html',
       controller: 'connectCtrl'
-
     })
-
     .state('profile', {
       url: "/profile",
       templateUrl: "templates/profile.html",
@@ -167,5 +197,5 @@ starter.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     });
- $urlRouterProvider.otherwise('/app');
+    $urlRouterProvider.otherwise('/app');
 });

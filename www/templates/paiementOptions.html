@@ -1,0 +1,56 @@
+<ion-view id="PaiementOptionsView" title="{{AppLogo}}">
+  <!-- <ion-header-bar class="bar-calm">
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection">  </a>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+    <h1 class="title">Connexion</h1>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+  </ion-header-bar> -->
+  <ion-nav-title>
+    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
+  </ion-nav-title>
+  <ion-content padding="true" data-ng-init="initForm()">
+    <!-- Title -->
+    <div>
+      <h3 class="titlePhone"><b>Choisissez votre mode de paiement : </b></h3>
+    </div>
+
+    <!-- TELEPHONE -->
+    
+    <ion-radio ng-repeat="item in paiementModeList"
+                   ng-value="item.value"
+                   ng-model="data.mode"
+                   name="paiement-mode">
+                        {{ item.text }}
+    </ion-radio>
+
+
+     
+
+        <!-- PASSWORD -->
+
+        <!--<div>
+          <h5 class="titlePhone">Votre mot de passe : </h5>
+        </div>
+
+        <label class="item item-input">
+          <i class="icon ion-locked placeholder-icon calm" style="font-size: large"></i>
+          <input type="password" ng-focus="displayPwdTooltip()" ng-click="displayPwdTooltip()"
+                 placeholder="Mot de passe" ng-model="formData.password" ng-minlength="6">
+        </label>
+
+        <div id="popupCntPwd" ng-class="{'hidden' : ! showPwdTooltip}" ng-if="!passwordIsValid()">
+          <div class="arrow-up"></div>
+          <div id="pwdPopup">
+            Taille minimale: 6 caractères
+          </div>
+        </div>
+      </div>-->
+      <br>
+      <!-- ACTIONS -->
+      <div class="buttonConnect">
+        <button class="button button-full button-positive green" data-ng-click="Redirect()">Continuer
+        </button>
+        <button class="button button-full button-positive grey" ui-sref="app">Quitter</button>
+      </div>
+  </ion-content>
+</ion-view>

@@ -11,7 +11,8 @@
 
 var starter = angular.module('starter', ['ionic','wsConnectors', 'parsingServices', 'fileServices', 'globalServices','ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova','validationDataServices','providerServices',
-  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-autocomplete','ui.mask'])
+  'LocalStorageModule','connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt','ion-google-autocomplete','ui.mask',
+  'passwordServices','SmsServices','paiementServices'])
 
 .run(function($ionicPlatform, $rootScope, $http, x2js, ngFB) {
   ngFB.init({appId: '426767167530378'});
@@ -82,6 +83,10 @@ $rootScope.previousView = '';
 
 //Add ionic loading
     .config(function($httpProvider) {
+        // $httpProvider.defaults.withCredentials = true;
+        // $httpProvider.defaults.useXDomain = true;
+        // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+         
       $httpProvider.interceptors.push(function($rootScope) {
           return {
               request: function(request) {

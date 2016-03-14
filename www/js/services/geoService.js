@@ -132,12 +132,20 @@ services
                     (address_components[5] ? address_components[5].long_name : '');
                   var fullAddress = results[0].formatted_address;
 
+                  var country = address_components[4] ? address_components[4].long_name :'';
+
+                  var adr_address = "<span class='street-address'>" + street + "</span>," +
+                    "<span class='postal-code'>" + postalCode + "</span> " +
+                    "<span class='locality'>" + city + "</span >, " +
+                    "<span class='country-name'>" + country + "</span >";
+
                   userAddress = {
                     'postalCode': postalCode,
                     'city': city,
                     'num': num,
                     'street': street,
                     'complement': complement,
+                    'adr_address': adr_address,
                     'fullAddress': fullAddress
                   };
                   console.log(userAddress);

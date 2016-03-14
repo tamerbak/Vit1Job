@@ -5,8 +5,8 @@
 'use strict';
 
 starter
-  .controller('cPhoneCtrl', function ($scope, $rootScope, localStorageService, $state,$http, x2js, AuthentificatInServer, PullDataFromServer,
-				formatString, PersistInServer, LoadList, Global, DataProvider, Validator){
+  .controller('cPhoneCtrl', function ($scope, $rootScope, localStorageService, $state,$http,
+                                      AuthentificatInServer, LoadList, Global, Validator){
 
     $scope.formData = {};
     $scope.isIOS = ionic.Platform.isIOS();
@@ -131,21 +131,21 @@ starter
       }
     };
 
-		$scope.initForm=function(){
-			// GET LIST
-      if(!$scope.formData)
+    $scope.initForm=function(){
+      // GET LIST
+      /*if(!$scope.formData)
         $scope.formData={};
       $scope.formData.index="33";
-			//$scope.formData={ 'villes': $cookieStore.get('villes')};
-      $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
-        .success(function(data) {
-          console.log(data);
-          $scope.formData.pays=data;
+      //$scope.formData={ 'villes': $cookieStore.get('villes')};
+      var listIndicatif  = LoadList.loadCountries();
+      listIndicatif.success(function(response) {
+        console.log(response);
+        $scope.formData.pays=response.data;
 
-        }).error(function(error) {
-          console.log(error);
-        });
-		};
+      }).error(function(error) {
+        console.log(error);
+      });*/
+    };
 
 		$scope.loadCodeInter=function(){
 			var code=$scope.formData.country;

@@ -65,7 +65,7 @@ starter
         steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
 
         if (steps != '') {
-          $scope.title = "Pré-saisie des informations contractuelles : civilité";
+          $scope.title = "Pré-saisie des informations contractuelles : fiche employeur";
 
 
           if (steps.state) {
@@ -88,7 +88,7 @@ starter
           });
         } else {
           $scope.isContractInfo = false;
-          $scope.title = "Saisie de la civilité";
+          $scope.title = "Fiche employeur";
         }
       }
     });

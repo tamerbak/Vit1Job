@@ -90,12 +90,14 @@ starter.controller('jobyersOffersListCtrl',
             $scope.jobyersOffers[i].matching = $scope.jobyersOffers[i].matching.split(".")[0];
           if ($scope.jobyersOffers[i].availability.text == '0 minutes')
             $scope.jobyersOffers[i].availability.text = 'Maintenant!';
-          if ($scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1])
-            $scope.jobyersOffers[i].jobyerName =
-              $scope.jobyersOffers[i].jobyerName.split(" ")[0] + " " + //"M. "
-              $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
+          if ($scope.jobyersOffers[i].prenom && $scope.jobyersOffers[i].titre)
+            $scope.jobyersOffers[i].jobyerName = $scope.jobyersOffers[i].titre + " " +
+              $scope.jobyersOffers[i].prenom;
           $scope.jobyersOffersPart.push({
             "id": i,
+            "titre" :  $scope.jobyersOffers[i].titre,
+            "prenom" :  $scope.jobyersOffers[i].prenom,
+            "nom" :  $scope.jobyersOffers[i].nom,
             "availability": {
               value: $scope.jobyersOffers[i].availability.value,
               text: $scope.jobyersOffers[i].availability.text
@@ -134,13 +136,15 @@ starter.controller('jobyersOffersListCtrl',
             $scope.jobyersOffers[i].matching = $scope.jobyersOffers[i].matching.split(".")[0];
           if ($scope.jobyersOffers[i].availability.text == '0 minutes')
             $scope.jobyersOffers[i].availability.text = 'Maintenant!';
-          if ($scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1])
-            $scope.jobyersOffers[i].jobyerName =
-              $scope.jobyersOffers[i].jobyerName.split(" ")[0] + " " + //"M. "
-              $scope.jobyersOffers[i].jobyerName.split(" ")[$scope.jobyersOffers[i].jobyerName.split(" ").length - 1]; // first Name
+          if ($scope.jobyersOffers[i].prenom && $scope.jobyersOffers[i].titre)
+            $scope.jobyersOffers[i].jobyerName = $scope.jobyersOffers[i].titre + " " +
+              $scope.jobyersOffers[i].prenom;
 
           $scope.jobyersOffersPart.push({
             "id": i,
+            "titre" :  $scope.jobyersOffers[i].titre,
+            "prenom" :  $scope.jobyersOffers[i].prenom,
+            "nom" :  $scope.jobyersOffers[i].nom,
             "availability": {
               value: $scope.jobyersOffers[i].availability.value,
               text: $scope.jobyersOffers[i].availability.text
@@ -275,13 +279,13 @@ starter.controller('jobyersOffersListCtrl',
 
                 //var redirectToStep1 = (typeof (employer) == "undefined");
                 var redirectToStep1 = (currentEmployer && currentEmployer.entreprises[0]) ?
-                (typeof (currentEmployer.titre) == "undefined") ||
-                (typeof (currentEmployer.prenom) == "undefined") ||
-                (typeof (currentEmployer.nom) == "undefined") ||
-                (typeof (currentEmployer.entreprises[0].name) == "undefined") ||
-                (typeof (currentEmployer.entreprises[0].siret) == "undefined") ||
-                (typeof (currentEmployer.entreprises[0].naf) == "undefined") ||
-                (typeof (currentEmployer.entreprises[0].urssaf) == "undefined") : true;
+                (currentEmployer.titre == "") ||
+                (currentEmployer.prenom == "") ||
+                (currentEmployer.nom == "") ||
+                (currentEmployer.entreprises[0].name == "") ||
+                (currentEmployer.entreprises[0].siret == "") ||
+                (currentEmployer.entreprises[0].naf == "") ||
+                (currentEmployer.entreprises[0].urssaf == "") : true;
                 var redirectToStep2 = (currentEmployer && currentEmployer.entreprises[0]) ?
                 (typeof (currentEmployer.entreprises[0].adresses) == "undefined") ||
                 (typeof (currentEmployer.entreprises[0].adresses[0]) == "undefined") : true;

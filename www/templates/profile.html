@@ -2,13 +2,13 @@
 <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
-  <!-- <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-chevron-left button-clear button-dark" ui-sref="app">  </a>
-    <h1 class="title">Profile</h1>
-    <a class="button icon-right ion-home button-clear button-dark" ui-sref="app">  </a>
-  </ion-header-bar> -->
+  <!--<ion-header-bar class="bar-calm">
+   <a class="button icon-left ion-chevron-left button-clear button-dark" ui-sref="app">  </a>
+   <h1 class="title">Profile</h1>
+   <a class="button icon-right ion-home button-clear button-dark" ui-sref="app">  </a>
+ </ion-header-bar> -->
   <ion-content class="has-header">
-    <div class="list card">
+    <!-- <div class="list card">
       <div class="item">
         <h2>{{user.name}}</h2>
         <p>{{user.city}}</p>
@@ -17,5 +17,18 @@
         <img src="http://graph.facebook.com/{{user.id}}/picture?width=270&height=270"/>
       </div>
     </div>
+    <iframe ng-src="{{link}}"></iframe>-->
+
+    <a class="item" href="#" onclick="cordova.InAppBrowser.open('https://demo.yousign.fr/public/ext/cosignature/preview/lXAtkf74F3cPXoahQ0qSGw1q6AoFf9iPZYS0lcji?tpl=e9ecb0d279aaed5495890bfc84020501', '_self', 'location=yes,closebuttoncaption=Retourner'); return false;">
+      Open self method (cordova web view)
+    </a>
+
+    <a class="item" href="#" onclick="cordova.InAppBrowser.open('https://demo.yousign.fr/public/ext/cosignature/preview/lXAtkf74F3cPXoahQ0qSGw1q6AoFf9iPZYS0lcji?tpl=e9ecb0d279aaed5495890bfc84020501', '_system', 'location=yes,closebuttoncaption=Retourner'); return false;">
+      Open system browser
+    </a>
+    <a class="item" href="#" onclick="cordova.InAppBrowser.open('https://demo.yousign.fr/public/ext/cosignature/preview/lXAtkf74F3cPXoahQ0qSGw1q6AoFf9iPZYS0lcji?tpl=e9ecb0d279aaed5495890bfc84020501', '_system', 'location=yes,closebuttoncaption=Retourner'); return false;">
+      Open blank method (inAppBrowser)
+    </a>
+
   </ion-content>
 </ion-view>

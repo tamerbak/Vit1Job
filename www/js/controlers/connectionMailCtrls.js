@@ -4,8 +4,8 @@
 
 'use strict';
 starter
-  .controller('cMailCtrl', function ($scope, $rootScope, localStorageService, $state, x2js, AuthentificatInServer, PullDataFromServer,
-                                     formatString, PersistInServer, Global, Validator) {
+  .controller('cMailCtrl', function ($scope, $rootScope, localStorageService, $state, AuthentificatInServer,
+                                     Global, Validator, LoadList) {
 
     // FORMULAIRE
     $scope.formData = {};
@@ -47,7 +47,7 @@ starter
       localStorageService.set('currentEmployer', data);
       var isNewUser = data.new;
       if (isNewUser == 'true') {
-        Global.showAlertValidation("Bienvenue ! vous êtes rentré dans votre espace VitOnJob sécurisé.");
+        Global.showAlertValidation("Bienvenue dans votre espace VitOnJob!");
         $state.go("saisieCiviliteEmployeur");
       } else {
         $state.go("app");
@@ -123,10 +123,10 @@ starter
         $scope.formData={};
       $scope.formData.index="33";
       //$scope.formData={ 'villes': $cookieStore.get('villes')};
-      $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
-        .success(function(data) {
-          console.log(data);
-          $scope.formData.pays=data;
+      var listIndicatif  = LoadList.loadCountries();
+      listIndicatif.success(function(response) {
+          console.log(response);
+          $scope.formData.pays=response.data;
 
         }).error(function(error) {
           console.log(error);
@@ -145,6 +145,7 @@ starter
         return false;
     };
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    $scope.initForm();
     viewData.enableBack = true;
     $scope.formData.phone = "";
     $scope.formData.email = "";

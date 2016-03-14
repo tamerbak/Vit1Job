@@ -15,8 +15,8 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
-$calm:                            #14BAA6;
-$dark:                            #757575;
+$calm:                            #757575;
+$dark:                            #14BAA6;
 $stable:                          white;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -96,8 +96,8 @@ button.button.button-full.button-positive.grey {
    border-bottom-left-radius: 27px;
    border-top-right-radius: 27px;
    border-top-left-radius: 27px;
-   background-color:#757575;
-   border-color: #757575;
+   background-color:#14BAA6;
+   border-color: #14BAA6;
    padding: 6px;
  }
 
@@ -134,7 +134,7 @@ ion-slide.slider-slide {
 }
 
 h3.hslide1 {
-  color: #757575;
+  color: #14BAA6;
 }
 
 .list.list-inset.page2{
@@ -172,7 +172,7 @@ h3.hslide1 {
 }
 
 .mfb-component__list li:nth-child(1) a:nth-child(1) {
-  background: #757575;
+  background: #14BAA6;
   width: 90px;
   height: 90px;
   left: 19px;
@@ -207,7 +207,7 @@ h3.hslide1 {
 }*/
 
 .odd {
-  background-color: #757575;
+  background-color: #14BAA6;
   color: white;
 }
 .even {
@@ -292,11 +292,11 @@ button.button-icon.round-overlay-button {
   }
 
   &.greyCalm {
-    background-color: #757575;
+    background-color: #14BAA6;
     color: white;
 
     &.activated {
-      background-color: darken(#757575, 15%);
+      background-color: darken(#14BAA6, 15%);
     }
   }
 

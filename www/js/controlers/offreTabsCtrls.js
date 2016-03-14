@@ -462,11 +462,16 @@ starter
         remuneration)
         .success(function (response){
           console.log(response);
-          var entreprises = localStorageService.get('currentEmployer').entreprises;
+          var employeur = localStorageService.get('currentEmployer');
+          var entreprises = employeur.entreprises;
           var offers = entreprises[0].offers;
 
           if (offers == undefined)
             offers = [];
+
+          /*offers.push (response[0].value);
+          employeur.entreprises[0].offers = offers;
+          localStorageService.set('currentEmployer', employeur);*/
 
         }).error(queryError);
 

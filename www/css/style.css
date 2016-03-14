@@ -97,7 +97,7 @@ ion-footer-bar.hide-on-keyboard-open.bar.bar-footer {
 }
 
 .mfb-component__list li:nth-child(1) a:nth-child(1) {
-  background: #757575;
+  background: #14BAA6;
   width: 90px;/*90px;*/
   height: 90px;
   left: 30%;  /*9vw;*/
@@ -115,7 +115,7 @@ ion-footer-bar.hide-on-keyboard-open.bar.bar-footer {
 }
 
 .mfb-component__list li:nth-child(3) a:nth-child(1)::after {
-  color: #757575;
+  color: #14BAA6;
   left: 143%; /*5vw;*/
   top: 390%; /*28vh;*/
   font-size: 1.5em;
@@ -128,7 +128,7 @@ ion-footer-bar.hide-on-keyboard-open.bar.bar-footer {
 }
 
 .mfb-component__list li:nth-child(4) a:nth-child(1)::after {
-  color: #14BAA6;
+  color: #757575;
   left: 143%;
   top: 219%;
   font-size: 1.5em;
@@ -136,7 +136,7 @@ ion-footer-bar.hide-on-keyboard-open.bar.bar-footer {
 
 .vertical-line{
   position: absolute;
-  border-left:medium #757575 solid;
+  border-left:medium #14BAA6 solid;
   height:320px;
   /*margin-left: 13.5%;/*16vw;*/
   margin-top: -4.5vh;
@@ -195,8 +195,8 @@ button.button.button-positive.rel {
 }
 
 .checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
-  background: #14BAA6;
-  border-color: #14BAA6;
+  background: #757575;
+  border-color: #757575;
 }
 
 .modal {
@@ -210,7 +210,7 @@ button.button.button-positive.rel {
   overflow: hidden;
   min-height: 50%;
  width: 79%;
-  background-color: #14BAA6;
+  background-color: #757575;
   border-color: black;
   /*color: white;*/
 }
@@ -225,7 +225,7 @@ ion-content.modalContent.scroll-content.ionic-scroll.has-header {
 a.button.button-calm.linked{
   border-top-right-radius: 27px;
   border-bottom-right-radius: 27px;
-  border-color: #14BAA6;
+  border-color: #757575;
 }
 
 i.icon.ion-social-linkedin {
@@ -243,18 +243,18 @@ i.icon.ion-social-facebook {
 a.button.button-calm.fb{
   border-top-left-radius: 27px;
   border-bottom-left-radius: 27px;
-  border-color: #14BAA6;
+  border-color: #757575;
 }
 a.button.button-calm {
-  border-top: 1px solid #14BAA6;
-  border-bottom: 1px solid #14BAA6;
+  border-top: 1px solid #757575;
+  border-bottom: 1px solid #757575;
   border-left: 1px solid #FFFFFF;
   border-right: 1px solid #FFFFFF;
 }
 
 .h3Connect1{
   font-size : 1em;
-  color : #757575;
+  color : #14BAA6;
   width: 100%;
 }
 
@@ -267,13 +267,13 @@ a.button.button-calm {
   font-family: "Helvetica Neue","Roboto","Segoe UI",sans-serif;
   line-height: 20px;
   text-rendering: optimizelegibility;
-  color: #757575;
+  color: #14BAA6;
 }
 
 .flat{
-  border: 0 none; width: 99%;color: #757575; background-color: transparent; padding: 0px;}
+  border: 0 none; width: 99%;color: #14BAA6; background-color: transparent; padding: 0px;}
 .flat option{
-  color: #757575;border: 0 none; width: 99%;}
+  color: #14BAA6;border: 0 none; width: 99%;}
 
 /*input.indicatif_tel {
   z-index: 100;
@@ -328,13 +328,13 @@ input[type="file"]{
 
 .decale{
   padding-right: 4px;
-  color: #757575 !important;
+  color: #14BAA6 !important;
   opacity:.7;
 }
 
 
 input[type="text"], input[type="email"], input[type="password"]{
-  color: #757575;
+  color: #14BAA6;
 }
 
 .button.icon-right:before {
@@ -359,7 +359,7 @@ input[type="text"], input[type="email"], input[type="password"]{
   background:url(../img/icons/error.png)right no-repeat; border-color:red !important;z-index: 3;
 }
 .has-success{
-  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #14BAA6 !important;z-index: 3;
+  background:url(../img/icons/ok.png)right no-repeat; border:solid 1px #757575 !important;z-index: 3;
 }
 
 ion-content.scroll-content.ionic-scroll.has-header .scroll.padding img {
@@ -414,7 +414,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   border-bottom-left-radius: 27px;
   border-top-right-radius: 0;
   border-top-left-radius: 27px;
-  border-color: #14BAA6;
+  border-color: #757575;
   border-right: none;
 }
 
@@ -423,7 +423,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   border-bottom-left-radius: 0;
   border-top-right-radius: 27px;
   border-top-left-radius: 0;
-  border-color: #14BAA6;
+  border-color: #757575;
   border-left: none;
   margin-right: 1px;
 }
@@ -433,7 +433,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
-  border-color: #14BAA6;
+  border-color: #757575;
   border-left: none;
   border-right: none;
 }
@@ -493,7 +493,7 @@ div#metiers_dropdown, div#jobs_dropdown, div#ex0_dropdown, div#ex1_dropdown, div
 
 }
 #offresContent .padding > .list .item{
-  border-color: #14BAA6;
+  border-color: #757575;
   text-align: left;
 }
 ion-tabs ion-nav-view{
@@ -501,7 +501,7 @@ ion-tabs ion-nav-view{
 }
 #offresTabContent .item-input{
   //border-radius: 27px;
-  border-color: #14BAA6;
+  border-color: #757575;
 }
 
 #offresTabContent .selectClass{
@@ -534,7 +534,7 @@ ion-tabs ion-nav-view{
 }
 /*#########################################################################*/
 #civiliteView .row{
-  border: solid #14BAA6 1px !important;
+  border: solid #757575 1px !important;
   border-radius: 24px;
   margin-top: 8px !important;
 }
@@ -568,7 +568,7 @@ ion-tabs ion-nav-view{
   overflow: hidden;
   color: white;
   font-size: 14px;
-  background-color: #14baa6;
+  background-color: #757575;
   height: auto;
   width: 100%;
   padding-left: 10px;
@@ -589,7 +589,7 @@ ion-tabs ion-nav-view{
   margin-left: 15px;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #14baa6;
+  border-bottom: 10px solid #757575;
 }
 
 .chiffre{
@@ -598,7 +598,7 @@ ion-tabs ion-nav-view{
   margin-left: 37%;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #14baa6;
+  border-bottom: 10px solid #757575;
   margin-top: -15px;
 }
 
@@ -608,7 +608,7 @@ ion-tabs ion-nav-view{
   margin-left: 15px;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #14baa6;
+  border-bottom: 10px solid #757575;
   margin-top: -15px;
 }
 
@@ -648,19 +648,19 @@ ion-tabs ion-nav-view{
 }
 
 .button.button-green{
-  border-color: #14BAA6;
-  background-color: #14BAA6;
+  border-color: #757575;
+  background-color: #757575;
   color: #fff;
 }
 .card .item:first-child, .list-inset .item:first-child, .padding > .list .item:first-child {
     border-radius: 0px;
-    border-color: #14BAA6;
+    border-color: #757575;
 }
 .card .item:last-child, .list-inset .item:last-child, .padding > .list .item:last-child , .autoCompl, .padding > .list.xtel .item.it2:last-child{
     border-radius: 0px !important;
 }
 .list .item{
-      border-color: #14BAA6;
+      border-color: #757575;
 }
 #jobTabView .input-container {
   position: relative;
@@ -683,16 +683,16 @@ ion-tabs ion-nav-view{
 #agendaTabView .button.button-block, #agendaTabView .button.button-full {
     margin-top: 6px;
     margin-bottom: 6px;
-    border-color: #14BAA6;
+    border-color: #757575;
 }
 #agendaTabView .item.item-select{
   padding-top: 0px;
   padding-bottom: 0px;
-  border-color: #14BAA6;
+  border-color: #757575;
 }
 #agendaTabView ion-item{
   padding: 0px 10px;
-  border-color: #14BAA6;
+  border-color: #757575;
 }
 #agendaTabView .range input{
   margin-top: 0px;
@@ -749,7 +749,7 @@ ion-tabs ion-nav-view{
   text-align: center;
   border-color: #d1d3d6;
   font-size: 21px;
-  color: #14BAA6;
+  color: #757575;
   border-width: 1px;
 }
 .platform-android .android-sheet-vitonjob .action-sheet .action-sheet-title{

@@ -19,11 +19,16 @@ services.factory('jobyerService', ['$http', function($http) {
 
 		data = {
 		'class' : 'fr.protogen.masterdata.model.CCallout',
-        'id' : 42,//32,
+        'id' : 72,//42,//32,
         'args' : [{
             'class' : 'fr.protogen.masterdata.model.CCalloutArguments',
             label : 'creation offre',
             value : stringData
+          },
+          {
+            'class' : 'fr.protogen.masterdata.model.CCalloutArguments',
+            label : 'type utilisateur',
+            value : "employeur"
           }]
 		};
 

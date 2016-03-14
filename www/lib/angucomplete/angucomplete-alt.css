@@ -1,6 +1,6 @@
 
 .autoCompl{
-	border: solid 1px #14BAA6;
+	border: solid 1px #757575;
 	border-radius: 27px;
 	padding-top: 1%;
 	padding-bottom: 1%;
@@ -26,7 +26,7 @@
     padding: 6px;
     cursor: pointer;
 	/* position: relative; */
-    z-index: 100000 !important; 
+    z-index: 100000 !important;
     position: absolute;
     /*top: 32px;
     left: 0px;
@@ -50,14 +50,14 @@
     color: #000000;
     margin-bottom: 4px;
     clear: both;
-	z-index: 100000 !important; 
+	z-index: 100000 !important;
 	position: relative;
 	text-align: left;
 	width: 100%;
 }
 
 .angucomplete-selected-row, .angucomplete-row:hover {
-    background-color: #14BAA6;
+    background-color: #757575;
     /**background-color: lightblue;**/
     color: #ffffff;
 }

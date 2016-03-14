@@ -4,14 +4,14 @@
 
 starter
   .controller('PayLineCtrl', function ($scope, $rootScope, localStorageService, $state,$http, x2js, AuthentificatInServer, PullDataFromServer,
-				formatString, PersistInServer, LoadList, Global, DataProvider, Validator,payLine){
+				formatString, LoadList, Global, DataProvider, Validator,payLine){
 
     $scope.formData = {};
     $scope.isIOS = ionic.Platform.isIOS();
     $scope.isAndroid = ionic.Platform.isAndroid();
-    
-    
-    
+
+
+
     var OnAuthenticateSuccesss = function(data){
       if(!data){
         OnAuthenticateError(data);
@@ -65,41 +65,41 @@ starter
     //   payLine.getToken("1","2",numCard,dateExpiration,cardCvx)
     //         .success(OnAuthenticateSuccesss)
     //         .error(OnAuthenticateError);
-    
+
             var url = "https://homologation-webpayment.payline.com/webpayment/getToken";
             var data = {"data":data,"accessKeyRef":accessKeyRef,"cardNumber":numCard,"cardExpirationDate":dateExpiration,"cardCvx":cardCvx};
-		  
-		  jQuery.ajax({ 
+
+		  jQuery.ajax({
               url: url,
-              type: "POST", 
-              data: JSON.stringify({"foo":"bar"}), 
-            //   dataType: "json", 
-            //   contentType: "application/json; charset=utf-8", 
-              success: function (response) { console.log("success"); }, 
-              error: function (response) { console.log("failed"); } 
+              type: "POST",
+              data: JSON.stringify({"foo":"bar"}),
+            //   dataType: "json",
+            //   contentType: "application/json; charset=utf-8",
+              success: function (response) { console.log("success"); },
+              error: function (response) { console.log("failed"); }
             }).done(function( data ) {
                 if ( console && console.log ) {
                     console.log( data );
                 }
-            });  
+            });
          };
-    
-    
+
+
     $scope.displayPwdTooltip = function() {
       $scope.showPwdTooltip = true;
     };
-   
+
 
 		$scope.initForm=function(){
 			// GET LIST
       if(!$scope.formData)
         $scope.formData={};
-      
+
 		};
 
-		
 
-    
+
+
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });

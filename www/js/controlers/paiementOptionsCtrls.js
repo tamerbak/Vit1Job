@@ -6,7 +6,7 @@
  var clientSecret = "x14txRHh2arUKVfNS7eZ8I-v";
 
  starter
-    .controller('PaiementOptionsCtrl', function($scope, localStorageService, $state, ngFB, Global, $cordovaOauth, $http, formatString, AuthentificatInServer, x2js, LoadList ) {
+    .controller('PaiementOptionsCtrl', function($scope, localStorageService, $state, ngFB, Global, $cordovaOauth, $http, $rootScope, formatString, AuthentificatInServer, x2js, LoadList ) {
 
 
 
@@ -23,16 +23,17 @@
 
           var json = {
             "class" : 'com.vitonjob.callouts.pay.PayBean',
-            "email": "change.me@slimpay.com",
-            "familyName": "Doe",
-            "givenName": "John",
+            "email": "DDupont@mail.com",
             "civility": "Mr",
+            "familyName": "Dupont",
+            "givenName": "David",
             "telephone": "+33612345678",
-            "city": "Paris",
+            "street": "27 rue At",
+            "postalCode": "79008",
             "country": "FR",
-            "postalCode": "75008",
-            "street1": "12554",
-            "amount": "20"
+            "city": "Paris",
+            "amount" : "20"
+
           };
 
           json = JSON.stringify(json);
@@ -62,6 +63,11 @@
 
           $http(request).success(function(response) {
             console.log(response);
+            var link = JSON.parse(response[0].value);
+            localStorageService.set('urlSlimPay',link.url);
+            //$rootScope.urlSlimPay = response[0].value.url;
+            $state.go('slimPay');
+
 
           }).error(function(error){
             console.log(error);

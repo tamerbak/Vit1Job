@@ -60,7 +60,7 @@ starter
     });
     $scope.$on("$ionicView.beforeEnter", function (scopes, states) {
       // console.log(states.fromCache+"  state : "+states.stateName);
-      if (states.stateName == "saisieCiviliteEmployeur") {
+      if (states.stateName == "menu.infoTabs.saisieCiviliteEmployeur") {
         $scope.disableTagButton = (localStorageService.get('steps') != null) ? {'visibility': 'hidden'} : {'visibility': 'visible'};
         steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
 
@@ -247,19 +247,19 @@ starter
       if (steps) {
         console.log(steps);
         if (steps.step2) {
-          $state.go('adressePersonel');
+          $state.go('menu.infoTabs.adressePersonel');
         }
         else if (steps.step3) {
-          $state.go('adresseTravail');
+          $state.go('menu.infoTabs.adresseTravail');
         }
         else {
-          $state.go('contract');
+          $state.go('menu.contract');
         }
 
       }
       else {
         console.log("else" + steps);
-        $state.go('adressePersonel');
+        $state.go('menu.infoTabs.adressePersonel');
       }
     };
 
@@ -343,25 +343,23 @@ starter
     };
 
     $scope.$on("$ionicView.beforeEnter", function (scopes, states) {
-      if (states.stateName == "saisieCiviliteEmployeur") {
+      if (states.stateName == "menu.infoTabs.saisieCiviliteEmployeur") {
         $scope.initForm();
         var employeur = localStorageService.get('currentEmployer');
         if (employeur) {
           // INITIALISATION FORMULAIRE
-          if (employeur.civilite)
+          if (employeur.titre)
             $scope.formData.civ = employeur.titre;
           if (employeur.nom)
             $scope.formData.nom = employeur.nom;
           if (employeur.prenom)
             $scope.formData.prenom = employeur.prenom;
-          if (employeur.entreprise)
-            $scope.formData.entreprise = employeur.entreprise[0].name;
-          if (employeur.siret)
-            $scope.formData.siret = employeur.entreprise[0].siret;
-          if (employeur.ape)
-            $scope.formData.ape = employeur.entreprise[0].naf;
-          if (employeur.numUssaf)
-            $scope.formData.numUssaf = employeur.entreprise[0].urssaf;
+          if (employeur.entreprises[0]) {
+            $scope.formData.entreprise = employeur.entreprises[0].name;
+            $scope.formData.siret = employeur.entreprises[0].siret;
+            $scope.formData.ape = employeur.entreprises[0].naf;
+            //$scope.formData.numUssaf = employeur.entreprises[0].urssaf;
+          }
         }
       }
     });

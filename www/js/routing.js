@@ -1,204 +1,355 @@
 /**
- * Created by HODAIKY on 24/10/2015.
+ * Created by Tamer on 24/10/2015.
  */
 'use strict';
 
 starter.config(function($stateProvider, $urlRouterProvider) {
-    
-  
+
+
   $stateProvider
 
-    .state('app', {
+    .state('menu', {
+      url: '/menu',
+      abstract: true,
+      templateUrl: 'menu.html',
+      controller: 'MenuCtrl'
+    })
+
+    .state('menu.app', {
       url: '/app',
-      templateUrl: 'templates/home.html',
-      controller: 'homeCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/home.html',
+          controller: 'homeCtrl'
+        }
+      }
+      //templateUrl: 'templates/home.html',
+
     })
-    .state('resetPassword', {
+    .state('menu.resetPassword', {
       url: '/resetPassword',
-      templateUrl: 'templates/resetPassword.html',
-      controller: 'ResetPasswordCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/resetPassword.html',
+          //templateUrl: 'templates/resetPassword.html',
+          controller: 'ResetPasswordCtrl'
+        }
+      }
     })
-    .state('verifyPassword', {
+    .state('menu.verifyPassword', {
       url: '/verifyPassword',
-      templateUrl: 'templates/verifyPassword.html',
-      controller: 'VerifyPasswordCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/verifyPassword.html',
+          //templateUrl: 'templates/verifyPassword.html',
+          controller: 'VerifyPasswordCtrl'
+        }
+      }
     })
-    .state('changePassword', {
+    .state('menu.changePassword', {
       url: '/changePassword',
-      templateUrl: 'templates/changePassword.html',
-      controller: 'ChangePasswordCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/changePassword.html',
+          //templateUrl: 'templates/changePassword.html',
+          controller: 'ChangePasswordCtrl'
+        }
+      }
     })
-    .state('paiementOptions', {
+    .state('menu.paiementOptions', {
       url: '/paiementOptions',
-      templateUrl: 'templates/paiementOptions.html',
-      controller: 'PaiementOptionsCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/paiementOptions.html',
+          //templateUrl: 'templates/paiementOptions.html',
+          controller: 'PaiementOptionsCtrl'
+        }
+      }
     })
-    .state('payLine', {
+    .state('menu.payLine', {
       url: '/payLine',
-      templateUrl: 'templates/payLine.html',
-      controller: 'PayLineCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/payLine.html',
+          //templateUrl: 'templates/payLine.html',
+          controller: 'PayLineCtrl'
+        }
+      }
     })
-    .state('slimPay', {
+    .state('menu.slimPay', {
       url: '/slimPay',
-      templateUrl: 'templates/slimPay.html',
-      controller: 'SlimPayCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/slimPay.html',
+          //templateUrl: 'templates/slimPay.html',
+          controller: 'SlimPayCtrl'
+        }
+      }
     })
-    .state('connection', {
+    .state('menu.connection', {
       url: '/connection',
-      templateUrl: 'templates/connections.html',
-      controller: 'connectCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/connections.html',
+          //templateUrl: 'templates/connections.html',
+          controller: 'connectCtrl'
+        }
+      }
     })
-    .state('profile', {
+    .state('menu.profile', {
       url: "/profile",
       params: {
         'link': ""
       },
-      templateUrl: "templates/profile.html",
-      controller: "ProfileCtrl"
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/profile.html',
+          //templateUrl: "templates/profile.html",
+          controller: "ProfileCtrl"
+        }
+      }
     })
 
-    .state('list', {
+    .state('menu.list', {
       url: '/list',
-      templateUrl: 'templates/listJobyers.html',
-      controller: 'listCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/listJobyers.html',
+          //templateUrl: 'templates/listJobyers.html',
+          controller: 'listCtrl'
+        }
+      }
 
     })
 
-    .state('map', {
+    .state('menu.map', {
       url: '/map',
-      templateUrl: 'templates/map.html',
-      controller: 'MapCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/map.html',
+          //templateUrl: 'templates/map.html',
+          controller: 'MapCtrl'
+        }
+      }
 
     })
 
-    .state('jobyersOffersTab', {
+    .state('menu.jobyersOffersTab', {
       url: '/jobyersOffersTab',
       abstract: true,
-      templateUrl: 'templates/jobyersOffersTab.html',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/jobyersOffersTab.html'
+        }
+      }
+      //templateUrl: 'templates/jobyersOffersTab.html',
     })
 
-    .state('jobyersOffersTab.list', {
+    .state('menu.jobyersOffersTab.list', {
       url: '/list',
       views: {
-        'jobyersOffersTab-list': {
-          templateUrl: 'templates/jobyersOffersList.html',
-          controller: 'jobyersOffersListCtrl'
-        }
+        //'menuContent': {
+          //views: {
+            'jobyersOffersTab-list': {
+              templateUrl: 'templates/searchTabs/jobyersOffersList.html',
+              controller: 'jobyersOffersListCtrl'
+            }
+          //}
+        //}
       }
     })
 
-    .state('jobyersOffersTab.map', {
+    .state('menu.jobyersOffersTab.map', {
       url: '/map',
       views: {
-        'jobyersOffersTab-map': {
-          templateUrl: 'templates/jobyersMap.html',
-          controller: 'jobyersMapCtrl'
-        }
-      }
+        //'menuContent': {
+          //views: {
+            'jobyersOffersTab-map': {
+              templateUrl: 'templates/searchTabs/jobyersMap.html',
+              controller: 'jobyersMapCtrl'
+            }
+          }
+        //}
+      //}
     })
 
-    .state('jobyersOffersTab.options', {
+    .state('menu.jobyersOffersTab.options', {
       url: '/options',
       views: {
-        'jobyersOffersTab-options': {
-          templateUrl: 'templates/jobyersOffersOptions.html',
-          controller: 'jobyersOffersOptionsCtrl'
+        //'menuContent': {
+          //views: {
+            'jobyersOffersTab-options': {
+              templateUrl: 'templates/searchTabs/jobyersOffersOptions.html',
+              controller: 'jobyersOffersOptionsCtrl'
+            }
+          }
+        //}
+      //}
+    })
+
+    .state('menu.listNext', {
+      url: '/listNext',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/listJobyersNext.html',
+          //templateUrl: 'templates/listJobyersNext.html',
+          controller: 'listNextCtrl'
+        }
+      }
+
+    })
+
+    .state('menu.cPhone', {
+      url: '/cPhone',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/connexionPhone.html',
+          //templateUrl: 'templates/connexionPhone.html',
+          controller: 'cPhoneCtrl'
         }
       }
     })
 
-    .state('listNext', {
-      url: '/listNext',
-      templateUrl: 'templates/listJobyersNext.html',
-      controller: 'listNextCtrl'
-
-    })
-
-    .state('cPhone', {
-      url: '/cPhone',
-      templateUrl: 'templates/connexionPhone.html',
-      controller: 'cPhoneCtrl'
-    })
-
-    .state('cMail', {
+    .state('menu.cMail', {
       url: '/cMail',
-      templateUrl: 'templates/connexionMail.html',
-      controller: 'cMailCtrl'
-    })
-    .state('saisieCiviliteEmployeur', {
-      url: '/saisieCivilite/:steps',
-      templateUrl: 'templates/saisieCiviliteEmployeur.html',
-      controller: 'saisieCiviliteEmployeurCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/connexionMail.html',
+          //templateUrl: 'templates/connexionMail.html',
+          controller: 'cMailCtrl'
+        }
+      }
     })
 
-    .state('adresseTravail', {
+    .state('menu.infoTabs', {
+      url: '/infoTabs',
+      cache: false,
+      abstract: true,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/informationTabs.html'//,
+          //controller: 'infoTabsCtrl'
+        }
+      }
+    })
+
+    .state('menu.infoTabs.saisieCiviliteEmployeur', {
+      url: '/saisieCivilite/:steps',
+      views: {
+        'infoTabs-saisieCiviliteEmployeur': {
+          templateUrl: 'templates/infoTabs/saisieCiviliteEmployeur.html',
+          controller: 'saisieCiviliteEmployeurCtrl'
+        }
+      }
+    })
+
+    .state('menu.infoTabs.adresseTravail', {
       url: '/adresseTravail/',
       params: {
         'geolocated': false, 'addressPers': null , steps:null
       },
-      templateUrl: 'templates/adresseTravail.html',
-      controller: 'adresseTravailCtrl'
+      views: {
+        'infoTabs-adresseTravail': {
+          templateUrl: 'templates/infoTabs/adresseTravail.html',
+          controller: 'adresseTravailCtrl'
+        }
+      }
     })
 
-    .state('adressePersonel', {
+    .state('menu.infoTabs.adressePersonel', {
       url: '/adressePersonel/:steps',
-      templateUrl: 'templates/adressePersonel.html',
-      controller: 'adressePersonelCtrl'
+      views: {
+          'infoTabs-adressePersonel': {
+            controller: 'adressePersonelCtrl',
+            templateUrl: 'templates/infoTabs/adressePersonel.html'
+          }
+      }
     })
 
-    .state('offres', {
+    .state('menu.offres', {
       url: '/offres',
-      templateUrl: 'templates/offres.html',
-      controller: 'offresCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/offres.html',
+          //templateUrl: 'templates/offres.html',
+          controller: 'offresCtrl'
+        }
+      }
     })
-    .state('offreTabs', {
+    .state('menu.offreTabs', {
       url: '/offreTabs/:offre',
       cache: false,
       abstract: true,
-      templateUrl: 'templates/offreTabs.html',
-      controller: 'offreTabsCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/offreTabs.html',
+          //templateUrl: 'templates/offreTabs.html',
+          controller: 'offreTabsCtrl'
+        }
+      }
     })
-    .state('contract', {
+    .state('menu.contract', {
       url: '/contract',
       params: {jobyer: null},
-      templateUrl: 'templates/createContract.html',
-      controller: 'contractCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/createContract.html',
+          //templateUrl: 'templates/createContract.html',
+          controller: 'contractCtrl'
+        }
+      }
     })
-    .state('offreTabs.job', {
+    .state('menu.offreTabs.job', {
       url: '/job/:offre',
       views: {
-        'offreTabs-job': {
-          controller: 'offreTabsCtrl',
-          templateUrl: 'templates/tabs/job.html'
-        }
-      }
+        //'menuContent': {
+          //views: {
+            'offreTabs-job': {
+              controller: 'offreTabsCtrl',
+              templateUrl: 'templates/offerTabs/job.html'
+            }
+          }
+        //}
+      //}
     })
-    .state('offreTabs.qualites', {
+    .state('menu.offreTabs.qualites', {
       url: '/qualites',
       views: {
-        'offreTabs-qualites': {
-          controller: 'offreTabsCtrl',
-          templateUrl: 'templates/tabs/qualites.html'
-        }
-      }
+        //'menuContent': {
+          //views: {
+            'offreTabs-qualites': {
+              controller: 'offreTabsCtrl',
+              templateUrl: 'templates/offerTabs/qualites.html'
+            }
+          }
+        //}
+      //}
     })
-    .state('offreTabs.langues', {
+    .state('menu.offreTabs.langues', {
       url: '/langues',
       views: {
-        'offreTabs-langues': {
-          controller: 'offreTabsCtrl',
-          templateUrl: 'templates/tabs/langues.html'
-        }
-      }
+        //'menuContent': {
+          //views: {
+            'offreTabs-langues': {
+              controller: 'offreTabsCtrl',
+              templateUrl: 'templates/offerTabs/langues.html'
+            }
+          }
+        //}
+      //}
     })
-    .state('offreTabs.agenda', {
+    .state('menu.offreTabs.agenda', {
       url: '/agenda',
       views: {
-        'offreTabs-agenda': {
-          controller: 'offreTabsCtrl',
-          templateUrl: 'templates/tabs/agenda.html'
-        }
-      }
+        //'menuContent': {
+          //views: {
+            'offreTabs-agenda': {
+              controller: 'offreTabsCtrl',
+              templateUrl: 'templates/offerTabs/agenda.html'
+            }
+          }
+        //}
+      //}
     });
-    $urlRouterProvider.otherwise('/app');
+    $urlRouterProvider.otherwise('/menu/app');
 });

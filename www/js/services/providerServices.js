@@ -13,7 +13,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_ville, nom from user_ville";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_ville":data.data[i]["pk_user_ville"],"libelle":data.data[i]["nom"]});
             });
@@ -26,7 +26,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_code_postal, code from user_code_postal";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_code_postal":data.data[i]["pk_user_code_postal"],"libelle":data.data[i]["code"]});
             });
@@ -44,7 +44,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_langue, libelle from user_langue";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_langue":data.data[i]["pk_user_langue"],"libelle":data.data[i]["libelle"]});
             });
@@ -57,7 +57,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_indispensable, libelle from user_indispensable";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_competence_transverse":data.data[i]["pk_user_indispensable"],"libelle":data.data[i]["libelle"]});
             });
@@ -69,7 +69,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_pays, nom, code from user_pays";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_nationalite":data.data[i]["pk_user_pays"],"libelle":data.data[i]["nom"], "code":data.data[i]["code"]});
             });
@@ -82,7 +82,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_niveau, libelle from user_niveau";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_niveau_de_maitrise":data.data[i]["pk_user_niveau"],"libelle":data.data[i]["libelle"]});
             });
@@ -96,7 +96,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_metier, libelle from user_metier";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_metier":data.data[i]["pk_user_metier"],"libelle":data.data[i]["libelle"]});
             });
@@ -109,7 +109,7 @@ angular.module('providerServices', [])
         "where fk_user_metier = pk_user_metier and pk_user_job = fk_user_job and pk_user_pratique_job = " + id;
       var results = [];
 
-      return $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql})
+      return $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql})
         /*.success(function (data) {
         for(var i = 0 ; i < data.data.length ; i++)
           results.push({"pk_user_metier":data.data[i]["pk_user_metier"],"libelle":data.data[i]["libelle"]});
@@ -123,7 +123,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_job, fk_user_metier, libelle from user_job";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
                 	results.push({"pk_user_competence":data.data[i]["pk_user_job"],"libelle":data.data[i]["libelle"],"fk_user_metier":data.data[i]["fk_user_metier"]});
             });
@@ -137,7 +137,7 @@ angular.module('providerServices', [])
 			var sql = "select pk_user_pays, nom, code from user_pays";
 			var results = [];
 
-			  $http({ method: 'POST', url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
+			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 console.log(data.data);
                 results = data.data;
             });

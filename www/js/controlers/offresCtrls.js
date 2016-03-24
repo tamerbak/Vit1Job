@@ -136,7 +136,7 @@ starter
       var employeur = localStorageService.get('currentEmployer');
       if (employeur.new == true)
         Global.showAlertValidation("Bienvenue dans VitOnJob.<br>Vous venez de créer votre compte.<br>Vous pouvez lancer la recherche de jobyers selon vos critères.");
-      $state.go('app');
+      $state.go('menu.app');
     };
     $scope.supprimerOffre = function () {
       var offre = $scope.formData.offre;

@@ -42,20 +42,20 @@ starter
       UpdateInServer.updateAdressePersEmployeur(eid, adresse)
         .success(function (response) {
 
-          //TEL 25022016 : to remove !
-          employeur = localStorageService.get('employeur');
-          if (!employeur)
-            var employeur = {"civilite": "", "nom": "", "prenom": "", entreprise: "", siret: "", ape: "", numUssaf: ""};
-          var adressePersonel = {};
-          if ($scope.formData.address.formatted_address)
-            adressePersonel = {'fullAddress': $scope.formData.address.formatted_address};
-          else
-            adressePersonel = {'fullAddress': ""};
-          employeur.adressePersonel = adressePersonel;
-          employeur.formdataAddress = $scope.formData.address;
+          /*TEL 25022016 : to remove !
+           employeur = localStorageService.get('employeur');
+           if (!employeur)
+           var employeur = {"civilite": "", "nom": "", "prenom": "", entreprise: "", siret: "", ape: "", numUssaf: ""};
+           var adressePersonel = {};
+           if ($scope.formData.address.formatted_address)
+           adressePersonel = {'fullAddress': $scope.formData.address.formatted_address};
+           else
+           adressePersonel = {'fullAddress': ""};
+           employeur.adressePersonel = adressePersonel;
+           employeur.formdataAddress = $scope.formData.address;
 
-          // PUT IN SESSION
-          localStorageService.set('employeur', employeur);
+           // PUT IN SESSION
+           localStorageService.set('employeur', employeur);*/
 
           //TEL 25022016 : to establish :
           var addresses = entreprises.adresses;
@@ -64,16 +64,16 @@ starter
 
           addresses.push(
             {
-              "addressId" : JSON.parse(response[0].value).id,
-              "siegeSocial" : "false",
-              "adresseTravail" : "true",
-              "fullAdress" : $scope.formData.address.formatted_address
+              "addressId": JSON.parse(response[0].value).id,
+              "siegeSocial": "false",
+              "adresseTravail": "true",
+              "fullAdress": $scope.formData.address.formatted_address
             }
           );
 
           entreprises.adresses = addresses;
           currentEmployer.entreprises = entreprises;
-          localStorageService.set('currentEmployer',currentEmployer);
+          localStorageService.set('currentEmployer', currentEmployer);
 
         }).error(function (err) {
           console.log("error : insertion DATA");
@@ -84,16 +84,16 @@ starter
       if (steps) {
 
         if (steps.step3) {
-          $state.go('adresseTravail');
+          $state.go('menu.infoTabs.adresseTravail');
         }
         else {
-          $state.go('contract');
+          $state.go('menu.contract');
         }
 
       }
       else {
 
-        $state.go('adresseTravail', {"geolocated": geolocated, "addressPers": $scope.formData.address});
+        $state.go('menu.infoTabs.adresseTravail', {"geolocated": geolocated, "addressPers": $scope.formData.address});
       }
 
     };
@@ -183,22 +183,33 @@ starter
       viewData.enableBack = true;
     });
     $scope.$on("$ionicView.beforeEnter", function (scopes, states) {
-        var employeur = localStorageService.get('employeur');
+        var employeur = localStorageService.get('currentEmployer');
+        var adrExist = false;
         if (employeur) {
-          var result = {
-            address_components: [],
-            adr_address: "",
-            formatted_address: (employeur.adressePersonel) ? employeur.adressePersonel.fullAddress : "",
-            geometry: "",
-            icon: ""
-          };
-          var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
-          ngModel.$setViewValue(result);
-          ngModel.$render();
+          employeur.entreprises[0].adresses.some(function (adr) {
+            if (adr.adresseTravail == "true" ) {
+              var result = {
+                address_components: [],
+                adr_address: "",
+                formatted_address: adr.fullAdress, //) ? employeur.adressePersonel.fullAddress : "",
+                geometry: "",
+                icon: ""
+              };
+              var ngModel = angular.element($('#autocomplete_personel')).controller('ngModel');
+              ngModel.$setViewValue(result);
+              ngModel.$render();
+              adrExist = true;
+              return true;
+            }
+          });
+
         }
 
+        /*if (adrExist)
+          return;*/
 
-        if (states.stateName == "adressePersonel") { //states.fromCache &&
+
+        if (states.stateName == "menu.infoTabs.adressePersonel") { //states.fromCache &&
           //$scope.initForm();
           //employeur=localStorageService.get('employeur');
           var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
@@ -231,7 +242,8 @@ starter
           else {
             $scope.title = "Siège social";
             $scope.isContractInfo = false;
-            displayPopups();
+            if (adrExist == false)
+              displayPopups();
           }
         }
 

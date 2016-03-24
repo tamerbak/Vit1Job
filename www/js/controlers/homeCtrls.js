@@ -189,19 +189,20 @@ starter
           localStorageService.remove('sessionID');
           var connexion = {'etat': false, 'libelle': 'Se connecter', 'employeID': 0};
           localStorageService.set('connexion', connexion);
+          $scope.formData = {};
 
           console.log("New Connexion : " + JSON.stringify(localStorageService.get('connexion')));
-          $state.go("connection");
+          $state.go("menu.connection");
 
 
         }
         else {
           console.log("IL S'AGIT D'UNE CONNEXION");
-          $state.go("connection");
+          $state.go("menu.connection");
         }
       }
       else
-        $state.go("connection");
+        $state.go("menu.connection");
     };
 
     var checkIsLogged = function () {
@@ -227,6 +228,8 @@ starter
 
       localStorageService.set('connexion', connexion);
 
+      location.reload();
+
 
     };
 
@@ -240,7 +243,7 @@ starter
             type: 'button-dark',
             onTap: function (e) {
               confirmPopup.close();
-              $state.go("connection");
+              $state.go("menu.connection");
             }
           }, {
             text: '<b>Retour</b>',
@@ -287,7 +290,7 @@ starter
       var sdata = data[0]['value'];
       var jobyersOffers = JSON.parse(sdata);
       localStorageService.set('jobyersOffers', jobyersOffers);
-      $state.go("jobyersOffersTab.list");
+      $state.go("menu.jobyersOffersTab.list");
     };
 
     var onError = function (data) {

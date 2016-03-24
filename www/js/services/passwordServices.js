@@ -15,7 +15,7 @@ angular.module('passwordServices', ['ionic'])
             }
             return text;
         }
-        
+
         this.updatePassword = function(email, phone,newPassword){
             var role = 'employeur';
             var sql = "UPDATE user_account SET ";
@@ -24,12 +24,12 @@ angular.module('passwordServices', ['ionic'])
             sql = sql + " email='"+email+"' ";
             sql = sql + "AND telephone='"+phone+"' ";
             sql = sql + "AND role='"+role+"'; ";
-            
+
 
 
             return $http({
                 method: 'POST',
-                url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
+                url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
                 headers: {
                 "Content-Type": "text/plain"
                 },
@@ -37,12 +37,12 @@ angular.module('passwordServices', ['ionic'])
             });
         };
     })
-    
-    
 
-    
-    
-    
+
+
+
+
+
 
 
 

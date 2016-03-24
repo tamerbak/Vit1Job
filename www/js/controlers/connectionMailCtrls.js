@@ -48,9 +48,9 @@ starter
       var isNewUser = data.new;
       if (isNewUser == 'true') {
         Global.showAlertValidation("Bienvenue dans votre espace VitOnJob!");
-        $state.go("saisieCiviliteEmployeur");
+        $state.go("menu.infoTabs.saisieCiviliteEmployeur");
       } else {
-        $state.go("app");
+        $state.go("menu.app");
       }
     };
 

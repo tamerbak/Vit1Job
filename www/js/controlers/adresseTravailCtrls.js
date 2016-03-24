@@ -75,11 +75,11 @@ starter
           var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
           if (!steps) {
 
-            $state.go('offres');
+            $state.go('menu.offres');
           }
           else {
 
-            $state.go('contract');
+            $state.go('menu.contract');
           }
 
         }).error(function (err) {
@@ -97,26 +97,32 @@ starter
     });
 
     $scope.$on("$ionicView.beforeEnter", function (scopes, states) {
-      var employeur = localStorageService.get('employeur');
+      var employeur = localStorageService.get('currentEmployer');
+      var adrExist = false;
       if (employeur) {
-        //console.log(employeur.adresseTravail.fullAddress);
-        var result = {
-          address_components: [],
-          adr_address: "",
-          formatted_address: (employeur.adresseTravail) ? employeur.adresseTravail.fullAddress : "",
-          geometry: "",
-          icon: ""
-        };
-        console.log(result);
-        var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
-        ngModel.$setViewValue(result);
-        ngModel.$render();
+        employeur.entreprises[0].adresses.some(function (adr) {
+          if (adr.siegeSocial == "true") {
+            var result = {
+              address_components: [],
+              adr_address: "",
+              formatted_address: adr.fullAdress, //) ? employeur.adressePersonel.fullAddress : "",
+              geometry: "",
+              icon: ""
+            };
+            var ngModel = angular.element($('#autocomplete_travail')).controller('ngModel');
+            ngModel.$setViewValue(result);
+            ngModel.$render();
+            adrExist = true;
+            return true;
+          }
+        });
+
       }
-      ;
+
 
 
       // console.log(states.fromCache+"  state : "+states.stateName);
-      if (states.stateName == "adresseTravail") {
+      if (states.stateName == "menu.infoTabs.adresseTravail") {
         var steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
         //$scope.initForm();
         // console.log("steps ="+steps);
@@ -147,7 +153,8 @@ starter
         } else {
           $scope.title = "Adresse de la mission";
           $scope.isContractInfo = false;
-          displayPopups();
+          if (adrExist == false)
+            displayPopups();
         }
         // console.log("steps : "+steps);
         // console.log("$scope.title : "+$scope.title);
@@ -323,9 +330,9 @@ starter
     //};
     $scope.skipGoto = function () {
       if ($scope.isContractInfo)
-        $state.go('contract');
+        $state.go('menu.contract');
       else
-        $state.go('offres');
+        $state.go('menu.offres');
     }
   });
 

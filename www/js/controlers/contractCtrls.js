@@ -152,14 +152,14 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
 
         var employeur = localStorageService.get('currentEmployer');
         if (index == 0) {
-          $state.go("saisieCiviliteEmployeur", {employeur: employeur});
+          $state.go("menu.infoTabs.saisieCiviliteEmployeur", {employeur: employeur});
         }
         if (index == 1) {
-          $state.go("adressePersonel", {employeur: employeur});
+          $state.go("menu.infoTabs.adressePersonel", {employeur: employeur});
         }
         if (index == 2) {
 
-          $state.go("adresseTravail", {employeur: employeur});
+          $state.go("menu.infoTabs.adresseTravail", {employeur: employeur});
         }
         //branchement de la page de contrat ou infos clients
 

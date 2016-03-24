@@ -13,6 +13,7 @@
   </ion-nav-buttons>
  -->
   <ion-content padding="true">
+    <br>
     <div class = "row">
       <div class="vimg"><img src="img/logo_employeur2.png"></div>
     </div>
@@ -38,8 +39,8 @@
     </div>
 
     <div class="row">
-      <button class="button button-full button-positive grey" ng-if="!isLogged" ui-sref="connection">
-        Se connecter
+      <button class="button button-full button-positive grey" ng-if="!isLogged" ui-sref="menu.connection">
+        Se connecter / Créer un compte
       </button>
       <button class="button button-full button-positive grey" ng-if="isLogged" data-ng-click="logOut()">
         Se déconnecter
@@ -54,7 +55,7 @@
 
     <div class="row">
       <h6 style="width: 100%">
-        Version: VIT 0.0.25
+        Version: VIT 0.0.27.1
       </h6>
     </div>
 

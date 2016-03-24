@@ -1,15 +1,16 @@
 <ion-view id="conxionMailView" title="{{AppLogo}}">
   <!-- <ion-header-bar class="bar-calm">
-   <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection"> </a>
+   <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="map.connection"> </a>
    <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
    <h1 class="title">Connexion</h1>
-   <a class="button icon-right ion-home button-clear button-light" ui-sref="app"> </a>
+   <a class="button icon-right ion-home button-clear button-light" ui-sref="menu.app"> </a>
     </ion-header-bar> -->
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
   <ion-content padding="true">
     <!-- Title -->
+    <br>
     <div>
       <h3 class="titlePhone"><b>Entrez votre e-mail : </b></h3>
     </div>
@@ -106,7 +107,7 @@
         <button class="button button-full button-positive green" data-ng-click="Authenticate()"
                 ng-disabled="!formData.email || !formData.password || formData.password.length<6 || !formData.phone">Connecter
         </button>
-        <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
+        <button class="button button-full button-positive grey" ui-sref="menu.connection">Quitter</button>
       </div>
     </div>
 

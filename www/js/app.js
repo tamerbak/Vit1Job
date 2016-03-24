@@ -14,11 +14,14 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
   'LocalStorageModule', 'connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt', 'ion-google-autocomplete', 'ui.mask',
 'ionic.service.core','passwordServices','SmsServices','paiementServices'])
 
-  .run(function ($ionicPlatform, $rootScope, $http, x2js, ngFB) {
-    ngFB.init({appId: '426767167530378'});
+  .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen) {
+
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
+      setTimeout(function() {
+        $cordovaSplashscreen.hide()
+      }, 10000);
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
@@ -69,7 +72,7 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
         // $httpProvider.defaults.withCredentials = true;
         // $httpProvider.defaults.useXDomain = true;
         // delete $httpProvider.defaults.headers.common['X-Requested-With'];
-         
+
       $httpProvider.interceptors.push(function($rootScope) {
           return {
               request: function(request) {
@@ -84,7 +87,7 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
         });
     })
 
- 
+
 
   .run(function ($rootScope, $ionicLoading) {
     $rootScope.$on('loading:show', function () {

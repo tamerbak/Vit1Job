@@ -1,26 +1,27 @@
 <ion-view id="payLineView" title="{{AppLogo}}">
   <!-- <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection">  </a>
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="map.connection">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <h1 class="title">Connexion</h1>
-    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="menu.app">  </a>
   </ion-header-bar> -->
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
   <ion-content padding="true" data-ng-init="initForm()">
+    <br>
     <!-- Title -->
     <!--<div>
       <h3 class="titlePhone"><b>Numéro de la carte : </b></h3>
     </div>-->
 
-    
-    
+
+
 
       <!-- Numéro de la carte -->
 
-      
-        
+
+
     <div>
         <h3 class="titlePhone">Numéro de la carte :</h3>
       </div>
@@ -29,7 +30,7 @@
           <input type="text"
                  placeholder="N° de la carte" ng-model="formData.ncard"  >
         </label>
-        
+
          <div>
         <h3 class="titlePhone">Date de l'expiration :</h3>
       </div>
@@ -38,8 +39,8 @@
           <input type="text"
                  placeholder="Date d'expiration de la carte'" ng-model="formData.dateExpiration" >
         </label>
-        
-        
+
+
          <div>
         <h3 class="titlePhone">Cryptogramme :</h3>
       </div>
@@ -48,16 +49,16 @@
           <input type="text"
                  placeholder="Cryptogramme" ng-model="formData.cardcvx" >
         </label>
-        
 
-        
+
+
       <br>
       <!-- ACTIONS -->
       <div class="buttonConnect">
         <button class="button button-full button-positive green" data-ng-click="Validate()"
                 ng-disabled="!formData.cardcvx || !formData.dateExpiration || !formData.cardcvx">Vérifier
         </button>
-        <button class="button button-full button-positive grey" ui-sref="connection">Quitter</button>
+        <button class="button button-full button-positive grey" ui-sref="menu.connection">Quitter</button>
       </div>
   </ion-content>
 </ion-view>

@@ -1,9 +1,9 @@
 <ion-view id="civiliteView" title="{{AppLogo}}">
   <!-- <ion-nav-buttons side="primary">
-      <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="app">  </a>
+      <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="menu.app">  </a>
       </ion-nav-buttons> -->
   <ion-nav-buttons side="secondary">
-    <a class="button icon-right ion-chevron-right button-clear" ui-sref="adressePersonel"
+    <a class="button icon-right ion-chevron-right button-clear" ui-sref="menu.infoTabs.adressePersonel"
        ng-disabled="skipDisabled();"> </a>
   </ion-nav-buttons>
   <ion-nav-title>
@@ -11,7 +11,7 @@
   </ion-nav-title>
 
   <ion-content padding="true" data-ng-init="initForm()">
-
+<br>
     <!-- Title -->
     <div>
       <h3 class="titlePhone"><b>{{title}}</b></h3>
@@ -19,7 +19,11 @@
 
     <!-- TITRE -->
     <div class="list">
+
       <label class="item item-input" style="padding-left: 8px;">
+        <!--div class="input-label">
+          Titre
+        </div-->
         <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
           <option selected disabled style="display: none;">Titre</option>
           <option data-ng-repeat="x in formData.civilites" value="{{x.libelle}}">{{x.libelle}}</option>
@@ -87,7 +91,7 @@
 
     <!-- ACTIONS -->
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="updateCiviliteEmployeur()"
+      <button class="button button-full button-positive grey" data-ng-click="updateCiviliteEmployeur()"
               ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">
         Valider
       </button>

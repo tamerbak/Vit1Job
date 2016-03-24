@@ -24,7 +24,7 @@ starter
                 Global.showAlertValidation("Une erreur est survenue lors de changement du mot de passe");
             }else{
                 localStorageService.remove('connexion');
-                $state.go("connection")
+                $state.go("menu.connection")
             }
 
         };

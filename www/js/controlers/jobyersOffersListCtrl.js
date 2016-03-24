@@ -284,8 +284,7 @@ starter.controller('jobyersOffersListCtrl',
                 (currentEmployer.nom == "") ||
                 (currentEmployer.entreprises[0].name == "") ||
                 (currentEmployer.entreprises[0].siret == "") ||
-                (currentEmployer.entreprises[0].naf == "") ||
-                (currentEmployer.entreprises[0].urssaf == "") : true;
+                (currentEmployer.entreprises[0].naf == "") : true;
                 var redirectToStep2 = (currentEmployer && currentEmployer.entreprises[0]) ?
                 (typeof (currentEmployer.entreprises[0].adresses) == "undefined") ||
                 (typeof (currentEmployer.entreprises[0].adresses[0]) == "undefined") : true;
@@ -334,7 +333,7 @@ starter.controller('jobyersOffersListCtrl',
                   objRedirect.state = false;
                   localStorageService.set("steps", objRedirect);
                   //show contract page //TODO
-                  $state.go("contract", {jobyer: jobber});
+                  $state.go("menu.contract", {jobyer: jobber});
                   // console.log(jobber);
                   // console.log("redirect to contract pages");
                 }
@@ -342,13 +341,13 @@ starter.controller('jobyersOffersListCtrl',
                   objRedirect.state = true;
                   localStorageService.set("steps", objRedirect);
                   // console.log(employer);
-                  if (redirectToStep1) $state.go("saisieCiviliteEmployeur", {jobyer: jobber});
-                  else if (redirectToStep2) $state.go("adressePersonel", {jobyer: jobber});
-                  else if (redirectToStep3) $state.go("adresseTravail", {jobyer: jobber});
+                  if (redirectToStep1) $state.go("menu.infoTabs.saisieCiviliteEmployeur", {jobyer: jobber});
+                  else if (redirectToStep2) $state.go("menu.infoTabs.adressePersonel", {jobyer: jobber});
+                  else if (redirectToStep3) $state.go("menu.infoTabs.adresseTravail", {jobyer: jobber});
                 }
               } else {
                 showNonConnectedPopup(jobber);
-                //$state.go("connection", {jobyer: jobber});
+                //$state.go("map.connection", {jobyer: jobber});
               }
             }
             return true;
@@ -367,7 +366,7 @@ starter.controller('jobyersOffersListCtrl',
               type: 'button-dark',
               onTap: function (e) {
                 confirmPopup.close();
-                $state.go("connection", {jobyer: jobber});
+                $state.go("menu.connection", {jobyer: jobber});
               }
             }, {
               text: '<b>Retour</b>',

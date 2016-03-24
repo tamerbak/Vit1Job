@@ -47,9 +47,9 @@ starter
       var isNewUser = data.new;
       if (isNewUser == 'true') {
         Global.showAlertValidation("Bienvenue dans votre espace VitOnJob!");
-        $state.go("saisieCiviliteEmployeur");
+        $state.go("menu.infoTabs.saisieCiviliteEmployeur");
       } else {
-        $state.go("app");
+        $state.go("menu.app");
       }
     };
 
@@ -68,9 +68,9 @@ starter
 
       phone = index + phone;
 
-      AuthentificatInServer.Authenticate(email, phone, password, 'employeur')
-      .success(OnAuthenticateSuccesss)
-      .error(OnAuthenticateError);
+      AuthentificatInServer.Authenticate(email, phone, password, 'employeur').
+        success(OnAuthenticateSuccesss)
+        .error(OnAuthenticateError);
     };
     $scope.displayPwdTooltip = function() {
       $scope.showPwdTooltip = true;
@@ -160,7 +160,7 @@ starter
 		};
 
 		$scope.$on( "$ionicView.beforeEnter", function( scopes, states ){
-			if(states.stateName == "cPhone" ){
+			if(states.stateName == "menu.cPhone" ){
 				$scope.initForm();
 			}
 		});

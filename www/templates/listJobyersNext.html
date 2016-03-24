@@ -2,7 +2,7 @@
   <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="search">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
-    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="menu.app">  </a>
   </ion-header-bar> -->
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
@@ -43,7 +43,7 @@
       </div>
       <div class="col col-33">
         <label class="checkbox ">
-          <input type="checkbox" ng-model="matching.checked" ng-change="sort()"> 
+          <input type="checkbox" ng-model="matching.checked" ng-change="sort()">
         </label>
       </div>
       <div class="col col-33">
@@ -85,7 +85,7 @@
     ng-if="!moredata">
   </ion-infinite-scroll>
 
-      
+
     <!--</div>-->
 
   </ion-content>

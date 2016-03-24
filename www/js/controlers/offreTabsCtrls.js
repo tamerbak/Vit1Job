@@ -336,7 +336,7 @@ starter
             type: 'button-dark',
             onTap: function (e) {
               myPopup2.close();
-              $state.go('offres');
+              $state.go('menu.offres');
             }
           }, {
             text: '<b>Oui</b>',
@@ -547,7 +547,7 @@ starter
         localStorageService.set('offres', listOffersPerUser);
       }*/
 
-      $state.go('offres');
+      $state.go('menu.offres');
 
     };
     var idUser = 1;

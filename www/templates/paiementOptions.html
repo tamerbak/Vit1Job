@@ -1,27 +1,51 @@
 <ion-view id="PaiementOptionsView" title="{{AppLogo}}">
   <!-- <ion-header-bar class="bar-calm">
-    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="connection">  </a>
+    <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="map.connection">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
     <h1 class="title">Connexion</h1>
-    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="menu.app">  </a>
   </ion-header-bar> -->
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
   <ion-content padding="true" data-ng-init="initForm()">
+    <br>
     <!-- Title -->
     <div>
       <h3 class="titlePhone"><b>Choisissez votre mode de paiement : </b></h3>
     </div>
 
-    <!-- TELEPHONE -->
+    <div class="list">
 
-    <ion-radio ng-repeat="item in paiementModeList"
+      <div class="item item-divider" style="background-color: #757575; color: white;">
+        <b>SlimPay</b>
+      </div>
+      <a class="item" href="" style="text-align: left;" ng-click="Redirect()">
+        <i class="icon ion-social-euro" style="font-size: x-large">&nbsp;</i>
+        Paiement par compte bancaire<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b style="font-size: small">Saisie de l'IBAN</b>
+      </a>
+
+      <div class="item item-divider" style="background-color: #14BAA6;">
+        <b>PayLine</b>
+      </div>
+      <a class="item" href="#" style="text-align: left;">
+        <i class="icon ion-card" style="font-size: x-large"></i>
+        Paiement par carte bancaire
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b style="font-size: small">Prise de l'empreinte</b>
+      </a>
+
+    </div>
+
+    <!--ion-radio ng-repeat="item in paiementModeList"
                    ng-value="item.value"
                    ng-model="data.mode"
                    name="paiement-mode">
                         {{ item.text }}
-    </ion-radio>
+    </ion-radio-->
 
 
 
@@ -45,12 +69,12 @@
           </div>
         </div>
       </div>-->
-      <br>
+
       <!-- ACTIONS -->
-      <div class="buttonConnect">
+      <!--div class="buttonConnect">
         <button class="button button-full button-positive green" data-ng-click="Redirect()">Valider
         </button>
         <button class="button button-full button-positive grey" ui-sref="contract">Annuler</button>
-      </div>
+      </div-->
   </ion-content>
 </ion-view>

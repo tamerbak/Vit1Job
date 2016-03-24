@@ -85,7 +85,7 @@ starter
         };
 
         $scope.$on( "$ionicView.beforeEnter", function( scopes, states ){
-            if(states.stateName == "cPhone" ){
+            if(states.stateName == "menu.cPhone" ){
                 $scope.initForm();
             }
         });

@@ -1,0 +1,50 @@
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-calm bar bar-header disable-user-behavior">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-calm bar bar-header disable-user-behavior">
+      <h1 class="title">Menu</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item menu-close ng-click="goToConnection()" style="border-color: white;">
+          <i class="icon ion-person" style="font-size: x-large" ng-show="!isConnected"></i>
+          {{(isConnected)? "":"Connexion"}}
+          <a class="item item-avatar" href="#" style="border-color: #14BAA6;background-color: #14BAA6;
+              border-bottom-left-radius: 30px;border-top-right-radius: 30px;" ng-show="isConnected">
+            <img src="img/me.png">
+            <h2>Tim</h2>
+            <p>Employeur</p>
+          </a>
+        </ion-item>
+        <ion-item menu-close ui-sref="menu.app" style="border-color: white;">
+          <i class="icon ion-search" style="font-size: x-large"></i>
+          Lancer ma recherche
+        </ion-item>
+        <ion-item menu-close ng-click="goToFiche()" style="border-color: white;">
+          <i class="icon ion-clipboard" style="font-size: x-large"></i>
+          Mes informations
+        </ion-item>
+        <ion-item menu-close ng-click="goToOffers()" style="border-color: white;">
+          <i class="icon ion-ios-list-outline" style="font-size: x-large"></i>
+          Mes offres d'emploi
+        </ion-item>
+        <ion-item menu-close href="#" style="border-color: white;">
+          <i class="icon ion-filing" style="font-size: x-large"></i>
+          Mon coffre
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

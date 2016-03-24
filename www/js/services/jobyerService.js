@@ -36,7 +36,7 @@ services.factory('jobyerService', ['$http', function($http) {
 
 		var request = {
 	      method : 'POST',
-	      url : 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+	      url : 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
 	      headers : {
 	      'Content-Type' : 'application/json'
 	      },
@@ -96,7 +96,7 @@ services.factory('jobyerService', ['$http', function($http) {
 		var stringData = JSON.stringify(data);
 		return {
 			method : 'POST',
-			url : 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+			url : 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
 			headers : {
 				'Content-Type' : 'application/json'
 			},

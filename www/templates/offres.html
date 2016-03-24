@@ -8,7 +8,7 @@
   <!-- <ion-header-bar class="bar-calm">
     <a class="button icon-left ion-chevron-left button-clear button-light" ui-sref="adresseTravail">  </a>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
-    <a class="button icon-right ion-home button-clear button-light" ui-sref="app">  </a>
+    <a class="button icon-right ion-home button-clear button-light" ui-sref="menu.app">  </a>
   </ion-header-bar>
    -->
 <!-- <ion-nav-buttons side="primary">
@@ -18,12 +18,13 @@
 </ion-nav-buttons>
 
 <ion-nav-buttons side="right">
-<button class="button button-clear button-small" ui-sref="app">
+<button class="button button-clear button-small" ui-sref="menu.app">
   <i class="icon icon-right ion-ios-arrow-forward"></i>
 </button>
 </ion-nav-buttons> -->
 
   <ion-content id="offresContent" class="has-header" overflow-scroll="true" padding="true" data-ng-init="initAll()">
+    <br>
     <!-- Title -->
     <div>
       <h3 class="titlePhone"><b>Offres d'emploi</b></h3>
@@ -64,7 +65,7 @@
 -->
 
     <div class="button-bar">
-      <a class="button button-light button-block icon ion-plus-circled" ui-sref="offreTabs.job"></a>
+      <a class="button button-light button-block icon ion-plus-circled" ui-sref="menu.offreTabs.job"></a>
       <a class="button button-light button-block icon ion-android-create" ng-click="modifierOffre();"></a>
       <a class="button button-light button-block icon ion-ios-copy" ng-click="dupliquerOffre();"></a>
       <a class="button button-light button-block icon ion-trash-b" ng-click="supprimerOffre();"></a>
@@ -73,7 +74,7 @@
 
   </div>
   </br>
-  <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer</button>
+  <button ng-style="disableTagButton" class="button button-full button-positive grey icon-right ion-chevron-right" ng-click="compteCree();">Passer à la recherche</button>
   </ion-content>
 </ion-view>
 

@@ -1416,7 +1416,7 @@ $scope.init = function () {
                 else if(redirectToStep3) $state.go("adresseTravail",{ "steps": JSON.stringify(objRedirect)});
               }
             }else{
-              $state.go("connection");
+              $state.go("map.connection");
             }
           }
 

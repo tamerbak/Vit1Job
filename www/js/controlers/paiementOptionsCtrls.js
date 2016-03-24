@@ -54,7 +54,7 @@
 
           var request = {
             method: 'POST',
-            url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+            url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -66,15 +66,12 @@
             var link = JSON.parse(response[0].value);
             localStorageService.set('urlSlimPay',link.url);
             //$rootScope.urlSlimPay = response[0].value.url;
-            $state.go('slimPay');
+            $state.go('menu.slimPay');
 
 
           }).error(function(error){
             console.log(error);
           });
-
-
-
 
 
          /*   if($scope.data.mode == "slimPay"){

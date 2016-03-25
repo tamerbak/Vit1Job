@@ -22,7 +22,7 @@ angular.module('SmsServices', ['ionic'])
 
             var request = {
                 method: 'POST',
-                url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/envoisms' ,
+                url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/envoisms' ,
                 headers: {
                     "Content-Type": "text/xml"
                 },

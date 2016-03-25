@@ -228,7 +228,7 @@ starter
 
       localStorageService.set('connexion', connexion);
 
-      location.reload();
+      location.reload(false);
 
 
     };

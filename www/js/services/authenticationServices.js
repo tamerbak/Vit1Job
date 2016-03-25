@@ -69,7 +69,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -163,7 +163,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -196,7 +196,7 @@ angular.module('wsConnectors', ['ionic'])
 
       return $http({
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
         headers: {
           "Content-Type": "text/plain"
         },
@@ -296,7 +296,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -378,7 +378,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -398,7 +398,7 @@ angular.module('wsConnectors', ['ionic'])
 
       return $http({
         method: 'POST',
-        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
+        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
         headers: {
           "Content-Type": "text/plain"
         },

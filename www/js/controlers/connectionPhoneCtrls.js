@@ -133,7 +133,7 @@ starter
 
     $scope.initForm=function(){
       // GET LIST
-      /*if(!$scope.formData)
+      if(!$scope.formData)
         $scope.formData={};
       $scope.formData.index="33";
       //$scope.formData={ 'villes': $cookieStore.get('villes')};
@@ -144,10 +144,10 @@ starter
 
       }).error(function(error) {
         console.log(error);
-      });*/
+      });
     };
 
-		$scope.loadCodeInter=function(){
+    $scope.loadCodeInter=function(){
 			var code=$scope.formData.country;
 			$scope.formData.phone="+"+code+" ";
 

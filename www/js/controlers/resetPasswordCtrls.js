@@ -147,7 +147,7 @@ starter
 
             $scope.formData.index="33";
             //$scope.formData={ 'villes': $cookieStore.get('villes')};
-            $http.get("http://vps259989.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
+            $http.get("http://ns389914.ovh.net:8080/VitOnJob/rest/common/pays/getAll")
                 .success(function(data) {
                     console.log(data);
                     $scope.formData.pays=data;

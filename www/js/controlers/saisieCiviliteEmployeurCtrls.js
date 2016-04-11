@@ -64,16 +64,9 @@ starter
         $scope.disableTagButton = (localStorageService.get('steps') != null) ? {'visibility': 'hidden'} : {'visibility': 'visible'};
         steps = (localStorageService.get('steps') != null) ? localStorageService.get('steps') : '';
 
-        if (steps != '') {
-          $scope.title = "Pré-saisie des informations contractuelles : fiche employeur";
-
-
-          if (steps.state) {
-            steps.step1 = false;
-            localStorageService.set("steps", steps);
-          }
-          ;
+        if (steps != '' && steps.state && steps.step1) {
           $scope.isContractInfo = true;
+          $scope.title = "Pré-saisie des informations contractuelles : fiche employeur";
           $ionicPopup.show({
             title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
             template: 'Veuillez remplir les données suivantes, elle seront utilisées dans le processus du contractualisation.',
@@ -86,6 +79,9 @@ starter
               }
             ]
           });
+
+          steps.step1 = false;
+          localStorageService.set("steps", steps);
         } else {
           $scope.isContractInfo = false;
           $scope.title = "Fiche employeur";
@@ -98,13 +94,14 @@ starter
       var employerId = currentEmployer.employerId;
       var enterpriseId = currentEmployer.entreprises[0].entrepriseId;
 
-      var titre = $scope.formData.civ;
+      var titre = $scope.formData.civilite.libelle;
       var nom = $scope.formData.nom;
       var prenom = $scope.formData.prenom;
       var entreprise = $scope.formData.entreprise;
       var siret = $scope.formData.siret;
       var ape = $scope.formData.ape;
       var numUssaf = $scope.formData.numUssaf;
+      var imgUri = $scope.imgURI;
 
       // RECUPERATION CONNEXION
       var connexion = localStorageService.get('connexion');
@@ -114,7 +111,7 @@ starter
       // RECUPERATION SESSION ID
       var sessionId = localStorageService.get('sessionID');
 
-      if (titre || nom || prenom || entreprise || siret || ape || numUssaf) {
+      if (titre || nom || prenom || entreprise || siret || ape || numUssaf || imgUri) {
         if (!titre)
           titre = "";
         if (!nom)
@@ -145,10 +142,13 @@ starter
           ape = "";
         if (!numUssaf)
           numUssaf = "";
+        if (!imgUri)
+          imgUri = 'none';
+
         var user = {"email": "cmFjaGlkQHRlc3QuY29t", "password": "MTIzNDU2", "role": "ZW1wbG95ZXVy"};
         // UPDATE EMPLOYEUR
         UpdateInServer.updateCiviliteInEmployeur(
-          user, titre, nom, prenom, entreprise, siret, ape, numUssaf, sessionId, employerId, enterpriseId)
+          user, titre, nom, prenom, entreprise, siret, ape, numUssaf, sessionId, employerId, enterpriseId, imgUri)
           .success(function (response) {
 
             // DONNEES ONT ETE SAUVEGARDES
@@ -165,20 +165,38 @@ starter
             employeur.entreprises[0].name = entreprise;
             employeur.entreprises[0].siret = siret;
             employeur.entreprises[0].naf = ape;
-            employeur.entreprises[0].urssaf = numUssaf;
-
+            //employeur.entreprises[0].urssaf = numUssaf;
 
             // PUT IN SESSION
             localStorageService.set('currentEmployer', employeur);
 
-          }).error(function (err) {
+            if (imgUri) {
+              UpdateInServer.uploadPhoto(imgUri, employerId, 'employeur','scan','upload')
+                .success(
+                function (response) {
+                  console.log("Photo uploaded !");
+                  employeur.scan = imgUri;
+                  // PUT IN SESSION
+                  localStorageService.set('currentEmployer', employeur);
+                }
+              ).error(
+                function (error) {
+                  console.log("Photo upload error !");
+                }
+              )
+            }
+
+
+          }
+        ).
+          error(function (err) {
             console.log("error : insertion DATA");
             console.log("error In updateCiviliteInEmployeur: " + err);
           });
       }
 
       // UPLOAD IMAGE
-      if ($scope.formData.imageEncode) {
+      /*if ($scope.formData.imageEncode) {
 
         // console.log("image name : "+$scope.formData.imageName);
         //console.log("image en base64 : "+$scope.formData.imageEncode);
@@ -196,52 +214,7 @@ starter
             console.log("error : upload File");
             console.log("error In UploadFile.uploadFile(): " + err);
           });
-      }
-
-      /*** LOAD LIST ZIP-CODE
-       codePostals=localStorageService.get('zipCodes');
-       if(!codePostals){
-				LoadList.loadZipCodes(sessionId)
-					.success(function (response){
-							resp=formatString.formatServerResult(response);
-							// DONNEES ONT ETE CHARGES
-							console.log("les ZipCodes ont été bien chargé");
-							zipCodesObjects=resp.dataModel.rows.dataRow;
-
-							if(typeof zipCodesObjects === 'undefined' || zipCodesObjects.length<=0 || zipCodesObjects===""){
-								console.log('Aucune résultat trouvé');
-								// PUT IN SESSION
-								localStorageService.set('zipCodes', []);
-								return;
-							}
-
-							// GET ZIP-CODE
-							zipCodes=[];
-							zipCode={}; // zipCode.libelle | zipCode.id
-
-							zipCodesList=[].concat(zipCodesObjects);
-							console.log("zipCodesList.length : "+zipCodesList.length);
-							for(var i=0; i<zipCodesList.length; i++){
-								object=zipCodesList[i].dataRow.dataEntry;
-
-								// PARCOURIR LIST PROPERTIES
-								zipCode[object[0].attributeReference]=object[0].value;
-								zipCode[object[1].attributeReference]=object[1].value;
-
-								if(zipCode)
-									zipCodes.push(zipCode);
-								zipCode={}
-							}
-
-							console.log("zipCodes.length : "+zipCodes.length);
-							// PUT IN SESSION
-							//localStorageService.set('zipCodes', zipCodes);
-							console.log("zipCodes : "+JSON.stringify(zipCodes));
-						}).error(function (err){
-							console.log("error : LOAD DATA");
-							console.log("error in loadZipCodes : "+err);
-						});
-			}***/
+      }*/
 
       // REDIRECTION VERS PAGE - ADRESSE PERSONEL
       if (steps) {
@@ -261,8 +234,11 @@ starter
         console.log("else" + steps);
         $state.go('menu.infoTabs.adressePersonel');
       }
-    };
+    }
+    ;
 
+    if (!$scope.items)
+      $scope.items = [];
 
     $scope.selectImage = function () {
       /*onSuccess = function (imageURI) {
@@ -273,31 +249,102 @@ starter
        console.log('An error occured: ' + message);
        }*/
       var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
+        quality: 100,
+        destinationType: Camera.DestinationType.FILE_URI,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
         allowEdit: false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100
+        saveToPhotoAlbum: true
+        //targetWidth: 100,
+        //targetHeight: 100
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
+
         $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        ;
+        //console.log("imageURI (Android) : " + "content://media/internal/images/media/" + $scope.imgURI.split("%3A")[1]);
         // console.log("imageURI : "+$scope.imgURI);
         //$state.go($state.current, {}, {reload: true});
+
+        window.resolveLocalFileSystemURL("content://media/internal/images/media/" + $scope.imgURI.split("%3A")[1], function (fileEntry) {
+
+          //If this doesn't work
+          $scope.image = fileEntry.nativeURL;
+          console.log("ResolveLocalFileSystem" + $scope.image);
+          //Try this
+          //var image = document.getElementById('myImage');
+          //image.src = fileEntry.nativeURL;
+        });
+
+
+        $scope.items.push({
+          src: $scope.imgURI,//'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg',
+          sub: 'This is a <b>subtitle</b>'
+        });
 
       }, function (err) {
         console.log('An error occured: ' + message);
       });
     };
-    /*
-     $scope.selectImage = function() {
-     console.log("selectImage");
-     document.getElementById('image').click();
-     };
-     */
+
+    $scope.getPhotoFromAlbum = function () {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(function (imageURI) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageURI;
+        var employeur = localStorageService.get('currentEmployer');
+        employeur.scan = $scope.imgURI;
+        localStorageService.set('currentEmployer', employeur);
+      }, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        correctOrientation: true,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY, //Camera.PictureSourceType.PHOTOLIBRARY
+        saveToPhotoAlbum: true
+      });
+    };
+
+    $scope.getPhotoFromCamera = function () {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(
+        function (imageURI) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageURI;
+          var employeur = localStorageService.get('currentEmployer');
+          employeur.scan = $scope.imgURI;
+          localStorageService.set('currentEmployer', employeur);
+        },
+        onFail,
+        {
+          quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL,
+          correctOrientation: true,
+          sourceType: Camera.PictureSourceType.Camera, //Camera.PictureSourceType.PHOTOLIBRARY
+          saveToPhotoAlbum: true
+        });
+    };
+
+    function onFail() {
+      console.log("Erreur de chargement de photo");
+    }
+
+    /*function onPhotoURISuccess(imageURI) {
+
+     $scope.imgURI = "data:image/jpeg;base64," + imageURI;
+     }
+
+     function onPhotoURISuccess2(imageURI) {
+     var base64String;
+     window.resolveLocalFileSystemURI(imageURI,
+
+     function (fileEntry) {
+     console.log(fileEntry.name);
+     },
+     function (FileError) {
+     console.log(FileError);
+     }
+     );
+
+     }*/
+
     $scope.loadImage = function (img) {
 
       // console.log("files.length : "+img.files.length);
@@ -318,6 +365,7 @@ starter
           $scope.formData.imageName = img.files[0].name;
           // RECUPERE ENCODAGE-64
           $scope.formData.imageEncode = e.target.result;
+          console.log("imageEncode (iOS) : " + e.target.result);
         };
         FR.readAsDataURL(image.files[0]);
         //$scope.$apply(function(){});
@@ -325,6 +373,7 @@ starter
         FR.onload = function (oFREvent) {
           document.getElementById("uploadPreview").src = oFREvent.target.result;
           $scope.imgURI = oFREvent.target.result;
+          console.log("imageURI (iOS) : " + $scope.imgURI);
           //$state.go($state.current, {}, {reload: true});
         };
       }
@@ -348,8 +397,12 @@ starter
         var employeur = localStorageService.get('currentEmployer');
         if (employeur) {
           // INITIALISATION FORMULAIRE
-          if (employeur.titre)
-            $scope.formData.civ = employeur.titre;
+          if (employeur.titre) {
+            var civiliteArray = $.grep($scope.formData.civilites, function (e) {
+              return e.libelle == employeur.titre;
+            });
+            $scope.formData.civilite = civiliteArray.length == 1 ? civiliteArray[0] : "";
+          }
           if (employeur.nom)
             $scope.formData.nom = employeur.nom;
           if (employeur.prenom)
@@ -359,6 +412,30 @@ starter
             $scope.formData.siret = employeur.entreprises[0].siret;
             $scope.formData.ape = employeur.entreprises[0].naf;
             //$scope.formData.numUssaf = employeur.entreprises[0].urssaf;
+          }
+
+          //Load image if exist :
+          if (employeur.scan && !(employeur.scan.replace('data:image/jpeg;base64,','') == 'undefined')) {
+            $scope.imgURI = employeur.scan;
+          } else {
+            UpdateInServer.uploadPhoto('', employeur.employerId, 'employeur','scan','get')
+              .success(
+              function (response) {
+                console.log("Photo uploaded !");
+                if (!(response[0].value == undefined)){
+                  //var fichier  = JSON.parse(response[0].value);
+                  var tkherbi9 = response[0].value.split("\"")[3];
+                  employeur.scan = "data:image/jpeg;base64," + tkherbi9;
+                  // PUT IN SESSION
+                  localStorageService.set('currentEmployer', employeur);
+                  $scope.imgURI = employeur.scan;
+                } else console.log("Photo non récupérée");
+              }
+            ).error(
+              function (error) {
+                console.log("Photo upload error !");
+              }
+            );
           }
         }
       }
@@ -382,7 +459,7 @@ starter
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
         $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        // console.log("imageData : "+imageData);
+        console.log("imageData : " + imageData);
         //$state.go($state.current, {}, {reload: true});
       }, function (err) {
         console.log(err);
@@ -392,4 +469,6 @@ starter
      var employeur=localStorageService.get('currentEmployer');
      return $scope.isContractInfo && (!employeur || !employeur.entreprise[0].urssaf || !employeur.entreprise[0].naf || !employeur.entreprise[0].siret || !employeur.nom || !employeur.prenom || !employeur.entreprise[0].name || !employeur.titre);
      };*/
-  });
+  }
+)
+;

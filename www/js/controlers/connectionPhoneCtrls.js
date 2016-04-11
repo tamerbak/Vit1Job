@@ -28,8 +28,13 @@ starter
 
       data = JSON.parse(data);
 
-      if(data.id ==0){
+      if(data.id ==0 && data.status == "failure"){
         OnAuthenticateError(data);
+        return;
+      }
+
+      if(data.id ==0 && data.status == "passwordError"){
+        Global.showAlertPassword("Votre mot de passe est incorrect");
         return;
       }
 
@@ -38,7 +43,7 @@ starter
       var connexion = {
         'etat': true,
         'libelle': 'Se déconnecter',
-        'employeID': data.id
+        'employeID': data.employerId
       };
 
 
@@ -55,7 +60,7 @@ starter
 
     var OnAuthenticateError = function(data){
       console.log(data);
-      Global.showAlertPassword("Le nom d'utilisateur ou le mot de passe est incorrect");
+      Global.showAlertPassword("Serveur non disponible ou problème de connexion.");
     };
 
     $scope.Authenticate = function () {

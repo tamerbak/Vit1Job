@@ -2,7 +2,7 @@
   <ion-nav-buttons side="secondary">
     <a class="button ion-navicon button-clear" style="font-size:x-large" data-ng-click="gotToOffres();"></a>
   </ion-nav-buttons>
-<ion-nav-title>
+  <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
   <!-- <ion-header-bar class="bar-calm">
@@ -16,56 +16,98 @@
     </div>
 
 
-    <!-- <button class="button button-stable button-block button-small icon ion-calendar" ng-click="showDatePickerDebut()"> Date de début : {{ formData.dateDebut | date : 'dd/MM/yyyy'}}</button> -->
 
-<label id="dateDebutContainer" class="button button-block button-small">
-    <i class="ion-calendar icon" style="vertical-align: initial"></i>
-  <span style="display:inline">Date de Début : </span>
-  <input id="dateDebutInput" type="date" style="display:inline" ng-model="formData.dateDebut">
-</label>
+    <ionic-multi-date-picker input-obj="datepickerObject">
+      <a class="button button-icon icon ion-calendar light" style="border-bottom-left-radius: 75px;border-bottom-right-radius: 75px;
+    border-top-left-radius: 75px;border-top-right-radius: 75px;width: 14%;background: #757575;"></a>
+    </ionic-multi-date-picker>
+
+    <div class="row">
+      <div class="col col-20" style="border: none !important;"></div>
+      <div class="col" style="border: none !important;">
+        <ion-checkbox ng-model="isChecked" ng-checked = "checkAction(isChecked)" style="border: none !important;" ng-show="selectedDates.length>0">Horaire fixe</ion-checkbox>
+      </div>
+      <div class="col col-20" style="border: none !important;"></div>
+    </div>
+
+    <div class="row" ng-show="isChecked">
+      <div class="col" style="border: none !important;">
+        <a class="button icon-left ion-ios-time-outline button-clear" style="color: inherit;" ng-click="timePicker()" ng-show="selectedDates.length>0"> {{fixedStartHour}}</a>
+      </div>
+      <div class="col" style="border: none !important;">
+        <a class="button icon-left ion-ios-time button-clear" style="color: inherit;" ng-click="timePicker2()" ng-show="selectedDates.length>0">  {{fixedEndHour}}</a>
+      </div>
+    </div>
+
+    <div class="list" style="text-align: left;">
+      <div class="item item-button-right" ng-repeat="d in selectedDates">
+        <i class="icon ion-android-calendar"></i>
+        {{ d.date.getDate() }}/{{ d.date.getMonth() + 1 }}/{{ d.date.getFullYear() }}
+        <button class="button button-clear" style="color: inherit; left: 40%;" ng-click="timePickerStart(d)" ng-disabled = "isChecked">
+          <i class="icon ion-ios-time-outline"></i>
+          &nbsp;{{d.startHour}}
+        </button>
+        <button class="button button-clear" style="color: inherit;" ng-click="timePickerEnd(d)" ng-disabled = "isChecked">
+          <i class="icon ion-ios-time"></i>
+          &nbsp;{{d.endHour}}
+        </button>
+
+      </div>
+
+      <!--div class="item" ng-repeat="d in selectedDates">
+        {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}
+      </div-->
+    </div>
+
+    <!--label id="dateDebutContainer" class="button button-block button-small">
+      <i class="ion-calendar icon" style="vertical-align: initial"></i>
+      <span style="display:inline">Date de Début : </span>
+      <input id="dateDebutInput" type="date" style="display:inline" ng-model="formData.dateDebut">
+    </label>
 
 
     <label id="dateFinContainer" class="button button-block button-small">
-    <i class="ion-calendar icon" style="vertical-align: initial"></i>
-  <span style="display:inline">Date de Fin : </span>
-  <input id="dateFinInput" type="date" style="display:inline" ng-model="formData.dateFin">
-</label>
+      <i class="ion-calendar icon" style="vertical-align: initial"></i>
+      <span style="display:inline">Date de Fin : </span>
+      <input id="dateFinInput" type="date" style="display:inline" ng-model="formData.dateFin">
+    </label>
 
-    
-
-   <!--  <button class="button button-stable button-block button-small icon ion-calendar" ng-click="showDatePickerFin()">  Date de fin  : {{formData.dateFin | date : 'dd/MM/yyyy'}}</button>
-   <input id="dateFinInput" type="date" style="display:none" ng-model="formData.dateFin"> -->
-
-   <!-- <div class="item item-divider">Répétitions</div> -->
     <div>
       <label class="item item-select">
-          <span class="input-label" >Jour de la semaine</span>
-          <select ng-model="formData.jourSelect">
-              <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
-          </select>
+        <span class="input-label">Jour de la semaine</span>
+        <select ng-model="formData.jourSelect">
+          <option ng-repeat="jour in formData.jours">{{ jour.nom }}</option>
+        </select>
       </label>
       <ion-item class="range green">
-          <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
-          <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut" data-ng-change="heureChange('debut')">
+        <span style="width: 65px;text-align: left;"> de {{ formData.heureDebutFormat }} </span>
+        <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureDebut"
+               data-ng-change="heureChange('debut')">
       </ion-item>
       <ion-item class="range green">
-      <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
-          <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin" data-ng-change="heureChange('fin')">
+        <span style="width: 65px;text-align: left;">à {{ formData.heureFinFormat }} </span>
+        <input type="range" step="15" min="0" max="1425" data-ng-model="formData.heureFin"
+               data-ng-change="heureChange('fin')">
       </ion-item>
     </div>
     <br/>
     <ion-list style="text-align: left;">
-        <ion-radio ng-change ="changeEditState()" ng-repeat="horaire in formData.horaires" ng-model = "formData.horaireSelect" ng-value = "{{ $index }}" value = "{{ $index }}">{{ horaire.jour }} de {{horaire.heureDebut}} à {{horaire.heureFin}} </ion-radio>
+      <ion-radio ng-change="changeEditState()" ng-repeat="horaire in formData.horaires"
+                 ng-model="formData.horaireSelect" ng-value="{{ $index }}" value="{{ $index }}">{{ horaire.jour }} de
+        {{horaire.heureDebut}} à {{horaire.heureFin}}
+      </ion-radio>
     </ion-list>
     <div class="button-bar">
-        <button class="button button-light button-block  icon ion-plus-circled " ng-click="ajouterHoraire()"></button>
-        <button class="button button-light button-block  icon ion-trash-b " ng-click="supprimerHoraire()"></button>
-        <button class="button button-light button-block  icon ion-edit " ng-show="!formData.editShow" ng-click="editerHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
-        <button class="button button-light button-block  icon ion-loop " ng-show="formData.editShow" ng-click="saveEditHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
-    </div>
+      <button class="button button-light button-block  icon ion-plus-circled " ng-click="ajouterHoraire()"></button>
+      <button class="button button-light button-block  icon ion-trash-b " ng-click="supprimerHoraire()"></button>
+      <button class="button button-light button-block  icon ion-edit " ng-show="!formData.editShow"
+              ng-click="editerHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
+      <button class="button button-light button-block  icon ion-loop " ng-show="formData.editShow"
+              ng-click="saveEditHoraire()" style="border-width: 1px; border-radius: 0px 2px 2px 0px;"></button>
+    </div-->
 
     <div class="buttonConnect">
-      <button class="button button-full button-positive green" data-ng-click="validerOffre();">Valider</button>
+      <button class="button button-full button-positive green" data-ng-click="validerOffre();">Valider l'offre d'emploi</button>
     </div>
   </ion-content>
 </ion-view>

@@ -68,7 +68,7 @@ angular.module('paiementServices', ['ionic', 'cb.x2js'])
 
       this.getToken=function(){
 
-          var url = "http://ns389914.ovh.net:8080/vitonjobv1/api/callout";
+          var url = "http://vps259989.ovh.net:8080/vitonjobv1/api/callout";
 
 
           var data = {

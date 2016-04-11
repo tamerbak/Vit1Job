@@ -21,12 +21,10 @@
     <div class="list">
 
       <label class="item item-input" style="padding-left: 8px;">
-        <!--div class="input-label">
-          Titre
-        </div-->
-        <select class="flat" data-ng-model="formData.civ" data-ng-init="formData.civ='Titre'">
-          <option selected disabled style="display: none;">Titre</option>
-          <option data-ng-repeat="x in formData.civilites" value="{{x.libelle}}">{{x.libelle}}</option>
+        <select class="flat" ng-model="formData.civilite" data-ng-init="formData.civilite.libelle='Titre'" ng-options="x.libelle for x in formData.civilites">
+          <option selected disabled style="display: none;" value ="">Titre</option>
+          <option value=''>- Titre -</option>
+          <!--<option data-ng-repeat="x in formData.civilites" value="{{x.libelle}}">{{x.libelle}}</option>-->
         </select>
         <span ng-show="formData.civ=='Titre' && isContractInfo" class="requiredStar">*</span>
       </label>
@@ -72,7 +70,7 @@
 
     <div class="list">
       <!-- <h3 class="titlePhone">Charger un scan de votre extrait k-bis</h3> -->
-      <button class="button button-full button-positive green" data-ng-click="selectImage()" ng-show="{{isAndroid}}">
+      <button class="button button-full button-positive green" data-ng-click="getPhotoFromAlbum()" ng-show="{{isAndroid}}">
         Charger un scan de votre extrait k-bis
       </button>
 
@@ -83,16 +81,17 @@
           votre extrait k-bis
         </button>
       </div>
-      <button class="button button-full button-positive green" data-ng-click="takePicture()">
+      <button class="button button-full button-positive green" data-ng-click="getPhotoFromCamera()">
         Prendre une photo de votre extrait k-bis
       </button>
-      <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px; max-height: 100px;padding-top:5px;"/>
+      <!--ion-gallery ion-gallery-items="items"></ion-gallery-->
+      <img id="uploadPreview" ng-src={{imgURI}} style="max-width: 100px;padding-top:5px;"/>
     </div>
 
     <!-- ACTIONS -->
     <div class="buttonConnect">
       <button class="button button-full button-positive grey" data-ng-click="updateCiviliteEmployeur()"
-              ng-disabled="isContractInfo && (!formData.numUssaf || !formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">
+              ng-disabled="isContractInfo && (!formData.ape || !apnIsValid() || !formData.siret || !formData.nom || !formData.prenom || !formData.entreprise )">
         Valider
       </button>
     </div>

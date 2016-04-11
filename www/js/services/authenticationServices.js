@@ -57,7 +57,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var data = {
         'class': 'fr.protogen.masterdata.model.CCallout',
-        'id': 49,
+        'id': 96,//95,//74,//49,
         'args': [{
           'class': 'fr.protogen.masterdata.model.CCalloutArguments',
           label: 'requete authentification',
@@ -69,7 +69,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -83,7 +83,7 @@ angular.module('wsConnectors', ['ionic'])
 
     this.yousignService = function (employeur, jobyer) {
 
-      var jsonData = {
+      /*var jsonData = {
         "titre": employeur.titre,
         "prenom": employeur.prenom,
         "nom": employeur.nom,
@@ -128,8 +128,60 @@ angular.module('wsConnectors', ['ionic'])
         "client": "",
         "primeDiverses": "néant"
 
-      };
+      };*/
 
+      var jsonData = {
+        "titre" : "M.",
+        "prenom": "Didier",
+        "nom": "MONTEGUT",
+        "entreprise" : "GROUPEMENT INTERACTIF DU DEGIVRAGE ET DU DENEIGEMENT (G.I.D)",
+        "adresseEntreprise" : "Paris",
+        "jobyerPrenom" : jobyer.prenom,
+        "jobyerNom" : jobyer.nom,
+        "nss" : jobyer.numSS,
+        "dateNaissance" : jobyer.dateNaissance,
+        "lieuNaissance" : jobyer.lieuNaissance, //"SOISSONS (02)",
+        "nationalite" : jobyer.nationalite, //"Francais",
+        "adresseDomicile" : jobyer.address,//"14 Rue Dessigny 02200 CUISY EN ALMONT",
+        "dateDebutMission" : "23/01/2016",
+        "dateFinMission" : "23/01/2016",
+        "periodeEssai" : "3 jours",
+        "dateDebutTerme" : "23/01/2016",
+        "dateFinTerme" : "23/01/2016",
+        "motifRecours" : "Remplacement Maladie",
+        "justificationRecours" : "Mme Martin Monique",
+        "qualification" : "Magasinier confirmé",
+        "caracteristiquePoste" : "Gestion du stock pièces",
+        "tempsTravail" : {
+          "nombreHeures" : "35H Hebdo",
+          "variables" : "Oui"
+        },
+        "horaireHabituel" : {
+          "debut" : "22H00",
+          "fin" : "23H00",
+          "variables" : "Oui"
+        },
+        "posteARisque" : "Non",
+        "surveillanceMedicale" : "Non",
+        "epi" : "chaussures de sécurité",
+        "salaireBase" : "13,00 euros B/H",
+        "dureeMoyenneMensuelle" : "35H Hebdo",
+        "salaireHN" : "115,00€ B/H",
+        "salaireHS": {
+          "35h" : "+25%",
+          "43h" : "+50%"
+        },
+        "droitRepos" : "> 41H 50%",
+        "adresseInterim" : "",
+        "client" : "",
+        "primeDiverses" : "néant",
+        "SiegeSocial" : "31 rue du Moulin 31320 CASTANET TOLOSAN",
+        "ContenuMission" : "d opérateur déneigement et dégivrage – coefficient 185",
+        "categorie" : "ouvrier",
+        "filiere" : "exploitation"
+        ,    "HeureDebutMission" : "22H",
+        "HeureFinMission" : "23H"
+      };
 
       var dataSign =
       {
@@ -151,7 +203,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var data = {
         'class': 'fr.protogen.masterdata.model.CCallout',
-        'id': 65,//59,//58,//57, //56,//55,//54, //53,//52,// 51, //47,
+        'id': 93,//92,//90,//87,//65,//59,//58,//57, //56,//55,//54, //53,//52,// 51, //47,
         'args': [{
           'class': 'fr.protogen.masterdata.model.CCalloutArguments',
           label: 'Signature electronique',
@@ -193,15 +245,51 @@ angular.module('wsConnectors', ['ionic'])
       sql = sql + "urssaf='" + numUrssaf + "', ";
       sql = sql + "ape_ou_naf='" + codeAPE + "' where  pk_user_entreprise=" + enterpriseId;
 
+        return $http({
+          method: 'POST',
+          url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
+          headers: {
+            "Content-Type": "text/plain"
+          },
+          data: sql
+        });
+    };
 
-      return $http({
+    this.uploadPhoto = function (imgUri, employerId, role, field, action){
+      var donnee = {
+        "class":'com.vitonjob.callouts.files.DataToken',
+        "table":'user_'+ role,
+        "field": field,
+        "id": employerId,
+        "operation": action,
+        "encodedFile": (imgUri)? imgUri.split(';base64,')[1] : ''
+      };
+
+      donnee = JSON.stringify(donnee);
+      var donneeEncodee = btoa(donnee);
+
+      var data = {
+        'class': 'fr.protogen.masterdata.model.CCallout',
+        'id': 97,//94,
+        'args': [{
+          'class': 'fr.protogen.masterdata.model.CCalloutArguments',
+          label: 'Upload fichier',
+          value: donneeEncodee
+        }]
+      };
+
+      var stringData = JSON.stringify(data);
+
+      var request = {
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
-          "Content-Type": "text/plain"
+          'Content-Type': 'application/json'
         },
-        data: sql
-      });
+        data: stringData
+      };
+
+      return $http(request);
     };
 
     /*this.updateCiviliteInEmployeur = function (user, civilite, nom, prenom, raisonSocial, siret, codeAPE, numUrssaf, sessionID, employerId, enterpriseId) {
@@ -296,7 +384,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -378,7 +466,7 @@ angular.module('wsConnectors', ['ionic'])
 
       var request = {
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/callout',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -398,7 +486,7 @@ angular.module('wsConnectors', ['ionic'])
 
       return $http({
         method: 'POST',
-        url: 'http://ns389914.ovh.net:8080/vitonjobv1/api/sql',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
         headers: {
           "Content-Type": "text/plain"
         },

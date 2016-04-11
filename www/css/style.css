@@ -800,3 +800,22 @@ label.item.item-input.it3 {
   border-left: 0;
 }
 
+.popup-container.picker-body.popup-showing.active{
+  font-size: smaller;
+}
+
+
+button.button.ng-binding.button_set {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+button.button.ng-binding.button_close {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+

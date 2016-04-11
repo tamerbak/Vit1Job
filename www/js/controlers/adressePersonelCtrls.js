@@ -34,7 +34,7 @@ starter
 
 
       var currentEmployer = localStorageService.get('currentEmployer');
-      var employeId = currentEmployer.id;
+      var employeId = currentEmployer.employerId;
       var entreprises = currentEmployer.entreprises;  //  I am sure that there is a company associated with the user
       var eid = currentEmployer.entreprises[0].entrepriseId;
 
@@ -174,10 +174,10 @@ starter
       }
     }
 
-    $scope.$on("$ionicView.beforeEnter", function () {
-      $scope.formData.zipCodes = DataProvider.getZipCodes();
-      $scope.formData.villes = DataProvider.getVilles();
-    });
+    //$scope.$on("$ionicView.beforeEnter", function () {
+      //$scope.formData.zipCodes = DataProvider.getZipCodes();
+      //$scope.formData.villes = DataProvider.getVilles();
+    //});
 
     $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
       viewData.enableBack = true;

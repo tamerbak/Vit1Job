@@ -36,7 +36,7 @@ starter
       var connexion = {
         'etat': true,
         'libelle': 'Se déconnecter',
-        'employeID': data.id
+        'employeID': data.employerId
       };
 
 

@@ -5,7 +5,8 @@
 'use strict';
 starter
 
-  .controller('offreTabsCtrl', function ($scope, $rootScope, DataProvider, Global, $state, $stateParams, $cordovaDatePicker, $ionicPopup, localStorageService, jobyerService) {
+  .controller('offreTabsCtrl', function ($scope, $rootScope, DataProvider, Global, $state, $stateParams, $cordovaDatePicker, $ionicPopup,
+                                         localStorageService, jobyerService, ionicTimePicker) {
     $scope.absoluteJobs = DataProvider.getJobs();
     //$scope.formData={};
     if ($stateParams.offre) {
@@ -369,6 +370,11 @@ starter
       var remuneration;
 
 
+      if (!$scope.selectedDates || $scope.selectedDates.length == 0) {
+        Global.showAlertValidation("Vous n'avez pas ajouter des dates valides,Veuillez cliquer sur l'agenda pour les ajouter.");
+        return false;
+      };
+
       if (!$scope.offre)
         $scope.offre = {};
       $scope.offre.degre = $scope.formData.degre;
@@ -403,6 +409,28 @@ starter
 
       $scope.offre.remuneration = $scope.formData.remuneration;
       remuneration = $scope.offre.remuneration;
+
+
+      //TEL 31/03/2016 New agenda :
+      var weekday = new Array(7);
+      weekday[0] = "Dimanche";
+      weekday[1] = "Lundi";
+      weekday[2] = "Mardi";
+      weekday[3] = "Mercredi";
+      weekday[4] = "Jeudi";
+      weekday[5] = "Vendredi";
+      weekday[6] = "Samedi";
+      if ($scope.selectedDates.length > 0) {
+        $scope.formData.horaires = [];
+        for (var i = 0; i < $scope.selectedDates.length; i++) {
+          $scope.formData.horaires.push({
+              "jour": weekday[$scope.selectedDates[i].date.getDay()],
+              "heureDebut": $scope.selectedDates[i].startHour,
+              "heureFin": $scope.selectedDates[i].endHour
+            }
+          )
+        }
+      }
 
       $scope.offre.horaires = $scope.formData.horaires;
       for (var i = 0; i < $scope.offre.horaires.length; i++) {
@@ -727,6 +755,257 @@ starter
     $scope.changeEditState = function () {
       if ($scope.formData.editShow) {
         $scope.formData.editShow = false
+      }
+    };
+
+    //################# Agenda parameters ####################
+    var weekDaysList = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"];
+    var monthList = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+    var h0 = new Date(2016, 3, 4)
+      , h1 = new Date(2016, 3, 9)
+      , h2 = new Date(2016, 3, 3)
+      , h3 = new Date(2016, 3, 10)
+      , h4 = new Date(2016, 3, 30)
+      , h5 = new Date(2016, 3, 16)
+      , h6 = new Date(2016, 3, 6)
+      , calendar0 = [h0, h1, h2, h3, h4, h5, h6];
+
+    var c0 = new Date(2016, 3, 4)
+      , c1 = new Date(2016, 3, 9)
+      , c2 = new Date(2016, 3, 3)
+      , c3 = new Date(2016, 3, 10)
+      , c4 = new Date(2016, 3, 12)
+      , c5 = new Date(2016, 3, 16)
+      , c6 = new Date(2016, 3, 18)
+      , c7 = new Date(2016, 3, 19)
+      , c8 = new Date(2016, 3, 22)
+      , c9 = new Date(2016, 3, 27)
+      , c10 = new Date(2016, 3, 25)
+      , c11 = new Date(2016, 3, 6)
+      , calendar1 = [c0, c1]
+      , calendar2 = [c2, c3]
+      , calendar3 = [c4]
+      , calendar4 = [c2, c5, c11]
+      , calendar5 = [c4, c10]
+      , calendar6 = [c6, c7, c8, c9]
+      , calendar7 = [c5, c6, c11];
+
+    var d0 = new Date(2016, 3, 16)
+      , d1 = new Date(2016, 3, 17)
+      , d2 = new Date(2016, 3, 17)
+      , d3 = new Date(2016, 3, 30)
+      , d4 = new Date(2016, 3, 1)
+      , disabledDates = [d0, d1, d2, d3, d4];
+
+    var s0 = new Date(2016, 3, 31)  // preview month
+      , s1 = new Date(2016, 3, 10) // holiday
+      , s2 = new Date(2016, 3, 11) // holiday
+      , s7 = new Date(2016, 3, 6) //
+      , s3 = new Date(2016, 3, 12) //
+      , s4 = new Date(2016, 3, 12) // clone
+      , s5 = new Date(2016, 3, 17) // conflict with disabled
+      , s6 = new Date(2016, 3, 1); // conflict with disabled, next month
+    //$scope.selectedDates = [s1, s2, s3, s4, s0, s5, s6, s7];
+
+    //if (!$scope.selectedDatesOriginal)
+    $scope.selectedDatesOriginal = [];
+    if (!$scope.selectedDates)
+      $scope.selectedDates = [];
+    for(var i=0; i<$scope.selectedDates.length;i++){
+      $scope.selectedDatesOriginal.push($scope.selectedDates[i].dates)
+    }
+    $scope.datepickerObject = {
+      templateType: 'POPUP', // POPUP | MODAL
+      modalFooterClass: 'bar-light',
+      //header: 'multi-date-picker',
+      headerClass: 'royal-bg light',
+
+      btnsIsNative: false,
+
+      btnOk: 'OK',
+      btnOkClass: 'button-clear cal-green',
+
+      btnCancel: 'Fermer',
+      btnCancelClass: 'button-clear button-dark',
+
+      btnTodayShow: true,
+      btnToday: "Aujourd'hui",
+      btnTodayClass: 'button-clear button-dark',
+
+      btnClearShow: true,
+      btnClear: 'Libérer',
+      btnClearClass: 'button-clear button-dark',
+
+      selectType: 'MULTI', // SINGLE | PERIOD | MULTI
+
+      tglSelectByWeekShow: true, // true | false (default)
+      tglSelectByWeek: 'Semaine entière',
+      isSelectByWeek: false, // true (default) | false
+      selectByWeekMode: 'NORMAL', // INVERSION (default), NORMAL
+      tglSelectByWeekClass: 'toggle-positive',
+      titleSelectByWeekClass: 'positive positive-border',
+
+      accessType: 'WRITE', // READ | WRITE
+      //showErrors: true, // true (default), false
+      //errorLanguage: 'RU', // EN | RU
+
+      //fromDate: new Date(2015, 9),
+      //toDate: new Date(2016, 1),
+
+      selectedDates: $scope.selectedDatesOriginal,
+      viewMonth: $scope.selectedDatesOriginal, //
+      disabledDates: '', //disabledDates,
+
+      calendar0: calendar0,
+      calendar0Class: '',
+      calendar0Name: 'Serveur Wahou',
+
+      calendar1: calendar1,
+      //calendar1Class: '',
+      calendar1Name: 'Jours fériés',
+
+      calendar2: calendar2,
+      calendar2Class: '',
+      //calendar2Name: 'calendar 2',
+
+      calendar3: calendar3,
+      calendar3Class: '',
+      calendar3Name: 'Anniversaire',
+
+      calendar4: calendar4,
+      calendar4Class: 'cal-color-black',
+      calendar4Name: 'Non disponible',
+
+      calendar5: calendar5,
+      calendar5Class: '',
+      calendar5Name: 'Conducteur habitué',
+
+      calendar6: calendar6,
+      calendar6Class: '',
+      calendar6Name: 'Cuisinier Débutant',
+
+      calendar7: calendar7,
+      calendar7Class: '',
+      calendar7Name: 'Autres RDV',
+
+      conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
+
+      closeOnSelect: false,
+
+      mondayFirst: true,
+      weekDaysList: weekDaysList,
+      monthList: monthList,
+
+      callback: function (dates) {  //Mandatory
+        retSelectedDates(dates);
+      }
+    };
+
+    var retSelectedDates = function (dates) {
+      if (!$scope.selectedDates)
+        $scope.selectedDates = [];
+      if (!$scope.selectedDatesOriginal)
+        $scope.selectedDatesOriginal = [];
+      $scope.selectedDatesOriginal.length = 0;
+      $scope.selectedDates.length = 0;
+      for (var i = 0; i < dates.length; i++) {
+        var newValSelDate = {
+          "date": angular.copy(dates[i]),
+          "startHour": "--:--",
+          "endHour": "--:--"
+        };
+        $scope.selectedDatesOriginal.push(angular.copy(dates[i]));
+        $scope.selectedDates.push(newValSelDate);
+      }
+    };
+
+    $scope.fixedStartHour = "--:--";
+    $scope.fixedEndHour = "--:--";
+
+    $scope.timePicker = function () {
+      var ipObj1 = {
+        callback: function (val) {      //Mandatory
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+            var selectedTime = new Date(val * 1000);
+            var hours = (selectedTime.getUTCHours() < 10) ? "0" + selectedTime.getUTCHours() : selectedTime.getUTCHours();
+            var minutes = (selectedTime.getUTCMinutes() < 10) ? "0" + selectedTime.getUTCMinutes() : selectedTime.getUTCMinutes();
+            $scope.fixedStartHour = hours + ":" + minutes;
+            console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+          }
+        }//,
+        //inputTime: 50400,   //Optional
+        //format: 12,         //Optional
+        //step: 15//,           //Optional
+        //setLabel: 'Set2'    //Optional
+      };
+
+      ionicTimePicker.openTimePicker(ipObj1);
+    };
+
+    $scope.timePicker2 = function () {
+      var ipObj1 = {
+        callback: function (val) {      //Mandatory
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+            var selectedTime = new Date(val * 1000);
+            var hours = (selectedTime.getUTCHours() < 10) ? "0" + selectedTime.getUTCHours() : selectedTime.getUTCHours();
+            var minutes = (selectedTime.getUTCMinutes() < 10) ? "0" + selectedTime.getUTCMinutes() : selectedTime.getUTCMinutes();
+            $scope.fixedEndHour = hours + ":" + minutes;
+            console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+          }
+        }
+      };
+
+      ionicTimePicker.openTimePicker(ipObj1);
+    };
+
+    $scope.timePickerStart = function (d) {
+      var ipObj1 = {
+        callback: function (val) {      //Mandatory
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+            var selectedTime = new Date(val * 1000);
+            var hours = (selectedTime.getUTCHours() < 10) ? "0" + selectedTime.getUTCHours() : selectedTime.getUTCHours();
+            var minutes = (selectedTime.getUTCMinutes() < 10) ? "0" + selectedTime.getUTCMinutes() : selectedTime.getUTCMinutes();
+            d.startHour = hours + ":" + minutes;
+            console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+          }
+        }
+      };
+
+      ionicTimePicker.openTimePicker(ipObj1);
+    };
+
+    $scope.timePickerEnd = function (d) {
+      var ipObj1 = {
+        callback: function (val) {      //Mandatory
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+            var selectedTime = new Date(val * 1000);
+            var hours = (selectedTime.getUTCHours() < 10) ? "0" + selectedTime.getUTCHours() : selectedTime.getUTCHours();
+            var minutes = (selectedTime.getUTCMinutes() < 10) ? "0" + selectedTime.getUTCMinutes() : selectedTime.getUTCMinutes();
+            d.endHour = hours + ":" + minutes;
+            console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+          }
+        }
+      };
+
+      ionicTimePicker.openTimePicker(ipObj1);
+    };
+
+    $scope.isChecked = false;
+    $scope.checkAction = function (bool) {
+      if (bool && $scope.selectedDates) {
+        for (var i = 0; i < $scope.selectedDates.length; i++) {
+          $scope.selectedDates[i].startHour = $scope.fixedStartHour;
+          $scope.selectedDates[i].endHour = $scope.fixedEndHour;
+        }
       }
     };
 

@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "ng-material-floating-button": "ng-mfb#~0.6.2",
-    "angular-local-storage": "~0.2.3"
+    "angular-local-storage": "~0.2.3",
+    "ionic-multi-date-picker": "^2.0.0",
+    "ionic-timepicker": "^0.5.0",
+    "ion-gallery": "^0.1.14"
   }
 }

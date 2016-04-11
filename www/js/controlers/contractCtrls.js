@@ -36,7 +36,7 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
   // An alert dialog
   $scope.showAlert = function () {
     //printing the pdf
-    if (ionic.Platform.isAndroid() && ionic.Platform.version() <= 4.2) {
+    /*if (ionic.Platform.isAndroid() && ionic.Platform.version() <= 4.2) {
       var alertPopup1 = $ionicPopup.show({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",
         template: "Pour imprimer votre contrat, ou le sauvegarder comme PDF, veuillez configurer les paramètres d'impression de votre telephone",
@@ -63,10 +63,10 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
           ]
         });
         alertPopup.then(function () {
-          $state.go("app");
+          $state.go("menu.app");
         });
       });
-    } else {
+    } else {*/
 
       console.log(ionic.Platform.version());
 
@@ -131,7 +131,7 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
       AuthentificatInServer.yousignService(employeur, jobyer).success(signtaureSuccess).error(onError);
       //signtaureSuccess("");
 
-    }
+    //}
 
 
   };
@@ -171,6 +171,7 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
 
     viewData.enableBack = true;
     $scope.showiFrame = false;
+    $scope.hideiFrame = true;
 
   });
 
@@ -204,6 +205,7 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
       window.location.pathname.replace("/","%2F");
     //+ "?urlsuccess="+urlSuccess
     $scope.showiFrame = true;
+    $scope.hideiFrame = false;
     var link = youSign.iFrameURLs[0].iFrameURL ;
     //"https://demo.yousign.fr/public/cosignature/fBIcrK6aJgL5J3NXSvFxyLMve18Zw9LqJHXVtGJd?tpl=e9ecb0d279aaed5495890bfc84020501";
     var iframe = document.createElement('iframe');

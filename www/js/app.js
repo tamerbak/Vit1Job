@@ -12,7 +12,7 @@
 var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServices', 'fileServices', 'globalServices', 'ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova', 'validationDataServices', 'providerServices',
   'LocalStorageModule', 'connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt', 'ion-google-autocomplete', 'ui.mask',
-'ionic.service.core','passwordServices','SmsServices','paiementServices'])
+'ionic.service.core','passwordServices','SmsServices','paiementServices', 'ionic-multi-date-picker', 'ionic-timepicker', 'ion-gallery'])
 
   .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen) {
 
@@ -32,6 +32,30 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
 
       $rootScope.AppLogo = '<div class="vimgBar"><img src="img/vit1job-mini.png"></div>';
       $rootScope.previousView = '';
+
+      //Instabug integration :
+      cordova.plugins.instabug.activate(
+        {
+          android: '8638bb86054b6354141c9a07d8317d26',
+          ios: 'a79265adfebcc922588a989ab0a07557'
+        },
+        'shake',//button
+        {
+          commentRequired: true,
+          colorTheme: 'dark',
+          shakingThresholdAndroid: '0.01',
+          shakingThresholdIPhone: '0.5',
+          shakingThresholdIPad: '0.6',
+          enableIntroDialog: true,
+          setLocale : 'french'
+        },
+        function () {
+          console.log('Instabug initialized.');
+        },
+        function (error) {
+          console.log('Instabug could not be initialized - ' + error);
+        }
+      );
 
     });
   })
@@ -87,7 +111,16 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
         });
     })
 
-
+  .config(function (ionicTimePickerProvider) {
+    var timePickerObj = {
+      inputTime: (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60)),
+      format: 24,
+      step: 1,
+      setLabel: 'Ok',
+      closeLabel: 'Fermer'
+    };
+    ionicTimePickerProvider.configTimePicker(timePickerObj);
+  })
 
   .run(function ($rootScope, $ionicLoading) {
     $rootScope.$on('loading:show', function () {

@@ -29,7 +29,7 @@ starter
       var employeId = connexion.employeID;
       // RECUPERATION SESSION ID
       var currentEmployer = localStorageService.get('currentEmployer');
-      employeId = currentEmployer.id;
+      employeId = currentEmployer.employerId;
       var entreprises = currentEmployer.entreprises;  //  I am sure that there is a company associated with the user
       var eid = currentEmployer.entreprises[0].entrepriseId;
 

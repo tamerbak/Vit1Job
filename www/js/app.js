@@ -12,16 +12,20 @@
 var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServices', 'fileServices', 'globalServices', 'ng-mfb',
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova', 'validationDataServices', 'providerServices',
   'LocalStorageModule', 'connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt', 'ion-google-autocomplete', 'ui.mask',
-'ionic.service.core','passwordServices','SmsServices','paiementServices', 'ionic-multi-date-picker', 'ionic-timepicker', 'ion-gallery'])
+'ionic.service.core','passwordServices','SmsServices','paiementServices', 'ionic-multi-date-picker', 'ionic-timepicker', 'ion-gallery',
+'ionic.service.push'])
 
-  .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen) {
+  .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen, $ionicPush) {
 
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
-      setTimeout(function() {
-        $cordovaSplashscreen.hide()
-      }, 10000);
+      if (window.cordova){
+        setTimeout(function () {
+          $cordovaSplashscreen.hide()
+        }, 10000);
+      }
+
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
@@ -34,28 +38,59 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
       $rootScope.previousView = '';
 
       //Instabug integration :
-      cordova.plugins.instabug.activate(
-        {
-          android: '8638bb86054b6354141c9a07d8317d26',
-          ios: 'a79265adfebcc922588a989ab0a07557'
+      if (window.cordova){
+        cordova.plugins.instabug.activate(
+          {
+            android: '8638bb86054b6354141c9a07d8317d26',
+            ios: 'a79265adfebcc922588a989ab0a07557'
+          },
+          'shake',//button
+          {
+            commentRequired: true,
+            colorTheme: 'dark',
+            shakingThresholdAndroid: '0.1',
+            shakingThresholdIPhone: '0.5',
+            shakingThresholdIPad: '0.6',
+            enableIntroDialog: true,
+            setLocale : 'french'
+          },
+          function () {
+            console.log('Instabug initialized.');
+          },
+          function (error) {
+            console.log('Instabug could not be initialized - ' + error);
+          }
+        );
+      }
+
+
+
+      //ionic push notifications
+      var push = new Ionic.Push({
+        "debug": true,
+        "onNotification": function(notification) {
+          var payload = notification.payload;
+          console.log(notification, payload);
+          console.log(JSON.stringify(notification))
         },
-        'shake',//button
-        {
-          commentRequired: true,
-          colorTheme: 'dark',
-          shakingThresholdAndroid: '0.01',
-          shakingThresholdIPhone: '0.5',
-          shakingThresholdIPad: '0.6',
-          enableIntroDialog: true,
-          setLocale : 'french'
+        "onRegister": function(data) {
+          console.log(data.token);
         },
-        function () {
-          console.log('Instabug initialized.');
-        },
-        function (error) {
-          console.log('Instabug could not be initialized - ' + error);
+        "pluginConfig": {
+          "ios": {
+            "badge": true,
+            "sound": true
+          },
+          "android": {
+            "iconColor": "#343434"
+          }
         }
-      );
+      });
+
+      push.register(function(token) {
+        console.log("Device token:",token.token);
+        push.saveToken(token);  // persist the token in the Ionic Platform
+      });
 
     });
   })

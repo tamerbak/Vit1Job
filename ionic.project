@@ -1,6 +1,5 @@
 {
   "name": "Vit1Job",
-  "app_id": "21b1460b",
   "gulpStartupTasks": [
     "sass",
     "watch"

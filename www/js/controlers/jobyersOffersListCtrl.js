@@ -109,7 +109,11 @@ starter.controller('jobyersOffersListCtrl',
             "latitude": $scope.jobyersOffers[i].latitude,
             "logitude": $scope.jobyersOffers[i].logitude,
             "matching": $scope.jobyersOffers[i].matching,
-            "tel": $scope.jobyersOffers[i].tel
+            "tel": $scope.jobyersOffers[i].tel,
+            "dateNaissance" : $scope.jobyersOffers[i].dateNaissance,
+            "lieuNaissance" : $scope.jobyersOffers[i].lieuNaissance,
+            "nationalite" : $scope.jobyersOffers[i].nationalite,
+            "deviceToken" : $scope.jobyersOffers[i].deviceToken
 
           });
         }
@@ -156,7 +160,11 @@ starter.controller('jobyersOffersListCtrl',
             "latitude": $scope.jobyersOffers[i].latitude,
             "logitude": $scope.jobyersOffers[i].logitude,
             "matching": $scope.jobyersOffers[i].matching,
-            "tel": $scope.jobyersOffers[i].tel
+            "tel": $scope.jobyersOffers[i].tel,
+            "dateNaissance" : $scope.jobyersOffers[i].dateNaissance,
+            "lieuNaissance" : $scope.jobyersOffers[i].lieuNaissance,
+            "nationalite" : $scope.jobyersOffers[i].nationalite,
+            "deviceToken" : $scope.jobyersOffers[i].deviceToken
 
           });
         }
@@ -201,6 +209,7 @@ starter.controller('jobyersOffersListCtrl',
 
         localStorageService.remove('Selectedjobyer');
         localStorageService.set('Selectedjobyer', jobber);
+        console.log();
         var hideSheet = $ionicActionSheet.show({
           buttons: [
             {text: '<i class="ion-android-textsms"> Contacter par SMS</i>'}, //Index = 0

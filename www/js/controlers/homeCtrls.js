@@ -288,6 +288,7 @@ starter
       if (data == null || data.length == 0)
         return;
       var sdata = data[0]['value'];
+      console.log(JSON.stringify(sdata));
       var jobyersOffers = JSON.parse(sdata);
       localStorageService.set('jobyersOffers', jobyersOffers);
       $state.go("menu.jobyersOffersTab.list");

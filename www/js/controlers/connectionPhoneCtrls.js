@@ -46,6 +46,23 @@ starter
         'employeID': data.employerId
       };
 
+      //Load device token to current account :
+      var token = localStorageService.get('deviceToken');
+      var accountId = data.id;
+      if (token) {
+        console.log("insertion du token : "+ token);
+        var sql = "Update user_account set device_token = '" + token + "' where pk_user_account = '" + accountId + "';";
+        $http({
+          method: 'POST',
+          url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
+          headers: {"Content-Type": "text/plain"},
+          data: sql
+        }).success(function (data) {
+          console.log("device token bien inséré pour l'utilisateur " + accountId);
+        }).error(function(erreur){
+          console.log("device token est non inséré. Erreur : " + erreur);
+        });
+      }
 
       localStorageService.set('connexion', connexion);
       localStorageService.set('currentEmployer', data);

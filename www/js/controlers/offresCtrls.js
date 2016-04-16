@@ -5,7 +5,7 @@
 'use strict';
 starter
 
-  .controller('offresCtrl', function ($scope, $rootScope, Global, $state, $filter, localStorageService) {
+  .controller('offresCtrl', function ($scope, $rootScope, Global, $state, $filter, localStorageService, OffresService) {
     // FORMULAIRE
 
     //
@@ -141,25 +141,50 @@ starter
     $scope.supprimerOffre = function () {
       var offre = $scope.formData.offre;
       if (offre.offerId) {
-        var offres = $rootScope.offres;
-        var indexOffres = offres.indexOf(offre);
-        $rootScope.offres.splice(indexOffres, 1);
 
-        console.log("Load offers in localStorage");
+        //Afficher un popup de confirmation
+        var confirmPopup = Global.showAlert("Confirmation");
 
-        var employeur = localStorageService.get('currentEmployer');
-        employeur.entreprises[0].offers = $rootScope.offres;
-        localStorageService.set('currentEmployer', employeur);
+        confirmPopup.then(function(res) {
+          console.log('Confirmation Tapped!', res);
 
-        if (offre.etat == "publie")
-          $scope.formData.offresPublies.splice($scope.formData.offresPublies.indexOf(offre), 1);
-        else
-          $scope.formData.offresNonPublies.splice($scope.formData.offresNonPublies.indexOf(offre), 1);
-        $scope.formData.offre = {selected: false};
+          //Si Oui
+          if (res === 'yes') {
+
+            console.log('>> delete offre : ', offre);
+            OffresService
+              .deleteOffreJobyer(offre)
+              .success(function(data) {
+                console.log('Success deleteOffreJobyer : ', data);
+
+                if (data && data.status === 'success') {
+                  var offres = $rootScope.offres;
+                  var indexOffres = offres.indexOf(offre);
+                  $rootScope.offres.splice(indexOffres, 1);
+
+                  console.log("Load offers in localStorage");
+
+                  var employeur = localStorageService.get('currentEmployer');
+                  employeur.entreprises[0].offers = $rootScope.offres;
+                  localStorageService.set('currentEmployer', employeur);
+
+                  if (offre.etat == "publie")
+                    $scope.formData.offresPublies.splice($scope.formData.offresPublies.indexOf(offre), 1);
+                  else
+                    $scope.formData.offresNonPublies.splice($scope.formData.offresNonPublies.indexOf(offre), 1);
+                  $scope.formData.offre = {selected: false};
+                }
+              })
+              .error(function(error){
+                console.log('Error deleteOffreJobyer : ', error);
+              });
+          }
+        });
       } else {
         Global.showAlertValidation("Veuillez séléctionner une offre.");
       }
     };
+
     $scope.$on("$ionicView.beforeEnter", function (scopes, states) {
       if (states.fromCache && states.stateName == "competence") {
         console.log("Initialisation : beforeEnter(competence)");

@@ -12,14 +12,18 @@ angular.module('Services')
       if (offre && offre.offerId) {
         if (offre.disponibilite) {
           angular.forEach(offre.disponibilite, function (value, key) {
-            var subDispoQuery = '(select pk_user_disponibilite from user_disponibilite where fk_user_disponibilite__user_offre_jobyer=' + offre.offerId + ');\n';
+            var subDispoQuery = '(select pk_user_disponibilite from user_disponibilite where fk_user_disponibilite__user_offre_entreprise=' + offre.offerId + ');\n';
             deleteOffreQuerys += 'delete from user_plage_horaire where fk_user_disponibilite in ' + subDispoQuery;
             deleteOffreQuerys += 'delete from user_repetition where fk_user_disponibilite in ' + subDispoQuery;
-            deleteOffreQuerys += 'delete from user_disponibilite where fk_user_disponibilite__user_offre_jobyer=' + offre.offerId + ';\n';
+            deleteOffreQuerys += 'delete from user_disponibilite where fk_user_disponibilite__user_offre_entreprise=' + offre.offerId + ';\n';
           });
         }
 
-        deleteOffreQuerys += 'delete from user_offre_jobyer where pk_user_offre_jobyer=' + offre.offerId + ';\n';
+        deleteOffreQuerys += 'delete from user_disponibilites_des_offres where fk_user_offre_entreprise=' + offre.offerId + ';\n';
+        deleteOffreQuerys += 'delete from user_pratique_langue where fk_user_offre_entreprise=' + offre.offerId + ';\n';
+        deleteOffreQuerys += 'delete from user_pratique_job where fk_user_offre_entreprise=' + offre.offerId + ';\n';
+        deleteOffreQuerys += 'delete from user_pratique_indispensable where fk_user_offre_entreprise=' + offre.offerId + ';\n';
+        deleteOffreQuerys += 'delete from user_offre_entreprise where pk_user_offre_entreprise=' + offre.offerId + ';\n';
       }
 
       console.log('>> Query : ' + deleteOffreQuerys);

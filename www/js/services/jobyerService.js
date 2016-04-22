@@ -104,6 +104,45 @@ services.factory('jobyerService', ['$http', function($http) {
 		};
 	};
 
+
+  var criteriaSearchService = function(data) {
+    var query = {
+      "class": "com.vitonjob.callouts.recherche.SearchQuery",
+      "job": data.job,
+      "metier": data.metier,
+      "entreprise": "",
+      "lieu": data.location,
+      "nom": data.nom,
+      "date": data.date, //"DD/MM/YYYY",
+      "table": "user_offre_jobyer" //user_offre_entreprise
+    };
+
+    var queryText = JSON.stringify(query);
+    var queryCoded = btoa(queryText);
+
+    var datas = {
+      'class': 'fr.protogen.masterdata.model.CCallout',
+      id: 120,
+      args: [{
+        class: 'fr.protogen.masterdata.model.CCalloutArguments',
+        label: 'Requete de recherche par criteres',
+        value: queryCoded
+      }]
+    };
+
+    var stringData = JSON.stringify(datas);
+
+    return $http({
+      method : 'POST',
+      url : 'http://vps259989.ovh.net:8080/vitonjobv1/api/callout',
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      data : stringData
+    });
+
+  };
+
 	var factory = {
 
 		getJobyersOffersByJob : function(job, entrepriseId, transportationMode, orderBy){
@@ -118,7 +157,10 @@ services.factory('jobyerService', ['$http', function($http) {
 		},
 		enregistrerOffre : function(id, titre, job, langues, indispensables, disponibilites, remuneration){
 			return enregistrerOffre(id, titre, job, langues, indispensables, disponibilites, remuneration);
-		}
+		},
+    criteriaSearchService : function(data){
+      return criteriaSearchService(data);
+    }
 
 	};
 

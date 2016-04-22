@@ -28,27 +28,27 @@ angular.module('ion-google-autocomplete', [])
                     var searchEventTimeout = undefined;
                     $rootScope.location = $location;
                     var googleAutocompleteOk='<button ng-click="selectLocationString(searchQuery)" class="button button-clear">Ok';
-                    
-                    if ($rootScope.location.$$path == '/jobyersOffersTab/map') 
+
+                    if ($rootScope.location.$$path == '/jobyersOffersTab/map')
                     {
                         googleAutocompleteOk = '';
                     }
                     //  else if($rootScope.location.$$path === '/adressePersonel/')
                     // {
-                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-travail')) 
+                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-travail'))
                     //     {
                     //         $('#google-autocomplete-personel input:first').removeClass('autocomplete-travail');
                     //     };
-                        
+
                     //     $('#google-autocomplete-personel input:first').addClass('autocomplete-personel');
                     // }
                     // else if($rootScope.location.$$path === '/adresseTravail/')
                     // {
-                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-personel')) 
+                    //     if ($('#google-autocomplete-personel input:first').hasClass('autocomplete-personel'))
                     //     {
                     //         $('#google-autocomplete-personel input:first').removeClass('autocomplete-personel');
                     //     };
-                        
+
                     //     $('#google-autocomplete-travail input:first').addClass('autocomplete-travail');
                     // }
                     var POPUP_TPL = [
@@ -61,7 +61,7 @@ angular.module('ion-google-autocomplete', [])
                                 googleAutocompleteOk,
                                 '</button>',
                                 '<button class="button button-clear google-autocomplete-cancele">',
-                                    attrs.labelCancel || 'Cancel',
+                                    attrs.labelCancel || 'Annuler',
                                 '</button>',
                             '</div>',
                             '<ion-content class="has-header has-header">',
@@ -89,9 +89,9 @@ angular.module('ion-google-autocomplete', [])
                             var details = placesService.getDetails({reference:location.reference}, function(result, status){
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
 
-                                    resultF = { 
-                                        address_components: result.address_components, 
-                                        adr_address: result.adr_address, 
+                                    resultF = {
+                                        address_components: result.address_components,
+                                        adr_address: result.adr_address,
                                         formatted_address: result.formatted_address,
                                         geometry: "",
                                         icon: "",
@@ -115,10 +115,10 @@ angular.module('ion-google-autocomplete', [])
                         scope.selectLocationString = function(searchQuery)
                         {
 
-                            
-                            var result = { 
-                                address_components: [], 
-                                adr_address: "", 
+
+                            var result = {
+                                address_components: [],
+                                adr_address: "",
                                 formatted_address: searchQuery,
                                 geometry: "",
                                 icon: "",
@@ -128,7 +128,7 @@ angular.module('ion-google-autocomplete', [])
 
 
                         };
-                        
+
 
                         scope.$watch('searchQuery', function(query){
                             if (searchEventTimeout) $timeout.cancel(searchEventTimeout);

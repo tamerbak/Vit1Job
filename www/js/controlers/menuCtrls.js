@@ -4,19 +4,25 @@
 
 starter.controller('MenuCtrl', function ($scope, localStorageService, $state, $ionicSideMenuDelegate) {
 
-  //Control variables
-  var employer = localStorageService.get('currentEmployer');
-  if (employer)
-    $scope.prenom = employer.prenom;
+
 
   //Before enter to menu ..
   $scope.$on('$ionicView.beforeEnter', function () {
+    //Control variables
     var cnx = localStorageService.get('connexion');
     if (cnx) {
       $scope.isConnected = cnx.etat;
     } else {
       $scope.isConnected = false;
     }
+
+    var employer = localStorageService.get('currentEmployer');
+    if (employer){
+      if (!$scope.formData)
+        $scope.formData = {};
+      $scope.formData.prenom = employer.prenom;
+    }
+
   });
 
   $scope.$watch($ionicSideMenuDelegate.getOpenRatio(), function () {

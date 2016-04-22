@@ -5,24 +5,8 @@
 
 starter.controller('contractCtrl', function ($scope, localStorageService, $stateParams, DataProvider, $ionicActionSheet, $ionicPopup, $state, $cordovaPrinter, AuthentificatInServer,$http ) {
 
-
-  var employeur = localStorageService.get('currentEmployer');
-  console.log(employeur);
-  var jobyer = localStorageService.get('Selectedjobyer');
-  //var civilites = DataProvider.getCivilites();
-  var civilite = employeur.titre;
-  /*for (var i in civilites) {
-   if (civilites[i].libelle == employeur.titre)
-   civilite = civilites[i].libelle;
-   }*/
-  $scope.societe = employeur.entreprises[0].name;
-  $scope.contact = civilite + " " + employeur.nom + " " + employeur.prenom;
-  //var adrTrv = employeur.adresseTravail;
-  //$scope.lieu = adrTrv.fullAddress;
-  //var jobyer = $stateParams.jobyer;
-  $scope.firstNameJ = jobyer.prenom;
-  $scope.lastNameJ = jobyer.nom;
-
+  var employeur;
+  var jobyer;
   // An alert dialog
   $scope.showAlert = function () {
     //printing the pdf
@@ -117,7 +101,7 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
      });
      });
      }*/
-
+    $scope.hideiFrame = false;
     AuthentificatInServer.yousignService(employeur, jobyer).success(signtaureSuccess).error(onError);
     //signtaureSuccess("");
 
@@ -162,6 +146,24 @@ starter.controller('contractCtrl', function ($scope, localStorageService, $state
     viewData.enableBack = true;
     $scope.showiFrame = false;
     $scope.hideiFrame = true;
+
+    employeur = localStorageService.get('currentEmployer');
+    console.log(employeur);
+    jobyer = localStorageService.get('Selectedjobyer');
+    if (!jobyer) jobyer = $stateParams.jobyer;
+    //var civilites = DataProvider.getCivilites();
+    var civilite = employeur.titre;
+    /*for (var i in civilites) {
+     if (civilites[i].libelle == employeur.titre)
+     civilite = civilites[i].libelle;
+     }*/
+    $scope.societe = employeur.entreprises[0].name;
+    $scope.contact = civilite + " " + employeur.nom + " " + employeur.prenom;
+    //var adrTrv = employeur.adresseTravail;
+    //$scope.lieu = adrTrv.fullAddress;
+    //var jobyer = $stateParams.jobyer;
+    $scope.firstNameJ = jobyer.prenom;
+    $scope.lastNameJ = jobyer.nom;
 
   });
 

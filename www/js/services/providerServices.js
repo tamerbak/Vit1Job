@@ -46,7 +46,7 @@ angular.module('providerServices', [])
 
 			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
-                	results.push({"pk_user_langue":data.data[i]["pk_user_langue"],"libelle":data.data[i]["libelle"]});
+                	results.push({"pricticeLanguageId":data.data[i]["pk_user_langue"],"language":data.data[i]["libelle"]});
             });
 
 		    return results;
@@ -59,7 +59,7 @@ angular.module('providerServices', [])
 
 			  $http({ method: 'POST', url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql', headers: {   "Content-Type": "text/plain" }, data: sql}).success(function (data) {
                 for(var i = 0 ; i < data.data.length ; i++)
-                	results.push({"pk_user_competence_transverse":data.data[i]["pk_user_indispensable"],"libelle":data.data[i]["libelle"]});
+                	results.push({"pricticeIndispensableId":data.data[i]["pk_user_indispensable"],"indispensable":data.data[i]["libelle"]});
             });
 
 		    return results;
@@ -88,7 +88,19 @@ angular.module('providerServices', [])
             });
 
 		    return results;
-		}
+		};
+
+    this.getUserbyPhone = function (tel) {
+      var sql = "select pk_user_account, email from user_account where telephone = '"+tel+"' and role = 'employeur'";
+
+      return $http({
+        method: 'POST',
+        url: 'http://vps259989.ovh.net:8080/vitonjobv1/api/sql',
+        headers: {"Content-Type": "text/plain"},
+        data: sql
+      });
+
+    };
 
 		/*************************************** *************************************** ***************************************/
 

@@ -8,6 +8,7 @@ starter
   .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies, jobyerService, $ionicHistory) {
     $scope.$on('$ionicView.beforeEnter', function (e, config) {
       config.enableBack = false;
+      //$scope.formData = "";
     });
     /*$scope.displayBack = function() {
      return $ionicHistory.viewHistory().backView != null;
@@ -176,6 +177,7 @@ starter
       if (states.fromCache && states.stateName == "app") {
         $scope.initConnexion();
       }
+      $scope.formData.mDate = "23/12/2016"
     });
 
     $scope.modeConnexion = function () {
@@ -449,5 +451,371 @@ starter
         jobyerService.recherche(job, "").success(onGetJobyersOffersByJobSuccess).error(onError);
       }
     };
+
+    //$scope.mPerson ="" ;
+    $scope.personCriteria = function () {
+
+      if ($scope.pStyle) {
+        if ($scope.pStyle.activated) {
+          $scope.bPerson = false;
+          $scope.formData.mPerson = "";
+          $scope.pStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.bPerson = true;
+          $scope.pStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        //$scope.mPerson = "";
+        $scope.bPerson = true;
+        $scope.pStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.sectorCriteria = function () {
+
+      if ($scope.sStyle) {
+        if ($scope.sStyle.activated) {
+          $scope.bSector = false;
+          $scope.formData.mSector = "";
+          $scope.sStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.bSector = true;
+          $scope.sStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        $scope.bSector = true;
+        $scope.sStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.jobCriteria = function () {
+
+      if ($scope.jStyle) {
+        if ($scope.jStyle.activated) {
+          $scope.bJob = false;
+          $scope.formData.mJob = "";
+          $scope.jStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.bJob = true;
+          $scope.jStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        $scope.bJob = true;
+        $scope.jStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.langCriteria = function () {
+
+      if ($scope.laStyle) {
+        if ($scope.laStyle.activated) {
+          $scope.blang = false;
+          $scope.formData.mLanguage = "";
+          $scope.laStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.blang = true;
+          $scope.laStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        $scope.blang = true;
+        $scope.laStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.calCriteria = function () {
+
+      if ($scope.cStyle) {
+        if ($scope.cStyle.activated) {
+          $scope.bcal = false;
+          $scope.formData.mDate = "";
+          $scope.cStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.bcal = true;
+          $scope.cStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        $scope.bcal = true;
+        $scope.cStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.locationCriteria = function () {
+
+      if ($scope.loStyle) {
+        if ($scope.loStyle.activated) {
+          $scope.blocation = false;
+          $scope.formData.mLocation = "";
+          $scope.loStyle = {
+            "activated": false,
+            "background-color": "white"
+          }
+        } else {
+          $scope.blocation = true;
+          $scope.loStyle = {
+            "activated": true,
+            "background-color": "#14BAA6"
+          }
+        }
+      } else {
+        $scope.blocation = true;
+        $scope.loStyle = {
+          "activated": true,
+          "background-color": "#14BAA6"
+        }
+      }
+    };
+
+    $scope.criteriaSearch = function () {
+
+      var person = "",
+        sector = "",
+        job = "",
+        date = "",
+        location = "";
+
+      if ($scope.formData.mPerson) person = $scope.formData.mPerson;
+      if ($scope.formData.mSector) sector = $scope.formData.mSector;
+      if ($scope.formData.mJob) job = $scope.formData.mJob;
+      if ($scope.formData.mDate) date = $scope.formData.mDate.getDate().toString() +"/" +
+        ($scope.formData.mDate.getMonth() + 1) + "/" +
+        $scope.formData.mDate.getFullYear().toString();
+      if ($scope.formData.mLocation) location = $scope.formData.mLocation;
+
+      var data = {
+        "job": job,
+        "metier": sector,
+        "lieu": location,
+        "nom": person,
+        "date": date //"DD/MM/YYYY"
+      };
+
+      // Call web service :
+      jobyerService.criteriaSearchService(data).
+        success(function (response) {
+          console.log('recherche par critères bien executée');
+          onGetJobyersOffersByJobSuccess(response);
+        }).
+        error(function (error) {
+          onError();
+          console.log('erreur dans le ws de la recherche par critères : ' + error)
+        });
+
+
+    };
+
+    $scope.$watch('formData.mDate', function () {
+      console.log($scope.formData.mDate);
+    });
+
+    // Agenda
+    var weekDaysList = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"];
+    var monthList = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+    var h0 = new Date(2016, 3, 4)
+      , h1 = new Date(2016, 3, 9)
+      , h2 = new Date(2016, 3, 3)
+      , h3 = new Date(2016, 3, 10)
+      , h4 = new Date(2016, 3, 30)
+      , h5 = new Date(2016, 3, 16)
+      , h6 = new Date(2016, 3, 6)
+      , calendar0 = [h0, h1, h2, h3, h4, h5, h6];
+
+    var c0 = new Date(2016, 3, 4)
+      , c1 = new Date(2016, 3, 9)
+      , c2 = new Date(2016, 3, 3)
+      , c3 = new Date(2016, 3, 10)
+      , c4 = new Date(2016, 3, 12)
+      , c5 = new Date(2016, 3, 16)
+      , c6 = new Date(2016, 3, 18)
+      , c7 = new Date(2016, 3, 19)
+      , c8 = new Date(2016, 3, 22)
+      , c9 = new Date(2016, 3, 27)
+      , c10 = new Date(2016, 3, 25)
+      , c11 = new Date(2016, 3, 6)
+      , calendar1 = [c0, c1]
+      , calendar2 = [c2, c3]
+      , calendar3 = [c4]
+      , calendar4 = [c2, c5, c11]
+      , calendar5 = [c4, c10]
+      , calendar6 = [c6, c7, c8, c9]
+      , calendar7 = [c5, c6, c11];
+
+    var d0 = new Date(2016, 3, 16)
+      , d1 = new Date(2016, 3, 17)
+      , d2 = new Date(2016, 3, 17)
+      , d3 = new Date(2016, 3, 30)
+      , d4 = new Date(2016, 3, 1)
+      , disabledDates = [d0, d1, d2, d3, d4];
+
+    var s0 = new Date(2016, 3, 31)  // preview month
+      , s1 = new Date(2016, 3, 10) // holiday
+      , s2 = new Date(2016, 3, 11) // holiday
+      , s7 = new Date(2016, 3, 6) //
+      , s3 = new Date(2016, 3, 12) //
+      , s4 = new Date(2016, 3, 12) // clone
+      , s5 = new Date(2016, 3, 17) // conflict with disabled
+      , s6 = new Date(2016, 3, 1); // conflict with disabled, next month
+    //$scope.selectedDates = [s1, s2, s3, s4, s0, s5, s6, s7];
+
+    //if (!$scope.selectedDatesOriginal)
+    $scope.selectedDatesOriginal = [];
+    if (!$scope.selectedDates)
+      $scope.selectedDates = [];
+    for(var i=0; i<$scope.selectedDates.length;i++){
+      $scope.selectedDatesOriginal.push($scope.selectedDates[i].dates)
+    }
+    $scope.datepickerObject = {
+      templateType: 'POPUP', // POPUP | MODAL
+      modalFooterClass: 'bar-light',
+      //header: 'multi-date-picker',
+      headerClass: 'royal-bg light',
+
+      btnsIsNative: false,
+
+      btnOk: 'OK',
+      btnOkClass: 'button-clear cal-green',
+
+      btnCancel: 'Fermer',
+      btnCancelClass: 'button-clear button-dark',
+
+      btnTodayShow: true,
+      btnToday: "Aujourd'hui",
+      btnTodayClass: 'button-clear button-dark',
+
+      btnClearShow: true,
+      btnClear: 'Libérer',
+      btnClearClass: 'button-clear button-dark',
+
+      selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
+
+      tglSelectByWeekShow: false, // true | false (default)
+      tglSelectByWeek: 'Semaine entière',
+      isSelectByWeek: false, // true (default) | false
+      selectByWeekMode: 'NORMAL', // INVERSION (default), NORMAL
+      tglSelectByWeekClass: 'toggle-positive',
+      titleSelectByWeekClass: 'positive positive-border',
+
+      accessType: 'WRITE', // READ | WRITE
+      //showErrors: true, // true (default), false
+      //errorLanguage: 'RU', // EN | RU
+
+      //fromDate: new Date(2015, 9),
+      //toDate: new Date(2016, 1),
+
+      selectedDates: $scope.selectedDatesOriginal,
+      viewMonth: $scope.selectedDatesOriginal, //
+      disabledDates: '', //disabledDates,
+
+      calendar0: calendar0,
+      calendar0Class: '',
+      calendar0Name: 'Serveur Wahou',
+
+      calendar1: calendar1,
+      //calendar1Class: '',
+      calendar1Name: 'Jours fériés',
+
+      calendar2: calendar2,
+      calendar2Class: '',
+      //calendar2Name: 'calendar 2',
+
+      calendar3: calendar3,
+      calendar3Class: '',
+      calendar3Name: 'Anniversaire',
+
+      calendar4: calendar4,
+      calendar4Class: 'cal-color-black',
+      calendar4Name: 'Non disponible',
+
+      calendar5: calendar5,
+      calendar5Class: '',
+      calendar5Name: 'Conducteur habitué',
+
+      calendar6: calendar6,
+      calendar6Class: '',
+      calendar6Name: 'Cuisinier Débutant',
+
+      calendar7: calendar7,
+      calendar7Class: '',
+      calendar7Name: 'Autres RDV',
+
+      conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
+
+      closeOnSelect: false,
+
+      mondayFirst: true,
+      weekDaysList: weekDaysList,
+      monthList: monthList,
+
+      callback: function (dates) {  //Mandatory
+        retSelectedDates(dates);
+      }
+    };
+
+    var retSelectedDates = function (dates) {
+      if (!$scope.selectedDates)
+        $scope.selectedDates = [];
+      if (!$scope.selectedDatesOriginal)
+        $scope.selectedDatesOriginal = [];
+      $scope.selectedDatesOriginal.length = 0;
+      $scope.selectedDates.length = 0;
+      for (var i = 0; i < dates.length; i++) {
+        var newValSelDate = {
+          "date": angular.copy(dates[i]),
+          "startHour": "--:--",
+          "endHour": "--:--"
+        };
+        $scope.selectedDatesOriginal.push(angular.copy(dates[i]));
+        $scope.selectedDates.push(newValSelDate);
+      }
+      $scope.formData.mDate = $scope.selectedDates[0].date.getDate()+ "/" +
+        ($scope.selectedDates[0].date.getMonth() + 1) + "/" +
+        $scope.selectedDates[0].date.getFullYear();
+    };
+
 
   });

@@ -152,7 +152,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
           //views: {
             'jobyersOffersTab-list': {
               templateUrl: 'templates/searchTabs/jobyersOffersList.html',
-              controller: 'jobyersOffersListCtrl'
+              controller: 'CardsCtrl' //jobyersOffersListCtrl
             }
           //}
         //}

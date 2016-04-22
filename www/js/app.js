@@ -13,7 +13,7 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
   'cb.x2js', 'ngOpenFB', 'base64', 'ngCordova', 'validationDataServices', 'providerServices',
   'LocalStorageModule', 'connexionPhoneServices', 'Services', 'ngCookies', 'angucomplete-alt', 'ion-google-autocomplete', 'ui.mask',
 'ionic.service.core','passwordServices','SmsServices','paiementServices', 'ionic-multi-date-picker', 'ionic-timepicker', 'ion-gallery',
-'ionic.service.push'])
+'ionic.service.push', 'ionic.contrib.ui.tinderCards2', 'ionic-pullup', 'ionic-sidetabs'])
 
   .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen, $ionicPush) {
 
@@ -155,6 +155,23 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
       closeLabel: 'Fermer'
     };
     ionicTimePickerProvider.configTimePicker(timePickerObj);
+  })
+
+  .config(function($stateProvider, $urlRouterProvider) {
+
+  })
+
+  .directive('noScroll', function($document) {
+
+    return {
+      restrict: 'A',
+      link: function($scope, $element, $attr) {
+
+        $document.on('touchmove', function(e) {
+          e.preventDefault();
+        });
+      }
+    }
   })
 
   .run(function ($rootScope, $ionicLoading) {

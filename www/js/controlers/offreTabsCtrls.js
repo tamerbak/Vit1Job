@@ -135,14 +135,29 @@ starter
           $scope.formData.languesList = $scope.offre.pricticesLanguage;
         if ($scope.offre.remuneration)
           $scope.formData.remuneration = $scope.offre.remuneration;
-        if ($scope.offre.disponibilite && $scope.offre.disponibilite.length > 0){
-          for (var i = 0; i < $scope.offre.disponibilite.length; i++)
-              $scope.formData.horaires += {
-                "jour" :$scope.offre.disponibilite[i].jour,
-                "heureDebut" : $scope.offre.disponibilite[i].heureDebut,
-                "heureFin" : $scope.offre.disponibilite[i].heureFin
-              }
-            $scope.formData.horaires = $scope.offre.horaires;
+        if ($scope.offre.disponibilite && $scope.offre.disponibilite.length > 0) {
+          for (var i = 0; i < $scope.offre.disponibilite.length; i++) {
+            var hours = (new Date($scope.offre.disponibilite[i].heureDebut).getUTCHours() < 10) ?
+            "0" + new Date($scope.offre.disponibilite[i].heureDebut).getUTCHours() :
+              new Date($scope.offre.disponibilite[i].heureDebut).getUTCHours();
+            var minutes = (new Date($scope.offre.disponibilite[i].heureDebut).getUTCMinutes() < 10) ?
+            "0" + new Date($scope.offre.disponibilite[i].heureDebut).getUTCMinutes() :
+              new Date($scope.offre.disponibilite[i].heureDebut).getUTCMinutes();
+            var houre = (new Date($scope.offre.disponibilite[i].heureFin).getUTCHours() < 10) ?
+            "0" + new Date($scope.offre.disponibilite[i].heureFin).getUTCHours() :
+              new Date($scope.offre.disponibilite[i].heureFin).getUTCHours();
+            var minutee = (new Date($scope.offre.disponibilite[i].heureFin).getUTCMinutes() < 10) ?
+            "0" + new Date($scope.offre.disponibilite[i].heureFin).getUTCMinutes() :
+              new Date($scope.offre.disponibilite[i].heureFin).getUTCMinutes();
+            $scope.formData.horaires += {
+              "jour": new Date($scope.offre.disponibilite[i].jour),
+              "heureDebut": hours + ":" + minutes,
+              "heureFin": houre + ":" + minutee
+            }
+          }
+
+          $scope.formData.horaires = $scope.offre.horaires;
+          $scope.selectedDates = $scope.offre.horaires;
         }
         else
           $scope.formData.horaires = [];
@@ -255,7 +270,7 @@ starter
       if (qi != undefined) {
         var qiList = $scope.formData.qiList;
         for (var i = 0; i < qiList.length; i++) {
-          if (qiList[i].pk_user_competence_transverse == qi.pk_user_competence_transverse) {
+          if (qiList[i].pricticeIndispensableId == qi.pricticeIndispensableId) {
             Global.showAlertValidation("Cette qualité existe déjà dans la liste.");
             return;
           }
@@ -298,12 +313,12 @@ starter
       if (langue != undefined) {
         var languesList = $scope.formData.languesList;
         for (var i = 0; i < languesList.length; i++) {
-          if (languesList[i].pk_user_langue == langue.pk_user_langue) {
+          if (languesList[i].pricticeLanguageId == langue.pricticeLanguageId) {
             Global.showAlertValidation("Cette langue existe déjà dans la liste.");
             return;
           }
         }
-        langue.maitriseLangue = $scope.formData.maitriseLangue;
+        langue.level = $scope.formData.maitriseLangue;
         $scope.formData.languesList.push(langue);
 
       } else {
@@ -372,7 +387,8 @@ starter
       if (!$scope.selectedDates || $scope.selectedDates.length == 0) {
         Global.showAlertValidation("Vous n'avez pas ajouter des dates valides,Veuillez cliquer sur l'agenda pour les ajouter.");
         return false;
-      };
+      }
+      ;
 
       if (!$scope.offre)
         $scope.offre = {};
@@ -386,21 +402,21 @@ starter
       else
         $scope.offre.titre = $scope.formData.maitrise;
       titre = $scope.offre.titre;
-      $scope.offre.metier = $scope.formData.metier.originalObject;
-      metier = $scope.offre.metier.libelle;
+      $scope.offre.metier = ($scope.formData.metier.originalObject) ? $scope.formData.metier.originalObject : $scope.formData.metier;
+      metier = ($scope.offre.metier.libelle) ? $scope.offre.metier.libelle : $scope.offre.metier;
       $scope.offre.job = $scope.formData.job.originalObject;
       job = $scope.offre.job.libelle;
       $scope.offre.qiList = $scope.formData.qiList;
       for (var i = 0; i < $scope.offre.qiList.length; i++)
         indispensables.push({
           "class": "com.vitonjob.QIndispensable",
-          "qi": $scope.offre.qiList[i].pk_user_competence_transverse
+          "qi": $scope.offre.qiList[i].pricticeIndispensableId
         });
       $scope.offre.languesList = $scope.formData.languesList;
       for (var i = 0; i < $scope.offre.languesList.length; i++) {
         var l = {
           "class": "com.vitonjob.Langue",
-          "pk": $scope.offre.languesList[i].pk_user_langue,
+          "pk": $scope.offre.languesList[i].pricticeLanguageId,
           "maitrise": $scope.offre.languesList[i].maitriseLangue
         };
         langues.push(l);
@@ -412,18 +428,18 @@ starter
 
       //TEL 31/03/2016 New agenda :
       /*var weekday = new Array(7);
-      weekday[0] = "Dimanche";
-      weekday[1] = "Lundi";
-      weekday[2] = "Mardi";
-      weekday[3] = "Mercredi";
-      weekday[4] = "Jeudi";
-      weekday[5] = "Vendredi";
-      weekday[6] = "Samedi";*/
+       weekday[0] = "Dimanche";
+       weekday[1] = "Lundi";
+       weekday[2] = "Mardi";
+       weekday[3] = "Mercredi";
+       weekday[4] = "Jeudi";
+       weekday[5] = "Vendredi";
+       weekday[6] = "Samedi";*/
       if ($scope.selectedDates.length > 0) {
         $scope.formData.horaires = [];
         for (var i = 0; i < $scope.selectedDates.length; i++) {
           $scope.formData.horaires.push({
-              "jour": $scope.selectedDates[i].date.getFullYear().toString()+"-"+($scope.selectedDates[i].date.getMonth()+1).toString()+"-"+$scope.selectedDates[i].date.getDate().toString(), //weekday[$scope.selectedDates[i].date.getDay()]
+              "jour": $scope.selectedDates[i].date.getFullYear().toString() + "-" + ($scope.selectedDates[i].date.getMonth() + 1).toString() + "-" + $scope.selectedDates[i].date.getDate().toString(), //weekday[$scope.selectedDates[i].date.getDay()]
               "heureDebut": $scope.selectedDates[i].startHour,
               "heureFin": $scope.selectedDates[i].endHour
             }
@@ -437,39 +453,39 @@ starter
         var h = {
           "class": "com.vitonjob.Disponibilite", //"com.vitonjob.PlageHoraire"
           "jour": ho.jour,
-          "heureDebut" : parseInt(ho.heureDebut.split(':')[0]) * 60 + parseInt(ho.heureDebut.split(':')[1]),
-          "heureFin" : parseInt(ho.heureFin.split(':')[0]) * 60 + parseInt(ho.heureFin.split(':')[1])
+          "heureDebut": parseInt(ho.heureDebut.split(':')[0]) * 60 + parseInt(ho.heureDebut.split(':')[1]),
+          "heureFin": parseInt(ho.heureFin.split(':')[0]) * 60 + parseInt(ho.heureFin.split(':')[1])
         };
         plagesHoraires.push(h);
       }
 
       //validate date
       /*var accept = true; //validateDate();
-      if (accept) {
-        //date debut
-        if (!$scope.formData.dateDebut)
-          $scope.formData.dateDebut = new Date();
-        var dateDebutFormatted = formatDate($scope.formData.dateDebut);
-        console.log('dateDebutFormatted' + dateDebutFormatted + typeof dateDebutFormatted);
+       if (accept) {
+       //date debut
+       if (!$scope.formData.dateDebut)
+       $scope.formData.dateDebut = new Date();
+       var dateDebutFormatted = formatDate($scope.formData.dateDebut);
+       console.log('dateDebutFormatted' + dateDebutFormatted + typeof dateDebutFormatted);
 
-        //date fin
-        if (!$scope.formData.dateFin)
-          $scope.formData.dateFin = new Date();
+       //date fin
+       if (!$scope.formData.dateFin)
+       $scope.formData.dateFin = new Date();
 
-        var dateFinFormatted = formatDate($scope.formData.dateFin);
+       var dateFinFormatted = formatDate($scope.formData.dateFin);
 
-        console.log('dateFinFormatted' + dateFinFormatted + typeof dateFinFormatted);
+       console.log('dateFinFormatted' + dateFinFormatted + typeof dateFinFormatted);
 
-        $scope.offre.dateDebut = dateDebutFormatted.getFullYear() + "-" + dateDebutFormatted.getMonth() + "-" + dateDebutFormatted.getDate();
-        $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();
+       $scope.offre.dateDebut = dateDebutFormatted.getFullYear() + "-" + dateDebutFormatted.getMonth() + "-" + dateDebutFormatted.getDate();
+       $scope.offre.dateFin = dateFinFormatted.getFullYear() + "-" + dateFinFormatted.getMonth() + "-" + dateFinFormatted.getDate();
 
-      }
-      disponibilites = {
-        "class": "com.vitonjob.Disponibilite",
-        "dateDebut": $scope.offre.dateDebut,
-        "dateFin": $scope.offre.dateFin,
-        "plagesHoraires": plagesHoraires
-      };*/
+       }
+       disponibilites = {
+       "class": "com.vitonjob.Disponibilite",
+       "dateDebut": $scope.offre.dateDebut,
+       "dateFin": $scope.offre.dateFin,
+       "plagesHoraires": plagesHoraires
+       };*/
       var offre = $scope.offre;
       console.log(offre);
       console.log($scope.formData);
@@ -487,7 +503,7 @@ starter
         indispensables,
         plagesHoraires,
         remuneration)
-        .success(function (response){
+        .success(function (response) {
           console.log(response);
           var employeur = localStorageService.get('currentEmployer');
           var entreprises = employeur.entreprises;
@@ -497,8 +513,8 @@ starter
             offers = [];
 
           /*offers.push (response[0].value);
-          employeur.entreprises[0].offers = offers;
-          localStorageService.set('currentEmployer', employeur);*/
+           employeur.entreprises[0].offers = offers;
+           localStorageService.set('currentEmployer', employeur);*/
 
         }).error(queryError);
 
@@ -538,23 +554,23 @@ starter
       offers.push(
         {
           "offerId": offers.length + 1,
-          "title" : titre,
-          "remuneration" : remuneration,
-          "publiee" : "false",
-          "pricticesJob" : [{
+          "title": titre,
+          "remuneration": remuneration,
+          "publiee": "false",
+          "pricticesJob": [{
             "pricticeJobId": "",
             "metier": $scope.offre.metier.libelle,
             "job": $scope.offre.job.libelle,
             "level": $scope.offre.job.level
           }],
-          "pricticesLanguage" : $scope.offre.languesList,
-          "pricticesIndisponsables" : $scope.offre.qiList,
-          "disponibilite" : [
+          "pricticesLanguage": $scope.offre.languesList,
+          "pricticesIndisponsables": $scope.offre.qiList,
+          "disponibilite": [
             {
-              "disponibiliteId" : "",
-              "dateDebut" : $scope.offre.dateDebut,
-              "dateFin" : $scope.offre.dateFin,
-              "Repetitions" : []
+              "disponibiliteId": "",
+              "dateDebut": $scope.offre.dateDebut,
+              "dateFin": $scope.offre.dateFin,
+              "Repetitions": []
             }
           ]
         }
@@ -562,17 +578,17 @@ starter
 
       var employeur = localStorageService.get('currentEmployer');
       employeur.entreprises[0].offers = offers;
-      localStorageService.set ('currentEmployer', employeur);
+      localStorageService.set('currentEmployer', employeur);
 
       /*if ($rootScope.offres == undefined)
-        localStorageService.set('offres', []);
-      else {
-        var offerPerUser = [];
-        offerPerUser.id = localStorageService.get('currentEmployer').id;
-        offerPerUser.values = $rootScope.offres;
-        listOffersPerUser.push(offerPerUser);
-        localStorageService.set('offres', listOffersPerUser);
-      }*/
+       localStorageService.set('offres', []);
+       else {
+       var offerPerUser = [];
+       offerPerUser.id = localStorageService.get('currentEmployer').id;
+       offerPerUser.values = $rootScope.offres;
+       listOffersPerUser.push(offerPerUser);
+       localStorageService.set('offres', listOffersPerUser);
+       }*/
 
       $state.go('menu.offres');
 
@@ -811,7 +827,7 @@ starter
     $scope.selectedDatesOriginal = [];
     if (!$scope.selectedDates)
       $scope.selectedDates = [];
-    for(var i=0; i<$scope.selectedDates.length;i++){
+    for (var i = 0; i < $scope.selectedDates.length; i++) {
       $scope.selectedDatesOriginal.push($scope.selectedDates[i].dates)
     }
     $scope.datepickerObject = {
@@ -1010,3 +1026,4 @@ starter
 
 
   });
+

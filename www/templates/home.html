@@ -8,32 +8,35 @@
   <ion-nav-title>
     <div class="vimgBar"><img src="img/vit1job-mini.png"></div>
   </ion-nav-title>
-<!--    <ion-nav-buttons side="primary">
- <button class="button icon-right ion-chevron-left button-clear " ng-click="myGoBack()"></button>
-  </ion-nav-buttons>
- -->
-  <ion-content padding="true">
+  <!--    <ion-nav-buttons side="primary">
+   <button class="button icon-right ion-chevron-left button-clear " ng-click="myGoBack()"></button>
+    </ion-nav-buttons>
+   -->
+  <ion-content padding="true" >
     <br>
-    <div class = "row">
-      <div class="vimg"><img src="img/logo_employeur2.png"></div>
+
+    <div class="row">
+      <div class="vimg" ><img src="img/logo_employeur2.png"></div>
     </div>
 
-    <div class = "row sear" > <!-- data-ng-init="initConnexion()"> -->
+    <div class="row sear"> <!-- data-ng-init="initConnexion()"> -->
       <div class="list list-inset">
         <label class="item item-input">
-          <input type="search" placeholder="Votre recherche ici..." ng-model="job" ng-enter = "launchSearchForJobyersOffers(job)">
+          <input type="search" placeholder="Votre recherche ici..." ng-model="job"
+                 ng-enter="launchSearchForJobyersOffers(job)">
           <i class="icon ion-search placeholder-icon"></i>
         </label>
       </div>
     </div>
 
-    <div class = "row">
+    <div class="row">
       <h3 class="hslide1">Trouvez vos jobyers immédiatement disponibles!</h3>
     </div>
 
 
     <div class="row">
-      <button class="button button-full button-positive green" ng-disabled="!job" ng-click="launchSearchForJobyersOffers(job)" > <!-- data-ng-click="getJobbers(query)"> -->
+      <button class="button button-full button-positive green" ng-disabled="!job"
+              ng-click="launchSearchForJobyersOffers(job)"> <!-- data-ng-click="getJobbers(query)"> -->
         Lancer la recherche
       </button>
     </div>
@@ -55,13 +58,153 @@
 
     <div class="row">
       <h6 style="width: 100%">
-        Version: VIT 0.0.31
+        Version: VIT 0.0.33
       </h6>
     </div>
 
-</ion-content>
-<!--<ion-footer-bar class="hide-on-keyboard-open">
+    <!--ion-pull-up-footer class="bar-energized" on-expand="footerExpand()" on-collapse="footerCollapse()" max-height="50%"
+                        style="background-color: #757575">
+      <ion-pull-up-bar>
+        <h1 class="title" ion-pull-up-trigger>Recherche avec critères</h1>
+        <button class="button icon ion-search"
+                style="background-color: transparent; border-color: transparent;"></button>
+      </ion-pull-up-bar>
+      <ion-pull-up-handle width="100" height="25" toggle="ion-chevron-up ion-chevron-down"
+                          style="border-radius: 25px 25px 0 0; background-color: #14BAA6 !important">
+        <i class="icon ion-chevron-up"></i>
+      </ion-pull-up-handle>
+      <div id="searchCriteria" style="width: 100%;margin-top: 44px;">
+        <div class="button-bar">
+          <a class="button button-light button-block icon ion-person" ng-style="pStyle" ng-click="personCriteria()"></a>
+          <a class="button button-light button-block icon ion-pie-graph" ng-style="sStyle" ng-click="sectorCriteria()"></a>
+          <a class="button button-light button-block icon ion-briefcase" ng-style="jStyle" ng-click="jobCriteria()"></a>
+          <a class="button button-light button-block icon ion-earth" ng-style="laStyle" ng-click="langCriteria()"></a>
+          <a class="button button-light button-block icon ion-android-calendar" ng-style="cStyle" ng-click="calCriteria()"></a>
+          <a class="button button-light button-block icon ion-location" ng-style="loStyle" ng-click="locationCriteria()"></a>
+        </div>
 
-</ion-footer-bar>-->
+        <div class="list">
+          <label class="item item-input" ng-if = "bPerson">
+            <i class="icon ion-person"></i>
+            <span class="input-label">Jobyer </span>
+            <input type="text" ng-model="mPerson">
+          </label>
+          <label class="item item-input" ng-if = "bSector">
+            <i class="icon ion-pie-graph"></i>
+            <span class="input-label">Secteur </span>
+            <input type="text" ng-model="mSector">
+          </label>
+          <label class="item item-input" ng-if = "bJob">
+            <i class="icon ion-briefcase"></i>
+            <span class="input-label">Job </span>
+            <input type="text" ng-model="mJob">
+          </label>
+          <label class="item item-input" ng-if = "blang">
+            <i class="icon ion-earth"></i>
+            <span class="input-label">Langue </span>
+            <input type="text" ng-model="mLanguage">
+          </label>
+          <label class="item item-input" ng-if = "bcal">
+            <i class="icon ion-android-calendar"></i>
+            <span class="input-label">Date </span>
+            <input type="text" ng-model="mDate">
+          </label>
+          <label class="item item-input" ng-if = "blocation">
+            <i class="icon ion-location"></i>
+            <span class="input-label">Lieu </span>
+            <input type="text" ng-model="mLocation">
+          </label>
+          <button class="button button-full button-positive grey" ng-click="launchSearchForJobyersOffers(job)"
+                  ng-if="bPerson || bSector || bJob || blang || bcal || blocation">
+            Lancer la recherche
+          </button>
+        </div>
+
+
+
+
+      </div>
+
+    </ion-pull-up-footer-->
+
+
+
+    <ion-side-tabs on-expand="tabExpand(index)" on-collapse="tabCollapse(index)" >
+      <ion-side-tab class="dark-bg" style="border-radius: 10px;z-index: 999; background-color: #757575 !important;" expand="tab1.expand">
+        <ion-side-tab-handle width="40" height="50" toggle="ion-chevron-left ion-chevron-right"
+                             style="border-radius: 10px 0 0 10px;background-color: #14BAA6 !important;">
+          <i class="icon ion-gear-a calm" style="font-size: xx-large;"></i>
+          <b style="font-size: large"></b></ion-side-tab-handle>
+
+        <div id="searchCriteria" style="width: 100%;margin-top: 20px;">
+          <div style="font-size: large; color: white;">
+            Recherche avec critères
+          </div>
+
+          <div class="button-bar">
+            <a class="button button-light button-block icon ion-person" ng-style="pStyle" ng-click="personCriteria()"></a>
+            <a class="button button-light button-block icon ion-pie-graph" ng-style="sStyle" ng-click="sectorCriteria()"></a>
+            <a class="button button-light button-block icon ion-briefcase" ng-style="jStyle" ng-click="jobCriteria()"></a>
+            <!--a class="button button-light button-block icon ion-earth" ng-style="laStyle" ng-click="langCriteria()"></a-->
+            <a class="button button-light button-block icon ion-android-calendar" ng-style="cStyle" ng-click="calCriteria()"></a>
+            <!--ionic-multi-date-picker input-obj="datepickerObject">
+              <a class="button button-light button-block icon ion-android-calendar" ng-style="cStyle" ng-click="calCriteria()" style="top: 1px;"></a>
+            </ionic-multi-date-picker-->
+            <a class="button button-light button-block icon ion-location" ng-style="loStyle" ng-click="locationCriteria()"></a>
+          </div>
+
+          <div class="list" ng-controller="homeCtrl">
+            <label class="item item-input" ng-if = "bPerson">
+              <i class="icon ion-person"></i>
+              <span class="input-label">Jobyer </span>
+              <input type="text" ng-model="formData.mPerson" placeholder="Nom ou prénom">
+            </label>
+            <label class="item item-input" ng-if = "bSector">
+              <i class="icon ion-pie-graph"></i>
+              <span class="input-label">Secteur </span>
+              <input type="text" ng-model="formData.mSector" placeholder="Domaine du job">
+            </label>
+            <label class="item item-input" ng-if = "bJob">
+              <i class="icon ion-briefcase"></i>
+              <span class="input-label">Job </span>
+              <input type="text" ng-model="formData.mJob" placeholder="Job">
+            </label>
+            <!--label class="item item-input" ng-if = "blang">
+              <i class="icon ion-earth"></i>
+              <span class="input-label">Langue </span>
+              <input type="text" ng-model="mLanguage">
+            </label-->
+            <label class="item item-input" ng-if = "bcal">
+              <i class="icon ion-android-calendar"></i>
+              <span class="input-label">Date</span>
+              <input type="date" data-ng-model="formData.mDate" placeholder="jj/mm/yyyy" datetime = "dd/MM/yyyy">
+            </label>
+            <!--label class="item item-input" ng-if = "blocation">
+              <i class="icon ion-location"></i>
+              <span class="input-label">Lieu </span>
+              <input type="text" ng-model="formData.mLocation">
+            </label-->
+
+            <label id="google-criteriaSearch" class="item item-input" ng-if = "blocation">
+              <i class="icon ion-location"></i>
+              <span class="input-label">Lieu </span>
+              <ion-google-autocomplete placeholder="Rue, ville ou CP..." id="criteriaSearch"
+                                       ng-model="formData.mLocation" places-options="placesOptions" />
+            </label>
+            <button class="button button-full button-positive grey" ng-click="criteriaSearch()"
+                    ng-if="bPerson || bSector || bJob || blang || bcal || blocation">
+              Lancer la recherche
+            </button>
+          </div>
+        </div>
+      </ion-side-tab>
+    </ion-side-tabs>
+
+
+
+  </ion-content>
+  <!--<ion-footer-bar class="hide-on-keyboard-open">
+
+  </ion-footer-bar>-->
 </ion-view>
 

@@ -62,12 +62,12 @@
 
       <!-- Mail -->
 
-      <div>
+      <div ng-show="showEmailField">
         <h3 class="titlePhone">Votre e-mail :</h3>
       </div>
 
       <div class="list">
-        <label class="item item-input" style="margin-bottom:15px;">
+        <label class="item item-input" style="margin-bottom:15px;" ng-show="showEmailField">
           <i class="icon ion-email placeholder-icon calm" style="font-size: large"></i>
           <input animation="fade" type="email" id="email" ng-click="displayEmailTooltip()" placeholder="Email"
                  data-ng-model="formData.email" data-ng-change="validatEmail('email')">
@@ -101,13 +101,35 @@
           </div>
         </div>
       </div>
+
+      <!-- Confirmation -->
+      <div ng-show="showEmailField">
+        <h5 class="titlePhone">Confirmation du mot de passe : </h5>
+      </div>
+
+      <label class="item item-input" ng-show="showEmailField">
+        <i class="icon ion-locked placeholder-icon calm" style="font-size: large"></i>
+        <input type="password" ng-focus="displayPwd2Tooltip()" ng-click="displayPwd2Tooltip()"
+               placeholder="Confirmer mot de passe" ng-model="formData.password2" ng-minlength="6">
+      </label>
+
+      <div id="popupCntPwd" ng-class="{'hidden' : ! showPwd2Tooltip}" ng-if="!password2IsValid()">
+        <div class="arrow-up"></div>
+        <div id="pwdPopup">
+          Les deux mots de passe doivent être identiques!
+        </div>
+      </div>
+
+    </div>
+
       <br>
       <!-- ACTIONS -->
-      <div class="buttonConnect">
-        <button class="button button-full button-positive green" data-ng-click="Authenticate()"
-                ng-disabled="!formData.index || !formData.phone || !formData.password || !formData.email">Se connecter
-        </button>
-        <button class="button button-full button-positive grey" ui-sref="menu.connection">Quitter</button>
-      </div>
+    <div class="buttonConnect">
+      <button class="button button-full button-positive green" data-ng-click="Authenticate()"
+              ng-disabled="goForAction()">{{libelleButton}}
+      </button>
+      <a href="#" style="color : #757575;"> Mot de passe oublié ? </a>
+      <button class="button button-full button-positive grey" ui-sref="menu.connection">Quitter</button>
+    </div>
   </ion-content>
 </ion-view>

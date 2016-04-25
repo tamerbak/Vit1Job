@@ -19,17 +19,19 @@ angular.module('globalServices', ['ionic', 'cb.x2js','ngCookies'])
 					text: '<b>Non</b>',
 					type: 'button-dark',
 					onTap: function(e){
-
+              return 'no';
 					}
 				},{
 					text: '<b>Oui</b>',
 					type: 'button-calm',
 					onTap: function(e){
-
+              return 'yes';
 					}
 				}
 			 ]
 		 });
+
+      return myPopup;
 	  };
 
 	    this.showAlertValidation=function(temp){

@@ -90,6 +90,8 @@
   <script src="js/controlers/payLineCtrls.js"></script>
   <script src="js/controlers/slimPayCtrls.js"></script>
   <script src="js/controlers/menuCtrls.js"></script>
+  <script src="js/controlers/networkTutorialCtrls.js"></script>
+  
 
   <!-- SERVICES & FACTORIES -->
   <script src="js/services/authenticationServices.js"></script>
@@ -145,10 +147,25 @@
 
 
 </head>
-<body ng-app="starter">
+<body> 
+    <!--ng-app="starter">-->
 <ion-nav-bar class="bar-calm">
   <ion-nav-back-button></ion-nav-back-button>
 </ion-nav-bar>
 <ion-nav-view></ion-nav-view>
+<script>
+    angular.element(document).ready(function () {
+        if (window.cordova) {
+        console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
+        document.addEventListener('deviceready', function () {
+            console.log("Deviceready event has fired, bootstrapping AngularJS.");
+            angular.bootstrap(document.body, ['starter']);
+        }, false);
+        } else {
+            console.log("Running in browser, bootstrapping AngularJS now.");
+            angular.bootstrap(document.body, ['app']);
+        }
+    });
+</script>
 </body>
 </html>

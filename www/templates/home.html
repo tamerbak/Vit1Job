@@ -13,6 +13,7 @@
     </ion-nav-buttons>
    -->
   <ion-content padding="true" >
+    <div class="alert" >{{networkStat}}</div>
     <br>
 
     <div class="row">
@@ -49,6 +50,13 @@
         Se déconnecter
       </button>
     </div>
+    
+    <!--<div>
+        <button class="button button-full button-positive grey" ui-sref="menu.networkTutorial">
+            Tutoriel
+        </button>
+    </div>
+    -->
 
     <!--div class="row">
       <button class="button button-full button-positive grey" ng-if="!isLogged" ui-sref="resetPassword">

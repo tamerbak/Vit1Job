@@ -11,6 +11,9 @@
 .row.sear {
   /*margin-top: -5%;*/
 }
+.alert{
+    color:red;
+}
 
 .vimgBar {
   width: 100%;

@@ -5,11 +5,15 @@
 
 starter
 
-  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, $ionicPopup, localStorageService, $timeout, $cookies, jobyerService, $ionicHistory) {
+  .controller('homeCtrl', function ($scope, $rootScope, $http, $state, x2js, Global, $ionicPopup, localStorageService, $timeout, $cookies, jobyerService, $ionicHistory,$cordovaNetwork) {
     $scope.$on('$ionicView.beforeEnter', function (e, config) {
       config.enableBack = false;
       //$scope.formData = "";
     });
+    
+
+    
+    //$rootScope.NetworkStat = '<div>Vous n\'êtes pas connecté.</div>';
     /*$scope.displayBack = function() {
      return $ionicHistory.viewHistory().backView != null;
      };
@@ -17,7 +21,44 @@ starter
      $scope.myGoBack = function() {
      window.history.back();
      };*/
+     var init = function(){ 
+        document.addEventListener("deviceready", function () {
+          
+            $scope.network = $cordovaNetwork.getNetwork();
+            $scope.isOnline = $cordovaNetwork.isOnline();
+            $scope.$apply();
+            
+            if($scope.isOnline){
+                $rootScope.networkStat = "  ";
+            }else{
+                $rootScope.networkStat = "Vous n\'êtes pas connecté.";
+            }
 
+            // listen for Online event
+            $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+                $rootScope.networkStat = "   ";
+                $scope.isOnline = true;
+                $scope.network = $cordovaNetwork.getNetwork();
+                
+                $scope.$apply();
+            })
+
+            // listen for Offline event
+            $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+                $rootScope.networkStat = "Vous n\'êtes pas connecté";
+                $scope.isOnline = false;
+                $scope.network = $cordovaNetwork.getNetwork();
+
+                $scope.$apply();
+            })
+        
+        
+
+         }, false);
+  
+     }
+     
+    init();
     // FORMULAIRE
     $scope.formData = {};
     //$scope.formData.connexion= {};
@@ -58,7 +99,7 @@ starter
 
             //Check if there are rows!
 
-            if (jsonResp.dataModel.rows.dataRow instanceof Array) {
+            if (jsonResp.dataModel.rows.dataRow instanceof Array) {g
               //if (jsonResp.dataModel.rows.dataRow.length > 0){
               //if (rowsCount > 0){
 
@@ -234,7 +275,7 @@ starter
 
 
     };
-
+    
     var showNonConnectedPopup = function () {
       var confirmPopup = $ionicPopup.confirm({
         title: "<div class='vimgBar'><img src='img/vit1job-mini2.png'></div>",

@@ -15,7 +15,7 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
 'ionic.service.core','passwordServices','SmsServices','paiementServices', 'ionic-multi-date-picker', 'ionic-timepicker', 'ion-gallery',
 'ionic.service.push', 'ionic.contrib.ui.tinderCards2', 'ionic-pullup', 'ionic-sidetabs'])
 
-  .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen, $ionicPush) {
+  .run(function ($ionicPlatform, $rootScope, $cordovaSplashscreen, $ionicPush,$cordovaNetwork) {
 
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -33,9 +33,31 @@ var starter = angular.module('starter', ['ionic', 'wsConnectors', 'parsingServic
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
+    //   console.log("**");
+    //   console.log(navigator.connection);
+    //   console.log(window.Connection);
+    //   console.log("--------");
+    //   var type = $cordovaNetwork.getNetwork();
+    //   console.log($cordovaNetwork.getNetwork());
+    //   if(window.Connection) {
+    //             if(navigator.connection.type == Connection.NONE) {
+    //                 $ionicPopup.confirm({
+    //                     title: "Internet Disconnected",
+    //                     content: "The internet is disconnected on your device."
+    //                 })
+    //                 .then(function(result) {
+    //                     if(!result) {
+    //                         ionic.Platform.exitApp();
+    //                     }
+    //                 });
+    //             }
+    //         }else{
+    //             console.log("connected");
+    //         }
 
       $rootScope.AppLogo = '<div class="vimgBar"><img src="img/vit1job-mini.png"></div>';
       $rootScope.previousView = '';
+      $rootScope.networkStat = '  ';
 
       //Instabug integration :
       if (window.cordova){
